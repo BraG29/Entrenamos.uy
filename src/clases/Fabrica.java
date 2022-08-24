@@ -2,7 +2,7 @@ package clases;
 
 public class Fabrica {
 	
-	IControlador getInterface() {
+	public IControlador getInterface() {
 		return Controlador.getInstance();
 			
 		}

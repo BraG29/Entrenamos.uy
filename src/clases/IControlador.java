@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class IControlador {
 
-	void altaUsuario(
+	public void altaUsuario(
 			String nick, String nombre,String apellido,String email,LocalDate fechaNac
 			) {};
-	void altaUsuario(
+	public void altaUsuario(
 			String nick, String nombre,String apellido,String email,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb
 			) {};
