@@ -37,7 +37,7 @@ import clases.IControlador;
 
 public class AltaUsuario extends JFrame {
 
-	private VentanaError showError;
+	private VentanaMensaje showMensaje;
 	private JPanel contentPane;
 	private JTextField txtFieldNick;
 	private JTextField txtFieldNombre;
@@ -276,8 +276,8 @@ public class AltaUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String errorCamposClave = "Por favor rellene todos los campos claves";
 				if(cBoxTipoUsr.getSelectedIndex() == 0) {
-					showError = new VentanaError("Seleccione un tipo de usuario");
-					showError.setVisible(true);
+					showMensaje = new VentanaMensaje("ERROR","Seleccione un tipo de usuario",Color.RED);
+					showMensaje.setVisible(true);
 				}else {
 					if(
 							txtFieldNombre.getText().isEmpty() ||
@@ -287,14 +287,14 @@ public class AltaUsuario extends JFrame {
 							cBoxMes.getSelectedIndex() == 0 ||
 							cBoxDia.getSelectedIndex() == 0 ||
 							txtFieldAnio.getText().isEmpty()) {
-						showError = new VentanaError(errorCamposClave);
-						showError.setVisible(true);
+						showMensaje = new VentanaMensaje("ERROR",errorCamposClave,Color.RED);
+						showMensaje.setVisible(true);
 					}else if(
 							cBoxTipoUsr.getSelectedIndex() == 2 &&
 							(txtFieldInstitucion.getText().isEmpty() ||
 							txtFieldDescripcion.getText().isEmpty())) {
-						showError = new VentanaError(errorCamposClave);
-						showError.setVisible(true);
+						showMensaje = new VentanaMensaje("ERROR",errorCamposClave,Color.RED);
+						showMensaje.setVisible(true);
 					}else {
 						//Pasamos todos los controles del front estamos listo para llamar al back
 						Fabrica f = new Fabrica();
@@ -321,10 +321,12 @@ public class AltaUsuario extends JFrame {
 									nickname, nombre, apellido, email, fechaNac, institucion, descripcion, biografia, sitioWeb);
 						}
 						if(existe) {
-							showError = new VentanaError("En Nickname o Correo ingresado ya existe. Por favor intentelo de nuevo");
-							showError.setVisible(true);
+							showMensaje = new VentanaMensaje("ERROR","En Nickname o Correo ingresado ya existe. Por favor intentelo de nuevo",Color.RED);
+							showMensaje.setVisible(true);
 						}
 						else {
+							String mensaje = "Se ha dado de alta al usuario " + nickname + " en el sistema";
+							showMensaje = new VentanaMensaje("Usuario Creado", mensaje, Color.BLACK);
 							setVisible(false);
 						}
 					}
