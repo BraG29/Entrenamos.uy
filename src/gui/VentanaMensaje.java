@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaError extends JFrame {
+public class VentanaMensaje extends JFrame {
 
 	private JPanel contentPane;
 
@@ -38,7 +38,7 @@ public class VentanaError extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaError(String error) {
+	public VentanaMensaje(String titulo, String mensaje,  Color color) {
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 256);
@@ -48,18 +48,18 @@ public class VentanaError extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("ERROR");
+		JLabel lblTitulo = new JLabel(titulo);
 		lblTitulo.setFont(new Font("Waree", Font.BOLD, 20));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setBounds(0, 0, 366, 46);
 		contentPane.add(lblTitulo);
 		
-		JLabel lblError = new JLabel("");
-		lblError.setForeground(Color.RED);
+		
+		JLabel lblError = new JLabel(mensaje);
+		lblError.setForeground(color);
 		lblError.setHorizontalAlignment(SwingConstants.CENTER);
 		lblError.setBounds(10, 47, 344, 77);
 		contentPane.add(lblError);
-		lblError.setText(error);
 		
 		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
