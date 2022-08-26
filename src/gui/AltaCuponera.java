@@ -2,18 +2,17 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
-public class Test_NoPush extends JFrame {
+public class AltaCuponera extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -22,7 +21,7 @@ public class Test_NoPush extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Test_NoPush frame = new Test_NoPush();
+					AltaCuponera frame = new AltaCuponera();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -34,26 +33,26 @@ public class Test_NoPush extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Test_NoPush() {
+	public AltaCuponera() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		JButton bynCancelar = new JButton("Cancelar");
+		bynCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		bynCancelar.setBounds(37, 386, 117, 25);
+		contentPane.add(bynCancelar);
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel.add(lblNewLabel);
-		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnNewButton = new JButton("New button");
-		panel.add(btnNewButton);
+		JButton btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.setBounds(240, 386, 117, 25);
+		contentPane.add(btnConfirmar);
 	}
 
 }

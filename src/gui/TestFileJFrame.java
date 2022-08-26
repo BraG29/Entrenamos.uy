@@ -35,7 +35,7 @@ import javax.swing.JButton;
 import clases.Fabrica;
 import clases.IControlador;
 
-public class AltaUsuario extends JFrame {
+public class TestFileJFrame extends JFrame {
 
 	//private VentanaError showError;
 	private JPanel contentPane;
@@ -56,7 +56,7 @@ public class AltaUsuario extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AltaUsuario frame = new AltaUsuario();
+					TestFileJFrame frame = new TestFileJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,7 +68,7 @@ public class AltaUsuario extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AltaUsuario() {
+	public TestFileJFrame() {
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 414, 448);
