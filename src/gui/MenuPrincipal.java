@@ -93,9 +93,9 @@ public class MenuPrincipal extends JFrame {
 		btnRegistroAClase.setBounds(322, 100, 298, 25);
 		contentPane.add(btnRegistroAClase);
 		
-		JButton btnAltaUsuario_7 = new JButton("Crear Cuponera");
-		btnAltaUsuario_7.setBounds(322, 137, 298, 25);
-		contentPane.add(btnAltaUsuario_7);
+		JButton btnCrearCuponera = new JButton("Crear Cuponera");
+		btnCrearCuponera.setBounds(322, 137, 298, 25);
+		contentPane.add(btnCrearCuponera);
 		
 		JButton btnConsultaCuponera = new JButton("Consulta de Cuponeras");
 		btnConsultaCuponera.setBounds(326, 211, 298, 25);
