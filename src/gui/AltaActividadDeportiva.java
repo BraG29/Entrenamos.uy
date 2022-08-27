@@ -133,6 +133,11 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setText("<---------");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,6 +263,10 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         //altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);       pa cuando haya backend
         
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:

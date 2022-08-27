@@ -208,6 +208,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&lt;---------"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
