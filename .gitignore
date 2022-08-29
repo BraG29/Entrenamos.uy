@@ -19,11 +19,18 @@
 *.tar.gz
 *.rar
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of e2d4adc (Quitado de .form)
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
 /nbproject/private/
 /build/
 /dist/
+<<<<<<< HEAD
 /target/
+=======
+/nbbuild/
+>>>>>>> e5f37048bcdbf65106b61cacf918894b89b3256e

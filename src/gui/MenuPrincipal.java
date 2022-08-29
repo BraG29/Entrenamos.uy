@@ -19,6 +19,8 @@ public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private AltaUsuario menuAltaUsuario;
+        private AltaActividadDeportiva menuAltaActividad;
+        private ConsultaActividadDeportiva menuConsultaActividad;
 
 	/**
 	 * Launch the application.
@@ -74,10 +76,22 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnModoficarUsuario);
 		
 		JButton btnAltaActividad = new JButton("Alta de Actividad Deportiva");
+                btnAltaActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuAltaActividad = new AltaActividadDeportiva();
+				menuAltaActividad.setVisible(true);
+			}
+		});
 		btnAltaActividad.setBounds(12, 174, 298, 25);
 		contentPane.add(btnAltaActividad);
 		
 		JButton btnConsultaActividad = new JButton("Consulta de Actividad Deportiva");
+                btnConsultaActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuConsultaActividad = new ConsultaActividadDeportiva();
+				menuConsultaActividad.setVisible(true);
+			}
+		});
 		btnConsultaActividad.setBounds(12, 211, 298, 25);
 		contentPane.add(btnConsultaActividad);
 		
