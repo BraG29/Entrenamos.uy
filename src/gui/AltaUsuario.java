@@ -52,18 +52,18 @@ public class AltaUsuario extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AltaUsuario frame = new AltaUsuario();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					AltaUsuario frame = new AltaUsuario();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -307,7 +307,7 @@ public class AltaUsuario extends JFrame {
 						apellido = txtFieldApellido.getText();
 						email = txtEmail.getText();
 						fechaNac = LocalDate.of(
-								Integer.parseInt(txtFieldAnio.getText()), Integer.parseInt(cBoxMes.getSelectedItem().toString()),
+								Integer.parseInt(txtFieldAnio.getText()), cBoxMes.getSelectedIndex(),
 								Integer.parseInt(cBoxDia.getSelectedItem().toString()));
 						if(cBoxTipoUsr.getSelectedIndex() == 1) {
 							existe = sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac);
@@ -333,7 +333,6 @@ public class AltaUsuario extends JFrame {
 				}
 			}
 		});
-		
 	}
 	
 	private String[] getDias(int mes) {
