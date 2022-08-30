@@ -17,11 +17,12 @@ import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame {
 
-	private JPanel contentPane;
-	private AltaUsuario menuAltaUsuario;
+    private JPanel contentPane;
+    private AltaUsuario menuAltaUsuario;
     private AltaActividadDeportiva menuAltaActividad;
     private ConsultaActividadDeportiva menuConsultaActividad;
     private ModificarUsuario menuModificarUsuario;
+    private AltaClase menuAltaClase;
 
 	/**
 	 * Launch the application.
@@ -108,6 +109,12 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnConsultaActividad);
 		
 		JButton btnAltaClase = new JButton("Alta de dictado de Clase");
+                btnAltaClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuAltaClase = new AltaClase();
+				menuAltaClase.setVisible(true);
+			}
+		});
 		btnAltaClase.setBounds(12, 248, 298, 25);
 		contentPane.add(btnAltaClase);
 		
