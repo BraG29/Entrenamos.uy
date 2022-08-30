@@ -26,7 +26,7 @@ public class VentanaMensaje extends JFrame {
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
-//					VentanaMensaje frame = new VentanaMensaje("","",Color.BLACK);
+//					VentanaError frame = new VentanaError("Inserte nombre");
 //					frame.setVisible(true);
 //				} catch (Exception e) {
 //					e.printStackTrace();

@@ -18,18 +18,18 @@ public class RegistroDictadoClase extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					RegistroDictadoClase frame = new RegistroDictadoClase();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RegistroDictadoClase frame = new RegistroDictadoClase();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
