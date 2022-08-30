@@ -1,14 +1,11 @@
 package gui;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author progappvm
- */
+
+
+
 public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 
     /**
@@ -16,7 +13,38 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
      */
     public ConsultaActividadDeportiva() {
         initComponents();
+        
+        this.labelNombreAct.setVisible(false);
+        this.labelDesc.setVisible(false);
+        this.labelDuracion.setVisible(false);
+        this.labelCosto.setVisible(false);
+        this.labelFecha.setVisible(false);
+        this.comboLista.setVisible(false);
+        this.labelClases.setVisible(false);
+        
+        
+        String[] holiwi = new String[] {"-","holiwi","owo"}; //llamada a una función futura
+        
+        this.comboInsti.setModel(new DefaultComboBoxModel(holiwi));
+        
+        //int uwu = holiwi.length;
+        
+        /*for (int i = 0; i  < uwu ;i++){
+            this.comboInsti.addItem(holiwi[i]);
+        }*/
+                
+        
+        
     }
+    
+    /*public String[] prueba(){
+        String[] arrayString;
+        //while(){
+        
+        return arrayString;
+            
+        }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,26 +55,22 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        fieldInstiDepo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        comboInsti = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        comboLista = new javax.swing.JComboBox<>();
+        labelClases = new javax.swing.JLabel();
+        labelNombreAct = new javax.swing.JLabel();
+        labelDesc = new javax.swing.JLabel();
+        labelDuracion = new javax.swing.JLabel();
+        labelCosto = new javax.swing.JLabel();
+        labelFecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        fieldInstiDepo.setText("Escriba la institución deportiva");
-        fieldInstiDepo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fieldInstiDepoMouseClicked(evt);
-            }
-        });
-        fieldInstiDepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldInstiDepoActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Consulta de Actividad Deportiva");
@@ -89,23 +113,88 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             }
         });
 
+        comboInsti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboInstiActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Actividad Deportiva");
+
+        comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboListaActionPerformed(evt);
+            }
+        });
+
+        labelClases.setText("Clases/Cuponeras");
+
+        labelNombreAct.setText("jLabel5");
+        labelNombreAct.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                labelNombreActComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                labelNombreActComponentShown(evt);
+            }
+        });
+
+        labelDesc.setText("jLabel5");
+        labelDesc.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                labelDescComponentShown(evt);
+            }
+        });
+
+        labelDuracion.setText("jLabel5");
+        labelDuracion.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                labelDuracionComponentShown(evt);
+            }
+        });
+
+        labelCosto.setText("jLabel5");
+        labelCosto.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                labelCostoComponentShown(evt);
+            }
+        });
+
+        labelFecha.setText("jLabel5");
+        labelFecha.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                labelFechaComponentShown(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(fieldInstiDepo, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
-                                .addGap(52, 52, 52))
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(comboLista, javax.swing.GroupLayout.Alignment.LEADING, 0, 158, Short.MAX_VALUE)
+                                    .addComponent(comboInsti, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(labelClases)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(labelFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                .addComponent(labelCosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelDuracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelDesc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelNombreAct, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -115,25 +204,31 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel2)
-                .addGap(30, 30, 30)
-                .addComponent(fieldInstiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelClases))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelNombreAct)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelDesc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelDuracion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCosto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelFecha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jButton2))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fieldInstiDepoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldInstiDepoMouseClicked
-        if(fieldInstiDepo.getText().equals("Escriba la institución deportiva")){
-            fieldInstiDepo.setText("");
-        }
-    }//GEN-LAST:event_fieldInstiDepoMouseClicked
-
-    private void fieldInstiDepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldInstiDepoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldInstiDepoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -146,6 +241,63 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
+        int valSeleccionado = comboInsti.getSelectedIndex();
+//        System.out.println(valSeleccionado);
+        
+        if(valSeleccionado != 0){
+            //acá iria la función que consulta a la BdD por los datos de la Actividad Deportiva
+            this.comboLista.setVisible(true);
+            this.labelClases.setVisible(true);
+            
+        }else{
+            this.comboLista.setVisible(false);
+            this.labelClases.setVisible(false);
+        }
+        
+    }//GEN-LAST:event_comboInstiActionPerformed
+
+    private void comboListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListaActionPerformed
+                System.out.println(this.comboInsti.getSelectedIndex());
+        if(this.comboInsti.getSelectedIndex() != 0){
+            this.labelNombreAct.setVisible(true);
+            this.labelDesc.setVisible(true);
+            this.labelDuracion.setVisible(true);
+            this.labelCosto.setVisible(true);
+            this.labelFecha.setVisible(true);
+        }else{
+            this.labelNombreAct.setVisible(false);
+            this.labelDesc.setVisible(false);
+            this.labelDuracion.setVisible(false);
+            this.labelCosto.setVisible(false);
+            this.labelFecha.setVisible(false);
+    }
+    }//GEN-LAST:event_comboListaActionPerformed
+
+    private void labelNombreActComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelNombreActComponentHidden
+
+    }//GEN-LAST:event_labelNombreActComponentHidden
+
+    private void labelNombreActComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelNombreActComponentShown
+        this.labelNombreAct.setText("Nombre: ");
+    }//GEN-LAST:event_labelNombreActComponentShown
+
+    private void labelDescComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelDescComponentShown
+        this.labelDesc.setText("Descripción: ");
+    }//GEN-LAST:event_labelDescComponentShown
+
+    private void labelDuracionComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelDuracionComponentShown
+        this.labelDuracion.setText("Duración (mins): ");
+    }//GEN-LAST:event_labelDuracionComponentShown
+
+    private void labelCostoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelCostoComponentShown
+        this.labelCosto.setText("Costo: ");
+    }//GEN-LAST:event_labelCostoComponentShown
+
+    private void labelFechaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelFechaComponentShown
+        this.labelFecha.setText("Fecha de algo: ");
+    }//GEN-LAST:event_labelFechaComponentShown
 
     /**
      * @param args the command line arguments
@@ -177,17 +329,25 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConsultaActividadDeportiva().setVisible(true);
+                new ConsultaActividadDeportiva().setVisible(true);//FUNCA IGUAL VOS CONFIA
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField fieldInstiDepo;
+    private javax.swing.JComboBox<String> comboInsti;
+    private javax.swing.JComboBox<String> comboLista;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelClases;
+    private javax.swing.JLabel labelCosto;
+    private javax.swing.JLabel labelDesc;
+    private javax.swing.JLabel labelDuracion;
+    private javax.swing.JLabel labelFecha;
+    private javax.swing.JLabel labelNombreAct;
     // End of variables declaration//GEN-END:variables
 }
