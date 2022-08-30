@@ -154,7 +154,7 @@ public class AltaInstitucion extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				//NOMBRE ERROR
+				//NOMBRE ERROR.
 				
 				//NOMBRE
 				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseNombreInst.getText().equals("")){ 
