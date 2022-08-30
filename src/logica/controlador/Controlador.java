@@ -1,17 +1,15 @@
-package clases;
+package logica.controlador;
 
 import java.time.LocalDate;
 
 
 public class Controlador extends IControlador {
-	public boolean altaUsuario(
+	public void altaUsuario(
 			String nick, String nombre,String apellido,String email,LocalDate fechaNac) {
-		return true;
 	}
-	public boolean altaUsuario(
+	public void altaUsuario(
 			String nick, String nombre,String apellido,String email,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
-		return true;
 	}
 	public static Controlador getInstance() {
 		if(instance == null)
