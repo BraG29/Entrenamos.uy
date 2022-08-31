@@ -10,13 +10,13 @@ import java.time.LocalDate;
  * @author elinzar
  */
 public class DtCuponera {
-    private String nombreCup;
-    private String descripcion;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    private float descuento;
-    private LocalDate fechaAlta;
-    private int cantClases;
+    private final String nombreCup;
+    private final String descripcion;
+    private final LocalDate fechaInicio;
+    private final LocalDate fechaFin;
+    private final float descuento;
+    private final LocalDate fechaAlta;
+    private final int cantClases;
 
     public DtCuponera(String nombreCup, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, float descuento, LocalDate fechaAlta, int cantClases) {
         this.nombreCup = nombreCup;
