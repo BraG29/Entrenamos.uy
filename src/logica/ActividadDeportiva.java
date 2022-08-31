@@ -1,6 +1,9 @@
 package logica;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import logica.datatypes.DtActividadDeportiva;
+import java.util.ArrayList;
 
 
 public class ActividadDeportiva {
@@ -8,7 +11,8 @@ public class ActividadDeportiva {
     private String descripcion;
     private int duracion;//en minutos gente
     private float costo;
-    private LocalDate fechaRegistro;
+    private LocalDateTime fechaRegistro;
+    private HashMap clases = new HashMap<String,Clase>();
 
     
     
@@ -29,7 +33,7 @@ public class ActividadDeportiva {
         return costo;
     }
 
-    public LocalDate getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
@@ -50,11 +54,17 @@ public class ActividadDeportiva {
         this.costo = costo;
     }
 
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
     
     
-    
+    public DtActividadDeportiva getDTActividadDeportiva(){
+        ArrayList<String> strClases = new ArrayList<String>();
+        strClases.addAll(clases.keySet());
+        
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases);
+        return DtActi;
+    }
     
 }
