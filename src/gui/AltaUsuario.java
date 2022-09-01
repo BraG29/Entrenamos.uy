@@ -295,8 +295,8 @@ public class AltaUsuario extends JFrame {
 							apellido = txtFieldApellido.getText();
 							email = txtEmail.getText();
 							fechaNac = LocalDate.of(Integer.parseInt(txtFieldAnio.getText()),
-									Integer.parseInt(cBoxMes.getSelectedItem().toString()),
-									Integer.parseInt(cBoxDia.getSelectedItem().toString()));
+									cBoxMes.getSelectedIndex(),
+									cBoxDia.getSelectedIndex());
 							if (cBoxTipoUsr.getSelectedIndex() == 1) {
 								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac);
 							} else {
@@ -309,7 +309,7 @@ public class AltaUsuario extends JFrame {
 										descripcion, biografia, sitioWeb);
 							}
 							String mensajeConfirmacion = "Se ha dado de alta al usuario " + nickname + " en el sistema";
-							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.RED);
+							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 							showMensaje.setVisible(true);
 						}
 					}

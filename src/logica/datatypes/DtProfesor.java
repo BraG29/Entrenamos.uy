@@ -9,8 +9,8 @@ public class DtProfesor extends DtUsuario{
 	public final String descripcion;
 	public final String sitioWeb;
 	public DtProfesor(
-			String nickname, String email, String nombre, LocalDate fechaNac, String institucion, String biografia, String descripcion, String sitioWeb) {
-		super(nickname, email, nombre, fechaNac);
+			String nickname, String email, String nombre, String apellido, LocalDate fechaNac, String institucion, String biografia, String descripcion, String sitioWeb) {
+		super(nickname, email, nombre, apellido, fechaNac);
 		this.institucion = institucion;
 		this.biografia = biografia;
 		this.descripcion = descripcion;
