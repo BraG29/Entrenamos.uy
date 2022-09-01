@@ -23,8 +23,8 @@ public class AltaInstitucion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtIngreseNombreInst;
-	private JTextField txtIngreseUnaDescripcin;
-	private JTextField txtIngreseOPegue;
+	private JTextField txtIngreseDescripcion;
+	private JTextField txtIngreseURL;
 
 	/**
 	 * Launch the application.
@@ -86,20 +86,20 @@ public class AltaInstitucion extends JFrame {
 		lblDescripcion.setBounds(12, 81, 111, 15);
 		contentPane.add(lblDescripcion);
 		
-		txtIngreseUnaDescripcin = new JTextField();
+		txtIngreseDescripcion = new JTextField();
 		
-		txtIngreseUnaDescripcin.setForeground(Color.GRAY);
-		txtIngreseUnaDescripcin.setText("Ingrese una descripción");
-		txtIngreseUnaDescripcin.setColumns(10);
-		txtIngreseUnaDescripcin.setBounds(126, 79, 328, 19);
-		contentPane.add(txtIngreseUnaDescripcin);
+		txtIngreseDescripcion.setForeground(Color.GRAY);
+		txtIngreseDescripcion.setText("Ingrese una descripción");
+		txtIngreseDescripcion.setColumns(10);
+		txtIngreseDescripcion.setBounds(126, 79, 328, 19);
+		contentPane.add(txtIngreseDescripcion);
 		
-		txtIngreseUnaDescripcin.addKeyListener(new KeyAdapter() {
+		txtIngreseDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (txtIngreseUnaDescripcin.getText().equals("Ingrese una descripción")){ //si el texto es igual a eso
-					txtIngreseUnaDescripcin.setText(""); //dejo el campo vacio
-					txtIngreseUnaDescripcin.setForeground(Color.black);//color de la fuente en negro
+				if (txtIngreseDescripcion.getText().equals("Ingrese una descripción")){ //si el texto es igual a eso
+					txtIngreseDescripcion.setText(""); //dejo el campo vacio
+					txtIngreseDescripcion.setForeground(Color.black);//color de la fuente en negro
 				}
 			}
 		});
@@ -108,19 +108,19 @@ public class AltaInstitucion extends JFrame {
 		lblUrl.setBounds(66, 138, 56, 15);
 		contentPane.add(lblUrl);
 		
-		txtIngreseOPegue = new JTextField();
+		txtIngreseURL = new JTextField();
 	
-		txtIngreseOPegue.setForeground(Color.GRAY);
-		txtIngreseOPegue.setText("Ingrese o pegue una URL");
-		txtIngreseOPegue.setColumns(10);
-		txtIngreseOPegue.setBounds(126, 136, 328, 19);
-		contentPane.add(txtIngreseOPegue);
-		txtIngreseOPegue.addKeyListener(new KeyAdapter() {
+		txtIngreseURL.setForeground(Color.GRAY);
+		txtIngreseURL.setText("Ingrese o pegue una URL");
+		txtIngreseURL.setColumns(10);
+		txtIngreseURL.setBounds(126, 136, 328, 19);
+		contentPane.add(txtIngreseURL);
+		txtIngreseURL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtIngreseOPegue.getText().equals("Ingrese o pegue una URL"));
-				txtIngreseOPegue.setText("");
-				txtIngreseOPegue.setForeground(Color.black);
+				if(txtIngreseURL.getText().equals("Ingrese o pegue una URL"));
+				txtIngreseURL.setText("");
+				txtIngreseURL.setForeground(Color.black);
 			}
 		});
 		
@@ -139,14 +139,17 @@ public class AltaInstitucion extends JFrame {
 		JLabel lblErrorNombre = new JLabel("Por favor, ingrese un nombre.");
 		lblErrorNombre.setBounds(136, 52, 212, 15);
 		contentPane.add(lblErrorNombre);
+		lblErrorNombre.setVisible(false);
 		
 		JLabel lblErrorDesc = new JLabel("Por favor, ingrese una descripción.");
 		lblErrorDesc.setBounds(136, 110, 259, 15);
 		contentPane.add(lblErrorDesc);
+		lblErrorDesc.setVisible(false);
 		
 		JLabel lblErrorURL = new JLabel("Por favor, ingrese una URL.");
 		lblErrorURL.setBounds(136, 167, 212, 15);
 		contentPane.add(lblErrorURL);
+		lblErrorURL.setVisible(true);
 		
 		
 		JButton btnCrear = new JButton("Crear");
@@ -161,34 +164,36 @@ public class AltaInstitucion extends JFrame {
 					txtIngreseNombreInst.setForeground(Color.RED);
 					lblErrorNombre.setForeground(Color.RED);
 					txtIngreseNombreInst.setBorder(BorderFactory.createLineBorder(Color.RED));
+					lblErrorNombre.setVisible(true);
 					
 				}
 				//DESC
-				if (txtIngreseUnaDescripcin.getText().equals("Ingrese una descripción") || txtIngreseUnaDescripcin.getText().equals("")){ 
-					txtIngreseUnaDescripcin.setForeground(Color.RED);
+				if (txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseDescripcion.getText().equals("")){ 
+					txtIngreseDescripcion.setForeground(Color.RED);
 					lblErrorDesc.setForeground(Color.RED);
-					txtIngreseUnaDescripcin.setForeground(Color.RED);
+					txtIngreseDescripcion.setForeground(Color.RED);
+					lblErrorDesc.setVisible(true);
 
 				}
 				//URL
-				if(txtIngreseOPegue.getText().equals("Ingrese o pegue una URL") || txtIngreseOPegue.getText().equals("")) {
-					txtIngreseOPegue.setForeground(Color.RED);
+				if(txtIngreseURL.getText().equals("Ingrese o pegue una URL") || txtIngreseURL.getText().equals("")) {
+					txtIngreseURL.setForeground(Color.RED);
 					lblErrorURL.setForeground(Color.RED);
-					txtIngreseOPegue.setBorder(BorderFactory.createLineBorder(Color.RED));
+					txtIngreseURL.setBorder(BorderFactory.createLineBorder(Color.RED));
+					lblErrorURL.setVisible(true);
 				}
 			}
 		});
 		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String nombre = txtIngreseNombreInst.getText();
+				String descripcion = txtIngreseDescripcion.getText();
+				String URL = txtIngreseURL.getText();
+				//guardar datos,
 			}
 		});
 		btnCrear.setBounds(106, 228, 117, 25);
 		contentPane.add(btnCrear);
-		
-		
-		
-		
-		
 		
 		JLabel lblCamposObligatorios = new JLabel("* Campos obligatorios");
 		lblCamposObligatorios.setBounds(146, 201, 161, 15);

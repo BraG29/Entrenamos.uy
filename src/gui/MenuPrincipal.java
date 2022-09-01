@@ -19,9 +19,10 @@ public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private AltaUsuario menuAltaUsuario;
-        private AltaActividadDeportiva menuAltaActividad;
-        private ConsultaActividadDeportiva menuConsultaActividad;
-        private AltaInstitucion menuAltaInstitucion;
+    private AltaActividadDeportiva menuAltaActividad;
+    private ConsultaActividadDeportiva menuConsultaActividad;
+    private AltaInstitucion menuAltaInstitucion;
+    private ConsultaCuponeras menuCuponeras; //consulta cuponeras actividad deportiva
 
 	/**
 	 * Launch the application.
@@ -113,6 +114,12 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnCrearCuponera);
 		
 		JButton btnConsultaCuponera = new JButton("Consulta de Cuponeras");
+		btnConsultaCuponera.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuCuponeras = new ConsultaCuponeras();
+				menuCuponeras.setVisible(true);
+			}
+		});
 		btnConsultaCuponera.setBounds(326, 211, 298, 25);
 		contentPane.add(btnConsultaCuponera);
 		
