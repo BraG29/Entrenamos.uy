@@ -11,6 +11,10 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,13 +27,26 @@ public class MenuPrincipal extends JFrame {
     private ConsultaActividadDeportiva menuConsultaActividad;
     private AltaInstitucion menuAltaInstitucion;
     private ConsultaCuponeras menuCuponeras; //consulta cuponeras actividad deportiva
-    private AltaClase menuAltaClase;
     private ModificarUsuario menuModificarUsuario;
+    private AltaClase menuAltaClase;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			
+			em.getTransaction().begin();
+		}catch(Exception e) {
+			em.getTransaction().rollback();
+		}
+		
+		em.close();
+		emf.close();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
