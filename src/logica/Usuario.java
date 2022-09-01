@@ -1,17 +1,26 @@
 package logica;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import logica.datatypes.DtUsuario;
 import logica.datatypes.DtUsrKey;
 /**
  *
  * @author elinzar
  */
-public class Usuario {
+@Entity
+public class Usuario implements Serializable {
     
+	@Id
     protected String nickname;
+	@Id
     protected String email;
     protected String nombre;
+    protected String apellido;
     protected LocalDate fechaNac;
     
 // Getters and Setters----------------------------------------------------------
@@ -52,10 +61,11 @@ public class Usuario {
     public Usuario() {
 	}
     //Full constructor
-    public Usuario(String nickname, String email, String nombre, LocalDate fechaNac) {
+    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
         this.nickname = nickname;
         this.email = email;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.fechaNac = fechaNac;
         // Falta la imagen .png
     }
@@ -66,11 +76,9 @@ public class Usuario {
     }
     
     public DtUsuario getDatosUsr(){
-        DtUsuario output = new DtUsuario (this.nickname, this.email, this.nombre, this.fechaNac);
-        return output;
+        return null;
     }
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
-        DtUsuario output = new DtUsuario(this.nickname, this.email, this.nombre, this.fechaNac);
-        return output;
+        return null;
     }
 }
