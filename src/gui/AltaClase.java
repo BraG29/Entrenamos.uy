@@ -1,23 +1,33 @@
 package gui;
 
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 
 public class AltaClase extends javax.swing.JFrame {
 
+    
+     public LocalDateTime convertirALocalDateTime(Date dateAConvertir){
+        return dateAConvertir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+    
     /**
      * Creates new form AltaClase
      */
     public AltaClase() {
         initComponents();
         
-        this.labelFechaFin.setVisible(false);
+        //this.labelFechaFin.setVisible(false);
         this.labelFechaIni.setVisible(false);
         this.labelMMDDAA1.setVisible(false);
-        this.labelMMDDAA2.setVisible(false);
+        //this.labelMMDDAA2.setVisible(false);
         this.labelMax.setVisible(false);
         this.labelMin.setVisible(false);
         this.labelSocios.setVisible(false);
             
-        this.spinnerFechaFin.setVisible(false);
+        //this.spinnerFechaFin.setVisible(false);
         this.spinnerFechaIni.setVisible(false);
         this.spinnerMax.setVisible(false);
         this.spinnerMin.setVisible(false);
@@ -49,13 +59,10 @@ public class AltaClase extends javax.swing.JFrame {
         labelMin = new javax.swing.JLabel();
         labelMax = new javax.swing.JLabel();
         textURL = new javax.swing.JTextField();
-        spinnerFechaFin = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         botonAceptar = new javax.swing.JButton();
         labelMMDDAA1 = new javax.swing.JLabel();
-        labelMMDDAA2 = new javax.swing.JLabel();
         labelFechaIni = new javax.swing.JLabel();
-        labelFechaFin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,8 +134,6 @@ public class AltaClase extends javax.swing.JFrame {
             }
         });
 
-        spinnerFechaFin.setModel(new javax.swing.SpinnerDateModel());
-
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
 
         botonAceptar.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
@@ -159,11 +164,7 @@ public class AltaClase extends javax.swing.JFrame {
 
         labelMMDDAA1.setText("MM/DD/AA");
 
-        labelMMDDAA2.setText("MM/DD/AA");
-
         labelFechaIni.setText("fecha inicio");
-
-        labelFechaFin.setText("fecha fin");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,49 +173,40 @@ public class AltaClase extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textNombreProfe)
-                                    .addComponent(textURL))
-                                .addGap(25, 25, 25))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelSocios)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spinnerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMin)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMax))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(spinnerFechaFin, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(labelMMDDAA2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(labelFechaFin))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(labelMMDDAA1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(labelFechaIni))))
                                     .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel3))
-                                    .addComponent(textNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
+                                        .addComponent(jLabel3)))))
+                        .addGap(0, 48, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 6, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textURL)
+                            .addComponent(textNombreProfe, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelMMDDAA1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelFechaIni))
+                            .addComponent(textNombreClase)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelSocios)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(spinnerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelMin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelMax)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -228,28 +220,23 @@ public class AltaClase extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addComponent(textNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMMDDAA1)
                     .addComponent(labelFechaIni))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(spinnerFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelMMDDAA2)
-                    .addComponent(labelFechaFin))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(textNombreProfe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSocios)
                     .addComponent(spinnerMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMin)
                     .addComponent(labelMax))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(textURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jButton2))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -274,6 +261,32 @@ public class AltaClase extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAceptarMouseClicked
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+        String nombreInsti = comboInsti.getSelectedItem().toString();
+        String nombreClase = textNombreClase.getText();
+        LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
+        String nombreProfe = textNombreProfe.getText();
+        int sociosMin = ((Integer)spinnerMin.getValue());
+        int sociosMax = ((Integer)spinnerMax.getValue());
+        String URL = textURL.getText();
+        LocalDate fechaAlta = LocalDate.now();
+        
+        if(sociosMin > sociosMax){//control de valores Socios
+            VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", "Socios min no puede ser mayor a Socios max", java.awt.Color.RED);
+            ventanaError.setVisible(true);
+            return;
+            
+        }else{
+            if(nombreClase.equals("") || nombreProfe.equals("") || URL.equals("")){
+                VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", "Hay campos vacios sin rellenar", java.awt.Color.RED);
+                ventanaError.setVisible(true);
+                return;
+            }else{
+                
+                //llamo a la función de verda
+            }
+        }
+        
+        //LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
         
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -283,15 +296,15 @@ public class AltaClase extends javax.swing.JFrame {
 
     private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
         if(this.comboInsti.getSelectedIndex() != 0){
-            this.labelFechaFin.setVisible(true);
+            //this.labelFechaFin.setVisible(true);
             this.labelFechaIni.setVisible(true);
             this.labelMMDDAA1.setVisible(true);
-            this.labelMMDDAA2.setVisible(true);
+            //this.labelMMDDAA2.setVisible(true);
             this.labelMax.setVisible(true);
             this.labelMin.setVisible(true);
             this.labelSocios.setVisible(true);
             
-            this.spinnerFechaFin.setVisible(true);
+            //this.spinnerFechaFin.setVisible(true);
             this.spinnerFechaIni.setVisible(true);
             this.spinnerMax.setVisible(true);
             this.spinnerMin.setVisible(true);
@@ -300,15 +313,15 @@ public class AltaClase extends javax.swing.JFrame {
             this.textNombreProfe.setVisible(true);
             this.textURL.setVisible(true);
         }else{
-            this.labelFechaFin.setVisible(false);
+            //this.labelFechaFin.setVisible(false);
             this.labelFechaIni.setVisible(false);
             this.labelMMDDAA1.setVisible(false);
-            this.labelMMDDAA2.setVisible(false);
+            //this.labelMMDDAA2.setVisible(false);
             this.labelMax.setVisible(false);
             this.labelMin.setVisible(false);
             this.labelSocios.setVisible(false);
             
-            this.spinnerFechaFin.setVisible(false);
+            //this.spinnerFechaFin.setVisible(false);
             this.spinnerFechaIni.setVisible(false);
             this.spinnerMax.setVisible(false);
             this.spinnerMin.setVisible(false);
@@ -379,14 +392,11 @@ public class AltaClase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel labelFechaFin;
     private javax.swing.JLabel labelFechaIni;
     private javax.swing.JLabel labelMMDDAA1;
-    private javax.swing.JLabel labelMMDDAA2;
     private javax.swing.JLabel labelMax;
     private javax.swing.JLabel labelMin;
     private javax.swing.JLabel labelSocios;
-    private javax.swing.JSpinner spinnerFechaFin;
     private javax.swing.JSpinner spinnerFechaIni;
     private javax.swing.JSpinner spinnerMax;
     private javax.swing.JSpinner spinnerMin;
