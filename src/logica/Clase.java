@@ -15,35 +15,20 @@ public class Clase {
     //atributos calculados:
     private LocalTime horaFin;
     private int cantSocios;
-
-    
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
-        //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-    //FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!//FALTA CONSTRUCTOR, ANDA A TRABJAR MARTIN DALE!!!!!!!!!!!!!!
-
     
     
-    
-    
-    
-    
+    //Constructor, faltan los atributos calculados: horaFin y cantSocios.
+    public Clase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro) {
+        this.nombreClase = nombreClase;
+        this.fecha = fecha;
+        this.horaIni = horaIni;
+        this.cantMin = cantMin;
+        this.cantMax = cantMax;
+        this.claseURL = claseURL;
+        this.fechaRegistro = fechaRegistro;
+    }
+
+
     
     
     //Getters-------------------------------------------------------------------

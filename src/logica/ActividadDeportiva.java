@@ -67,4 +67,11 @@ public class ActividadDeportiva {
         return DtActi;
     }
     
+    public ArrayList<String> getNombreClases(){
+        ArrayList<String> nombreClases = new ArrayList<String>();
+        nombreClases.addAll(clases.keySet());
+        
+        return nombreClases;
+    }
+    
 }

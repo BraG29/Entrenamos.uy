@@ -41,9 +41,19 @@ public class Institucion {
     }
     
     
-    public String[] getActividadesDeportivas(){//placeholder
-        String[] ActiDepo = {"uwu"};
-        return ActiDepo;
+    public ArrayList<String> getActividadesDeportivas(){
+        ArrayList<String> ActividadesNom = new ArrayList<String>();
+        ActividadesNom.addAll(this.actividades.keySet()); 
+        return ActividadesNom;
+    }
+    
+    public ArrayList<String> getClases(String nomAC){
+        ArrayList<String> nombreClases = new ArrayList<String>();
+        
+        ActividadDeportiva ActiDepo = actividades.get(nomAC);
+        nombreClases.addAll(ActiDepo.getNombreClases());
+        
+        return nombreClases;
     }
     
     public DtInstitucion getDTInstitucion(){
