@@ -9,10 +9,10 @@ import logica.datatypes.DtUsrKey;
  */
 public class Usuario {
     
-    private String nickname;
-    private String email;
-    private String nombre;
-    private LocalDate fechaNac;
+    protected String nickname;
+    protected String email;
+    protected String nombre;
+    protected LocalDate fechaNac;
     
 // Getters and Setters----------------------------------------------------------
     public String getNickname() {
@@ -57,6 +57,7 @@ public class Usuario {
         this.email = email;
         this.nombre = nombre;
         this.fechaNac = fechaNac;
+        // Falta la imagen .png
     }
 //Methods-----------------------------------------------------------------------
     public DtUsrKey getKey(){
@@ -69,7 +70,7 @@ public class Usuario {
         return output;
     }
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
-        DtUsuario output = null;
+        DtUsuario output = new DtUsuario(this.nickname, this.email, this.nombre, this.fechaNac);
         return output;
     }
 }
