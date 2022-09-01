@@ -17,21 +17,14 @@ import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame {
 
-<<<<<<< HEAD
 	private JPanel contentPane;
 	private AltaUsuario menuAltaUsuario;
     private AltaActividadDeportiva menuAltaActividad;
     private ConsultaActividadDeportiva menuConsultaActividad;
     private AltaInstitucion menuAltaInstitucion;
     private ConsultaCuponeras menuCuponeras; //consulta cuponeras actividad deportiva
-=======
-    private JPanel contentPane;
-    private AltaUsuario menuAltaUsuario;
-    private AltaActividadDeportiva menuAltaActividad;
-    private ConsultaActividadDeportiva menuConsultaActividad;
-    private ModificarUsuario menuModificarUsuario;
     private AltaClase menuAltaClase;
->>>>>>> a71d1237704214ee4c6500ad32d8318c75683d35
+    private ModificarUsuario menuModificarUsuario;
 
 	/**
 	 * Launch the application.

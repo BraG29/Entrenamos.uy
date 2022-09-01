@@ -12,6 +12,7 @@ public class Usuario {
     protected String nickname;
     protected String email;
     protected String nombre;
+    protected String apellido;
     protected LocalDate fechaNac;
     
 // Getters and Setters----------------------------------------------------------
@@ -25,6 +26,14 @@ public class Usuario {
 
     public String getEmail() {
         return email;
+    }
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getApellido() {
+        return apellido;
     }
 
     public void setEmail(String email) {
@@ -56,6 +65,7 @@ public class Usuario {
         this.nickname = nickname;
         this.email = email;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.fechaNac = fechaNac;
         // Falta la imagen .png
     }
@@ -66,11 +76,11 @@ public class Usuario {
     }
     
     public DtUsuario getDatosUsr(){
-        DtUsuario output = new DtUsuario (this.nickname, this.email, this.nombre, this.fechaNac);
+        DtUsuario output = new DtUsuario (this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
         return output;
     }
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
-        DtUsuario output = new DtUsuario(this.nickname, this.email, this.nombre, this.fechaNac);
+        DtUsuario output = new DtUsuario(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
         return output;
     }
 }
