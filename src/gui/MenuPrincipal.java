@@ -17,12 +17,21 @@ import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame {
 
+<<<<<<< HEAD
 	private JPanel contentPane;
 	private AltaUsuario menuAltaUsuario;
     private AltaActividadDeportiva menuAltaActividad;
     private ConsultaActividadDeportiva menuConsultaActividad;
     private AltaInstitucion menuAltaInstitucion;
     private ConsultaCuponeras menuCuponeras; //consulta cuponeras actividad deportiva
+=======
+    private JPanel contentPane;
+    private AltaUsuario menuAltaUsuario;
+    private AltaActividadDeportiva menuAltaActividad;
+    private ConsultaActividadDeportiva menuConsultaActividad;
+    private ModificarUsuario menuModificarUsuario;
+    private AltaClase menuAltaClase;
+>>>>>>> a71d1237704214ee4c6500ad32d8318c75683d35
 
 	/**
 	 * Launch the application.
@@ -70,10 +79,21 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnAltaUsuario);
 		
 		JButton btnConsultaUsuario = new JButton("Consulta de Usuario");
+		btnConsultaUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnConsultaUsuario.setBounds(12, 100, 298, 25);
 		contentPane.add(btnConsultaUsuario);
 		
 		JButton btnModoficarUsuario = new JButton("Modificar Datos de Usuario");
+		btnModoficarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuModificarUsuario = new ModificarUsuario();
+				menuModificarUsuario.setVisible(true);
+			}
+		});
 		btnModoficarUsuario.setBounds(12, 137, 298, 25);
 		contentPane.add(btnModoficarUsuario);
 		
@@ -98,6 +118,12 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnConsultaActividad);
 		
 		JButton btnAltaClase = new JButton("Alta de dictado de Clase");
+                btnAltaClase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuAltaClase = new AltaClase();
+				menuAltaClase.setVisible(true);
+			}
+		});
 		btnAltaClase.setBounds(12, 248, 298, 25);
 		contentPane.add(btnAltaClase);
 		
@@ -128,12 +154,6 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnAgregarActividad);
 		
 		JButton btnAltaInstitucion = new JButton("Alta de Institución Deportiva");
-		btnAltaInstitucion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				menuAltaInstitucion = new AltaInstitucion();
-				menuAltaInstitucion.setVisible(true);
-			}
-		});
 		btnAltaInstitucion.setBounds(322, 248, 298, 25);
 		contentPane.add(btnAltaInstitucion);
 	}

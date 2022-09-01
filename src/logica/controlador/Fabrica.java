@@ -1,4 +1,4 @@
-package clases;
+package logica.controlador;
 
 public class Fabrica {
 	
