@@ -13,6 +13,7 @@ public class ActividadDeportiva {
     private float costo;
     private LocalDateTime fechaRegistro;
     private HashMap clases = new HashMap<String,Clase>();
+    private HashMap cuponeras = new HashMap<String,Cuponera>();
 
     
     
@@ -63,7 +64,10 @@ public class ActividadDeportiva {
         ArrayList<String> strClases = new ArrayList<String>();
         strClases.addAll(clases.keySet());
         
-        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases);
+        ArrayList<String> strCuponeras = new ArrayList<String>();
+        strCuponeras.addAll(cuponeras.keySet());
+        
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
         return DtActi;
     }
     
