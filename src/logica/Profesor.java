@@ -51,7 +51,7 @@ public class Profesor extends Usuario{
 //Methods-----------------------------------------------------------------------    
     @Override//child class implementation
     public DtUsuario getDatosCompletos(){
-        DtUsuario output = new DtProfesor(this.nickname, this.email, this.nombre, this.fechaNac, this.institucion, this.biografia, this.descripcion,this.sitioWeb);
+        DtUsuario output = new DtProfesor(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, this.institucion, this.biografia, this.descripcion,this.sitioWeb);
         return output;
     }
     
