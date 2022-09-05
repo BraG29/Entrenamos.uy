@@ -10,13 +10,15 @@ public class DtActividadDeportiva {
     public final float costo;
     public final LocalDateTime fechaRegistro;
     public final ArrayList<String> clases;
+    public final ArrayList<String> cuponeras;
     
-    public DtActividadDeportiva(String nomAct, String desc, int dura, float cost, LocalDateTime fecha, ArrayList<String> clase){
+    public DtActividadDeportiva(String nomAct, String desc, int dura, float cost, LocalDateTime fecha, ArrayList<String> clase, ArrayList<String> cupo){
         this.nombreAct = nomAct;
         this.descripcion = desc;
         this.duracion = dura;
         this.costo = cost;
         this.fechaRegistro = fecha; //checkear que esto se permita :7
         this.clases = clase;
+        this.cuponeras = cupo;
     }
 }

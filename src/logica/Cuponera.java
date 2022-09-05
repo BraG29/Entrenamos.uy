@@ -2,6 +2,8 @@ package logica;
 import logica.ActividadDeportiva;
 import logica.datatypes.DtCuponera;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +18,7 @@ public class Cuponera {
     private float descuento;
     private LocalDate fechaAlta;
     private int cantClases;
+    private HashMap actividades = new HashMap<String,ActividadDeportiva>();
     
 //Getters and Setters-----------------------------------------------------------
     public String getNombreCup() {
@@ -98,8 +101,11 @@ public class Cuponera {
     public void aniadirAD(ActividadDeportiva ad,int cantClases){
         
     }
-    public DtCuponera getData(){ 
-        DtCuponera output = new DtCuponera(this.nombreCup,this.descripcion,this.fechaInicio,this.fechaFin,this.descuento,this.fechaAlta,this.cantClases);
+    public DtCuponera getData(){
+        ArrayList<String> nomActis = new ArrayList<String>(); 
+        nomActis.addAll(this.actividades.keySet());
+        
+        DtCuponera output = new DtCuponera(this.nombreCup,this.descripcion,this.fechaInicio,this.fechaFin,this.descuento,this.fechaAlta,this.cantClases,nomActis);
         return output;
     }
     
