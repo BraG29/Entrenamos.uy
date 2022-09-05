@@ -27,5 +27,4 @@ public class DtCuponera {
         this.fechaAlta = fechaAlta;
         this.cantClases = cantClases;
     }
-   
 }
