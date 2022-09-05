@@ -28,7 +28,7 @@ public class MenuPrincipal extends JFrame {
     private AltaActividadDeportiva menuAltaActividad;//º4 alta actividad deportiva
     private ConsultaActividadDeportiva menuConsultaActividad; // º5 consulta de actividad deportiva
     private AltaClase menuAltaClase; // º6 alta dictado de clase
-    private ConsultaDistadoClase menuConsultaDictadoClase; // º7 consulta de dictado de clase
+    private ConsultaDictadoClase menuConsultaDictadoClase; // º7 consulta de dictado de clase
     private RegistroDictadoClase menuRegistroDictadoClase; // º8 Registro a dictado de clase
     private AltaCuponera menuAltaCuponera; // º9 Crear cuponera de actividades deportivas
     private AgregarActividadDeportivaCuponera menuAgregarActividad; //º10 Agregar actividad deportiva a cuponera    
@@ -147,7 +147,7 @@ public class MenuPrincipal extends JFrame {
 		JButton btnConsultaClase = new JButton("Consulta de dictado de Clase");
 		btnConsultaClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				menuConsultaDictadoClase = new ConsultaDistadoClase();
+				menuConsultaDictadoClase = new ConsultaDictadoClase();
 				menuConsultaDictadoClase.setVisible(true);
 			}
 		});
