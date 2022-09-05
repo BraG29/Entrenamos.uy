@@ -1,4 +1,4 @@
-package logica;
+package logica.usuario;
 
 import java.io.Serializable;
 import java.time.LocalDate;

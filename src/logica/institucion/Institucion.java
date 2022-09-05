@@ -1,7 +1,8 @@
-package logica;
+package logica.institucion;
 
 import java.util.HashMap;
 import logica.datatypes.DtInstitucion;
+
 import java.util.ArrayList;
 
 public class Institucion {

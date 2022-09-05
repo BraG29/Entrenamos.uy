@@ -1,4 +1,4 @@
-package logica;
+package logica.cuponera;
 import java.time.LocalDate;
 /**
  *
