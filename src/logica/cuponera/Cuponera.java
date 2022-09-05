@@ -1,6 +1,7 @@
-package logica;
-import logica.ActividadDeportiva;
+package logica.cuponera;
 import logica.datatypes.DtCuponera;
+import logica.institucion.ActividadDeportiva;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ArrayList;

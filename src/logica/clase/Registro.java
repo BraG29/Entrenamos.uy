@@ -1,6 +1,5 @@
-package logica;
+package logica.clase;
 import java.time.LocalDate;
-import logica.Clase;
 
 /**
  *

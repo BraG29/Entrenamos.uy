@@ -1,8 +1,7 @@
-package logica;
-import logica.Usuario;
-import logica.Institucion;
+package logica.usuario;
 import logica.datatypes.DtProfesor;
 import logica.datatypes.DtUsuario;
+import logica.institucion.Institucion;
 
 /**
  *

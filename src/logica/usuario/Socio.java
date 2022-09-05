@@ -1,4 +1,4 @@
-package logica;
+package logica.usuario;
 //import logica.Clase; not implemented
 //import logica.Registro; not implemented
 import java.time.LocalDate;
