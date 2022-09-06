@@ -1,19 +1,35 @@
 package logica.clase;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Clase {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Clase implements Serializable{
+	@Id
+	@Column(name="nombre")
     private String nombreClase;
+    
     private LocalDate fecha;
+    @Column(name="hora_inicio")
     private LocalTime horaIni;
+    @Column(name="cant_minima")
     private int cantMin;
+    @Column(name="cant_maxima")
     private int cantMax;
+    @Column(name="URL")
     private String claseURL;
+    @Column(name="fecha_registro")
     private LocalDate fechaRegistro;
     //atributos calculados:
+    @Column(name="hora_fin")
     private LocalTime horaFin;
+    @Column(name="cant_socios")
     private int cantSocios;
     
     

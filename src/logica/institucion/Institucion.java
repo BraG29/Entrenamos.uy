@@ -1,15 +1,36 @@
 package logica.institucion;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+
 import logica.datatypes.DtInstitucion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class Institucion {
+@Entity
+public class Institucion implements Serializable{
+	@Id
+	@Column(name="nombre")
     private String nombreInst;
     private String descripcion;
+    @Column(name="institucion_URL")
     private String instURL;  
-    private HashMap<String, ActividadDeportiva> actividades = new HashMap<>();
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Institucion_Actividad",
+	joinColumns = @JoinColumn(name="nom_institucion"),
+	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
+    private Collection<ActividadDeportiva> actividades;
 
     
     //Constructor por parametrOwO
@@ -44,22 +65,22 @@ public class Institucion {
     
     public ArrayList<String> getActividadesDeportivas(){
         ArrayList<String> ActividadesNom = new ArrayList<String>();
-        ActividadesNom.addAll(this.actividades.keySet()); 
+        //ActividadesNom.addAll(this.actividades.keySet()); 
         return ActividadesNom;
     }
     
     public ArrayList<String> getClases(String nomAC){
         ArrayList<String> nombreClases = new ArrayList<String>();
         
-        ActividadDeportiva ActiDepo = actividades.get(nomAC);
-        nombreClases.addAll(ActiDepo.getNombreClases());
+        //ActividadDeportiva ActiDepo = actividades.get(nomAC);
+        //nombreClases.addAll(ActiDepo.getNombreClases());
         
         return nombreClases;
     }
     
     public DtInstitucion getDTInstitucion(){
         ArrayList<String> ActividadesNom = new ArrayList<String>();
-        ActividadesNom.addAll(this.actividades.keySet()); 
+        //ActividadesNom.addAll(this.actividades.keySet()); 
         
         DtInstitucion DtInsti = new DtInstitucion(this.nombreInst, this.descripcion, this.instURL, ActividadesNom);
         return DtInsti;
