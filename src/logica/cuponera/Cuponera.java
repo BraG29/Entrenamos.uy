@@ -4,22 +4,41 @@ import logica.institucion.ActividadDeportiva;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
  * @author elinzar (Kevin Viera)
  */
+
+@Entity
 public class Cuponera {
 //Private Variables-------------------------------------------------------------
+	
+	@Id
+	@Column(name="nombre")
     private String nombreCup;
     private String descripcion;
+    @Column(name="fecha_inicio")
     private LocalDate fechaInicio;
+    @Column(name="fecha_fin")
     private LocalDate fechaFin;
     private float descuento;
+    @Column(name="fecha_alta")
     private LocalDate fechaAlta;
+    @Column(name="cant_clases")
     private int cantClases;
-    private HashMap actividades = new HashMap<String,ActividadDeportiva>();
+    
+    @ManyToMany(mappedBy = "cuponeras")
+    private Collection<ActividadDeportiva> actividades;
     
 //Getters and Setters-----------------------------------------------------------
     public String getNombreCup() {
@@ -104,7 +123,7 @@ public class Cuponera {
     }
     public DtCuponera getData(){
         ArrayList<String> nomActis = new ArrayList<String>(); 
-        nomActis.addAll(this.actividades.keySet());
+        //nomActis.addAll(this.actividades.keySet());
         
         DtCuponera output = new DtCuponera(this.nombreCup,this.descripcion,this.fechaInicio,this.fechaFin,this.descuento,this.fechaAlta,this.cantClases,nomActis);
         return output;

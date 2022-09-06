@@ -2,21 +2,48 @@ package logica.institucion;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
 import java.util.ArrayList;
+import java.util.Collection;
 
-
+@Entity
 public class ActividadDeportiva {
+	@Id
+	@Column(name="nombre")
     private String nombreAct;
     private String descripcion;
     private int duracion;//en minutos gente
     private float costo;
+    @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
-    private HashMap clases = new HashMap<String,Clase>();
-    private HashMap cuponeras = new HashMap<String,Cuponera>();
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Actividad_Cuponera",
+    	joinColumns = @JoinColumn(name="nom_actividad"),
+    	inverseJoinColumns = @JoinColumn(name="nom_cuponera"))
+    private Collection<Cuponera> cuponeras;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Actividad_Clase",
+		joinColumns = @JoinColumn(name="nom_actividad"),
+		inverseJoinColumns = @JoinColumn(name="nom_clase"))
+    private Collection<Clase> clases;
+    
+    
+    
 
     
     
@@ -65,10 +92,10 @@ public class ActividadDeportiva {
     
     public DtActividadDeportiva getDTActividadDeportiva(){
         ArrayList<String> strClases = new ArrayList<String>();
-        strClases.addAll(clases.keySet());
+        //strClases.addAll(clases.keySet());
         
         ArrayList<String> strCuponeras = new ArrayList<String>();
-        strCuponeras.addAll(cuponeras.keySet());
+        //strCuponeras.addAll(cuponeras.keySet());
         
         DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
         return DtActi;
@@ -76,7 +103,7 @@ public class ActividadDeportiva {
     
     public ArrayList<String> getNombreClases(){
         ArrayList<String> nombreClases = new ArrayList<String>();
-        nombreClases.addAll(clases.keySet());
+        //nombreClases.addAll(clases.keySet());
         
         return nombreClases;
     }

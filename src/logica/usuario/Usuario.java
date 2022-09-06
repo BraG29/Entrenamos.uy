@@ -3,8 +3,11 @@ package logica.usuario;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import logica.datatypes.DtUsuario;
 import logica.datatypes.DtUsrKey;
@@ -13,7 +16,8 @@ import logica.datatypes.DtUsrKey;
  * @author elinzar
  */
 @Entity
-public class Usuario implements Serializable {
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class Usuario implements Serializable {
     
 	@Id
     protected String nickname;
@@ -21,6 +25,7 @@ public class Usuario implements Serializable {
     protected String email;
     protected String nombre;
     protected String apellido;
+    @Column(name="fecha_nacimiento")
     protected LocalDate fechaNac;
     
 // Getters and Setters----------------------------------------------------------
