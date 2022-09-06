@@ -203,8 +203,7 @@ public class ConsultaCuponeras extends JFrame {
         btnCanclear.setBackground(Color.RED);
         btnCanclear.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		System.exit(0);
-        		//setVisible(false);
+        		setVisible(false);
         	}
         });
         

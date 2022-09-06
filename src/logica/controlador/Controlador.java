@@ -3,11 +3,18 @@ package logica.controlador;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import logica.datatypes.DtUsrKey;
 import logica.datatypes.*;
 
-
 public class Controlador extends IControlador {
+	
+	//EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+	//en menu  principal hay un ejemplo de instancia de entity manager
+	
+	
 	public void altaUsuario(
 			String nick, String nombre,String apellido,String email,LocalDate fechaNac) {
 	}

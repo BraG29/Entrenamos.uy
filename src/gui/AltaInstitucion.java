@@ -129,8 +129,7 @@ public class AltaInstitucion extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//setVisible(false);
-				System.exit(0);
+				setVisible(false);
 			}
 		});
 		btnCancelar.setBounds(250, 228, 117, 25);
