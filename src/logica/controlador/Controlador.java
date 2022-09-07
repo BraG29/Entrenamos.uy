@@ -3,10 +3,16 @@ package logica.controlador;
 import java.lang.management.GarbageCollectorMXBean;
 import java.sql.SQLException;
 import java.time.LocalDate;
+
+import logica.institucion.Institucion;
+
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
+
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
@@ -17,9 +23,11 @@ import logica.institucion.Institucion;
 import logica.usuario.Profesor;
 import logica.usuario.Socio;
 import logica.datatypes.*;
+import logica.institucion.Institucion;
 
 public class Controlador extends IControlador {
 	
+	String nombreCup;
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 	
@@ -103,7 +111,52 @@ public class Controlador extends IControlador {
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 	
+	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();;
+			Institucion inst = new Institucion(nombreInst, descripcion, URL);
+			inst.setNombreInst(nombreInst);
+			inst.setDescripcion(descripcion);
+			inst.setInstURL(URL);
+			em.persist(inst);
+			em.getTransaction().commit();
+		}
+		catch (Exception ex) {
+			if(em != null) {
+				em.getTransaction().rollback();				
+			}
+			ex.printStackTrace();
+		}
+		finally {
+			em.close();
+		}
+		
+	}
+	
 	private static Controlador instance;
 	private void Controlador(){
 	}
+
+        
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
+            
+            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
+            
+
+            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
+            EntityManager em = emf.createEntityManager();
+            Institucion insti = em.find(Institucion.class, nombreInsti);
+            
+            if(insti != null){
+                //hay que hacer try and catch
+                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+            }else{
+                System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+                //excepción de que insti no existe
+            }
+            
+        }
 }
