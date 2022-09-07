@@ -313,7 +313,7 @@ public class AltaUsuario extends JFrame {
 							showMensaje.setVisible(true);
 						}
 					}
-				} catch (IllegalArgumentException error) {
+				} catch (Exception error) {
 					showMensaje = new VentanaMensaje("ERROR", error.getMessage(), Color.RED);
 					showMensaje.setVisible(true);
 				}

@@ -40,18 +40,18 @@ public class MenuPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
-		EntityManager em = emf.createEntityManager();
-		
-		try {
-			
-			em.getTransaction().begin();
-		}catch(Exception e) {
-			em.getTransaction().rollback();
-		}
-		
-		em.close();
-		emf.close();
+//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+//		EntityManager em = emf.createEntityManager();
+//		
+//		try {
+//			
+//			em.getTransaction().begin();
+//		}catch(Exception e) {
+//			em.getTransaction().rollback();
+//		}
+//		
+//		em.close();
+//		emf.close();
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

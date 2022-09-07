@@ -1,4 +1,5 @@
 package logica.usuario;
+import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -32,11 +33,23 @@ public class Profesor extends Usuario{
     @JoinColumn(name="institucion")
     private Institucion institucion;
     
+    public Profesor(
+    		String nickname, String apellido, String email, String nombre, LocalDate fechaNac,
+    		String biografia, String descripcion, String sitioWeb, Institucion institucion) {
+    	super( nickname,  apellido,  email,  nombre, fechaNac);
+    	this.biografia = biografia;
+    	this.descripcion = descripcion;
+    	this.sitioWeb = sitioWeb;
+    	this.institucion = institucion;
+    }
     
+    
+    
+
 //Getters and Setters-----------------------------------------------------------    
+    
 
-
-    public String getBiografia() {
+	public String getBiografia() {
         return biografia;
     }
 
