@@ -19,6 +19,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
 
 public class AltaInstitucion extends JFrame {
 
@@ -49,7 +51,7 @@ public class AltaInstitucion extends JFrame {
 	public AltaInstitucion() {
 		setTitle("Alta institución deportiva");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 290);
+		setBounds(100, 100, 502, 335);
 		contentPane = new JPanel();
 		contentPane.addMouseListener(new MouseAdapter() {
 			@Override
@@ -125,7 +127,7 @@ public class AltaInstitucion extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(250, 228, 117, 25);
+		btnCancelar.setBounds(278, 273, 117, 25);
 		contentPane.add(btnCancelar);
 		
 		JLabel lblErrorNombre = new JLabel("Por favor, ingrese un nombre.");
@@ -143,6 +145,10 @@ public class AltaInstitucion extends JFrame {
 		contentPane.add(lblErrorURL);
 		lblErrorURL.setVisible(true);
 		
+		JLabel lblUsuarioCreadoCon = new JLabel("Usuario creado con exito!");
+		lblUsuarioCreadoCon.setVisible(false);
+		lblUsuarioCreadoCon.setBounds(136, 238, 192, 15);
+		contentPane.add(lblUsuarioCreadoCon);
 		
 		JButton btnCrear = new JButton("Crear");
 		btnCrear.addMouseListener(new MouseAdapter() {
@@ -151,47 +157,46 @@ public class AltaInstitucion extends JFrame {
 				IControlador controlador = fab.getInterface();
 				String nombreInst, descripcion, URL;
 		
+				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseURL.getText().equals("Ingrese o pegue una URL") ||  txtIngreseNombreInst.getText().equals("")){ 
+					
 				//NOMBRE
-				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseNombreInst.getText().equals("")){ 
 					txtIngreseNombreInst.setForeground(Color.RED);
 					lblErrorNombre.setForeground(Color.RED);
 					txtIngreseNombreInst.setBorder(BorderFactory.createLineBorder(Color.RED));
 					lblErrorNombre.setVisible(true);
 					
-				}
 				//DESC
-				if (txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseDescripcion.getText().equals("")){ 
 					txtIngreseDescripcion.setForeground(Color.RED);
 					lblErrorDesc.setForeground(Color.RED);
 					txtIngreseDescripcion.setForeground(Color.RED);
 					lblErrorDesc.setVisible(true);
 
-				}
 				//URL
-				if(txtIngreseURL.getText().equals("Ingrese o pegue una URL") || txtIngreseURL.getText().equals("")) {
 					txtIngreseURL.setForeground(Color.RED);
 					lblErrorURL.setForeground(Color.RED);
 					txtIngreseURL.setBorder(BorderFactory.createLineBorder(Color.RED));
 					lblErrorURL.setVisible(true);
 	
+				}else {
+					nombreInst = txtIngreseNombreInst.getText();
+					descripcion = txtIngreseDescripcion.getText();
+					URL = txtIngreseURL.getText();
+					
+					controlador.altaInstitucion(nombreInst, descripcion, URL);
+					
+					lblUsuarioCreadoCon.setForeground(Color.BLUE);
+					lblUsuarioCreadoCon.setVisible(true);							
 				}
-				
-				nombreInst = txtIngreseNombreInst.getText();
-				descripcion = txtIngreseDescripcion.getText();
-				URL = txtIngreseURL.getText();
-				
-				controlador.altaInstitucion(nombreInst, descripcion, URL);
 				
 			}
 		});
-		btnCrear.setBounds(106, 228, 117, 25);
+		btnCrear.setBounds(130, 273, 117, 25);
 		contentPane.add(btnCrear);
-		
-		
-		
 		
 		JLabel lblCamposObligatorios = new JLabel("* Campos obligatorios");
 		lblCamposObligatorios.setBounds(146, 201, 161, 15);
 		contentPane.add(lblCamposObligatorios);
+		
+		
 	}
 }
