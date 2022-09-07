@@ -6,20 +6,27 @@ import java.time.LocalDate;
 import logica.institucion.Institucion;
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+
+
 import javax.persistence.Persistence;
 
 import logica.datatypes.DtUsrKey;
 import logica.datatypes.*;
+import logica.institucion.Institucion;
 
 public class Controlador extends IControlador {
 	
 	String nombreCup;
 		
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+
+
+        EntityManager em = emf.createEntityManager();
+
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	
 	
@@ -87,6 +94,24 @@ public class Controlador extends IControlador {
 	private static Controlador instance;
 	private void Controlador(){
 	}
-	
-	
+
+        
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
+            
+            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
+            
+
+            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
+            
+            Institucion insti = em.find(Institucion.class, nombreInsti);
+            
+            if(insti != null){
+                //hay que hacer try and catch
+                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+            }else{
+                System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+                //excepción de que insti no existe
+            }
+            
+        }
 }
