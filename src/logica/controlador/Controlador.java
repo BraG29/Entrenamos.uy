@@ -1,9 +1,15 @@
 package logica.controlador;
 
+
 import java.time.LocalDate;
+
+import logica.institucion.Institucion;
+
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import logica.datatypes.DtUsrKey;
@@ -11,7 +17,9 @@ import logica.datatypes.*;
 
 public class Controlador extends IControlador {
 	
-	//EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+	String nombreCup;
+		
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	
 	
@@ -51,7 +59,34 @@ public class Controlador extends IControlador {
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 	
+	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
+		
+		EntityManager em = emf.createEntityManager();
+		
+		try {
+			em.getTransaction().begin();;
+			Institucion inst = new Institucion(nombreInst, descripcion, URL);
+			inst.setNombreInst(nombreInst);
+			inst.setDescripcion(descripcion);
+			inst.setInstURL(URL);
+			em.persist(inst);
+			em.getTransaction().commit();
+		}
+		catch (Exception ex) {
+			if(em != null) {
+				em.getTransaction().rollback();				
+			}
+			ex.printStackTrace();
+		}
+		finally {
+			em.close();
+		}
+		
+	}
+	
 	private static Controlador instance;
 	private void Controlador(){
 	}
+	
+	
 }

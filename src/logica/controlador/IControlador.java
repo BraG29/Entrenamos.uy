@@ -29,5 +29,8 @@ public class IControlador {
 			String nombre,String apellido,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
+	public void altaInstitucion(String nombreInst, String descripcion, String URL){
+		
+	}
 	
 }

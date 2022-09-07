@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import logica.controlador.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -63,17 +64,13 @@ public class AltaInstitucion extends JFrame {
 		JLabel lblNombre = new JLabel("(*) Nombre:");
 		lblNombre.setBounds(42, 23, 80, 15);
 		contentPane.add(lblNombre);
-		
 		txtIngreseNombreInst = new JTextField(); 
-	
 		txtIngreseNombreInst.setForeground(Color.GRAY);
 		txtIngreseNombreInst.setText("Ingrese nombre de institución");
 		txtIngreseNombreInst.setBounds(126, 21, 328, 19);
 		contentPane.add(txtIngreseNombreInst);
 		txtIngreseNombreInst.setColumns(10);
-
 		txtIngreseNombreInst.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyTyped(KeyEvent e) {
 				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución")){ //si el texto es igual a eso
 					txtIngreseNombreInst.setText(""); //dejo el campo vacio
@@ -82,20 +79,17 @@ public class AltaInstitucion extends JFrame {
 			}
 		});
 		
+		
 		JLabel lblDescripcion = new JLabel("(*) Descripcion:");
 		lblDescripcion.setBounds(12, 81, 111, 15);
-		contentPane.add(lblDescripcion);
-		
-		txtIngreseDescripcion = new JTextField();
-		
+		contentPane.add(lblDescripcion);	
+		txtIngreseDescripcion = new JTextField();	
 		txtIngreseDescripcion.setForeground(Color.GRAY);
 		txtIngreseDescripcion.setText("Ingrese una descripción");
 		txtIngreseDescripcion.setColumns(10);
 		txtIngreseDescripcion.setBounds(126, 79, 328, 19);
-		contentPane.add(txtIngreseDescripcion);
-		
+		contentPane.add(txtIngreseDescripcion);	
 		txtIngreseDescripcion.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyTyped(KeyEvent e) {
 				if (txtIngreseDescripcion.getText().equals("Ingrese una descripción")){ //si el texto es igual a eso
 					txtIngreseDescripcion.setText(""); //dejo el campo vacio
@@ -104,23 +98,22 @@ public class AltaInstitucion extends JFrame {
 			}
 		});
 		
+		
 		JLabel lblUrl = new JLabel("(*)  URL:");
 		lblUrl.setBounds(66, 138, 56, 15);
-		contentPane.add(lblUrl);
-		
+		contentPane.add(lblUrl);	
 		txtIngreseURL = new JTextField();
-	
 		txtIngreseURL.setForeground(Color.GRAY);
-		txtIngreseURL.setText("Ingrese o pegue una URL");
+		txtIngreseURL.setText("Ingrese una URL");
 		txtIngreseURL.setColumns(10);
 		txtIngreseURL.setBounds(126, 136, 328, 19);
 		contentPane.add(txtIngreseURL);
 		txtIngreseURL.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtIngreseURL.getText().equals("Ingrese o pegue una URL"));
-				txtIngreseURL.setText("");
-				txtIngreseURL.setForeground(Color.black);
+				if(txtIngreseURL.getText().equals("Ingrese una URL")) {
+					txtIngreseURL.setText("");
+					txtIngreseURL.setForeground(Color.black);
+				}
 			}
 		});
 		
@@ -153,11 +146,11 @@ public class AltaInstitucion extends JFrame {
 		
 		JButton btnCrear = new JButton("Crear");
 		btnCrear.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				//NOMBRE ERROR.
-				
+				Fabrica fab = new Fabrica();
+				IControlador controlador = fab.getInterface();
+				String nombreInst, descripcion, URL;
+		
 				//NOMBRE
 				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseNombreInst.getText().equals("")){ 
 					txtIngreseNombreInst.setForeground(Color.RED);
@@ -180,19 +173,22 @@ public class AltaInstitucion extends JFrame {
 					lblErrorURL.setForeground(Color.RED);
 					txtIngreseURL.setBorder(BorderFactory.createLineBorder(Color.RED));
 					lblErrorURL.setVisible(true);
+	
 				}
-			}
-		});
-		btnCrear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombre = txtIngreseNombreInst.getText();
-				String descripcion = txtIngreseDescripcion.getText();
-				String URL = txtIngreseURL.getText();
-				//guardar datos,
+				
+				nombreInst = txtIngreseNombreInst.getText();
+				descripcion = txtIngreseDescripcion.getText();
+				URL = txtIngreseURL.getText();
+				
+				controlador.altaInstitucion(nombreInst, descripcion, URL);
+				
 			}
 		});
 		btnCrear.setBounds(106, 228, 117, 25);
 		contentPane.add(btnCrear);
+		
+		
+		
 		
 		JLabel lblCamposObligatorios = new JLabel("* Campos obligatorios");
 		lblCamposObligatorios.setBounds(146, 201, 161, 15);

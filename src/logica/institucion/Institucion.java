@@ -33,7 +33,7 @@ public class Institucion implements Serializable{
     private Collection<ActividadDeportiva> actividades;
 
     
-    //Constructor por parametrOwO
+    //Constructor por parametro
     public Institucion(String nombreInst, String descripcion, String instURL) {
         this.nombreInst = nombreInst;
         this.descripcion = descripcion;
