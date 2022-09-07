@@ -1,6 +1,7 @@
 package logica.controlador;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import logica.datatypes.*;
@@ -29,5 +30,8 @@ public class IControlador {
 			String nombre,String apellido,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
+        
+         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){         
+        }
 	
 }

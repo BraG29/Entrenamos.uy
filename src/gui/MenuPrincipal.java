@@ -18,13 +18,18 @@ import javax.persistence.Persistence;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+//import logica.controlador.IControlador;
+//import logica.controlador.Fabrica;
 
 public class MenuPrincipal extends JFrame {
+    
+//    Fabrica fab = new Fabrica();
+//    IControlador controlador = fab.getInterface();
 
-	private JPanel contentPane;
-	private AltaUsuario menuAltaUsuario; //º1 alta usuario
-	private ConsultaUsuario menuConsultaUsuario; //º2 consulta usuario
-	private ModificarUsuario menuModificarUsuario; // º3 modificar datos usuario
+    private JPanel contentPane;
+    private AltaUsuario menuAltaUsuario; //º1 alta usuario
+    private ConsultaUsuario menuConsultaUsuario; //º2 consulta usuario
+    private ModificarUsuario menuModificarUsuario; // º3 modificar datos usuario
     private AltaActividadDeportiva menuAltaActividad;//º4 alta actividad deportiva
     private ConsultaActividadDeportiva menuConsultaActividad; // º5 consulta de actividad deportiva
     private AltaClase menuAltaClase; // º6 alta dictado de clase
@@ -40,19 +45,19 @@ public class MenuPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
-		EntityManager em = emf.createEntityManager();
-		
-		try {
-			
-			em.getTransaction().begin();
-		}catch(Exception e) {
-			em.getTransaction().rollback();
-		}
-		
-		em.close();
-		emf.close();
-		
+//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+//		EntityManager em = emf.createEntityManager();
+//		
+//		try {
+//			
+//			em.getTransaction().begin();
+//		}catch(Exception e) {
+//			em.getTransaction().rollback();
+//		}
+//		
+//		em.close();
+//		emf.close();
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

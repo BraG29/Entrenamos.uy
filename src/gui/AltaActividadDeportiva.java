@@ -3,6 +3,8 @@ package gui;
 import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import logica.controlador.IControlador;
+import logica.controlador.Fabrica;
 
 public class AltaActividadDeportiva extends javax.swing.JFrame {
 
@@ -14,8 +16,19 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
      * Creates new form AltaActividadDeportiva
      */
     public AltaActividadDeportiva() {
+//        Fabrica fab = new Fabrica();
+//        IControlador controlador = fab.getInterface();
+        
         initComponents();
     }
+    
+//     public AltaActividadDeportiva(IControlador controlador) {
+////        Fabrica fab = new Fabrica();
+////        IControlador controlador = fab.getInterface();
+//        
+//        initComponents();
+//    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,16 +256,23 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         
         try{
             float dura = Float.parseFloat(fieldDuracion.getText());
+            
+            float costo = Float.parseFloat(spinnerCosto.getValue().toString());
+            LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
+        //System.out.println(fechaAlta);
+        
+            Fabrica fab = new Fabrica();
+            IControlador controlador =  fab.getInterface();
+        
+            controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
+        
         }catch(Exception e){
             VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","caracteres invalidos en campo Duracion",java.awt.Color.RED);
             errorVentana.setVisible(true);
             return;
         }
         
-        LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
-        //System.out.println(fechaAlta);
-        
-        //altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);       pa cuando haya backend
+         
         
     }//GEN-LAST:event_jButton1MouseClicked
 
