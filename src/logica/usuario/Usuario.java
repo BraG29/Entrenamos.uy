@@ -20,8 +20,10 @@ import logica.datatypes.DtUsrKey;
 public abstract class Usuario implements Serializable {
     
 	@Id
+	@Column(unique = true)
     protected String nickname;
 	@Id
+	@Column(unique = true)
     protected String email;
     protected String nombre;
     protected String apellido;

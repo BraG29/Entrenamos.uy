@@ -18,7 +18,7 @@ import java.util.Collection;
  *
  * @author elinzar (Kevin Viera)
  */
-
+//Comentario para hacer push :v
 @Entity
 public class Cuponera {
 //Private Variables-------------------------------------------------------------

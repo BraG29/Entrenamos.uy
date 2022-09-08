@@ -25,7 +25,7 @@ public class ActividadDeportiva {
 	@Column(name="nombre")
     private String nombreAct;
     private String descripcion;
-    private int duracion;//en minutos gente
+    private float duracion;//en minutos gente
     private float costo;
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
@@ -41,6 +41,16 @@ public class ActividadDeportiva {
 		joinColumns = @JoinColumn(name="nom_actividad"),
 		inverseJoinColumns = @JoinColumn(name="nom_clase"))
     private Collection<Clase> clases;
+
+    
+    
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro) {
+        this.nombreAct = nombreAct;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.costo = costo;
+        this.fechaRegistro = fechaRegistro;
+    }
     
     
     
@@ -56,7 +66,7 @@ public class ActividadDeportiva {
         return descripcion;
     }
 
-    public int getDuracion() {
+    public float getDuracion() {
         return duracion;
     }
 

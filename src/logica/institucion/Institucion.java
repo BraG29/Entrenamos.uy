@@ -11,9 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,13 +40,22 @@ public class Institucion implements Serializable{
     private Collection<ActividadDeportiva> actividades;
 
     
-    //Constructor por parametrOwO
+    //Constructor por parametro
     public Institucion(String nombreInst, String descripcion, String instURL) {
         this.nombreInst = nombreInst;
         this.descripcion = descripcion;
         this.instURL = instURL;
     }
+    
+    public Institucion(Institucion insti){
+        this.nombreInst = insti.getNombreInst();
+        this.descripcion = insti.getDescripcion();
+        this.instURL = insti.getInstURL();
+    }
 
+      public Institucion() {
+    }
+    
     //Setters-----------------------------------------------------------------
     public void setNombreInst(String nombreInst) {
         this.nombreInst = nombreInst;
@@ -84,6 +100,27 @@ public class Institucion implements Serializable{
         
         DtInstitucion DtInsti = new DtInstitucion(this.nombreInst, this.descripcion, this.instURL, ActividadesNom);
         return DtInsti;
+    }
+    
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, EntityManagerFactory emf){
+        EntityManager em = emf.createEntityManager();
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+        
+        if(acti == null){
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta);
+            
+            //arranco la transaccion
+            EntityTransaction transaccion = em.getTransaction();
+            transaccion.begin();
+            em.persist(acti);
+            transaccion.commit(); 
+            em.close();
+            emf.close();
+            //termina la transaccion
+            
+        }else{//acti existe
+            //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
+        }
     }
     
     

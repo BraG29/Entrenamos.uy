@@ -46,9 +46,24 @@ public class Socio extends Usuario {
 	private Collection<CompraCuponera> compra;
 	
 	
+	
 	//methods-----------------------------------------------------------------------   
 
-    public void registrarAClase(Clase c, LocalDate fecha){
+    public Socio() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
+		super(nickname, apellido, email, nombre, fechaNac);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public void registrarAClase(Clase c, LocalDate fecha){
         //needs implementation
     }
     
