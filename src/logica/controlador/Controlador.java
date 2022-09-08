@@ -152,9 +152,15 @@ public class Controlador extends IControlador {
             
             if(insti != null){
                 //hay que hacer try and catch
-                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+                try{
+                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+                }catch(Exception e){
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+                
             }else{
-                System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+                throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
+                //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
                 //excepción de que insti no existe
             }
             
