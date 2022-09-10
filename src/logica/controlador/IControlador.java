@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import logica.datatypes.*;
 
+import logica.datatypes.DtCuponera;
+
 public class IControlador {
 
 	public void altaUsuario(
@@ -30,7 +32,19 @@ public class IControlador {
 			String nombre,String apellido,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
-
+	
+	
+	//CU Consulta de cuponeras de actividades deportivas
+	public ArrayList<String> listaCuponerasRegistradas() {
+		return null;
+	}
+	
+	public DtCuponera seleccionCuponera(String nombreCup) {
+		return null;
+	}
+	
+	
+	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL){
 		
 	}

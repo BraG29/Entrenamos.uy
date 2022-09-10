@@ -18,7 +18,6 @@ import javax.persistence.PersistenceException;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
-import logica.datatypes.DtUsrKey;
 import logica.institucion.Institucion;
 import logica.usuario.Profesor;
 import logica.usuario.Socio;
@@ -111,9 +110,32 @@ public class Controlador extends IControlador {
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 	
+	//CU Consulta de cuponeras de actividades deportivas
+	public ArrayList<String> listaCuponerasRegistradas() {
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		
+		//iterar en cuponeras
+		//obtener nombre
+		//devolver lista
+		return null;
+	}
+	
+	public DtCuponera seleccionCuponera(String nombreCup) {
+		
+		//encontrar cuponera
+		//obtener datos
+		//iterar en actividades
+		//obtener nombre
+		//devolver resultado(datos)
+		return null;
+	}
+	
+	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 		
 		EntityManager em = emf.createEntityManager();
+		
+		//controlar si existe.
 		
 		try {
 			em.getTransaction().begin();;

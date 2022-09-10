@@ -145,9 +145,9 @@ public class AltaInstitucion extends JFrame {
 		contentPane.add(lblErrorURL);
 		lblErrorURL.setVisible(true);
 		
-		JLabel lblUsuarioCreadoCon = new JLabel("Usuario creado con exito!");
+		JLabel lblUsuarioCreadoCon = new JLabel("Institución creado con exito!");
 		lblUsuarioCreadoCon.setVisible(false);
-		lblUsuarioCreadoCon.setBounds(136, 238, 192, 15);
+		lblUsuarioCreadoCon.setBounds(136, 238, 226, 15);
 		contentPane.add(lblUsuarioCreadoCon);
 		
 		JButton btnCrear = new JButton("Crear");
@@ -156,7 +156,8 @@ public class AltaInstitucion extends JFrame {
 				Fabrica fab = new Fabrica();
 				IControlador controlador = fab.getInterface();
 				String nombreInst, descripcion, URL;
-		
+				
+				//arreglar
 				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseURL.getText().equals("Ingrese o pegue una URL") ||  txtIngreseNombreInst.getText().equals("")){ 
 					
 				//NOMBRE
