@@ -115,11 +115,12 @@ public class Institucion implements Serializable{
             em.persist(acti);
             transaccion.commit(); 
             em.close();
-            emf.close();
+            //emf.close();
             //termina la transaccion
             
         }else{//acti existe
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
+            throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
     }
     

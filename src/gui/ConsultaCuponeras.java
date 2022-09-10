@@ -154,6 +154,7 @@ public class ConsultaCuponeras extends JFrame {
 	    		}
 	    	}
 	    });
+	    
 	       
         JLabel lblSeleccioneUnaActividad = new JLabel("Seleccione una actividad:");
         lblSeleccioneUnaActividad.setBounds(63, 22, 180, 15);

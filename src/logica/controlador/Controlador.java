@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,7 +24,6 @@ import org.hibernate.mapping.List;
 import com.mysql.cj.Query;
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
-import logica.datatypes.DtUsrKey;
 import logica.institucion.Institucion;
 import logica.usuario.Profesor;
 import logica.usuario.Socio;
@@ -40,11 +38,9 @@ public class Controlador extends IControlador {
 	private Usuario uRecordado;
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
-	
-	
-	public void altaUsuario(
-			String nick, String nombre,String apellido,String email,LocalDate fechaNac) {
-		
+
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -53,50 +49,50 @@ public class Controlador extends IControlador {
 			em.flush();
 			em.getTransaction().commit();
 			System.out.println("Usuario creado");
-		}catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			em.getTransaction().rollback();
-			SQLException eSQL = (SQLException)e.getCause().getCause();
-			if(eSQL.getErrorCode() == 1062) {
+			SQLException eSQL = (SQLException) e.getCause().getCause();
+			if (eSQL.getErrorCode() == 1062) {
 				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
-			}else {
+			} else {
 				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
 			}
 		}
 		em.close();
 	}
-	
-	
-	public void altaUsuario(
-			String nick, String nombre,String apellido,String email,LocalDate fechaNac,
+
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			Institucion i = em.find(Institucion.class, institucion);
-			if(i==null) {
+			if (i == null) {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			em.getTransaction().begin();
-			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion,sitioWeb, i);
+			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
 			em.persist(p);
 			em.flush();
 			em.getTransaction().commit();
 			System.out.println("Usuario creado");
-		}catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			em.getTransaction().rollback();
-			SQLException eSQL = (SQLException)e.getCause().getCause();
-			if(eSQL.getErrorCode() == 1062) {
+			SQLException eSQL = (SQLException) e.getCause().getCause();
+			if (eSQL.getErrorCode() == 1062) {
 				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
-			}else {
+			} else {
 				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
 			}
 		}
 		em.close();
 	}
+
 	public static Controlador getInstance() {
-		if(instance == null)
+		if (instance == null)
 			instance = new Controlador();
 		return instance;
 	}
+
 	public ArrayList<DtUsrKey> listarUsuarios() {
 		EntityManager em = emf.createEntityManager();
 		ArrayList listUsuarios = new ArrayList<DtUsrKey>();
@@ -128,7 +124,7 @@ public class Controlador extends IControlador {
 		em.close();
 		return listUsuarios;
 	}
-	
+
 	public DtUsuario getDatosUsuario(DtUsrKey usrKey) {
 		EntityManager em = emf.createEntityManager();
 		Usuario u = null;
@@ -151,7 +147,10 @@ public class Controlador extends IControlador {
 			return dtS;
 		}
 	}
-	
+
+
+
+
 	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac) {
 		EntityManager em = emf.createEntityManager();
 		try {
@@ -198,37 +197,89 @@ public class Controlador extends IControlador {
 		}catch(PersistenceException e) {
 			em.getTransaction().rollback();
 		}
+
+	}
+	//CU Consulta de cuponeras de actividades deportivas
+	public ArrayList<String> listaCuponerasRegistradas() {
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		
+		//iterar en cuponeras
+		//obtener nombre
+		//devolver lista
+		return null;
 	}
 	
+	public DtCuponera seleccionCuponera(String nombreCup) {
+		
+		//encontrar cuponera
+		//obtener datos
+		//iterar en actividades
+		//obtener nombre
+		//devolver resultado(datos)
+		return null;
+	}
+	
+	//CU alta institucion deportiva
+
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
-		
+
 		EntityManager em = emf.createEntityManager();
+
 		
+		//controlar si existe.
+
 		try {
-			em.getTransaction().begin();;
+			em.getTransaction().begin();
 			Institucion inst = new Institucion(nombreInst, descripcion, URL);
 			inst.setNombreInst(nombreInst);
 			inst.setDescripcion(descripcion);
 			inst.setInstURL(URL);
 			em.persist(inst);
 			em.getTransaction().commit();
-		}
-		catch (Exception ex) {
-			if(em != null) {
-				em.getTransaction().rollback();				
+		} catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
 			}
 			ex.printStackTrace();
-		}
-		finally {
+		} finally {
 			em.close();
 		}
-		
-	}
-	
-	private static Controlador instance;
-	private void Controlador(){
+
 	}
 
+	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime fechaIni, LocalDateTime fechaFin,
+			float descuento) {
+
+		EntityManager em = emf.createEntityManager();
+		LocalDateTime fechaAlta = LocalDateTime.now();
+
+		try {
+			em.getTransaction().begin();
+			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
+			nuevaCuponera.setNombreCup(nombreCup);
+			nuevaCuponera.setDescripcion(descripcion);
+			nuevaCuponera.setFechaInicio(fechaIni);
+			nuevaCuponera.setFechaFin(fechaFin);
+			nuevaCuponera.setDescuento(descuento);
+			nuevaCuponera.setFechaAlta(fechaAlta);
+			nuevaCuponera.setCantClases(0);
+			em.persist(nuevaCuponera);
+			em.getTransaction().commit();
+		} catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
+
+	}
+
+	private static Controlador instance;
+
+	private void Controlador() {
+	}
         
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
             
@@ -241,9 +292,15 @@ public class Controlador extends IControlador {
             
             if(insti != null){
                 //hay que hacer try and catch
-                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+                try{
+                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+                }catch(Exception e){
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+                
             }else{
-                System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+                throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
+                //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
                 //excepción de que insti no existe
             }
             
