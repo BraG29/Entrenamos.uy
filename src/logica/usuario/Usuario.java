@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -17,7 +18,7 @@ import logica.datatypes.DtUsrKey;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Usuario implements Serializable {
+public class Usuario implements Serializable {
     
 	@Id
 	@Column(unique = true)
@@ -63,7 +64,15 @@ public abstract class Usuario implements Serializable {
         this.fechaNac = fechaNac;
     }
     	
-//Constructors------------------------------------------------------------------
+    public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	//Constructors------------------------------------------------------------------
     //Empty constructor
     public Usuario() {
 	}
@@ -76,15 +85,17 @@ public abstract class Usuario implements Serializable {
         this.fechaNac = fechaNac;
         // Falta la imagen .png
     }
-//Methods-----------------------------------------------------------------------
+    public Usuario(String nickname, String email) {
+		this.nickname = nickname;
+		this.email = email;
+	}
+
+	//Methods-----------------------------------------------------------------------
     public DtUsrKey getKey(){
         DtUsrKey output = new DtUsrKey(this.nickname,this.email);
         return output;
     }
     
-    public DtUsuario getDatosUsr(){
-        return null;
-    }
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
         return null;
     }

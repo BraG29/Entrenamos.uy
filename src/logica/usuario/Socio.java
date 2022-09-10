@@ -27,6 +27,8 @@ import javax.persistence.Table;
 import logica.clase.Clase;
 import logica.clase.Registro;
 import logica.cuponera.CompraCuponera;
+import logica.datatypes.DtSocio;
+import logica.datatypes.DtUsuario;
 /**
  *
  * @author elinzar
@@ -61,7 +63,11 @@ public class Socio extends Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	public DtUsuario getDatosSocio() {
+		DtUsuario dtS = new DtSocio(
+				this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
+		return dtS;
+	}
 
 	public void registrarAClase(Clase c, LocalDate fecha){
         //needs implementation
