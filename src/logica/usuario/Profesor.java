@@ -3,12 +3,19 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.property.access.internal.PropertyAccessMapImpl.GetterImpl;
+
+import com.mysql.cj.Query;
 
 import logica.clase.Clase;
 import logica.datatypes.DtProfesor;
@@ -24,6 +31,8 @@ public class Profesor extends Usuario{
 //Variables---------------------------------------------------------------------
     public String biografia;
     public String descripcion;
+    
+    @Column(name="sitio_web")
     public String sitioWeb;
     
     @OneToMany(cascade = CascadeType.ALL)
@@ -33,6 +42,9 @@ public class Profesor extends Usuario{
     @JoinColumn(name="institucion")
     private Institucion institucion;
     
+    public Profesor() {
+    	
+    }
     public Profesor(
     		String nickname, String apellido, String email, String nombre, LocalDate fechaNac,
     		String biografia, String descripcion, String sitioWeb, Institucion institucion) {
@@ -79,6 +91,16 @@ public class Profesor extends Usuario{
         //DtUsuario output = new DtProfesor(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, this.institucion, this.biografia, this.descripcion,this.sitioWeb);
         //return output;
     	return null;
+    }
+    
+    public DtUsuario getDatosProfe(EntityManagerFactory emf){ 
+        EntityManager em = emf.createEntityManager();
+    	java.util.List l = em.createQuery("SELECT institucion FROM Profesor where nickname='"+this.nickname+"'").getResultList();
+    	Institucion i = (Institucion) l.get(0);
+    	DtUsuario dtP = new DtProfesor(
+        		this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, i.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
+    	return dtP;
+
     }
     
 }
