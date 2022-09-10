@@ -254,23 +254,33 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         String nombreInsti = fieldInstiDepo.getText();
         String desc = fieldDesc.getText();
         
-        try{
+        try{//se intenta parsear el float
             float dura = Float.parseFloat(fieldDuracion.getText());
             
             float costo = Float.parseFloat(spinnerCosto.getValue().toString());
             LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
-        //System.out.println(fechaAlta);
         
             Fabrica fab = new Fabrica();
             IControlador controlador =  fab.getInterface();
-        
-            controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
-        
-        }catch(Exception e){
+            
+            try{//se intenta persistir los datos
+                controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
+                
+            }catch(Exception e){//algo malió sal en la persistición
+                VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
+                errorVentana.setVisible(true);
+                return;
+            }
+            
+        }catch(Exception e){//fallo el parseo del float
             VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","caracteres invalidos en campo Duracion",java.awt.Color.RED);
             errorVentana.setVisible(true);
             return;
         }
+        
+        VentanaMensaje ventanaSatisfactoria = new VentanaMensaje("Actividad Deportiva","Se dio de alta la actividad satisfactoriamente",java.awt.Color.GREEN);
+        ventanaSatisfactoria.setVisible(true);
+        
         
          
         

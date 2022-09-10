@@ -52,6 +52,9 @@ public class ActividadDeportiva {
         this.fechaRegistro = fechaRegistro;
     }
     
+     public ActividadDeportiva() {
+    }
+    
     
     
 
