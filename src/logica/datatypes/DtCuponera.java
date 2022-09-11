@@ -27,4 +27,5 @@ public class DtCuponera {
         this.cantClases = cantClases;
         this.actividades = actis;
     }
+    
 }

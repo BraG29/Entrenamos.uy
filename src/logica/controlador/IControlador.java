@@ -42,5 +42,13 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
 			float descuento) {
 	}
-
+        
+        //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
+        public ArrayList<DtCuponera> ListarCuponeras(){
+            return null;
+        }
+        public ArrayList<DtInstitucion> ListarInstituciones(){
+            return null;
+        }
+        //-----------------------------------------------------------------------------------------------------------------
 }

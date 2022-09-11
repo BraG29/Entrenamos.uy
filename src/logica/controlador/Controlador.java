@@ -190,4 +190,15 @@ public class Controlador extends IControlador {
             }
             
         }
+        //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
+        public ArrayList<DtCuponera> ListarCuponeras(){
+            ArrayList<DtCuponera> l = new ArrayList<DtCuponera>();
+            return l;
+        }
+        public ArrayList<DtInstitucion> ListarInstituciones(){
+            ArrayList<DtInstitucion> l = new ArrayList<DtInstitucion>();
+            return l;
+        }
+        
+        //-----------------------------------------------------------------------------------------------------------------
 }
