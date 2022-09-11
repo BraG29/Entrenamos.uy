@@ -58,14 +58,14 @@ public class Socio extends Usuario {
 
 
 
-	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
-		super(nickname, apellido, email, nombre, fechaNac);
+	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac, String urlImagen ) {
+		super(nickname, apellido, email, nombre, fechaNac, urlImagen);
 		// TODO Auto-generated constructor stub
 	}
 
 	public DtUsuario getDatosSocio() {
 		DtUsuario dtS = new DtSocio(
-				this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
+				this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, this.urlImagen);
 		return dtS;
 	}
 

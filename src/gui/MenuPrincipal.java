@@ -45,7 +45,7 @@ public class MenuPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 //		EntityManager em = emf.createEntityManager();
 //		
 //		try {

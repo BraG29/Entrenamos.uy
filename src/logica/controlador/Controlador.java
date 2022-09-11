@@ -39,12 +39,12 @@ public class Controlador extends IControlador {
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
 
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
-			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
+			Socio s = new Socio(nick, apellido, email, nombre, fechaNac, imagen);
 			em.persist(s);
 			em.flush();
 			em.getTransaction().commit();
@@ -62,7 +62,7 @@ public class Controlador extends IControlador {
 	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
+			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			Institucion i = em.find(Institucion.class, institucion);
@@ -70,7 +70,7 @@ public class Controlador extends IControlador {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			em.getTransaction().begin();
-			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
 			em.persist(p);
 			em.flush();
 			em.getTransaction().commit();
@@ -151,7 +151,7 @@ public class Controlador extends IControlador {
 
 
 
-	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac) {
+	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac, String imagen) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -161,6 +161,7 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("nombre"), nombre);
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
+			cu.set(rootSocio.get("urlImagen"), imagen);
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -170,7 +171,7 @@ public class Controlador extends IControlador {
 		}
 	}
 	public void modificarDatos(
-			String nombre,String apellido,LocalDate fechaNac,
+			String nombre,String apellido,LocalDate fechaNac, String imagen,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 		
 		EntityManager em = emf.createEntityManager();
@@ -186,6 +187,7 @@ public class Controlador extends IControlador {
 			cu.set(rootProfesor.get("nombre"), nombre);
 			cu.set(rootProfesor.get("apellido"), apellido);
 			cu.set(rootProfesor.get("fechaNac"), fechaNac);
+			cu.set(rootProfesor.get("urlImagen"), imagen);
 			cu.set(rootProfesor.get("institucion"), nuevaInst);
 			cu.set(rootProfesor.get("biografia"), biografia);
 			cu.set(rootProfesor.get("descripcion"), descripcion);
