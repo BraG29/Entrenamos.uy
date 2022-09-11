@@ -1,5 +1,5 @@
 package logica.controlador;
-
+import logica.cuponera.Cuponera;
 import java.lang.management.GarbageCollectorMXBean;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -201,16 +201,49 @@ public class Controlador extends IControlador {
 	}
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
-		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		
-		//iterar en cuponeras
-		//obtener nombre
-		//devolver lista
-		return null;
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		EntityManager em = emf.createEntityManager();
+		java.util.List consultaCuponera = null;
+		try {
+			em.getTransaction().begin();
+			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
+			
+		}catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
+		for (int i = 0; i < consultaCuponera.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
+			String nombresCuponeras = (String) consultaCuponera.get(i); //obtengo el nombre en el q estoy parado casteo a string xq consulta es de tipo List
+			listaCuponeras.add(nombresCuponeras);//agrego a la lista
+		}
+		return listaCuponeras;
 	}
 	
 	public DtCuponera seleccionCuponera(String nombreCup) {
 		
+		ArrayList<DtCuponera> cuponeraASeleccionar = new ArrayList<DtCuponera>();
+		EntityManager em = emf.createEntityManager();
+		Cuponera cup;
+		try {
+			em.getTransaction().begin();
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera
+			if(cup == null){
+				throw new Exception("La cuponera ingresada no existe");
+			}
+			cup.getDatosConAC();
+		}catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
+		
+		//DtCuponera nombres = cup.getNombreCup();
 		//encontrar cuponera
 		//obtener datos
 		//iterar en actividades
@@ -225,10 +258,11 @@ public class Controlador extends IControlador {
 
 		EntityManager em = emf.createEntityManager();
 
-		
-		//controlar si existe.
-
 		try {
+			Institucion existe = em.find(Institucion.class,nombreInst); //devuelve null si no existe
+			if(existe != null) {
+				throw new Exception("La institución ingresada ya existe");
+			}
 			em.getTransaction().begin();
 			Institucion inst = new Institucion(nombreInst, descripcion, URL);
 			inst.setNombreInst(nombreInst);
