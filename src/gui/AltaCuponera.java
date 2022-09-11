@@ -1,7 +1,6 @@
 package gui;
 
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.GroupLayout.Alignment;
@@ -32,6 +31,8 @@ public class AltaCuponera extends javax.swing.JFrame {
 		jLabelTitulo = new javax.swing.JLabel();
 		jButtonCancelar = new javax.swing.JButton();
 		spinnerFechaIni = new javax.swing.JSpinner();
+		spinnerFechaFin = new javax.swing.JSpinner();
+		spinnerDescuento = new javax.swing.JSpinner();
 		textNombre = new javax.swing.JTextField();
 		jPanel1 = new javax.swing.JPanel();
 		botonAceptar = new javax.swing.JButton();
@@ -102,7 +103,6 @@ public class AltaCuponera extends javax.swing.JFrame {
 
 		JLabel jLabelFechaFin = new JLabel("Fecha Fin");
 
-		JSpinner spinnerDescuento = new JSpinner();
 		spinnerDescuento.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 
 		JLabel jLabelDescuento = new JLabel("Descuento");
