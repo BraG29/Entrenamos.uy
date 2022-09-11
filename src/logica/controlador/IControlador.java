@@ -10,12 +10,13 @@ import logica.datatypes.DtCuponera;
 
 public class IControlador {
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
+	}
+	
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, 
+			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
-	}
 
 	public ArrayList<DtUsrKey> listarUsuarios() {
 		return null;
@@ -25,12 +26,12 @@ public class IControlador {
 		return null;
 	}
 
-	public void modificarDatos(String nombre, String apellido, LocalDate fechaNac) {
+	public void modificarDatos(String nombre, String apellido, LocalDate fechaNac, String imagen) {
 
 	}
 
 	public void modificarDatos(String nombre, String apellido, LocalDate fechaNac, String institucion,
-			String descripcion, String biografia, String sitioWeb) {
+			String imagen, String descripcion, String biografia, String sitioWeb) {
 	}
 
 	//CU Consulta de cuponeras de actividades deportivas
@@ -58,5 +59,12 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
 			float descuento) {
 	}
+        
+        public ArrayList<String> getNombreInstituciones(){
+            return null;
+        }
 
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+            return null;
+        }
 }

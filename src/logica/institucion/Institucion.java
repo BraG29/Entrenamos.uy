@@ -106,8 +106,12 @@ public class Institucion implements Serializable{
         EntityManager em = emf.createEntityManager();
         ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
         
+
+        
         if(acti == null){
             acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta);
+            
+            this.actividades.add(acti);
             
             //arranco la transaccion
             EntityTransaction transaccion = em.getTransaction();
