@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import logica.institucion.Institucion;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDateTime;
 
 import javax.persistence.EntityManager;
@@ -18,10 +19,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
-import org.hibernate.jpa.internal.util.PessimisticNumberParser;
-import org.hibernate.mapping.List;
 
-import com.mysql.cj.Query;
+import javax.persistence.Query;
+//import javax.persistence.
+
+
+import org.hibernate.jpa.internal.util.PessimisticNumberParser;
+//import org.hibernate.mapping.List;
+
+//import com.mysql.cj.Query;
+
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 
 import logica.institucion.Institucion;
@@ -304,7 +311,36 @@ public class Controlador extends IControlador {
                 throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
                 //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
                 //excepción de que insti no existe
-            }
+            }  
+        }
+        
+        public ArrayList<String> getNombreInstituciones(){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
             
+            EntityManager em = emf.createEntityManager();
+            
+            //em.find(Institucion.class,);
+            
+            //List<Institucion> instis = em.createQuery("select i.nombreInst from Institucion i").getResultList();
+            
+            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
+            
+            return listaADevolver;
+        }
+        
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            
+            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
+            
+            
+            
+            
+            
+            
+            return listaADevolver;
         }
 }

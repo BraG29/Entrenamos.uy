@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
@@ -41,7 +42,8 @@ public class ActividadDeportiva {
 		joinColumns = @JoinColumn(name="nom_actividad"),
 		inverseJoinColumns = @JoinColumn(name="nom_clase"))
     private Collection<Clase> clases;
-
+    
+    
     
     
     public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro) {

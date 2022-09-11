@@ -59,5 +59,12 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
 			float descuento) {
 	}
+        
+        public ArrayList<String> getNombreInstituciones(){
+            return null;
+        }
 
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+            return null;
+        }
 }
