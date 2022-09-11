@@ -93,6 +93,15 @@ public class Cuponera {
 		this.cantClases = cantClases;
 	}
 
+    public Collection<ActividadDeportiva> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(Collection<ActividadDeportiva> actividades) {
+        this.actividades = actividades;
+    }
+        
+
 //Constructors------------------------------------------------------------------
 	// empty constructor
 	public Cuponera() {

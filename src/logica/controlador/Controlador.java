@@ -16,6 +16,9 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.Query;
 
 import logica.datatypes.DtUsrKey;
 import logica.institucion.Institucion;
@@ -23,6 +26,7 @@ import logica.usuario.Profesor;
 import logica.usuario.Socio;
 import logica.cuponera.Cuponera;
 import logica.datatypes.*;
+import logica.institucion.ActividadDeportiva;
 import logica.institucion.Institucion;
 
 public class Controlador extends IControlador {
@@ -192,7 +196,25 @@ public class Controlador extends IControlador {
         }
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
         public ArrayList<DtCuponera> ListarCuponeras(){
-            ArrayList<DtCuponera> l = new ArrayList<DtCuponera>();
+            //call entity manager and do the query
+            EntityManager em = emf.createEntityManager();
+            
+            List<Cuponera> list = em.createQuery("SELECT c FROM Cuponera c").getResultList();
+            
+            ArrayList<DtCuponera> l = null;
+            
+            for(Cuponera cup : list)
+            {
+                Collection<String> actividades = null;
+                Collection<ActividadDeportiva> Actis = cup.getActividades();
+                for(ActividadDeportiva a : Actis)
+                {
+                    actividades.add(a.getNombreAct());
+                }
+                DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
+                l.add(DtCup);
+            }
+              
             return l;
         }
         public ArrayList<DtInstitucion> ListarInstituciones(){

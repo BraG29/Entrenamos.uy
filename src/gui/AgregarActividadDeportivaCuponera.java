@@ -10,7 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
 
-import logica.datatypes.DtCuponera
+import logica.datatypes.DtCuponera;
 
 /**
  *
