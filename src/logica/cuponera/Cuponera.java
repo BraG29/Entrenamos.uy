@@ -9,8 +9,11 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +21,9 @@ import java.util.Collection;
 @Entity
 public class Cuponera {
 //Private Variables-------------------------------------------------------------
-
+	
+	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+	
 	@Id
 	@Column(name = "nombre")
 	private String nombreCup;
@@ -139,10 +144,27 @@ public class Cuponera {
 		return output;
 	}
 
-	
-	public DtCuponera getDatosConAC() {
-		return null;
-	}
+	/*
+	public ArrayList<String> getNombres() {
+		EntityManager em = emf.createEntityManager();
+		ArrayList<String> listaActividades = new ArrayList<String>();
+		java.util.List consultaAct = null;
+		try {
+			em.getTransaction().begin();
+			consultaAct = em.createQuery("SELECT nombreAct FROM Actividad_Cuponera").getResultList();//resultado = nombre
+		}catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
+		for (int i = 0; i < consultaAct.size(); i++) {
+			String nombreAct = (String)consultaAct.get(i); //nombre de la actividad en la q toy parado
+			listaActividades.add(nombreAct); //agrego a lista	
+		}
+		return listaActividades; //retorno nombres de actividades de esa cuponera.
+	}*/
 	
 //EOF---------------------------------------------------------------------------
 }

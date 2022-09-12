@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-import javax.crypto.Cipher;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -174,7 +173,6 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
 			cu.set(rootSocio.get("urlImagen"), imagen);
-
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -223,7 +221,6 @@ public class Controlador extends IControlador {
 		try {
 			em.getTransaction().begin();
 			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
-			
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -238,18 +235,19 @@ public class Controlador extends IControlador {
 		return listaCuponeras;
 	}
 	
-	public DtCuponera seleccionCuponera(String nombreCup) {
+/*	
+	public ArrayList<String> seleccionCuponera(String nombreCup) {
 		
-		ArrayList<DtCuponera> cuponeraASeleccionar = new ArrayList<DtCuponera>();
 		EntityManager em = emf.createEntityManager();
-		Cuponera cup;
+		Cuponera cup = null;
+		
 		try {
 			em.getTransaction().begin();
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
 			if(cup == null){
-				throw new Exception("La cuponera ingresada no existe");
+				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getDatosConAC();
+			cup.getData();
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -258,17 +256,11 @@ public class Controlador extends IControlador {
 			em.close();
 		}
 		
-		//DtCuponera nombres = cup.getNombreCup();
-		//encontrar cuponera
-		//obtener datos
-		//iterar en actividades
-		//obtener nombre
-		//devolver resultado(datos)
+		//cup.getNombres(); //esto le paso al combobox?
 		return null;
 	}
-	
+	*/
 	//CU alta institucion deportiva
-
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
 		EntityManager em = emf.createEntityManager();
@@ -374,8 +366,13 @@ public class Controlador extends IControlador {
             EntityManager em = emf.createEntityManager();
             
             
-            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre =" + "'" + nombreInsti + "'").getResultList());  
-            //System.out.println(listaADevolver);
+            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
+            
+            
+            
+            
+            
+            
             return listaADevolver;
         }
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
@@ -412,7 +409,7 @@ public class Controlador extends IControlador {
             
             EntityManager em = emf.createEntityManager();
             
-            //listaADevolver.addAll(em.createQuery("select nombre from Cuponeras ").getResultList());  me tira error "cuponera no esta mapeada"
+            //listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponeras c").getResultList());  me tira error "cuponera no esta mapeada"
             
             return listaADevolver;
             
