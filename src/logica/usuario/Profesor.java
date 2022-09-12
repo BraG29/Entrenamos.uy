@@ -93,13 +93,10 @@ public class Profesor extends Usuario{
     	return null;
     }
     
-    public DtUsuario getDatosProfe(EntityManagerFactory emf){ 
-        EntityManager em = emf.createEntityManager();
-    	java.util.List l = em.createQuery("SELECT institucion FROM Profesor where nickname='"+this.nickname+"'").getResultList();
-    	Institucion i = (Institucion) l.get(0);
+    public DtUsuario getDatosProfe(){ 
     	DtUsuario dtP = new DtProfesor(
         		this.nickname, this.email, this.nombre, this.apellido, 
-        		this.fechaNac, this.urlImagen, i.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
+        		this.fechaNac, this.urlImagen, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
     	return dtP;
 
     }
