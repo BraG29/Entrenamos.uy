@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import logica.institucion.ActividadDeportiva;
+
 @Entity
 public class Clase implements Serializable{
 	@Id
@@ -31,6 +33,8 @@ public class Clase implements Serializable{
     private LocalTime horaFin;
     @Column(name="cant_socios")
     private int cantSocios;
+    
+    private ActividadDeportiva actividadAsociada;
     
     
     //Constructor, faltan los atributos calculados: horaFin y cantSocios.

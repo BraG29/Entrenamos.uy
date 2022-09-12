@@ -15,11 +15,15 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
 
 
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,11 +37,11 @@ public class Institucion implements Serializable{
     @Column(name="institucion_URL")
     private String instURL;  
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Institucion_Actividad",
-	joinColumns = @JoinColumn(name="nom_institucion"),
-	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
-    private Collection<ActividadDeportiva> actividades;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="Institucion_Actividad",
+//	joinColumns = @JoinColumn(name="nom_institucion"),
+//	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
+//    private Collection<ActividadDeportiva> actividades;
 
     
     //Constructor por parametro
@@ -109,16 +113,48 @@ public class Institucion implements Serializable{
 
         
         if(acti == null){
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta);
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
             
-            this.actividades.add(acti);
+//            this.actividades.add(acti);
+           
             
             //arranco la transaccion
             EntityTransaction transaccion = em.getTransaction();
+            
             transaccion.begin();
             em.persist(acti);
-            transaccion.commit(); 
+            transaccion.commit();
+            
+//            transaccion.begin();
+//            
+//            
+//            
+////        
+//////            
+//                       em.persist(this.actividades);
+//          transaccion.commit();
+////            
+////            
+  //          transaccion.begin();
+//       
+//            CriteriaBuilder cb = em.getCriteriaBuilder();
+//            CriteriaUpdate<Institucion> cum = cb.createCriteriaUpdate(Institucion.class);
+//            
+//            Root<Institucion> rootInsti = cum.from(Institucion.class);
+//            cum.set(rootInsti.get("nombreInst"),this.nombreInst);
+//            cum.set(rootInsti.get("descripcion"),this.descripcion);
+//            cum.set(rootInsti.get("instURL"),this.instURL);
+//            
+//            cum.set(rootInsti.get(Path<actividades>),acti);
+//            //cum.s
+//            cum.where(cb.equal(rootInsti.get("nombreInsti"), this.getNombreInst()));
+//            em.createQuery(cum).executeUpdate();
+            
+//            em.flush();
+//            transaccion.commit();
+//            
             em.close();
+            //TIRAR ROLLBACK L8ER
             //emf.close();
             //termina la transaccion
             
@@ -126,6 +162,14 @@ public class Institucion implements Serializable{
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
             throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
+    }
+    
+    
+    public void darAltaClaseInsti(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
+        EntityManager em = emf.createEntityManager();
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreClase);
+        
+        acti.darAltaClaseActi(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, emf);
     }
     
     

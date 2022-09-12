@@ -332,13 +332,35 @@ public class Controlador extends IControlador {
             EntityManager em = emf.createEntityManager();
             
             
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            
-            
-            
-            
-            
+            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre =" + "'" + nombreInsti + "'").getResultList());  
+            //System.out.println(listaADevolver);
             return listaADevolver;
         }
+        
+        
+        public ArrayList<String> consultarProfe(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            
+            listaADevolver.addAll(em.createQuery("select p.nombre from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());  
+            //System.out.println(listaADevolver);
+            return listaADevolver;
+        }
+        
+        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+            EntityManager em = emf.createEntityManager();
+            
+            Institucion insti = em.find(Institucion.class,nombreInsti);
+            
+            try{
+                insti.darAltaClaseInsti(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, this.emf);
+            }catch(Exception e){
+                
+            }
+            
+            
+        }
+        
 }
