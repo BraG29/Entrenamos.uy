@@ -15,7 +15,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
 
 import logica.datatypes.DtInstitucion;
 
@@ -37,7 +39,7 @@ public class Institucion implements Serializable{
     @JoinTable(name="Institucion_Actividad",
 	joinColumns = @JoinColumn(name="nom_institucion"),
 	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
-    private Collection<ActividadDeportiva> actividades;
+    private static Collection<ActividadDeportiva> actividades;
 
     
     //Constructor por parametro
@@ -111,7 +113,7 @@ public class Institucion implements Serializable{
         if(acti == null){
             acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta);
             
-            this.actividades.add(acti);
+            //this.actividades.add(acti);
             
             //arranco la transaccion
             EntityTransaction transaccion = em.getTransaction();
@@ -119,6 +121,14 @@ public class Institucion implements Serializable{
             em.persist(acti);
             transaccion.commit(); 
             em.close();
+            
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaUpdate<Institucion> cum = cb.createCriteriaUpdate(Institucion.class);
+
+            Root<Institucion> rootInsti = cum.from(Institucion.class);
+            
+            cum.set(rootInsti.get("actividades"), acti);
+            
             //emf.close();
             //termina la transaccion
             

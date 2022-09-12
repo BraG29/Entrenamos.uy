@@ -343,12 +343,12 @@ public class ModificarUsuario extends JFrame {
 							String sitioWeb = txtFieldSitioWeb.getText();
 							sistema.modificarDatos(nombre, apellido, fNac, imagen, institucion, descripcion, biografia, sitioWeb);
 						}
+						showMensaje = new VentanaMensaje("DATOS MODIFICADOS", "Los datos se modificaron correctamente", Color.BLACK);
+						showMensaje.setVisible(true);
 					} catch (IllegalArgumentException error) {
 						showMensaje = new VentanaMensaje("ERROR", error.getMessage(), Color.RED);
 						showMensaje.setVisible(true);
 					}
-					showMensaje = new VentanaMensaje("DATOS MODIFICADOS", "Los datos se modificaron correctamente", Color.BLACK);
-					showMensaje.setVisible(true);
 					
 				}
 			});
