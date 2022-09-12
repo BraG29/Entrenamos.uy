@@ -34,7 +34,6 @@ public class Clase implements Serializable{
     @Column(name="cant_socios")
     private int cantSocios;
     
-    private ActividadDeportiva actividadAsociada;
     
     
     //Constructor, faltan los atributos calculados: horaFin y cantSocios.

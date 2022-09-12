@@ -22,7 +22,6 @@ import java.util.Collection;
 public class Cuponera {
 //Private Variables-------------------------------------------------------------
 	
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 	
 	@Id
 	@Column(name = "nombre")
