@@ -1,4 +1,5 @@
 package logica.institucion;
+import logica.cuponera.Cuponera;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import logica.datatypes.DtActividadDeportiva;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import logica.cuponera.Cuponera;
 @Entity
 public class ActividadDeportiva {
 	@Id

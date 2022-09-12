@@ -130,5 +130,10 @@ public class Cuponera {
 		return output;
 	}
 
+	
+	public DtCuponera getDatosConAC() {
+		return null;
+	}
+	
 //EOF---------------------------------------------------------------------------
 }
