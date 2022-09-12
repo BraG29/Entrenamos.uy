@@ -217,7 +217,6 @@ public class Controlador extends IControlador {
 		try {
 			em.getTransaction().begin();
 			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
-			
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -232,18 +231,18 @@ public class Controlador extends IControlador {
 		return listaCuponeras;
 	}
 	
-	public DtCuponera seleccionCuponera(String nombreCup) {
+/*	
+	public ArrayList<String> seleccionCuponera(String nombreCup) {
 		
-		ArrayList<DtCuponera> cuponeraASeleccionar = new ArrayList<DtCuponera>();
 		EntityManager em = emf.createEntityManager();
-		Cuponera cup;
+		Cuponera cup = null;
+		
 		try {
 			em.getTransaction().begin();
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
 			if(cup == null){
-				throw new Exception("La cuponera ingresada no existe");
+				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getDatosConAC();
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -252,17 +251,11 @@ public class Controlador extends IControlador {
 			em.close();
 		}
 		
-		//DtCuponera nombres = cup.getNombreCup();
-		//encontrar cuponera
-		//obtener datos
-		//iterar en actividades
-		//obtener nombre
-		//devolver resultado(datos)
+		//cup.getNombres(); //esto le paso al combobox?
 		return null;
 	}
-	
+	*/
 	//CU alta institucion deportiva
-
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
 		EntityManager em = emf.createEntityManager();

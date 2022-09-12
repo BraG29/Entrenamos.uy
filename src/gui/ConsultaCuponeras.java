@@ -190,6 +190,11 @@ public class ConsultaCuponeras extends JFrame {
 		});
 		comboBoxCuponera.setBounds(52, 46, 183, 24);
 		panel.add(comboBoxCuponera);
+		
+		
+		
+		
+		
 		//martin
 		String[] holiwi = new String[] {"-","holiwi","owo"}; //llamada a una función futura       
         comboBoxCuponera.setModel(new DefaultComboBoxModel(holiwi));

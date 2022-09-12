@@ -39,7 +39,7 @@ public class IControlador {
 		return null;
 	}
 	
-	public DtCuponera seleccionCuponera(String nombreCup) {
+	public ArrayList<String> seleccionCuponera(String nombreCup) {
 		return null;
 	}
 	
