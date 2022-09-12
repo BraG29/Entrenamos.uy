@@ -17,11 +17,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JList;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -33,9 +36,12 @@ import javax.swing.JTextArea;
 import javax.swing.JEditorPane;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
+
 import logica.datatypes.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -55,6 +61,7 @@ public class ModificarUsuario extends JFrame {
 	private JComboBox cBoxMes;
 	private JTextArea textBiografia;
 	private JComboBox cBoxDia;
+	private JTextField txtFieldImagen;
 
 	/**
 	 * Launch the application.
@@ -78,7 +85,7 @@ public class ModificarUsuario extends JFrame {
 	public ModificarUsuario() {
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 713, 363);
+		setBounds(100, 100, 902, 396);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,7 +94,6 @@ public class ModificarUsuario extends JFrame {
 		try {
 			Fabrica f = new Fabrica();
 			IControlador sistema = f.getInterface();
-			
 			
 			ArrayList<DtUsrKey> listaKeys = sistema.listarUsuarios();
 			String[] arrayKeys = new String[listaKeys.size()];
@@ -117,7 +123,7 @@ public class ModificarUsuario extends JFrame {
 			JPanel panelSocio = new JPanel();
 			panelSocio.setBorder(null);
 			panelSocio.setBackground(SystemColor.activeCaptionBorder);
-			panelSocio.setBounds(284, 12, 415, 122);
+			panelSocio.setBounds(284, 12, 415, 155);
 			contentPane.add(panelSocio);
 			panelSocio.setLayout(null);
 			//panelSocio.setVisible(false);
@@ -181,11 +187,21 @@ public class ModificarUsuario extends JFrame {
 			checkBoxEditar.setBackground(SystemColor.activeCaptionBorder);
 			checkBoxEditar.setBounds(337, 35, 70, 23);
 			panelSocio.add(checkBoxEditar);
+			
+			JLabel lblImagen_1 = new JLabel("Imagen(URL):");
+			lblImagen_1.setBounds(12, 128, 102, 15);
+			panelSocio.add(lblImagen_1);
+			
+			txtFieldImagen = new JTextField();
+			txtFieldImagen.setBounds(116, 126, 277, 19);
+			panelSocio.add(txtFieldImagen);
+			txtFieldImagen.setColumns(10);
 
 			JPanel panelProfesor = new JPanel();
 			panelProfesor.setBorder(null);
 			panelProfesor.setBackground(SystemColor.activeCaptionBorder);
-			panelProfesor.setBounds(284, 134, 415, 155);
+			panelProfesor.setBounds(283, 171, 415, 155);
+			panelProfesor.setVisible(false);
 			contentPane.add(panelProfesor);
 			panelProfesor.setLayout(null);
 			//panelProfesor.setVisible(false);
@@ -239,17 +255,21 @@ public class ModificarUsuario extends JFrame {
 					setVisible(false);				
 				}
 			});
-			btnCancelar.setBounds(284, 301, 117, 25);
+			btnCancelar.setBounds(296, 334, 117, 25);
 			contentPane.add(btnCancelar);
 
 			JButton btnConfirmar = new JButton("Confirmar");
-			btnConfirmar.setBounds(582, 301, 117, 25);
+			btnConfirmar.setBounds(592, 334, 117, 25);
 			contentPane.add(btnConfirmar);
 
 			JLabel lblElijaUnUsuario = new JLabel("Elija un Usuario:");
 			lblElijaUnUsuario.setFont(new Font("Dialog", Font.BOLD, 16));
 			lblElijaUnUsuario.setBounds(12, 0, 149, 25);
 			contentPane.add(lblElijaUnUsuario);
+			
+			JLabel lblImagen = new JLabel("");
+			lblImagen.setBounds(705, 70, 180, 180);
+			contentPane.add(lblImagen);
 			txtFieldAnio.addKeyListener(new KeyAdapter() {
 				public void keyTyped(KeyEvent e) {
 					if (txtFieldAnio.getText().length() >= 4) // limit textfield to 3 characters
@@ -283,6 +303,15 @@ public class ModificarUsuario extends JFrame {
 					cBoxMes.setSelectedIndex(dtU.fechaNac.getMonthValue());
 					cBoxDia.setSelectedIndex(dtU.fechaNac.getDayOfMonth());
 					txtFieldAnio.setText(String.valueOf(dtU.fechaNac.getYear()));
+					txtFieldImagen.setText(dtU.imagenUrl);
+					Image imagen = null;
+					try {
+						URL url = new URL(txtFieldImagen.getText());
+						imagen = ImageIO.read(url).getScaledInstance(180, 180, 100);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					lblImagen.setIcon(new ImageIcon(imagen));
 				}
 			});
 			checkBoxEditar.addActionListener(new ActionListener() {
@@ -304,21 +333,22 @@ public class ModificarUsuario extends JFrame {
 						LocalDate fNac = LocalDate.of(Integer.parseInt(txtFieldAnio.getText()),
 								cBoxMes.getSelectedIndex(),
 								cBoxDia.getSelectedIndex());
+						String imagen = txtFieldImagen.getText();
 						if(!panelProfesor.isVisible()) {
-							sistema.modificarDatos(nombre, apellido, fNac);
+							sistema.modificarDatos(nombre, apellido, fNac, imagen);
 						}else {
 							String institucion = txtFieldInstitucion.getText();
 							String descripcion = txtFieldDescripcion.getText();
 							String biografia = textBiografia.getText();
 							String sitioWeb = txtFieldSitioWeb.getText();
-							sistema.modificarDatos(nombre, apellido, fNac, institucion, descripcion, biografia, sitioWeb);
+							sistema.modificarDatos(nombre, apellido, fNac, imagen, institucion, descripcion, biografia, sitioWeb);
 						}
+						showMensaje = new VentanaMensaje("DATOS MODIFICADOS", "Los datos se modificaron correctamente", Color.BLACK);
+						showMensaje.setVisible(true);
 					} catch (IllegalArgumentException error) {
 						showMensaje = new VentanaMensaje("ERROR", error.getMessage(), Color.RED);
 						showMensaje.setVisible(true);
 					}
-					showMensaje = new VentanaMensaje("DATOS MODIFICADOS", "Los datos se modificaron correctamente", Color.RED);
-					showMensaje.setVisible(true);
 					
 				}
 			});
@@ -340,6 +370,7 @@ public class ModificarUsuario extends JFrame {
 		textBiografia.setEditable(false);
 		cBoxMes.setEnabled(false);
 		cBoxDia.setEnabled(false);
+		txtFieldImagen.setEditable(false);
 
 	}
 
@@ -353,5 +384,6 @@ public class ModificarUsuario extends JFrame {
 		textBiografia.setEditable(true);
 		cBoxMes.setEnabled(true);
 		cBoxDia.setEnabled(true);
+		txtFieldImagen.setEditable(true);
 	}
 }

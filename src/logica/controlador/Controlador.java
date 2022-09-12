@@ -1,5 +1,5 @@
 package logica.controlador;
-
+import logica.cuponera.Cuponera;
 import java.lang.management.GarbageCollectorMXBean;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
+import javax.crypto.Cipher;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -46,12 +47,12 @@ public class Controlador extends IControlador {
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
 
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
-			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
+			Socio s = new Socio(nick, apellido, email, nombre, fechaNac, imagen);
 			em.persist(s);
 			em.flush();
 			em.getTransaction().commit();
@@ -69,7 +70,7 @@ public class Controlador extends IControlador {
 	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
+			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			Institucion i = em.find(Institucion.class, institucion);
@@ -77,7 +78,7 @@ public class Controlador extends IControlador {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			em.getTransaction().begin();
-			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
 			em.persist(p);
 			em.flush();
 			em.getTransaction().commit();
@@ -144,7 +145,7 @@ public class Controlador extends IControlador {
 		}
 		if(u instanceof Profesor) {
 			Profesor p = (Profesor)u;
-			DtUsuario dtP = p.getDatosProfe(emf);
+			DtUsuario dtP = p.getDatosProfe();
 			em.close();
 			return dtP;
 		}else {
@@ -158,7 +159,7 @@ public class Controlador extends IControlador {
 
 
 
-	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac) {
+	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac, String imagen) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -168,6 +169,8 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("nombre"), nombre);
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
+			cu.set(rootSocio.get("urlImagen"), imagen);
+
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -177,7 +180,7 @@ public class Controlador extends IControlador {
 		}
 	}
 	public void modificarDatos(
-			String nombre,String apellido,LocalDate fechaNac,
+			String nombre,String apellido,LocalDate fechaNac, String imagen,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 		
 		EntityManager em = emf.createEntityManager();
@@ -193,6 +196,7 @@ public class Controlador extends IControlador {
 			cu.set(rootProfesor.get("nombre"), nombre);
 			cu.set(rootProfesor.get("apellido"), apellido);
 			cu.set(rootProfesor.get("fechaNac"), fechaNac);
+			cu.set(rootProfesor.get("urlImagen"), imagen);
 			cu.set(rootProfesor.get("institucion"), nuevaInst);
 			cu.set(rootProfesor.get("biografia"), biografia);
 			cu.set(rootProfesor.get("descripcion"), descripcion);
@@ -208,16 +212,49 @@ public class Controlador extends IControlador {
 	}
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
-		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		
-		//iterar en cuponeras
-		//obtener nombre
-		//devolver lista
-		return null;
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		EntityManager em = emf.createEntityManager();
+		java.util.List consultaCuponera = null;
+		try {
+			em.getTransaction().begin();
+			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
+			
+		}catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
+		for (int i = 0; i < consultaCuponera.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
+			String nombresCuponeras = (String) consultaCuponera.get(i); //obtengo el nombre en el q estoy parado casteo a string xq consulta es de tipo List
+			listaCuponeras.add(nombresCuponeras);//agrego a la lista
+		}
+		return listaCuponeras;
 	}
 	
 	public DtCuponera seleccionCuponera(String nombreCup) {
 		
+		ArrayList<DtCuponera> cuponeraASeleccionar = new ArrayList<DtCuponera>();
+		EntityManager em = emf.createEntityManager();
+		Cuponera cup;
+		try {
+			em.getTransaction().begin();
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera
+			if(cup == null){
+				throw new Exception("La cuponera ingresada no existe");
+			}
+			cup.getDatosConAC();
+		}catch (Exception ex) {
+			if (em != null) {
+				em.getTransaction().rollback();
+			}
+		} finally {
+			em.close();
+		}
+		
+		//DtCuponera nombres = cup.getNombreCup();
 		//encontrar cuponera
 		//obtener datos
 		//iterar en actividades
@@ -232,10 +269,11 @@ public class Controlador extends IControlador {
 
 		EntityManager em = emf.createEntityManager();
 
-		
-		//controlar si existe.
-
 		try {
+			Institucion existe = em.find(Institucion.class,nombreInst); //devuelve null si no existe
+			if(existe != null) {
+				throw new Exception("La institución ingresada ya existe");
+			}
 			em.getTransaction().begin();
 			Institucion inst = new Institucion(nombreInst, descripcion, URL);
 			inst.setNombreInst(nombreInst);

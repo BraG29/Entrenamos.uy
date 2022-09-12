@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logica.controlador.Fabrica;
+import logica.controlador.IControlador;
+
 import java.awt.SystemColor;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
@@ -17,6 +21,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.awt.event.ActionEvent;
 //import logica.controlador.IControlador;
 //import logica.controlador.Fabrica;
@@ -74,9 +83,10 @@ public class MenuPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public MenuPrincipal() {
+		setTitle("Menu Principal");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 638, 314);
+		setBounds(100, 100, 638, 355);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -208,5 +218,310 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnAltaInstitucion.setBounds(322, 248, 298, 25);
 		contentPane.add(btnAltaInstitucion);
+		
+		JButton btnCargarDatos = new JButton("Cargar Datos de Prueba");
+		btnCargarDatos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Fabrica fab = new Fabrica();
+				cargarSocios(fab);
+				cargarInstituciones(fab);
+				cargarProfesores(fab);
+			}
+		});
+		btnCargarDatos.setBounds(12, 285, 298, 25);
+		contentPane.add(btnCargarDatos);
 	}
+	
+	public void cargarSocios(Fabrica fab) {
+		IControlador sistema = fab.getInterface();
+		List<String> nicks = Arrays.asList(
+				new String[] {
+						"Emi71",
+						"caro",
+						"euge",
+						"guille",
+						"sergiop",
+						"andy",
+						"tonyp",
+						"m1k4",
+						"charly"
+				});
+		List<String> nombres= Arrays.asList(
+				new String[] {
+						"Emiliano",
+						"Carolina",
+						"Eugenia",
+						"Guillermo",
+						"Sergio",
+						"Andrés",
+						"Antonio",
+						"Micaela",
+						"Carlos"
+				});
+		List<String> apellidos = Arrays.asList(
+				new String[] {
+						"Lucas",
+						"Omega",
+						"Williams",
+						"Hector",
+						"Perez",
+						"Roman",
+						"Paz",
+						"Lopez",
+						"Boston"
+				});
+		List<String> emails = Arrays.asList(
+				new String[] {
+					"emi71@gmail.com",
+					"caro@gmail.com",
+					"e.will@gmail.com",
+					"ghector@gmail.com",
+					"sergi@gmail.com.uy",
+					"chino@gmail.org.uy",
+					"eltony@gmail.org.uy",
+					"mika@gmail.com.ar",
+					"charly@gmail.com.uy"
+				});
+		List<LocalDate> fechas = Arrays.asList(
+				new LocalDate[] {
+						LocalDate.of(1971,12,31), 
+						LocalDate.of(1983,11,15), 
+						LocalDate.of(1990,4,15),
+						LocalDate.of(1959,5,15),
+						LocalDate.of(1951,1,28),
+						LocalDate.of(1976,3,17), 
+						LocalDate.of(1955,2,14), 
+						LocalDate.of(1987,2,23),
+						LocalDate.of(1937,5,8)   
+				});
+		List<String> imagenes = Arrays.asList(
+				new String[] {
+						"https://bit.ly/3lxoBvZ",
+						"https://bit.ly/3AfcJER",
+						"https://bit.ly/3Afz59x",
+						"https://bit.ly/2XkrKH9",
+						"https://bit.ly/3ElkVG2",
+						"https://bit.ly/3hDWgTD",
+						"https://bit.ly/3Ai4jMW",
+						"https://bit.ly/3zglsWf",
+						"https://bit.ly/2YRWDTQ"
+				});
+		for(int i=0; i<nicks.size(); i++) {
+			sistema.altaUsuario(
+					nicks.get(i), nombres.get(i), apellidos.get(i), emails.get(i), fechas.get(i), imagenes.get(i));
+		}
+				
+	}
+	
+	public void cargarInstituciones(Fabrica fab) {
+		IControlador sistema = fab.getInterface();
+		List<String> nombres = Arrays.asList(
+				new String[] {
+						"Instituto Natural",
+						"Fuerza Bruta",
+						"Telón",
+						"Olympic",
+				});
+		List<String> descripciones = Arrays.asList(
+				new String[] {
+						"Clases de gimnasia, aeróbica, spinning y yoga. ",
+						"Gimnasio especializado en el desarrollo de la "
+						+ "musculatura.",
+						"Actividades deportivas para todas las edades",
+						"Gimnasia y Aparatos ",
+				});
+		List<String> sitiosWeb = Arrays.asList(
+				new String[] {
+						"https://www.inatural.com/",
+						"https://www.musculos.com/",
+						"https://telon.com.uy/",
+						"https://www.olympic21.com/",
+				});
+		
+		for(int i = 0; i < nombres.size(); i++) {
+			sistema.altaInstitucion(
+					nombres.get(i), descripciones.get(i), sitiosWeb.get(i));
+		}
+	}
+	
+	public void cargarProfesores(Fabrica fab) {
+		IControlador sistema = fab.getInterface();
+		List<String> nicks = Arrays.asList(
+				new String[] {
+						"viktor",
+						"denis",
+						"clazar",
+						"TheBoss",
+						"Nelson",
+						"lale",
+						"prisc",
+						"dagost",
+						"aldo"
+				});
+		List<String> nombres= Arrays.asList(
+				new String[] {
+						"Victor",
+						"Denis",
+						"Carla",
+						"Bruno",
+						"Luis",
+						"Laura",
+						"Priscila",
+						"Daiana",
+						"Aldo"
+				});		
+//		List<String> = Arrays.asList(
+//						new String[] {
+//								"",
+//								"",
+//								"",
+//								"",
+//								"",
+//								"",
+//								"",
+//								"",
+//								""
+//						});
+		List<String> apellidos = Arrays.asList(
+				new String[] {
+						"Perez",
+						"Miguel",
+						"Lazaro",
+						"Sosa",
+						"Nelson",
+						"Leyes",
+						"Pappo",
+						"Agostini",
+						"Vivaldi",
+				});
+		List<String> emails = Arrays.asList(
+				new String[] {
+					"vperez@fuerza.com",
+					"den80@fuerza.com",
+					"claz4r0@hotmail.com",
+					"bruceTheBoss@gmail.c",
+					"nelson@hotmail.com",
+					"la_le@outlook.com",
+					"pripa@gmail.com",
+					"d_1940_ago@gmail.co",
+					"aldo@ outlook.com"
+				});
+		List<LocalDate> fechas = Arrays.asList(
+				new LocalDate[] {
+						LocalDate.of(1977,1,1), 
+						LocalDate.of(1980,6,14), 
+						LocalDate.of(1953,6,22),
+						LocalDate.of(1949,9,23),
+						LocalDate.of(1998,1,1),
+						LocalDate.of(1987,2,14), 
+						LocalDate.of(1981,8,13), 
+						LocalDate.of(1940,3,5),
+						LocalDate.of(1952,7,17)   
+				});
+		List<String> imagenes = Arrays.asList(
+				new String[] {
+						"https://bit.ly/3zetdMl",
+						"https://bit.ly/3lKq8Px",
+						"https://bit.ly/2VJvT6S",
+						"https://bit.ly/3kdT9TV",
+						"https://bit.ly/3lxsDo7",
+						"https://bit.ly/3EmlY8F",
+						"https://static9.depositphotos.com/1687987/1171/i/450/depositphotos_11715353-stock-photo-young-woman-portrait.jpg",
+						"https://bit.ly/3hB3zvo",
+						"https://bit.ly/2VLnzUj"
+				});
+		List<String> instituciones = Arrays.asList(
+				new String[] {
+						"Fuerza Bruta",//1
+						"Telón",//2
+						"Instituto Natural",//3
+						"Fuerza Bruta",//4
+						"Telón",//5
+						"Telón",//6
+						"Olympic",//7
+						"Olympic",//8
+						"Telón",//9
+				});
+		List<String> descripciones = Arrays.asList(
+				new String[] {
+						"Victor es un apasionado de los músculos. Sus clases "
+						+"son organizadas en función de distintos aparatos y "
+						+"pesas con el objetivo de desarrollar músculos",
+						
+						"A Denis le interesan los deportes con pelota, "
+						+ "principalmente el voleibol y el handball ",
+						
+						"Carlos es un profesor muy divertido cuyas clases de "
+						+ "aeróbica están cargadas de energía.",
+						
+						"Bruno es un ex-boxeardor que busca "
+						+ "entrenar a futuros campeones.",
+						
+						"Profesor de natación. Especializado en braza y "
+						+ "mariposa",
+						
+						"Luego de una exitosa carrera como jugadora de futbol "
+						+ "profesional. Laura dedica sus clases a enseñar tácticas "
+						+ "de futbol",
+						
+						"Laura tiene un gran interés por los deportes olímpicos.",
+						
+						"Profesora dedicada y exigente. No acepta un “no "
+						+ "puedo” como respuesta",
+						
+						"Dada su gran estatura Aldo siempre jugó al basquetbol, "
+						+ "hoy se dedica a enseñarlo."
+				});		
+		List<String> biografias = Arrays.asList(
+		new String[] {
+				"Victor nació en Moscow en 1977. En "
+				+ "el año 2005 emigró a Uruguay luego "
+				+ "de quedar encantado con el país en "
+				+ "un viaje turístico.",
+				
+				"Denis fue un jugador de voleibol "
+				+ "profesional. ",
+				
+				"El interés por la actividad física llevo "
+				+ "a Carlos a dejar su trabajo en un "
+				+ "estudio contable y abrir su propio "
+				+ "gimnasio."
+				+ "",
+				
+				"Bruno, mejor conocido como "
+				+ "Bruce en el ring, compitió "
+				+ "como boxeador entre los años "
+				+ "60s y 70s.",
+				
+				"",//vacio
+				
+				"Jugadora profesional de futbol desde "
+				+ "2010 a 2020.",
+				
+				"",//vacio
+				
+				"",//vacio
+				
+				""//vacio
+		});
+		List<String> sitiosWeb = Arrays.asList(
+		new String[] {
+				"http://www.vikgym.com/",
+				"http://www.depecho.com/",
+				"http://www.enforma.com/",
+				"http://www.bruce.net/",
+				"http://www.nelson.uy/",
+				"http://www.laley.com/",
+				"http://www.pi314.net/",
+				"http://www.dygym.com/",
+				"http://www.sportsaldo.net/"
+		});
+		for(int i=0; i<nicks.size(); i++) {
+			sistema.altaUsuario(
+					nicks.get(i), nombres.get(i), apellidos.get(i), emails.get(i), fechas.get(i), imagenes.get(i),
+					instituciones.get(i), descripciones.get(i), biografias.get(i), sitiosWeb.get(i));
+		}
+
+	}
+
 }

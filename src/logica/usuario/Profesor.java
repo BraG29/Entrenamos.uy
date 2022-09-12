@@ -46,9 +46,9 @@ public class Profesor extends Usuario{
     	
     }
     public Profesor(
-    		String nickname, String apellido, String email, String nombre, LocalDate fechaNac,
-    		String biografia, String descripcion, String sitioWeb, Institucion institucion) {
-    	super( nickname,  apellido,  email,  nombre, fechaNac);
+    		String nickname, String apellido, String email, String nombre, LocalDate fechaNac, 
+    		String urlImagen, String biografia, String descripcion, String sitioWeb, Institucion institucion) {
+    	super( nickname,  apellido,  email,  nombre, fechaNac, urlImagen);
     	this.biografia = biografia;
     	this.descripcion = descripcion;
     	this.sitioWeb = sitioWeb;
@@ -93,12 +93,10 @@ public class Profesor extends Usuario{
     	return null;
     }
     
-    public DtUsuario getDatosProfe(EntityManagerFactory emf){ 
-        EntityManager em = emf.createEntityManager();
-    	java.util.List l = em.createQuery("SELECT institucion FROM Profesor where nickname='"+this.nickname+"'").getResultList();
-    	Institucion i = (Institucion) l.get(0);
+    public DtUsuario getDatosProfe(){ 
     	DtUsuario dtP = new DtProfesor(
-        		this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, i.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
+        		this.nickname, this.email, this.nombre, this.apellido, 
+        		this.fechaNac, this.urlImagen, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
     	return dtP;
 
     }
