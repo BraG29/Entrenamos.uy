@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
+import javax.crypto.Cipher;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -148,7 +149,7 @@ public class Controlador extends IControlador {
 		}
 		if(u instanceof Profesor) {
 			Profesor p = (Profesor)u;
-			DtUsuario dtP = p.getDatosProfe(emf);
+			DtUsuario dtP = p.getDatosProfe();
 			em.close();
 			return dtP;
 		}else {
@@ -173,6 +174,7 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
 			cu.set(rootSocio.get("urlImagen"), imagen);
+
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -372,13 +374,8 @@ public class Controlador extends IControlador {
             EntityManager em = emf.createEntityManager();
             
             
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            
-            
-            
-            
-            
+            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre =" + "'" + nombreInsti + "'").getResultList());  
+            //System.out.println(listaADevolver);
             return listaADevolver;
         }
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
@@ -422,4 +419,31 @@ public class Controlador extends IControlador {
         }
         
         //-----------------------------------------------------------------------------------------------------------------
+        
+        
+        public ArrayList<String> consultarProfe(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            
+            listaADevolver.addAll(em.createQuery("select p.nombre from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());  
+            //System.out.println(listaADevolver);
+            return listaADevolver;
+        }
+        
+        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+            EntityManager em = emf.createEntityManager();
+            
+            Institucion insti = em.find(Institucion.class,nombreInsti);
+            
+            try{
+                insti.darAltaClaseInsti(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, this.emf);
+            }catch(Exception e){
+                
+            }
+            
+            
+        }
+        
 }
