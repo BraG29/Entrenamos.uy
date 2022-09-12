@@ -50,6 +50,7 @@ public class AltaUsuario extends JFrame {
 	private JTextField txtFieldInstitucion;
 	private JTextField txtFieldDescripcion;
 	private JTextField txtFieldSitioWeb;
+	private JTextField txtFieldImagen;
 
 	/**
 	 * Launch the application.
@@ -71,9 +72,10 @@ public class AltaUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public AltaUsuario() {
+		setTitle("Alta Usuario");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 452, 484);
+		setBounds(100, 100, 452, 517);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -93,7 +95,7 @@ public class AltaUsuario extends JFrame {
 		panelSocio.setForeground(new Color(51, 51, 51));
 		panelSocio.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panelSocio.setBackground(SystemColor.activeCaptionBorder);
-		panelSocio.setBounds(12, 63, 374, 169);
+		panelSocio.setBounds(12, 63, 374, 206);
 		contentPane.add(panelSocio);
 		panelSocio.setLayout(null);
 		panelSocio.setVisible(false);
@@ -177,12 +179,21 @@ public class AltaUsuario extends JFrame {
 		txtFieldAnio.setBounds(300, 137, 62, 24);
 		panelSocio.add(txtFieldAnio);
 		txtFieldAnio.setColumns(10);
+		
+		JLabel lblImagen = new JLabel("Imagen(URL):*");
+		lblImagen.setBounds(12, 173, 100, 15);
+		panelSocio.add(lblImagen);
+		
+		txtFieldImagen = new JTextField();
+		txtFieldImagen.setColumns(10);
+		txtFieldImagen.setBounds(124, 173, 250, 19);
+		panelSocio.add(txtFieldImagen);
 
 		JPanel panelProfesor = new JPanel();
 		panelProfesor.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panelProfesor.setBackground(SystemColor.activeCaptionBorder);
 		panelProfesor.setForeground(Color.WHITE);
-		panelProfesor.setBounds(12, 231, 426, 179);
+		panelProfesor.setBounds(12, 262, 426, 179);
 		contentPane.add(panelProfesor);
 		panelProfesor.setLayout(null);
 		panelProfesor.setVisible(false);
@@ -192,7 +203,7 @@ public class AltaUsuario extends JFrame {
 		panelProfesor.add(lblInstitucion);
 
 		txtFieldInstitucion = new JTextField();
-		txtFieldInstitucion.setBounds(108, 10, 146, 19);
+		txtFieldInstitucion.setBounds(119, 10, 146, 19);
 		panelProfesor.add(txtFieldInstitucion);
 		txtFieldInstitucion.setColumns(10);
 
@@ -201,7 +212,7 @@ public class AltaUsuario extends JFrame {
 		panelProfesor.add(lblDescripcion);
 
 		txtFieldDescripcion = new JTextField();
-		txtFieldDescripcion.setBounds(108, 37, 254, 19);
+		txtFieldDescripcion.setBounds(119, 37, 254, 19);
 		panelProfesor.add(txtFieldDescripcion);
 		txtFieldDescripcion.setColumns(10);
 
@@ -232,11 +243,11 @@ public class AltaUsuario extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(38, 422, 117, 25);
+		btnCancelar.setBounds(32, 453, 117, 25);
 		contentPane.add(btnCancelar);
 
 		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(246, 422, 117, 25);
+		btnConfirmar.setBounds(269, 453, 117, 25);
 		contentPane.add(btnConfirmar);
 
 		JLabel lblTitulo = new JLabel("Alta de Usuario");
@@ -279,7 +290,7 @@ public class AltaUsuario extends JFrame {
 						if (txtFieldNombre.getText().isEmpty() || txtFieldNick.getText().isEmpty()
 								|| txtFieldApellido.getText().isEmpty() || txtEmail.getText().isEmpty()
 								|| cBoxMes.getSelectedIndex() == 0 || cBoxDia.getSelectedIndex() == 0
-								|| txtFieldAnio.getText().isEmpty()) {
+								|| txtFieldAnio.getText().isEmpty() || txtFieldImagen.getText().isEmpty()) {
 							throw new IllegalArgumentException(errorCamposClave);
 						} else if (cBoxTipoUsr.getSelectedIndex() == 2 && (txtFieldInstitucion.getText().isEmpty()
 								|| txtFieldDescripcion.getText().isEmpty())) {
@@ -289,24 +300,25 @@ public class AltaUsuario extends JFrame {
 							Fabrica f = new Fabrica();
 							IControlador sistema = f.getInterface();
 							LocalDate fechaNac;
-							String nickname, nombre, apellido, email;
+							String nickname, nombre, apellido, email, imagen;
 							nickname = txtFieldNick.getText();
 							nombre = txtFieldNombre.getText();
 							apellido = txtFieldApellido.getText();
 							email = txtEmail.getText();
+							imagen = txtFieldImagen.getText();
 							fechaNac = LocalDate.of(Integer.parseInt(txtFieldAnio.getText()),
 									cBoxMes.getSelectedIndex(),
 									cBoxDia.getSelectedIndex());
 							if (cBoxTipoUsr.getSelectedIndex() == 1) {
-								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac);
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, imagen);
 							} else {
 								String institucion, descripcion, biografia, sitioWeb;
 								institucion = txtFieldInstitucion.getText();
 								descripcion = txtFieldDescripcion.getText();
 								biografia = textBiografia.getText();
 								sitioWeb = txtFieldSitioWeb.getText();
-								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, institucion,
-										descripcion, biografia, sitioWeb);
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, imagen, 
+										institucion, descripcion, biografia, sitioWeb);
 							}
 							String mensajeConfirmacion = "Se ha dado de alta al usuario " + nickname + " en el sistema";
 							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);

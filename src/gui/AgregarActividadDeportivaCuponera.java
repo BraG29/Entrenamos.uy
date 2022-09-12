@@ -28,8 +28,8 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
         Fabrica f = new Fabrica();
         IControlador sistema = f.getInterface();
         //Fetch Cuponeras and Instituciones
-        ArrayList<DtCuponera> ListaCuponeras = sistema.ListarCuponeras();
-        ArrayList<DtInstitucion> ListaInstitucion = sistema.ListarInstituciones();
+        ArrayList<String> ListaCuponeras = sistema.getNombreCuponeras();
+        ArrayList<String> ListaInstitucion = sistema.getNombreInstituciones();
         
         //Set first null combobox member
         String [] CuponeraList = new String[ListaCuponeras.size()+1];
@@ -38,14 +38,14 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
         InstitucionList[0] = "-";
         int c = 1;
         int i = 1;
-        for (DtCuponera DtCup : ListaCuponeras){
+        for (String DtCup : ListaCuponeras){
             
-            CuponeraList[c] = DtCup.nombreCup;
+            CuponeraList[c] = DtCup;
             c++;        
         }
-        for (DtInstitucion DtInst : ListaInstitucion){
+        for (String DtInst : ListaInstitucion){
             
-            InstitucionList[i] = DtInst.nombreInst;
+            InstitucionList[i] = DtInst;
             i++;        
         }
                 

@@ -45,7 +45,7 @@ public class MenuPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 //		EntityManager em = emf.createEntityManager();
 //		
 //		try {
@@ -186,7 +186,7 @@ public class MenuPrincipal extends JFrame {
 				menuCuponeras.setVisible(true);
 			}
 		});
-		btnConsultaCuponera.setBounds(326, 211, 298, 25);
+		btnConsultaCuponera.setBounds(322, 211, 298, 25);
 		contentPane.add(btnConsultaCuponera);
 		
 		JButton btnAgregarActividad = new JButton("Agregar Actividad a Cuponera");

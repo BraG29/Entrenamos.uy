@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -17,7 +18,7 @@ import logica.datatypes.DtUsrKey;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Usuario implements Serializable {
+public class Usuario implements Serializable {
     
 	@Id
 	@Column(unique = true)
@@ -29,6 +30,8 @@ public abstract class Usuario implements Serializable {
     protected String apellido;
     @Column(name="fecha_nacimiento")
     protected LocalDate fechaNac;
+    @Column(name="imagen")
+    protected String urlImagen;
     
 // Getters and Setters----------------------------------------------------------
     public String getNickname() {
@@ -63,28 +66,47 @@ public abstract class Usuario implements Serializable {
         this.fechaNac = fechaNac;
     }
     	
-//Constructors------------------------------------------------------------------
+    public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
+	}
+
+	//Constructors------------------------------------------------------------------
     //Empty constructor
     public Usuario() {
 	}
     //Full constructor
-    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
+    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac, String urlImagen) {
         this.nickname = nickname;
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNac = fechaNac;
+        this.urlImagen = urlImagen;
         // Falta la imagen .png
     }
-//Methods-----------------------------------------------------------------------
+    public Usuario(String nickname, String email) {
+		this.nickname = nickname;
+		this.email = email;
+	}
+
+	//Methods-----------------------------------------------------------------------
     public DtUsrKey getKey(){
         DtUsrKey output = new DtUsrKey(this.nickname,this.email);
         return output;
     }
     
-    public DtUsuario getDatosUsr(){
-        return null;
-    }
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
         return null;
     }

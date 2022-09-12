@@ -59,6 +59,7 @@ public class VentanaMensaje extends JFrame {
 		lblError.setForeground(color);
 		lblError.setHorizontalAlignment(SwingConstants.CENTER);
 		lblError.setBounds(10, 47, 344, 77);
+
 		contentPane.add(lblError);
 		
 		JButton btnOk = new JButton("Ok");

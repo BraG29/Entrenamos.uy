@@ -1,4 +1,5 @@
 package logica.institucion;
+import logica.cuponera.Cuponera;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
@@ -19,6 +21,7 @@ import logica.datatypes.DtActividadDeportiva;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import logica.cuponera.Cuponera;
 @Entity
 public class ActividadDeportiva {
 	@Id
@@ -41,7 +44,8 @@ public class ActividadDeportiva {
 		joinColumns = @JoinColumn(name="nom_actividad"),
 		inverseJoinColumns = @JoinColumn(name="nom_clase"))
     private Collection<Clase> clases;
-
+    
+    
     
     
     public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro) {
