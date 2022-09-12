@@ -257,6 +257,8 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         try{//se intenta parsear el float
             float dura = Float.parseFloat(fieldDuracion.getText());
             
+            System.out.println(dura);
+            
             float costo = Float.parseFloat(spinnerCosto.getValue().toString());
             LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
         

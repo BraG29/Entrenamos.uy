@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-import javax.crypto.Cipher;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -145,7 +144,7 @@ public class Controlador extends IControlador {
 		}
 		if(u instanceof Profesor) {
 			Profesor p = (Profesor)u;
-			DtUsuario dtP = p.getDatosProfe();
+			DtUsuario dtP = p.getDatosProfe(emf);
 			em.close();
 			return dtP;
 		}else {
@@ -170,7 +169,6 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
 			cu.set(rootSocio.get("urlImagen"), imagen);
-
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -245,6 +243,7 @@ public class Controlador extends IControlador {
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
+			cup.getData();
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();

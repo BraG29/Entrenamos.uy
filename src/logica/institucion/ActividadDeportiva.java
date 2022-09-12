@@ -1,6 +1,8 @@
 package logica.institucion;
+
 import logica.cuponera.Cuponera;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,13 +16,23 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import javax.persistence.ManyToOne;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
+
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
+import logica.clase.Clase;
+
+
 import logica.cuponera.Cuponera;
+
 @Entity
 public class ActividadDeportiva {
 	@Id
@@ -45,16 +57,21 @@ public class ActividadDeportiva {
     private Collection<Clase> clases;
 
     
+    @ManyToOne()
+    private Institucion insti;
+   
+
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.costo = costo;
         this.fechaRegistro = fechaRegistro;
+        this.insti = institu;
     }
     
-     public ActividadDeportiva() {
+    public ActividadDeportiva() {
     }
     
     
@@ -121,6 +138,11 @@ public class ActividadDeportiva {
         //nombreClases.addAll(clases.keySet());
         
         return nombreClases;
+    }
+    
+    public void darAltaClaseActi(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
+        //Clase clase = new Clase(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta);
+        //arreglar el constructor de Clase
     }
     
 }
