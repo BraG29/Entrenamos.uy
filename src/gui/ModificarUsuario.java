@@ -83,6 +83,7 @@ public class ModificarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public ModificarUsuario() {
+		setTitle("Modificar Usuario");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 902, 396);
@@ -94,7 +95,6 @@ public class ModificarUsuario extends JFrame {
 		try {
 			Fabrica f = new Fabrica();
 			IControlador sistema = f.getInterface();
-			
 			ArrayList<DtUsrKey> listaKeys = sistema.listarUsuarios();
 			String[] arrayKeys = new String[listaKeys.size()];
 			int i = 0;
