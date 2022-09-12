@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
 
-import javax.crypto.Cipher;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -31,6 +30,9 @@ import org.hibernate.jpa.internal.util.PessimisticNumberParser;
 //import com.mysql.cj.Query;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
+import java.util.Collection;
+import java.util.List;
+import javax.persistence.Query;
 
 import logica.institucion.Institucion;
 import logica.usuario.Profesor;
@@ -38,6 +40,7 @@ import logica.usuario.Socio;
 import logica.usuario.Usuario;
 import logica.cuponera.Cuponera;
 import logica.datatypes.*;
+import logica.institucion.ActividadDeportiva;
 import logica.institucion.Institucion;
 
 public class Controlador extends IControlador {
@@ -170,7 +173,6 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
 			cu.set(rootSocio.get("urlImagen"), imagen);
-
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
 			em.flush();
@@ -219,7 +221,6 @@ public class Controlador extends IControlador {
 		try {
 			em.getTransaction().begin();
 			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
-			
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -234,18 +235,19 @@ public class Controlador extends IControlador {
 		return listaCuponeras;
 	}
 	
-	public DtCuponera seleccionCuponera(String nombreCup) {
+/*	
+	public ArrayList<String> seleccionCuponera(String nombreCup) {
 		
-		ArrayList<DtCuponera> cuponeraASeleccionar = new ArrayList<DtCuponera>();
 		EntityManager em = emf.createEntityManager();
-		Cuponera cup;
+		Cuponera cup = null;
+		
 		try {
 			em.getTransaction().begin();
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
 			if(cup == null){
-				throw new Exception("La cuponera ingresada no existe");
+				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getDatosConAC();
+			cup.getData();
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -254,17 +256,11 @@ public class Controlador extends IControlador {
 			em.close();
 		}
 		
-		//DtCuponera nombres = cup.getNombreCup();
-		//encontrar cuponera
-		//obtener datos
-		//iterar en actividades
-		//obtener nombre
-		//devolver resultado(datos)
+		//cup.getNombres(); //esto le paso al combobox?
 		return null;
 	}
-	
+	*/
 	//CU alta institucion deportiva
-
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
 		EntityManager em = emf.createEntityManager();
@@ -379,4 +375,72 @@ public class Controlador extends IControlador {
             
             return listaADevolver;
         }
+        //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
+        public ArrayList<DtCuponera> ListarCuponeras(){
+            //call entity manager and do the query
+            EntityManager em = emf.createEntityManager();
+            
+            List<Cuponera> list = em.createQuery("SELECT c FROM Cuponera c").getResultList();
+            
+            ArrayList<DtCuponera> l = null;
+            
+            for(Cuponera cup : list)
+            {
+                Collection<String> actividades = null;
+                Collection<ActividadDeportiva> Actis = cup.getActividades();
+                for(ActividadDeportiva a : Actis)
+                {
+                    actividades.add(a.getNombreAct());
+                }
+                DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
+                l.add(DtCup);
+            }
+              
+            return l;
+        }
+        public ArrayList<DtInstitucion> ListarInstituciones(){
+            ArrayList<DtInstitucion> l = new ArrayList<DtInstitucion>();
+            return l;
+        }
+        
+        public ArrayList<String> getNombreCuponeras(){
+            
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            //listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponeras c").getResultList());  me tira error "cuponera no esta mapeada"
+            
+            return listaADevolver;
+            
+        }
+        
+        //-----------------------------------------------------------------------------------------------------------------
+        
+        
+        public ArrayList<String> consultarProfe(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            
+            listaADevolver.addAll(em.createQuery("select p.nombre from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());  
+            //System.out.println(listaADevolver);
+            return listaADevolver;
+        }
+        
+        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+            EntityManager em = emf.createEntityManager();
+            
+            Institucion insti = em.find(Institucion.class,nombreInsti);
+            
+            try{
+                insti.darAltaClaseInsti(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, this.emf);
+            }catch(Exception e){
+                
+            }
+            
+            
+        }
+        
 }

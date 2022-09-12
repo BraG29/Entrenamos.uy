@@ -39,7 +39,10 @@ public class AltaClase extends javax.swing.JFrame {
         this.comboActiDepo.setVisible(false);
         this.comboProfe.setVisible(false);
         this.textURL.setVisible(false);
+        this.textNomClase.setVisible(false);
+        
         this.botonAceptar.setVisible(true);
+        
         
         Fabrica fab = new Fabrica();
         IControlador controlador =  fab.getInterface();
@@ -80,6 +83,7 @@ public class AltaClase extends javax.swing.JFrame {
         labelActiDepo = new javax.swing.JLabel();
         comboProfe = new javax.swing.JComboBox<>();
         labelProfe = new javax.swing.JLabel();
+        textNomClase = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -172,6 +176,13 @@ public class AltaClase extends javax.swing.JFrame {
 
         labelProfe.setText("Prof. que la dicta");
 
+        textNomClase.setText("Escriba el nombre de la clase");
+        textNomClase.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textNomClaseMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,24 +191,21 @@ public class AltaClase extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2)
+                                    .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel3))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(comboProfe, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(labelProfe)))))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel3)))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(textURL)
                                     .addGroup(layout.createSequentialGroup()
@@ -215,14 +223,20 @@ public class AltaClase extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMax)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(comboActiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelActiDepo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(labelMax))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboActiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelActiDepo))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comboProfe, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelProfe)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(textNomClase))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -230,7 +244,7 @@ public class AltaClase extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -238,7 +252,9 @@ public class AltaClase extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboActiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelActiDepo))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textNomClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMMDDAA1)
@@ -256,7 +272,7 @@ public class AltaClase extends javax.swing.JFrame {
                     .addComponent(labelMax))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(textURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -278,13 +294,14 @@ public class AltaClase extends javax.swing.JFrame {
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
         String nombreInsti = comboInsti.getSelectedItem().toString();
-        //String nombreClase = textNombreClase.getText();
+        String nombreClase = textNomClase.getText();
         LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
         //String nombreProfe = textNombreProfe.getText();
         int sociosMin = ((Integer)spinnerMin.getValue());
         int sociosMax = ((Integer)spinnerMax.getValue());
         String URL = textURL.getText();
         LocalDate fechaAlta = LocalDate.now();
+
         
         if(sociosMin > sociosMax){//control de valores Socios
             VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", "Socios min no puede ser mayor a Socios max", java.awt.Color.RED);
@@ -292,17 +309,23 @@ public class AltaClase extends javax.swing.JFrame {
             return;
             
         }else{
-            if(comboActiDepo.getSelectedIndex() == 0 || comboProfe.getSelectedIndex() == 0 || URL.equals("") || comboInsti.getSelectedIndex() == 0){
+            if(comboActiDepo.getSelectedIndex() == 0 || comboProfe.getSelectedIndex() == 0 || URL.equals("") || comboInsti.getSelectedIndex() == 0 || nombreClase.equals("")){
                 VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", "Hay campos vacios sin rellenar", java.awt.Color.RED);
                 ventanaError.setVisible(true);
                 return;
             }else{
                 
                 //llamo a la función de verda
+                Fabrica fab = new Fabrica();
+                IControlador controlador = fab.getInterface();
+        
+                controlador.darAltaClase(nombreInsti,nombreClase, fechaInicio, this.comboProfe.getSelectedItem().toString() , sociosMin, sociosMax, URL, fechaAlta);
+        
+                //LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
             }
         }
         
-        //LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
+        
         
     }//GEN-LAST:event_botonAceptarActionPerformed
 
@@ -323,9 +346,27 @@ public class AltaClase extends javax.swing.JFrame {
             
             this.comboActiDepo.setVisible(true);
             this.comboProfe.setVisible(true);
+            comboActiDepo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            comboProfe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            
             this.textURL.setVisible(true);
-            //controlador.get
-            //LLAMADO DE ALGOOOOOO
+            this.textNomClase.setVisible(true);
+            
+            Fabrica fab = new Fabrica();
+            IControlador controlador = fab.getInterface();
+            
+            ArrayList<String> arrStrActiDepo = controlador.consultarActividadDepo(this.comboInsti.getSelectedItem().toString());
+            
+            for (int i = 0; i < arrStrActiDepo.size(); i++){//itero para darles el valor 
+            this.comboActiDepo.addItem(arrStrActiDepo.get(i)); 
+            }
+            
+            ArrayList<String> arrStrProfe = controlador.consultarProfe(this.comboInsti.getSelectedItem().toString());
+            
+            for (int i = 0; i < arrStrProfe.size(); i++){//itero para darles el valor 
+            this.comboProfe.addItem(arrStrProfe.get(i)); 
+            }
+            
             
         }else{
             this.labelActiDepo.setVisible(false);
@@ -342,8 +383,11 @@ public class AltaClase extends javax.swing.JFrame {
             this.spinnerMin.setVisible(false);
             
             this.comboActiDepo.setVisible(false);
+            comboActiDepo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            comboProfe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             this.comboProfe.setVisible(false);
             this.textURL.setVisible(false);
+            this.textNomClase.setVisible(false);
         }
     }//GEN-LAST:event_comboInstiActionPerformed
 
@@ -355,6 +399,12 @@ public class AltaClase extends javax.swing.JFrame {
 
     private void comboInstiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboInstiMouseClicked
     }//GEN-LAST:event_comboInstiMouseClicked
+
+    private void textNomClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textNomClaseMouseClicked
+        if(this.textNomClase.getText().equals("Escriba el nombre de la clase")){
+            this.textNomClase.setText("");
+        }
+    }//GEN-LAST:event_textNomClaseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -410,6 +460,7 @@ public class AltaClase extends javax.swing.JFrame {
     private javax.swing.JSpinner spinnerFechaIni;
     private javax.swing.JSpinner spinnerMax;
     private javax.swing.JSpinner spinnerMin;
+    private javax.swing.JTextField textNomClase;
     private javax.swing.JTextField textURL;
     // End of variables declaration//GEN-END:variables
 }

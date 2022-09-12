@@ -39,6 +39,8 @@ public class VentanaMensaje extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaMensaje(String titulo, String mensaje,  Color color) {
+            
+                System.out.println(mensaje);
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 368, 256);

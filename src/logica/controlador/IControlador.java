@@ -39,7 +39,7 @@ public class IControlador {
 		return null;
 	}
 	
-	public DtCuponera seleccionCuponera(String nombreCup) {
+	public ArrayList<String> seleccionCuponera(String nombreCup) {
 		return null;
 	}
 	
@@ -60,11 +60,31 @@ public class IControlador {
 			float descuento) {
 	}
         
+        //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
+        public ArrayList<DtCuponera> ListarCuponeras(){
+            return null;
+        }
+        public ArrayList<DtInstitucion> ListarInstituciones(){
+            return null;
+        }
+        
+        public ArrayList<String> getNombreCuponeras(){
+            return null;
+        }
+        //-----------------------------------------------------------------------------------------------------------------
         public ArrayList<String> getNombreInstituciones(){
             return null;
         }
 
         public ArrayList<String> consultarActividadDepo(String nombreInsti){
             return null;
+        }
+        
+        public ArrayList<String> consultarProfe(String nombreInsti){
+            return null;
+        }
+        
+        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+            
         }
 }

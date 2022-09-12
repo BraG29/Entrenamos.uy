@@ -2,6 +2,7 @@
 package logica.datatypes;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -15,9 +16,9 @@ public class DtCuponera {
     public final float descuento;
     public final LocalDateTime fechaAlta;
     public final int cantClases;
-    public final ArrayList<String> actividades;
+    public final Collection<String> actividades;
 
-    public DtCuponera(String nombreCup, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, float descuento, LocalDateTime fechaAlta, int cantClases, ArrayList<String> actis) {
+    public DtCuponera(String nombreCup, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, float descuento, LocalDateTime fechaAlta, int cantClases, Collection<String> actis) {
         this.nombreCup = nombreCup;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -27,4 +28,5 @@ public class DtCuponera {
         this.cantClases = cantClases;
         this.actividades = actis;
     }
+    
 }

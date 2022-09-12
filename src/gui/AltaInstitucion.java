@@ -145,7 +145,7 @@ public class AltaInstitucion extends JFrame {
 		contentPane.add(lblErrorURL);
 		lblErrorURL.setVisible(true);
 		
-		JLabel lblUsuarioCreadoCon = new JLabel("Institución creado con exito!");
+		JLabel lblUsuarioCreadoCon = new JLabel("Institución creada con exito!");
 		lblUsuarioCreadoCon.setVisible(false);
 		lblUsuarioCreadoCon.setBounds(136, 238, 226, 15);
 		contentPane.add(lblUsuarioCreadoCon);
