@@ -56,8 +56,8 @@ public class IControlador {
 
 	}
 
-	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
-			float descuento) {
+	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
+			LocalDate fechaFin, float descuento) {
 	}
         
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
