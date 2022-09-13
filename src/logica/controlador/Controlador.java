@@ -59,7 +59,7 @@ public class Controlador extends IControlador {
 		this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
 		this.em = emf.createEntityManager();
 		this.tran = em.getTransaction();
-		this.tran.begin();
+		//this.tran.begin();
 	}
 	
 	public void closeConnection(){
@@ -73,9 +73,10 @@ public class Controlador extends IControlador {
 		//EntityManager em = emf.createEntityManager();
 		try {
 			Socio s = new Socio(nick, apellido, email, nombre, fechaNac, imagen);
+			tran.begin();
 			em.persist(s);
 			em.flush();
-			tran.commit();
+			this.tran.commit();
 			System.out.println("Usuario creado");
 		} catch (PersistenceException e) {
 			tran.rollback();
@@ -99,6 +100,7 @@ public class Controlador extends IControlador {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
+			tran.begin();
 			em.persist(p);
 			em.flush();
 			tran.commit();
@@ -135,7 +137,7 @@ public class Controlador extends IControlador {
 			listNickProfe = em.createQuery("SELECT nickname FROM Profesor").getResultList();
 			listEmailProfe = em.createQuery("SELECT email FROM Profesor").getResultList();
 		}catch(PersistenceException e) {
-			tran.rollback();
+			//tran.rollback();
 		}
 		for(int i = 0; i < listNickSocio.size(); i++) {
 			String nS = (String)listNickSocio.get(i);
@@ -182,7 +184,7 @@ public class Controlador extends IControlador {
 	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac, String imagen) {
 		//EntityManager em = emf.createEntityManager();
 		try {
-			//tran.begin();
+			tran.begin();
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaUpdate<Socio> cu = cb.createCriteriaUpdate(Socio.class);
 			Root<Socio> rootSocio = cu.from(Socio.class);
@@ -204,7 +206,7 @@ public class Controlador extends IControlador {
 		
 		//EntityManager em = emf.createEntityManager();
 		try {
-			//tran.begin();
+			tran.begin();
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaUpdate<Profesor> cu = cb.createCriteriaUpdate(Profesor.class);
 			Root<Profesor> rootProfesor = cu.from(Profesor.class);
@@ -287,7 +289,7 @@ public class Controlador extends IControlador {
 			if(existe != null) {
 				throw new Exception("La institución ingresada ya existe");
 			}
-			//tran.begin();
+			tran.begin();
 			Institucion inst = new Institucion(nombreInst, descripcion, URL);
 			inst.setNombreInst(nombreInst);
 			inst.setDescripcion(descripcion);
@@ -295,9 +297,7 @@ public class Controlador extends IControlador {
 			em.persist(inst);
 			tran.commit();
 		} catch (Exception ex) {
-			if (em != null) {
-				tran.rollback();
-			}
+			tran.rollback();
 			ex.printStackTrace();
 		} finally {
 			//em.close();
@@ -312,7 +312,7 @@ public class Controlador extends IControlador {
 		//LocalDateTime fechaAlta = LocalDateTime.now();
 
 		try {
-			//tran.begin();
+			tran.begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);
 			nuevaCuponera.setDescripcion(descripcion);
