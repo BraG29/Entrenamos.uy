@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
+import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;

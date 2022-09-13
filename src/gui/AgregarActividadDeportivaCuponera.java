@@ -5,11 +5,15 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
+
 
 import logica.datatypes.DtCuponera;
 
@@ -193,10 +197,38 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
         //Set Backend Access
         Fabrica f = new Fabrica();
         IControlador sistema = f.getInterface();
-        
+        //prepare data to send into backend
+        //cuponera
+        System.out.println("In Menu AgregarActis");
         System.out.println(this.SelCuponeraCB.getSelectedItem().toString());
+        String nombreCup = this.SelCuponeraCB.getSelectedItem().toString();
+        //actividad
         System.out.println(this.ActividadesDeportivasLS.getSelectedValue());
+        String nombreActi = this.ActividadesDeportivasLS.getSelectedValue();
+        
+        //error check that cant classes isnt a string type object but a proper Integer
         System.out.println(this.CantidadClasesTF.getText());
+        int cantClasses = 0;
+        boolean success = false;
+        try{
+            cantClasses = Integer.parseInt(this.CantidadClasesTF.getText());
+            
+            success = true;
+           }
+        catch (NumberFormatException ex){
+            success = false;
+            System.out.println("Error!");
+            //ToDo show error message to Client
+        }
+        if(success == true){
+            //Call backend, send data
+            boolean persisted = sistema.agregarActividadCuponera(nombreCup,nombreActi,cantClasses);
+            if(persisted==true){
+                System.out.println("Success!");
+                this.ListarActis();
+            }
+            else System.out.println("Error!");
+        }
         
     }//GEN-LAST:event_GuardarBTActionPerformed
     
@@ -232,17 +264,21 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
             
             //Compare Actis, Delete Overlapping Actis from Set
             int i = 0;
-            if(ActisDeCup.size() != 0){
+            if(!ActisDeCup.isEmpty()){
+                Collection<String> objectsToRemove = new ArrayList<>();
+                
                 for(String InstiActis : InstiCBSelectionActis){
                     System.out.println(InstiActis); 
                     boolean t = ActisDeCup.contains(InstiActis);
                     System.out.print("Actis De Cup True?: ");
                     System.out.println(t);
                     if(t == true){
-                        InstiCBSelectionActis.remove(InstiActis);
+                        objectsToRemove.add(InstiActis);
                     }
-
                     i++;
+                }
+                if(!objectsToRemove.isEmpty()){
+                    InstiCBSelectionActis.removeAll(objectsToRemove);
                 }
             }
             
@@ -262,37 +298,37 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AgregarActividadDeportivaCuponera().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AgregarActividadDeportivaCuponera.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AgregarActividadDeportivaCuponera().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ActividadesDeportivasLS;

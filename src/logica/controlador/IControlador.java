@@ -9,6 +9,14 @@ import logica.datatypes.*;
 import logica.datatypes.DtCuponera;
 
 public class IControlador {
+	
+	public void initConnection() {
+		
+	}
+	
+	public void closeConnection() {
+		
+	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
 	}
@@ -56,8 +64,8 @@ public class IControlador {
 
 	}
 
-	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
-			float descuento) {
+	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
+			LocalDate fechaFin, float descuento) {
 	}
         
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
@@ -74,7 +82,8 @@ public class IControlador {
         public ArrayList<String> getActisDeCuponera(String nombreCup){
             return null;
         }
-        public void agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
+        public boolean agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
+            return false;
         }
         //-----------------------------------------------------------------------------------------------------------------
         public ArrayList<String> getNombreInstituciones(){

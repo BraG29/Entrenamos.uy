@@ -1,5 +1,6 @@
 package logica.institucion;
 
+import java.io.Serializable;
 import logica.cuponera.Cuponera;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.EntityTransaction;
 
 
 import logica.clase.Clase;
@@ -34,7 +36,7 @@ import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 
 @Entity
-public class ActividadDeportiva {
+public class ActividadDeportiva implements Serializable {
 	@Id
 	@Column(name="nombre")
     private String nombreAct;
@@ -100,6 +102,12 @@ public class ActividadDeportiva {
         return fechaRegistro;
     }
 
+    public Collection<Cuponera> getCuponeras() {
+        return cuponeras;
+    }
+    
+    
+
     //Setters
     public void setNombreAct(String nombreAct) {
         this.nombreAct = nombreAct;
@@ -120,7 +128,25 @@ public class ActividadDeportiva {
     public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+
+    public void setCuponeras(Collection<Cuponera> cuponeras) {
+        this.cuponeras = cuponeras;
+    }
     
+    public boolean agregarCup(Cuponera cup,EntityManager em,EntityTransaction tran){
+        try{
+            tran.begin();
+            em.flush();
+            this.cuponeras.add(cup);
+            tran.commit();
+            return true;
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+            tran.rollback();
+        }
+        return false;
+    }
     
     public DtActividadDeportiva getDTActividadDeportiva(){
         ArrayList<String> strClases = new ArrayList<String>();
