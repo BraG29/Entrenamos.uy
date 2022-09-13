@@ -104,7 +104,7 @@ public class Profesor extends Usuario{
 
     }
     
-    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManager em) {
+    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManager em , EntityTransaction tran) {
     	LocalTime horaIni = fechaInicio.toLocalTime();
 
         System.out.println("antes de crear la clase");
@@ -113,12 +113,10 @@ public class Profesor extends Usuario{
         
         em.flush();
         try {
-        	this.claseDictada.add(claseADictar);
-        	
-        	EntityTransaction transaccion = em.getTransaction();
-        	transaccion.begin();
+        	//tran.begin();
         	em.persist(claseADictar);
-        	transaccion.commit();
+        	this.claseDictada.add(claseADictar);
+        	tran.commit();
         	
         }catch(Exception e) {
         	throw new IllegalArgumentException(e.getMessage());

@@ -459,7 +459,7 @@ public class Controlador extends IControlador {
             System.out.println("despues de crear la insti");
             
             try{
-                Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, em);
+                Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, this.em,this.tran);
             }catch(Exception e){
                 throw new IllegalArgumentException(e.getMessage());
             }   
