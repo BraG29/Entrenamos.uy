@@ -3,7 +3,9 @@ package logica.institucion;
 import java.io.Serializable;
 import logica.cuponera.Cuponera;
 
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 
 import logica.clase.Clase;
@@ -45,6 +48,7 @@ public class ActividadDeportiva implements Serializable {
     private float costo;
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
+    private String IMG_URL;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="Actividad_Cuponera",
@@ -64,12 +68,13 @@ public class ActividadDeportiva implements Serializable {
    
 
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro,String IMG, Institucion institu) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.costo = costo;
         this.fechaRegistro = fechaRegistro;
+        this.IMG_URL = IMG;
         this.insti = institu;
     }
     
@@ -159,15 +164,37 @@ public class ActividadDeportiva implements Serializable {
         return DtActi;
     }
     
+    
     public ArrayList<String> getNombreClases(){
         ArrayList<String> nombreClases = new ArrayList<String>();
-        //nombreClases.addAll(clases.keySet());
         
         return nombreClases;
     }
     
-    public void darAltaClaseActi(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
-        //Clase clase = new Clase(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta);
+    public void darAltaClaseActi(Clase claseDictada, EntityManager em,EntityTransaction tran){
+       
+    	try {
+    		tran.begin();
+    		this.clases.add(claseDictada);
+    		tran.commit();
+        }catch(Exception e) {
+        	tran.rollback();
+        	System.out.println("UWUWUWUWUWU");
+        	throw new IllegalArgumentException(e.getMessage());
+        }
+    	
+//        System.out.println("antes de hacer la transaccion");
+//        EntityTransaction transaccion = em.getTransaction();
+//        transaccion.begin();
+//        
+//        em.persist(clase);
+//        
+//        transaccion.commit();
+//        
+//        System.out.println("despues de hacer la transaccion");
+        
+        
+        
         //arreglar el constructor de Clase
     }
     
