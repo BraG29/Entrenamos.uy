@@ -1,4 +1,5 @@
 package logica.controlador;
+import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import java.lang.management.GarbageCollectorMXBean;
 import java.sql.SQLException;
@@ -47,6 +48,7 @@ public class Controlador extends IControlador {
 	
 	private String nombreCup;
 	private Usuario uRecordado;
+	private Institucion instiRecordada;
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
 
@@ -323,11 +325,6 @@ public class Controlador extends IControlador {
 	}
         
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
-            
-            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
-            
-
-            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
             EntityManager em = emf.createEntityManager();
             Institucion insti = em.find(Institucion.class, nombreInsti);
             
@@ -340,8 +337,8 @@ public class Controlador extends IControlador {
                 }
                 
             }else{
-                throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
                 //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+                throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
                 //excepción de que insti no existe
             }  
         }
@@ -360,21 +357,20 @@ public class Controlador extends IControlador {
             return listaADevolver;
         }
         
-        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){//no se quién me toco la función, pero esto debe devolver las ACTIVIDADES DEPORTIVAS, algo OBVIO que dice en el mismo nombre de la funcion.
             ArrayList<String> listaADevolver = new ArrayList<String>();
             
             EntityManager em = emf.createEntityManager();
             
             
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            
-            
-            
-            
+            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
+      
             
             return listaADevolver;
         }
+        
+        
+      //------------------------------------------------------------------------------------------------------------------------------------------
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
         public ArrayList<DtCuponera> ListarCuponeras(){
             //call entity manager and do the query
@@ -398,11 +394,14 @@ public class Controlador extends IControlador {
               
             return l;
         }
+        
+        
+//------------------------------------------------------------------------------------------------------------------------------------------
         public ArrayList<DtInstitucion> ListarInstituciones(){
             ArrayList<DtInstitucion> l = new ArrayList<DtInstitucion>();
             return l;
         }
-        
+//------------------------------------------------------------------------------------------------------------------------------------------        
         public ArrayList<String> getNombreCuponeras(){
             
             ArrayList<String> listaADevolver = new ArrayList<String>();
@@ -415,32 +414,54 @@ public class Controlador extends IControlador {
             
         }
         
-        //-----------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------
         
         
-        public ArrayList<String> consultarProfe(String nombreInsti){
-            ArrayList<String> listaADevolver = new ArrayList<String>();
+        public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
+            ArrayList<String> listaNick = new ArrayList<String>();
+            ArrayList<String> listaEmails = new ArrayList<String>();
             
             EntityManager em = emf.createEntityManager();
             
+            listaNick.addAll(em.createQuery("select p.nickname from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
+            listaEmails.addAll(em.createQuery("select p.email from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
             
-            listaADevolver.addAll(em.createQuery("select p.nombre from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());  
-            //System.out.println(listaADevolver);
-            return listaADevolver;
-        }
-        
-        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
-            EntityManager em = emf.createEntityManager();
-            
-            Institucion insti = em.find(Institucion.class,nombreInsti);
-            
-            try{
-                insti.darAltaClaseInsti(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, this.emf);
-            }catch(Exception e){
-                
+            ArrayList<DtUsrKey> listaADevolver = new ArrayList<DtUsrKey>();
+            for(int i = 0; i < listaNick.size();i++) {
+            	
+            	listaADevolver.add(new DtUsrKey(listaNick.get(i),listaEmails.get(i)));
+            	//listaADevolver.add(listaNick.get(i) + " / " + listaEmails.get(i));
             }
             
-            
+            //System.out.println(list.toString());
+            return listaADevolver;
         }
+//----------------------------------------------------------------------------------------------------------------------------------------------------
         
+
+        
+        public void darAltaClase(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+            EntityManager em = emf.createEntityManager();
+            
+            System.out.println("Antes de crear la insti");
+            Profesor profe = em.find(Profesor.class, new Usuario(profeKey.nickname,profeKey.email));
+            System.out.println("despues de crear la insti");
+            
+            try{
+                Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, em);
+            }catch(Exception e){
+                throw new IllegalArgumentException(e.getMessage());
+            }   
+        }
+      //------------------------------------------------------------------------------------------------------------------------------------------ 
+        
+      public void recordarInsti(String nombreInsti) {
+    	  EntityManager em = this.emf.createEntityManager();
+    	  
+    	  this.instiRecordada = em.find(Institucion.class,nombreInsti);
+    	  System.out.println(this.instiRecordada.getNombreInst());
+      }
+      
+    //------------------------------------------------------------------------------------------------------------------------------------------ 
+      
 }

@@ -51,8 +51,7 @@ public class IControlador {
 		
 
 
-	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo,
-			LocalDateTime fechaAlta) {
+	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta) {
 
 	}
 
@@ -80,11 +79,15 @@ public class IControlador {
             return null;
         }
         
-        public ArrayList<String> consultarProfe(String nombreInsti){
+        public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
             return null;
         }
         
-        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+        public void darAltaClase(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
             
+        }
+        
+        public void recordarInsti(String nombreInsti) {
+        	
         }
 }

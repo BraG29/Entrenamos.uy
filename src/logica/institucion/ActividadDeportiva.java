@@ -2,7 +2,9 @@ package logica.institucion;
 
 import logica.cuponera.Cuponera;
 
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 
 import logica.clase.Clase;
@@ -133,15 +136,34 @@ public class ActividadDeportiva {
         return DtActi;
     }
     
+    
     public ArrayList<String> getNombreClases(){
         ArrayList<String> nombreClases = new ArrayList<String>();
-        //nombreClases.addAll(clases.keySet());
         
         return nombreClases;
     }
     
-    public void darAltaClaseActi(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
-        //Clase clase = new Clase(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta);
+    public void darAltaClaseActi(String nombreInsti, String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManagerFactory emf){
+        LocalTime horaIni = fechaInicio.toLocalTime();
+
+        System.out.println("antes de crear la clase");
+        Clase clase = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
+        System.out.println("despues de crear la clase");
+        
+        EntityManager em = emf.createEntityManager();
+        
+        System.out.println("antes de hacer la transaccion");
+        EntityTransaction transaccion = em.getTransaction();
+        transaccion.begin();
+        
+        em.persist(clase);
+        
+        transaccion.commit();
+        
+        System.out.println("despues de hacer la transaccion");
+        
+        
+        
         //arreglar el constructor de Clase
     }
     

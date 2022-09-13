@@ -8,6 +8,8 @@ import logica.controlador.IControlador;
 import logica.controlador.Fabrica;
 import java.util.ArrayList;
 
+import logica.datatypes.DtUsrKey;
+
 
 public class AltaClase extends javax.swing.JFrame {
 
@@ -15,6 +17,7 @@ public class AltaClase extends javax.swing.JFrame {
      public LocalDateTime convertirALocalDateTime(Date dateAConvertir){
         return dateAConvertir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
+     
     
     /**
      * Creates new form AltaClase
@@ -42,6 +45,7 @@ public class AltaClase extends javax.swing.JFrame {
         this.textNomClase.setVisible(false);
         
         this.botonAceptar.setVisible(true);
+        
         
         
         Fabrica fab = new Fabrica();
@@ -174,7 +178,7 @@ public class AltaClase extends javax.swing.JFrame {
 
         comboProfe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
-        labelProfe.setText("Prof. que la dicta");
+        labelProfe.setText("Profesor");
 
         textNomClase.setText("Escriba el nombre de la clase");
         textNomClase.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -204,38 +208,37 @@ public class AltaClase extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                            .addComponent(textNomClase)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textURL)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMMDDAA1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelFechaIni))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(labelSocios)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spinnerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMin)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelMax))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(textURL)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(spinnerFechaIni, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(labelMMDDAA1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(labelFechaIni))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(labelSocios)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(spinnerMin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(labelMin)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(spinnerMax, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(labelMax)))
+                                    .addComponent(labelProfe, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(comboActiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(labelActiDepo))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboProfe, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelProfe)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(textNomClase))))
+                                    .addComponent(comboProfe, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -297,6 +300,7 @@ public class AltaClase extends javax.swing.JFrame {
         String nombreClase = textNomClase.getText();
         LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
         //String nombreProfe = textNombreProfe.getText();
+        //int sociosMin = ((Integer)spinnerMin.getValue());
         int sociosMin = ((Integer)spinnerMin.getValue());
         int sociosMax = ((Integer)spinnerMax.getValue());
         String URL = textURL.getText();
@@ -318,10 +322,17 @@ public class AltaClase extends javax.swing.JFrame {
                 //llamo a la función de verda
                 Fabrica fab = new Fabrica();
                 IControlador controlador = fab.getInterface();
-        
-                controlador.darAltaClase(nombreInsti,nombreClase, fechaInicio, this.comboProfe.getSelectedItem().toString() , sociosMin, sociosMax, URL, fechaAlta);
-        
-                //LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
+                
+                try {
+                	String[] nickAndEmail = this.comboProfe.getSelectedItem().toString().split("/",0);
+                	DtUsrKey dtProfe = new DtUsrKey(nickAndEmail[0],nickAndEmail[1]);
+                	controlador.darAltaClase(nombreInsti,this.comboActiDepo.getSelectedItem().toString() ,nombreClase, fechaInicio,dtProfe  , sociosMin, sociosMax, URL, fechaAlta);
+                }catch(Exception e) {
+                	VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", e.getMessage(),java.awt.Color.RED);
+                	ventanaError.setVisible(true);
+                	return;
+                	
+                }
             }
         }
         
@@ -331,6 +342,7 @@ public class AltaClase extends javax.swing.JFrame {
 
     private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
         if(this.comboInsti.getSelectedIndex() != 0){
+        	//---------Muestro los componentes necesarios----------------------------------------
             this.labelActiDepo.setVisible(true);
             this.labelFechaIni.setVisible(true);
             this.labelMMDDAA1.setVisible(true);
@@ -338,33 +350,40 @@ public class AltaClase extends javax.swing.JFrame {
             this.labelMax.setVisible(true);
             this.labelMin.setVisible(true);
             this.labelSocios.setVisible(true);
-            
+          //------------------------------------------------------------------------------------
             //this.spinnerFechaFin.setVisible(true);
             this.spinnerFechaIni.setVisible(true);
             this.spinnerMax.setVisible(true);
             this.spinnerMin.setVisible(true);
-            
+          //------------------------------------------------------------------------------------
             this.comboActiDepo.setVisible(true);
             this.comboProfe.setVisible(true);
+            //Reseteo los valores de los combos
             comboActiDepo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             comboProfe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             
+            //------------------------------------------------------------------------------------
             this.textURL.setVisible(true);
             this.textNomClase.setVisible(true);
             
+            
+            //----------------------------------logica posta------------------------------------------------------
+            //-----------------------------------------------------------------------------------------------------
             Fabrica fab = new Fabrica();
             IControlador controlador = fab.getInterface();
             
-            ArrayList<String> arrStrActiDepo = controlador.consultarActividadDepo(this.comboInsti.getSelectedItem().toString());
+            ArrayList<String> arrStrActiDepo = controlador.consultarActividadDepo(this.comboInsti.getSelectedItem().toString());//consigo las Actis Depos de la BdD
+            controlador.recordarInsti(comboInsti.getSelectedItem().toString());//le mando el nombre del Insti para que el Controlador lo recuerde a pedido de BRAIAN
             
             for (int i = 0; i < arrStrActiDepo.size(); i++){//itero para darles el valor 
             this.comboActiDepo.addItem(arrStrActiDepo.get(i)); 
             }
             
-            ArrayList<String> arrStrProfe = controlador.consultarProfe(this.comboInsti.getSelectedItem().toString());
+            ArrayList<DtUsrKey> arrStrProfe = controlador.consultarProfe(this.comboInsti.getSelectedItem().toString());
             
-            for (int i = 0; i < arrStrProfe.size(); i++){//itero para darles el valor 
-            this.comboProfe.addItem(arrStrProfe.get(i)); 
+            for (int i = 0; i < arrStrProfe.size(); i++){//itero para darles el valor
+            	
+            	this.comboProfe.addItem(arrStrProfe.get(i).nickname + "/" + arrStrProfe.get(i).email) ; 
             }
             
             
@@ -385,6 +404,7 @@ public class AltaClase extends javax.swing.JFrame {
             this.comboActiDepo.setVisible(false);
             comboActiDepo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             comboProfe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            
             this.comboProfe.setVisible(false);
             this.textURL.setVisible(false);
             this.textNomClase.setVisible(false);

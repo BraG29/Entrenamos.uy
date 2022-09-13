@@ -1,5 +1,7 @@
 package logica.usuario;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -7,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -36,7 +39,7 @@ public class Profesor extends Usuario{
     public String sitioWeb;
     
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Clase> claseDicatada;
+    private Collection<Clase> claseDictada;//taba mal escrito "Dicatada", aviso por si rompe algo lmao
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="institucion")
@@ -99,6 +102,31 @@ public class Profesor extends Usuario{
         		this.fechaNac, this.urlImagen, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
     	return dtP;
 
+    }
+    
+    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManager em) {
+    	LocalTime horaIni = fechaInicio.toLocalTime();
+
+        System.out.println("antes de crear la clase");
+        Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
+        System.out.println("despues de crear la clase");
+        
+        em.flush();
+        try {
+        	this.claseDictada.add(claseADictar);
+        	
+        	EntityTransaction transaccion = em.getTransaction();
+        	transaccion.begin();
+        	em.persist(claseADictar);
+        	transaccion.commit();
+        	
+        }catch(Exception e) {
+        	throw new IllegalArgumentException(e.getMessage());
+        }
+        
+        
+    	
+    	return claseADictar;
     }
     
 }
