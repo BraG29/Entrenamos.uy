@@ -71,6 +71,11 @@ public class IControlador {
         public ArrayList<String> getNombreCuponeras(){
             return null;
         }
+        public ArrayList<String> getActisDeCuponera(String nombreCup){
+            return null;
+        }
+        public void agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
+        }
         //-----------------------------------------------------------------------------------------------------------------
         public ArrayList<String> getNombreInstituciones(){
             return null;

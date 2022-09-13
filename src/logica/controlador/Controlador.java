@@ -32,6 +32,7 @@ import org.hibernate.jpa.internal.util.PessimisticNumberParser;
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Query;
 
 import logica.institucion.Institucion;
@@ -366,11 +367,7 @@ public class Controlador extends IControlador {
             EntityManager em = emf.createEntityManager();
             
             
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            
-            
-            
+            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
             
             
             return listaADevolver;
@@ -379,7 +376,7 @@ public class Controlador extends IControlador {
         public ArrayList<DtCuponera> ListarCuponeras(){
             //call entity manager and do the query
             EntityManager em = emf.createEntityManager();
-            
+
             List<Cuponera> list = em.createQuery("SELECT c FROM Cuponera c").getResultList();
             
             ArrayList<DtCuponera> l = null;
@@ -409,9 +406,23 @@ public class Controlador extends IControlador {
             
             EntityManager em = emf.createEntityManager();
             
-            //listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponeras c").getResultList());  me tira error "cuponera no esta mapeada"
+            listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponera c").getResultList());
             
             return listaADevolver;
+            
+        }
+        
+        public ArrayList<String> getActisDeCuponera(String nombreCup){
+            ArrayList<String> listaADevolver = new ArrayList<String>();
+            
+            EntityManager em = emf.createEntityManager();
+            
+            listaADevolver.addAll(em.createQuery("select c.actividades from Cuponera c").getResultList());
+            
+            return listaADevolver;
+        }
+        
+        public void agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
             
         }
         
