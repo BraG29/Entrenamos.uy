@@ -143,24 +143,27 @@ public class ActividadDeportiva {
         return nombreClases;
     }
     
-    public void darAltaClaseActi(String nombreInsti, String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManagerFactory emf){
-        LocalTime horaIni = fechaInicio.toLocalTime();
-
-        System.out.println("antes de crear la clase");
-        Clase clase = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
-        System.out.println("despues de crear la clase");
-        
-        EntityManager em = emf.createEntityManager();
-        
-        System.out.println("antes de hacer la transaccion");
-        EntityTransaction transaccion = em.getTransaction();
-        transaccion.begin();
-        
-        em.persist(clase);
-        
-        transaccion.commit();
-        
-        System.out.println("despues de hacer la transaccion");
+    public void darAltaClaseActi(Clase claseDictada, EntityManager em,EntityTransaction tran){
+       
+    	try {
+    		tran.begin();
+    		this.clases.add(claseDictada);
+    		tran.commit();
+        }catch(Exception e) {
+        	tran.rollback();
+        	System.out.println("UWUWUWUWUWU");
+        	throw new IllegalArgumentException(e.getMessage());
+        }
+    	
+//        System.out.println("antes de hacer la transaccion");
+//        EntityTransaction transaccion = em.getTransaction();
+//        transaccion.begin();
+//        
+//        em.persist(clase);
+//        
+//        transaccion.commit();
+//        
+//        System.out.println("despues de hacer la transaccion");
         
         
         

@@ -19,8 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
-
-
+import logica.clase.Clase;
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
@@ -141,15 +140,13 @@ public class Institucion implements Serializable{
     }
     
     
-    public void darAltaClaseInsti(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
-        EntityManager em = emf.createEntityManager();
-        
+    public void darAltaClaseInsti(String nombreActiDepo,Clase claseDictada, EntityManager em, EntityTransaction tran){
         System.out.println("Antes de crear la acti depo");
         ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActiDepo);
         System.out.println("Despues de crear la acti depo");
         
         try {
-        	acti.darAltaClaseActi(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, emf);
+        	acti.darAltaClaseActi(claseDictada, em, tran);
         }catch(Exception e) {
         	throw new IllegalArgumentException("no se pudo encontrar la Actividad Deportiva asociada");
         }

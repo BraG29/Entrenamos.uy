@@ -46,6 +46,10 @@ public class Clase implements Serializable{
         this.claseURL = claseURL;
         this.fechaRegistro = fechaRegistro;
     }
+    
+    public Clase() {
+    	
+    };
 
 
     

@@ -460,6 +460,7 @@ public class Controlador extends IControlador {
             
             try{
                 Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, this.em,this.tran);
+                this.instiRecordada.darAltaClaseInsti(nombreActiDepo, claseDictada, em, tran);
             }catch(Exception e){
                 throw new IllegalArgumentException(e.getMessage());
             }   
@@ -467,9 +468,8 @@ public class Controlador extends IControlador {
       //------------------------------------------------------------------------------------------------------------------------------------------ 
         
       public void recordarInsti(String nombreInsti) {
-    	  EntityManager em = this.emf.createEntityManager();
     	  
-    	  this.instiRecordada = em.find(Institucion.class,nombreInsti);
+    	  this.instiRecordada = this.em.find(Institucion.class,nombreInsti);
     	  System.out.println(this.instiRecordada.getNombreInst());
       }
       
