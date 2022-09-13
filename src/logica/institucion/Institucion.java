@@ -114,12 +114,12 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, EntityManagerFactory emf){    
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManagerFactory emf){    
         EntityManager em = emf.createEntityManager();
         ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
 
         if(acti == null){
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
 
             
             //arranco la transaccion

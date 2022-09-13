@@ -339,14 +339,14 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
-        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
 
             Institucion insti = em.find(Institucion.class, nombreInsti);
             
             if(insti != null){
                 //hay que hacer try and catch
                 try{
-                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.emf);
+                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.emf);
                 }catch(Exception e){
                     throw new IllegalArgumentException(e.getMessage());
                 }

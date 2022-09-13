@@ -46,6 +46,7 @@ public class ActividadDeportiva {
     private float costo;
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
+    private String IMG_URL;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="Actividad_Cuponera",
@@ -65,12 +66,13 @@ public class ActividadDeportiva {
    
 
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro,String IMG, Institucion institu) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.costo = costo;
         this.fechaRegistro = fechaRegistro;
+        this.IMG_URL = IMG;
         this.insti = institu;
     }
     

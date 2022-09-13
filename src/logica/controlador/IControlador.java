@@ -59,7 +59,7 @@ public class IControlador {
 		
 
 
-	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta) {
+	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL) {
 
 	}
 
