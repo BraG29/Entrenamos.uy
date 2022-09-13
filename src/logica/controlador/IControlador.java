@@ -9,6 +9,14 @@ import logica.datatypes.*;
 import logica.datatypes.DtCuponera;
 
 public class IControlador {
+	
+	public void initConnection() {
+		
+	}
+	
+	public void closeConnection() {
+		
+	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
 	}
