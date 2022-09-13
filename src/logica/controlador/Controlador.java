@@ -303,11 +303,11 @@ public class Controlador extends IControlador {
 
 	}
 
-	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime fechaIni, LocalDateTime fechaFin,
-			float descuento) {
+	public void altaCuponera(String nombreCup, String descripcion, LocalDate fechaIni, LocalDate fechaFin,
+			LocalDate fechaAlta, float descuento) {
 
-		//EntityManager em = emf.createEntityManager();
-		LocalDateTime fechaAlta = LocalDateTime.now();
+
+		//LocalDateTime fechaAlta = LocalDateTime.now();
 
 		try {
 			//tran.begin();
