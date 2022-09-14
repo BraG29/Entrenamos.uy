@@ -337,13 +337,14 @@ public class Controlador extends IControlador {
 	}
         
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
-
+        	System.out.println("Antes de buscar la insti");
             Institucion insti = em.find(Institucion.class, nombreInsti);
+            System.out.println("Despues de buscar la insti"+insti.getNombreInst());
             
             if(insti != null){
                 //hay que hacer try and catch
                 try{
-                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.emf);
+                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
                 }catch(Exception e){
                     throw new IllegalArgumentException(e.getMessage());
                 }
@@ -357,13 +358,7 @@ public class Controlador extends IControlador {
         
         public ArrayList<String> getNombreInstituciones(){
             ArrayList<String> listaADevolver = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            //em.find(Institucion.class,);
-            
-            //List<Institucion> instis = em.createQuery("select i.nombreInst from Institucion i").getResultList();
-            
+                        
             listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
             
             return listaADevolver;
@@ -506,7 +501,7 @@ public class Controlador extends IControlador {
                 throw new IllegalArgumentException(e.getMessage());
             }   
         }
-      //------------------------------------------------------------------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------------------------------------------------------------------ 
         
       public void recordarInsti(String nombreInsti) {
     	  
@@ -514,6 +509,9 @@ public class Controlador extends IControlador {
     	  System.out.println(this.instiRecordada.getNombreInst());
       }
       
-    //------------------------------------------------------------------------------------------------------------------------------------------ 
-      
+//------------------------------------------------------------------------------------------------------------------------------------------ 
+      public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  return acti.getDTActividadDeportiva();
+      }
 }

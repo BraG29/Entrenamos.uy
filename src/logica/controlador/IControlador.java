@@ -104,4 +104,8 @@ public class IControlador {
         public void recordarInsti(String nombreInsti) {
         	
         }
+        
+        public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+        	return null;
+        }
 }

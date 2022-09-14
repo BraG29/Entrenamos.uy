@@ -294,11 +294,10 @@ public class AltaClase extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAceptarMouseClicked
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+    	//--------------------------Consigo los datos para enviar al controlador---------------------------------------
         String nombreInsti = comboInsti.getSelectedItem().toString();
         String nombreClase = textNomClase.getText();
         LocalDateTime fechaInicio = convertirALocalDateTime(((Date)this.spinnerFechaIni.getValue()));
-        //String nombreProfe = textNombreProfe.getText();
-        //int sociosMin = ((Integer)spinnerMin.getValue());
         int sociosMin = ((Integer)spinnerMin.getValue());
         int sociosMax = ((Integer)spinnerMax.getValue());
         String URL = textURL.getText();
