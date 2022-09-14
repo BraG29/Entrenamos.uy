@@ -5,12 +5,15 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
+
 
 import logica.datatypes.DtCuponera;
 
@@ -53,7 +56,6 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
                 
         this.SelCuponeraCB.setModel(new DefaultComboBoxModel(CuponeraList));
         this.SelInstitucionCB.setModel(new DefaultComboBoxModel(InstitucionList));
-        
     }
 
     /**
@@ -94,17 +96,22 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
         jLabel3.setText("Seleccionar Institucion:");
 
         SelInstitucionCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        ActividadesDeportivasLS.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        SelInstitucionCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelInstitucionCBActionPerformed(evt);
+            }
         });
+
         jScrollPane1.setViewportView(ActividadesDeportivasLS);
 
         jLabel4.setText("Cantidad de Clases:");
 
         GuardarBT.setText("Guardar");
+        GuardarBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarBTActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Actividades Deportivas:");
 
@@ -178,9 +185,116 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SelCuponeraCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelCuponeraCBActionPerformed
-        // TODO add your handling code here:
+        this.ListarActis();
     }//GEN-LAST:event_SelCuponeraCBActionPerformed
 
+    private void SelInstitucionCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelInstitucionCBActionPerformed
+        this.ListarActis();
+    }//GEN-LAST:event_SelInstitucionCBActionPerformed
+
+    private void GuardarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarBTActionPerformed
+        
+        //Set Backend Access
+        Fabrica f = new Fabrica();
+        IControlador sistema = f.getInterface();
+        //prepare data to send into backend
+        //cuponera
+        System.out.println("In Menu AgregarActis");
+        System.out.println(this.SelCuponeraCB.getSelectedItem().toString());
+        String nombreCup = this.SelCuponeraCB.getSelectedItem().toString();
+        //actividad
+        System.out.println(this.ActividadesDeportivasLS.getSelectedValue());
+        String nombreActi = this.ActividadesDeportivasLS.getSelectedValue();
+        
+        //error check that cant classes isnt a string type object but a proper Integer
+        System.out.println(this.CantidadClasesTF.getText());
+        int cantClasses = 0;
+        boolean success = false;
+        try{
+            cantClasses = Integer.parseInt(this.CantidadClasesTF.getText());
+            
+            success = true;
+           }
+        catch (NumberFormatException ex){
+            success = false;
+            System.out.println("Error!");
+            //ToDo show error message to Client
+        }
+        if(success == true){
+            //Call backend, send data
+            boolean persisted = sistema.agregarActividadCuponera(nombreCup,nombreActi,cantClasses);
+            if(persisted==true){
+                System.out.println("Success!");
+                this.ListarActis();
+            }
+            else System.out.println("Error!");
+        }
+        
+    }//GEN-LAST:event_GuardarBTActionPerformed
+    
+    private void ListarActis(){
+        //Check if Selection is valid
+        if(this.SelCuponeraCB.getSelectedIndex() == 0 || this.SelInstitucionCB.getSelectedIndex() == 0){
+            System.out.println("Index 0 Selected");
+            String [] Empty = new String [] {""};
+            this.ActividadesDeportivasLS.setListData(Empty);
+        }
+        else
+        {
+            //Fetch Selection
+            String CupCBSelection = this.SelCuponeraCB.getSelectedItem().toString();
+            System.out.print("CupCBSelection :");
+            System.out.println(CupCBSelection);
+            String InstiCBSelection = this.SelInstitucionCB.getSelectedItem().toString();
+            System.out.print("InstiCBSelection :");
+            System.out.println(InstiCBSelection);
+            
+            //Selection Fetched, Call backend
+            Fabrica f = new Fabrica();
+            IControlador sistema = f.getInterface();
+            
+            //Get Data from Backend for Instis
+            ArrayList<String> InstiCBSelectionActis = sistema.consultarActividadDepo(InstiCBSelection);
+            System.out.print("Size of InstiCBSelectionActis = ");
+            System.out.println(InstiCBSelectionActis.size());  
+            //Get Data from Backend for Cuponeras
+            ArrayList <String> ActisDeCup = sistema.getActisDeCuponera(CupCBSelection);
+            System.out.print("Size of ActisDeCup = ");
+            System.out.println(ActisDeCup.size());   
+            
+            //Compare Actis, Delete Overlapping Actis from Set
+            int i = 0;
+            if(!ActisDeCup.isEmpty()){
+                Collection<String> objectsToRemove = new ArrayList<>();
+                
+                for(String InstiActis : InstiCBSelectionActis){
+                    System.out.println(InstiActis); 
+                    boolean t = ActisDeCup.contains(InstiActis);
+                    System.out.print("Actis De Cup True?: ");
+                    System.out.println(t);
+                    if(t == true){
+                        objectsToRemove.add(InstiActis);
+                    }
+                    i++;
+                }
+                if(!objectsToRemove.isEmpty()){
+                    InstiCBSelectionActis.removeAll(objectsToRemove);
+                }
+            }
+            
+            //Prepare String Array for Listing
+            i = 0; //reused
+            String [] ActiList = new String [InstiCBSelectionActis.size()];
+            for(String InstiActis : InstiCBSelectionActis){
+                System.out.println(InstiActis);
+                ActiList[i] = InstiActis;
+               i++;
+            }
+            //List Actis into JList
+            this.ActividadesDeportivasLS.setListData(ActiList);
+        }   
+    }
+    
     /**
      * @param args the command line arguments
      */

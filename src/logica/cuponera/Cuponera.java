@@ -1,5 +1,6 @@
 package logica.cuponera;
 
+import java.io.Serializable;
 import logica.datatypes.DtCuponera;
 import logica.institucion.ActividadDeportiva;
 
@@ -17,9 +18,10 @@ import javax.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.EntityTransaction;
 
 @Entity
-public class Cuponera {
+public class Cuponera implements Serializable {
 //Private Variables-------------------------------------------------------------
 	
 	
@@ -130,8 +132,23 @@ public class Cuponera {
 		return output; // placeholder
 	}
 
-	public void aniadirAD(ActividadDeportiva ad, int cantClases) {
-
+	public boolean aniadirAD(ActividadDeportiva acti, int cantidadClases,EntityManager em,EntityTransaction tran) {
+            try{
+                
+                acti.agregarCup(this, em, tran);
+                tran.begin();
+                em.flush();
+                this.actividades.add(acti);
+                this.cantClases =+ cantidadClases;
+                tran.commit();
+                System.out.println("Should have worked...");
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                tran.rollback();
+                return false;
+            }
+            return true;
 	}
 
 	public DtCuponera getData() {

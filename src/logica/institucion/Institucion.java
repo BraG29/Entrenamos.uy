@@ -19,8 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
-
-
+import logica.clase.Clase;
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
@@ -49,7 +48,7 @@ public class Institucion implements Serializable{
     @JoinTable(name="Institucion_Actividad",
 	joinColumns = @JoinColumn(name="nom_institucion"),
 	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
-    private static Collection<ActividadDeportiva> actividades;
+    private Collection<ActividadDeportiva> actividades;
 
 
     
@@ -115,16 +114,12 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, EntityManagerFactory emf){
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManagerFactory emf){    
         EntityManager em = emf.createEntityManager();
         ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
-        
 
-        
         if(acti == null){
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
-
-            this.actividades.add(acti);
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
 
             
             //arranco la transaccion
@@ -132,25 +127,11 @@ public class Institucion implements Serializable{
             
             transaccion.begin();
             em.persist(acti);
+            this.actividades.add(acti);
             transaccion.commit();
-            
-
-           
-            em.close();
+            //em.close();
 
             //TIRAR ROLLBACK L8ER
-
-//            
-//            CriteriaBuilder cb = em.getCriteriaBuilder();
-//            CriteriaUpdate<Institucion> cum = cb.createCriteriaUpdate(Institucion.class);
-//
-//            Root<Institucion> rootInsti = cum.from(Institucion.class);
-//            
-//            cum.set(rootInsti.get("actividades"), acti);
-//            
-
-            //emf.close();
-            //termina la transaccion
             
         }else{//acti existe
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
@@ -159,11 +140,18 @@ public class Institucion implements Serializable{
     }
     
     
-    public void darAltaClaseInsti(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
-        EntityManager em = emf.createEntityManager();
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreClase);
+    public void darAltaClaseInsti(String nombreActiDepo,Clase claseDictada, EntityManager em, EntityTransaction tran){
+        System.out.println("Antes de crear la acti depo");
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActiDepo);
+        System.out.println("Despues de crear la acti depo");
         
-        acti.darAltaClaseActi(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, emf);
+        try {
+        	acti.darAltaClaseActi(claseDictada, em, tran);
+        }catch(Exception e) {
+        	throw new IllegalArgumentException("no se pudo encontrar la Actividad Deportiva asociada");
+        }
+        
+        
     }
     
     
