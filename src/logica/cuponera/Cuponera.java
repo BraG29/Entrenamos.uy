@@ -1,9 +1,10 @@
 package logica.cuponera;
 
+import java.io.Serializable;
 import logica.datatypes.DtCuponera;
 import logica.institucion.ActividadDeportiva;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,9 +18,10 @@ import javax.persistence.Persistence;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.EntityTransaction;
 
 @Entity
-public class Cuponera {
+public class Cuponera implements Serializable {
 //Private Variables-------------------------------------------------------------
 	
 	
@@ -28,12 +30,12 @@ public class Cuponera {
 	private String nombreCup;
 	private String descripcion;
 	@Column(name = "fecha_inicio")
-	private LocalDateTime fechaInicio;
+	private LocalDate fechaInicio;
 	@Column(name = "fecha_fin")
-	private LocalDateTime fechaFin;
+	private LocalDate fechaFin;
 	private float descuento;
 	@Column(name = "fecha_alta")
-	private LocalDateTime fechaAlta;
+	private LocalDate fechaAlta;
 	@Column(name = "cant_clases")
 	private int cantClases;
 
@@ -57,19 +59,19 @@ public class Cuponera {
 		this.descripcion = descripcion;
 	}
 
-	public LocalDateTime getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(LocalDateTime fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public LocalDateTime getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(LocalDateTime fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
@@ -81,11 +83,11 @@ public class Cuponera {
 		this.descuento = descuento;
 	}
 
-	public LocalDateTime getFechaAlta() {
+	public LocalDate getFechaAlta() {
 		return fechaAlta;
 	}
 
-	public void setFechaAlta(LocalDateTime fechaAlta) {
+	public void setFechaAlta(LocalDate fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
 
@@ -112,8 +114,8 @@ public class Cuponera {
 	}
 
 	// Full Constructor
-	public Cuponera(String nombreCup, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin,
-			float descuento, LocalDateTime fechaAlta, int cantClases) {
+	public Cuponera(String nombreCup, String descripcion, LocalDate fechaInicio, LocalDate fechaFin,
+			float descuento, LocalDate fechaAlta, int cantClases) {
 		this.nombreCup = nombreCup;
 		this.descripcion = descripcion;
 		this.fechaInicio = fechaInicio;
@@ -130,8 +132,23 @@ public class Cuponera {
 		return output; // placeholder
 	}
 
-	public void aniadirAD(ActividadDeportiva ad, int cantClases) {
-
+	public boolean aniadirAD(ActividadDeportiva acti, int cantidadClases,EntityManager em,EntityTransaction tran) {
+            try{
+                
+                acti.agregarCup(this, em, tran);
+                tran.begin();
+                em.flush();
+                this.actividades.add(acti);
+                this.cantClases =+ cantidadClases;
+                tran.commit();
+                System.out.println("Should have worked...");
+            }
+            catch(Exception ex){
+                System.out.println(ex.getMessage());
+                tran.rollback();
+                return false;
+            }
+            return true;
 	}
 
 	public DtCuponera getData() {

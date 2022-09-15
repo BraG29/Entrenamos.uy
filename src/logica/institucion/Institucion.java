@@ -19,8 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
-
-
+import logica.clase.Clase;
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
@@ -49,7 +48,7 @@ public class Institucion implements Serializable{
     @JoinTable(name="Institucion_Actividad",
 	joinColumns = @JoinColumn(name="nom_institucion"),
 	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
-    private static Collection<ActividadDeportiva> actividades;
+    private Collection<ActividadDeportiva> actividades;
 
 
     
@@ -115,55 +114,54 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, EntityManagerFactory emf){
-        EntityManager em = emf.createEntityManager();
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
-        
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManager em,EntityTransaction tran){    
+    	System.out.println("Antes de buscar la actidepo");
+    	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+    	System.out.println("Despues de buscar la actidepo");
+        //em.flush();
 
         
         if(acti == null){
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
-
-            this.actividades.add(acti);
-
-            
+        	System.out.println("antes de crear la actidepo");
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
+            System.out.println("MITIMITI PORTEZUELO");
+            //this.actividades.add(acti);
+            System.out.println("despues de crear la actidepo");
             //arranco la transaccion
-            EntityTransaction transaccion = em.getTransaction();
             
-            transaccion.begin();
+            tran.begin();
+            em.flush();
+            
             em.persist(acti);
-            transaccion.commit();
             
-
-           
-            em.close();
-
-            //TIRAR ROLLBACK L8ER
-
-//            
-//            CriteriaBuilder cb = em.getCriteriaBuilder();
-//            CriteriaUpdate<Institucion> cum = cb.createCriteriaUpdate(Institucion.class);
-//
-//            Root<Institucion> rootInsti = cum.from(Institucion.class);
-//            
-//            cum.set(rootInsti.get("actividades"), acti);
-//            
-
-            //emf.close();
-            //termina la transaccion
+            tran.commit();
+            //NO ENTIENDO NADA VIEJAAAAAAAA
+            //posible flush needed
+            tran.begin();
+            em.flush();
+            this.actividades.add(acti);
+            tran.commit();
             
         }else{//acti existe
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
+        	tran.rollback();
             throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
     }
     
     
-    public void darAltaClaseInsti(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, EntityManagerFactory emf){
-        EntityManager em = emf.createEntityManager();
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreClase);
+    public void darAltaClaseInsti(String nombreActiDepo,Clase claseDictada, EntityManager em, EntityTransaction tran){
+        System.out.println("Antes de crear la acti depo");
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActiDepo);
+        System.out.println("Despues de crear la acti depo");
         
-        acti.darAltaClaseActi(nombreInsti, nombreClase, fechaInicio, nombreProfe , sociosMin, sociosMax, URL,fechaAlta, emf);
+        try {
+        	acti.darAltaClaseActi(claseDictada, em, tran);
+        }catch(Exception e) {
+        	throw new IllegalArgumentException("no se pudo encontrar la Actividad Deportiva asociada");
+        }
+        
+        
     }
     
     

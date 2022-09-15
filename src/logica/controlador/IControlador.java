@@ -9,6 +9,14 @@ import logica.datatypes.*;
 import logica.datatypes.DtCuponera;
 
 public class IControlador {
+	
+	public void initConnection() {
+		
+	}
+	
+	public void closeConnection() {
+		
+	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
 	}
@@ -51,13 +59,19 @@ public class IControlador {
 		
 
 
+
 	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo,
 			LocalDateTime fechaAlta) { //agregar foto para la actividad
+		
+	}
+
+	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL) {
+
 
 	}
 
-	public void altaCuponera(String nombreCup, String descripcion, LocalDateTime _fechaInicio, LocalDateTime _fechaFin,
-			float descuento) {
+	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
+			LocalDate fechaFin, float descuento) {
 	}
         
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
@@ -71,6 +85,12 @@ public class IControlador {
         public ArrayList<String> getNombreCuponeras(){
             return null;
         }
+        public ArrayList<String> getActisDeCuponera(String nombreCup){
+            return null;
+        }
+        public boolean agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
+            return false;
+        }
         //-----------------------------------------------------------------------------------------------------------------
         public ArrayList<String> getNombreInstituciones(){
             return null;
@@ -80,11 +100,19 @@ public class IControlador {
             return null;
         }
         
-        public ArrayList<String> consultarProfe(String nombreInsti){
+        public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
             return null;
         }
         
-        public void darAltaClase(String nombreInsti,String nombreClase,LocalDateTime fechaInicio,String nombreProfe ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+        public void darAltaClase(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
             
+        }
+        
+        public void recordarInsti(String nombreInsti) {
+        	
+        }
+        
+        public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+        	return null;
         }
 }

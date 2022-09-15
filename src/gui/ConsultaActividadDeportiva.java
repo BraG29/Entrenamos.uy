@@ -1,7 +1,15 @@
 package gui;
 
+import java.util.ArrayList;
+
+import javax.persistence.EntityManager;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+
+import logica.controlador.Controlador;
+import logica.controlador.Fabrica;
+import logica.controlador.IControlador;
+import logica.datatypes.DtActividadDeportiva;
 
 
 
@@ -24,30 +32,27 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         
         this.comboLista.setVisible(false);
         this.comboActi.setVisible(false);
-
         
-        String[] holiwi = new String[] {"-","holiwi","owo"}; 
         
-        this.comboInsti.setModel(new DefaultComboBoxModel(holiwi));
+        String[] holiwi = new String[] {"-","holiwi","owo"};
         
-        //int uwu = holiwi.length;
+        Fabrica fab = new Fabrica();
+        IControlador controlador = fab.getInterface();
         
-        /*for (int i = 0; i  < uwu ;i++){
-            this.comboInsti.addItem(holiwi[i]);
-        }*/
-                
+        ArrayList<String> arrStr = controlador.getNombreInstituciones();
+        
+        for(int i = 0;i < arrStr.size();i++) {
+        	this.comboInsti.addItem(arrStr.get(i));
+        }
+        
+        //this.comboInsti.setModel(new DefaultComboBoxModel(holiwi));
+        
+          
         
         
     }
     
-    /*public String[] prueba(){
-        String[] arrayString;
-        //while(){
-        
-        return arrayString;
-            
-        }
-    }*/
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,6 +120,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             }
         });
 
+        comboInsti.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         comboInsti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboInstiActionPerformed(evt);
@@ -123,7 +129,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 
         jLabel3.setText("Institución");
 
-        comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "prueba", " " }));
+        comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         comboLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboListaActionPerformed(evt);
@@ -170,7 +176,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             }
         });
 
-        comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         comboActi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboActiActionPerformed(evt);
@@ -268,13 +274,37 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
         
         if(comboInsti.getSelectedIndex() != 0){
-            //acá iria la función que consulta a la BdD por las Actividades Deportivas
+            //acá iria la función que consulta a la BdD por las Actividades Deportivas------------------------------------------
+        	Fabrica fab = new Fabrica();
+        	IControlador controlador = fab.getInterface();
+        	
+        	//------------------_Itero para darle valor al comboBox de Actividades Deportivas------------------------------------
+        	comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        	
+        	ArrayList<String> arrStr = controlador.consultarActividadDepo(comboInsti.getSelectedItem().toString());
+        	for(int i = 0;i < arrStr.size();i++) {
+        		comboActi.addItem(arrStr.get(i));
+        	}
+        	//--------------------muestro el resto de componentes----------------------------------------------------------------
             this.comboActi.setVisible(true);
             this.labelActi.setVisible(true);
             
+            //--------------------escondo los componentes innecesarios-----------------------------------------------------------
+            
         }else{
+        	//--------------------restauro el valor que tenía originalmente el comboBox de Actividades----------------------------
+        	comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        	
+        	//--------------------Escondo el resto de componentes-----------------------------------------------------------------
             this.comboActi.setVisible(false);
+            this.comboLista.setVisible(false);
             this.labelActi.setVisible(false);
+            this.labelClases.setVisible(false);
+            this.labelNombreAct.setVisible(false);
+            this.labelDesc.setVisible(false);
+            this.labelDuracion.setVisible(false);
+            this.labelCosto.setVisible(false);
+            this.labelFecha.setVisible(false);
         }
         
     }//GEN-LAST:event_comboInstiActionPerformed
@@ -295,40 +325,64 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     }//GEN-LAST:event_labelNombreActComponentHidden
 
     private void labelNombreActComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelNombreActComponentShown
-        this.labelNombreAct.setText("Nombre: ");
+        //this.labelNombreAct.setText("Nombre: ");
     }//GEN-LAST:event_labelNombreActComponentShown
 
     private void labelDescComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelDescComponentShown
-        this.labelDesc.setText("Descripción: ");
+        //this.labelDesc.setText("Descripción: ");
     }//GEN-LAST:event_labelDescComponentShown
 
     private void labelDuracionComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelDuracionComponentShown
-        this.labelDuracion.setText("Duración (mins): ");
+        //this.labelDuracion.setText("Duración (mins): ");
     }//GEN-LAST:event_labelDuracionComponentShown
 
     private void labelCostoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelCostoComponentShown
-        this.labelCosto.setText("Costo: ");
+        //this.labelCosto.setText("Costo: ");
     }//GEN-LAST:event_labelCostoComponentShown
 
     private void labelFechaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelFechaComponentShown
-        this.labelFecha.setText("Fecha registro: ");
+        //this.labelFecha.setText("Fecha registro: ");
     }//GEN-LAST:event_labelFechaComponentShown
 
     private void comboActiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActiActionPerformed
 
-        if(comboInsti.getSelectedIndex() != 0){
+        if(comboInsti.getSelectedIndex() != 0 && comboActi.getSelectedIndex() != 0){
             //acá iria la función que consulta a la BdD por los datos de la Actividad Deportiva
+        	Fabrica fab = new Fabrica();
+        	IControlador controlador = fab.getInterface();
+        	
+        	DtActividadDeportiva dtActi = controlador.getDtActividadDeportiva(this.comboActi.getSelectedItem().toString());
             
             //combos
             this.comboLista.setVisible(true);
             
             //labels
             this.labelClases.setVisible(true);
+            
             this.labelNombreAct.setVisible(true);
+            this.labelNombreAct.setText("Nombre: " + dtActi.nombreAct);
+            
             this.labelDesc.setVisible(true);
+            this.labelDesc.setText("Descripción: " + dtActi.descripcion);
+            
             this.labelDuracion.setVisible(true);
+            this.labelDuracion.setText("Duración (mins): " + Float.toString(dtActi.duracion));
+            
             this.labelCosto.setVisible(true);
+            this.labelCosto.setText("Costo: " +  Float.toString(dtActi.costo) + "$");
+            
+            //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+            
             this.labelFecha.setVisible(true);
+            this.labelFecha.setText(dtActi.fechaRegistro.toString());
+            //System.out.println(comboActi.getSelectedIndex());
             
         }else{
             //combos
@@ -348,37 +402,37 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultaActividadDeportiva().setVisible(true);//FUNCA IGUAL VOS CONFIA
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(ConsultaActividadDeportiva.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ConsultaActividadDeportiva().setVisible(true);//FUNCA IGUAL VOS CONFIA
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConsulta;

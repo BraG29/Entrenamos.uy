@@ -28,14 +28,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 //import logica.controlador.IControlador;
 //import logica.controlador.Fabrica;
 
 public class MenuPrincipal extends JFrame {
     
-//    Fabrica fab = new Fabrica();
-//    IControlador controlador = fab.getInterface();
-
     private JPanel contentPane;
     private AltaUsuario menuAltaUsuario; //º1 alta usuario
     private ConsultaUsuario menuConsultaUsuario; //º2 consulta usuario
@@ -55,35 +54,32 @@ public class MenuPrincipal extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//		EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceApp");
-//		EntityManager em = emf.createEntityManager();
-//		
-//		try {
-//			
-//			em.getTransaction().begin();
-//		}catch(Exception e) {
-//			em.getTransaction().rollback();
-//		}
-//		
-//		em.close();
-//		emf.close();
-
+		Fabrica fab = new Fabrica();
+		IControlador sistema = fab.getInterface();
+		sistema.initConnection();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuPrincipal frame = new MenuPrincipal();
+					MenuPrincipal frame = new MenuPrincipal(sistema);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public MenuPrincipal() {
+	public MenuPrincipal(IControlador sistema) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				sistema.closeConnection();
+			}
+		});
 		setTitle("Menu Principal");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,17 +220,16 @@ public class MenuPrincipal extends JFrame {
 		btnCargarDatos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Fabrica fab = new Fabrica();
-				cargarSocios(fab);
-				cargarInstituciones(fab);
-				cargarProfesores(fab);
+				cargarSocios(sistema);
+				cargarInstituciones(sistema);
+				cargarProfesores(sistema);
 			}
 		});
 		btnCargarDatos.setBounds(12, 285, 298, 25);
 		contentPane.add(btnCargarDatos);
 	}
 	
-	public void cargarSocios(Fabrica fab) {
-		IControlador sistema = fab.getInterface();
+	public void cargarSocios(IControlador sistema) {
 		List<String> nicks = Arrays.asList(
 				new String[] {
 						"Emi71",
@@ -314,8 +309,7 @@ public class MenuPrincipal extends JFrame {
 				
 	}
 	
-	public void cargarInstituciones(Fabrica fab) {
-		IControlador sistema = fab.getInterface();
+	public void cargarInstituciones(IControlador sistema) {
 		List<String> nombres = Arrays.asList(
 				new String[] {
 						"Instituto Natural",
@@ -345,8 +339,7 @@ public class MenuPrincipal extends JFrame {
 		}
 	}
 	
-	public void cargarProfesores(Fabrica fab) {
-		IControlador sistema = fab.getInterface();
+	public void cargarProfesores(IControlador sistema) {
 		List<String> nicks = Arrays.asList(
 				new String[] {
 						"viktor",
@@ -524,6 +517,7 @@ public class MenuPrincipal extends JFrame {
 		}
 
 	}
+
 	//actividad deportiva
 	
 	public void cargarActividadesDeportivas(Fabrica fab) { //agregar sistema en parametro
@@ -602,4 +596,5 @@ public class MenuPrincipal extends JFrame {
 	}
 	
 	
+
 }
