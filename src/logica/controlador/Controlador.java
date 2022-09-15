@@ -445,8 +445,13 @@ public class Controlador extends IControlador {
         
         public ArrayList<String> getActisDeCuponera(String nombreCup){
             ArrayList<ActividadDeportiva> listaActis= new ArrayList<>();
-            ArrayList<String> listaADevolver = new ArrayList<>();        
-            listaActis.addAll(em.createQuery("select c.actividades from Cuponera c").getResultList());
+            ArrayList<String> listaADevolver = new ArrayList<>(); 
+            String findQuery = "select c.actividades from Cuponera c WHERE c.nombreCup = :nombre";
+            
+            
+            Query find = em.createQuery(findQuery);
+            find.setParameter("nombre",nombreCup);
+            listaActis.addAll(find.getResultList());
              
             for(ActividadDeportiva actis : listaActis){
                 System.out.println(actis.getNombreAct());
