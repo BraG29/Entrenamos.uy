@@ -120,7 +120,7 @@ public class Profesor extends Usuario{
         	
         }catch(Exception e) {
         	System.out.println("WOWOWOWOWOWOWO");
-        	throw new IllegalArgumentException(e.getMessage());
+        	throw new IllegalArgumentException(e);
         }
         
         

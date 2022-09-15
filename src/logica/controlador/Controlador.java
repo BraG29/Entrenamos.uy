@@ -339,7 +339,7 @@ public class Controlador extends IControlador {
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
         	System.out.println("Antes de buscar la insti");
             Institucion insti = em.find(Institucion.class, nombreInsti);
-            System.out.println("Despues de buscar la insti"+insti.getNombreInst());
+            System.out.println("Despues de buscar la insti "+insti.getNombreInst());
             
             if(insti != null){
                 //hay que hacer try and catch
@@ -490,15 +490,17 @@ public class Controlador extends IControlador {
 //----------------------------------------------------------------------------------------------------------------------------------------------------       
         public void darAltaClase(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
 
-            System.out.println("Antes de crear la insti");
+            System.out.println("Antes de crear el profe");
             Profesor profe = em.find(Profesor.class, new Usuario(profeKey.nickname,profeKey.email));
-            System.out.println("despues de crear la insti");
+            System.out.println("despues de crear el profe");
+            
+            //em.flush();
             
             try{
                 Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, this.em,this.tran);
                 this.instiRecordada.darAltaClaseInsti(nombreActiDepo, claseDictada, em, tran);
             }catch(Exception e){
-                throw new IllegalArgumentException(e.getMessage());
+                throw new IllegalArgumentException(e);
             }   
         }
 //------------------------------------------------------------------------------------------------------------------------------------------ 

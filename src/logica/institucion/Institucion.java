@@ -118,33 +118,54 @@ public class Institucion implements Serializable{
     	System.out.println("Antes de buscar la actidepo");
     	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
     	System.out.println("Despues de buscar la actidepo");
+//    	EntityTransaction tranza = em.getTransaction();
         //em.flush();
 
         
         if(acti == null){
         	System.out.println("antes de crear la actidepo");
             acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
-            System.out.println("MITIMITI PORTEZUELO");
-            //this.actividades.add(acti);
-            System.out.println("despues de crear la actidepo");
-            //arranco la transaccion
-            
-            tran.begin();
-            em.flush();
-            
-            em.persist(acti);
-            
-            tran.commit();
+//            System.out.println("MITIMITI PORTEZUELO");
+//            //this.actividades.add(acti);
+           System.out.println("despues de crear la actidepo");
+//            
+//            System.out.println(tran.isActive());
+//            //arranco la transaccion
+//            
+//            //em.flush();
+//            
+//            
+////            tranza.commit();
+//            System.out.println("entre el primer y 2ndo tran");
             //NO ENTIENDO NADA VIEJAAAAAAAA
             //posible flush needed
-            tran.begin();
-            em.flush();
-            this.actividades.add(acti);
-            tran.commit();
+            
+            
+            //em.flush();
+//            tran.begin();
+////            tranza.begin();
+//            
+////            tranza.commit();
+//            tran.commit();
+           // em.flush();
+            
+            try{
+            	tran.begin();
+                this.actividades.add(acti);
+                em.persist(acti);
+                tran.commit();
+                
+            }catch(Exception e) {
+            	tran.rollback();
+            	System.out.println(e.getMessage());
+            	throw new IllegalArgumentException(e);
+            }
+            
+            
+            
             
         }else{//acti existe
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
-        	tran.rollback();
             throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
     }
