@@ -253,20 +253,34 @@ public class Controlador extends IControlador {
 		}
 		return listaCuponeras;
 	}
-	
-/*	
-	public ArrayList<String> seleccionCuponera(String nombreCup) {
+
+	public DtCuponera seleccionCuponera(String nombreCup) {
 		
 		EntityManager em = emf.createEntityManager();
 		Cuponera cup = null;
-		
+		String nombre= null, descripcion = null;
+		Integer cant_clase = 0;
+		Float descuento = 0F;
+		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
+		DtCuponera cupData = null;		
 		try {
 			em.getTransaction().begin();
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getData();
+			
+			nombre = cup.getNombreCup();
+			descripcion = cup.getDescripcion();
+			cant_clase = cup.getCantClases();
+			descuento = cup.getDescuento();
+			fecha_inicio = cup.getFechaInicio();
+			fecha_fin = cup.getFechaFin();
+			fecha_alta = cup.getFechaAlta();
+			//nombresActividades = cup.getActividades();
+			
+			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
+			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -274,11 +288,9 @@ public class Controlador extends IControlador {
 		} finally {
 			em.close();
 		}
-		
-		//cup.getNombres(); //esto le paso al combobox?
-		return null;
+		return cupData;
 	}
-	*/
+	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
@@ -309,6 +321,7 @@ public class Controlador extends IControlador {
 			LocalDate fechaAlta, float descuento) {
 
 		try {
+			initConnection();
 			tran.begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);
@@ -336,8 +349,20 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
+            
+            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
+            
+
+            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
+            EntityManager em = emf.createEntityManager();
+        }
+        
+        //q carajos paso aca   att:Lucas
+            
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
         	System.out.println("Antes de buscar la insti");
+
             Institucion insti = em.find(Institucion.class, nombreInsti);
             System.out.println("Despues de buscar la insti "+insti.getNombreInst());
             
@@ -356,27 +381,59 @@ public class Controlador extends IControlador {
             }  
         }
         
-        public ArrayList<String> getNombreInstituciones(){
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-                        
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            return listaADevolver;
-        }
-        
-        public ArrayList<String> consultarActividadDepo(String nombreInsti){//no se quién me toco la función, pero esto debe devolver las ACTIVIDADES DEPORTIVAS, algo OBVIO que dice en el mismo nombre de la funcion.
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            
+    public ArrayList<String> getNombreInstituciones(){
+        ArrayList<String> listaADevolver = new ArrayList<String>();
+        initConnection();
+        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());  
+        closeConnection();
+        return listaADevolver;
+    }
+                    
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();            
+            initConnection();
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            
-      
-            
+            closeConnection();
             return listaADevolver;
         }
         
+        
+        public ArrayList<String> consultarClases(String nombreActividad){
+            ArrayList<String> listaADevolver = new ArrayList<String>();            
+            initConnection();
+            listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
+            closeConnection();            
+            return listaADevolver;
+        }
+        
+        public String[] getUnaClase(String nombreClase){
+        	String[] listaADevolver = new String[6];
+        	String urlDeLaClase = "";
+        	String cantMaxDeLaClase = "";
+        	String cantMinDeLaClase = "";
+        	String horaIniDeLaClase = "";
+        	String fechaDeLaClase = "";
+        	String registroDeLaClase = "";
+            
+        	initConnection();
+            
+            urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
+            cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
+            cantMinDeLaClase = em.createQuery("select cant_minima from Clase c where nombre = '" + nombreClase + "'").toString();
+            horaIniDeLaClase = em.createQuery("select hora_inicio from Clase c where nombre = '" + nombreClase + "'").toString();
+            fechaDeLaClase = em.createQuery("select fecha from Clase c where nombre = '" + nombreClase + "'").toString();
+            registroDeLaClase = em.createQuery("select fecha_registro from Clase c where nombre = '" + nombreClase + "'").toString();
+            
+            listaADevolver[0] = urlDeLaClase;
+            listaADevolver[1] = cantMaxDeLaClase;
+            listaADevolver[2] = cantMinDeLaClase;
+            listaADevolver[3] = horaIniDeLaClase;
+            listaADevolver[4] = fechaDeLaClase;
+            listaADevolver[5] = registroDeLaClase;
+            
+            closeConnection();            
+            return listaADevolver;
+        }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------

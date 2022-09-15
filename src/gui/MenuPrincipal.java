@@ -22,6 +22,7 @@ import javax.persistence.Persistence;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -516,4 +517,84 @@ public class MenuPrincipal extends JFrame {
 		}
 
 	}
+
+	//actividad deportiva
+	
+	public void cargarActividadesDeportivas(Fabrica fab) { //agregar sistema en parametro
+		IControlador sistema = fab.getInterface();
+		
+		List<String> nombreInst = Arrays.asList(new String[] {
+				"Fuerza bruta",
+				"Telón",
+				"Instituto natural",
+				"Fuerza bruta",
+				"Telón",
+				"Telón"
+		});
+		
+		
+		List<String> nombresAct = Arrays.asList(new String[] {
+				"Aparatos y pesas",
+				"Voleibol",
+				"Aeróbatica",
+				"Kickboxing",
+				"Atletismo",
+				"Basquetbol"
+		});
+		
+		List<String> descripcion = Arrays.asList(new String[] {
+				"Clases de aparatos, pesas y calistenia.",
+				"Voleibol en todas sus formas",
+				"Para cuidar el aparato cardiovascular",
+				"En busca del nuevo campeón de boxeo.",
+				"100m , 200m, postas y carreras con obstaculos.",
+				"Espectáculo conmemorando los 30 años de Violeta."	 
+		});
+		
+		List<Integer> duracion = Arrays.asList(new Integer[] {
+				90,
+				120,
+				110,
+				100,
+				150,
+				80
+		});
+		
+		List<Integer> costo = Arrays.asList(new Integer[] {
+				550,
+				750,
+				800,
+				980,
+				500,
+				450
+		});
+		
+		List<LocalDateTime> fecha_registro = Arrays.asList(new LocalDateTime[] {
+				
+				LocalDateTime.of(2021, 3, 31, 0, 0),
+				LocalDateTime.of(2021, 4, 20, 0, 0),
+				LocalDateTime.of(2021, 5, 30, 0, 0),
+				LocalDateTime.of(2021, 6, 7, 0, 0),
+				LocalDateTime.of(2021, 7, 8, 0, 0),
+				LocalDateTime.of(2021, 7, 31, 0, 0)
+					
+		});
+		
+		List<String> foto = Arrays.asList(new String[] {
+				"https://bit.ly/2XpKBkr",
+				"https://bit.ly/3vqbAbS",
+				"https://bit.ly/3ANzEXq",
+				"https://bit.ly/3jfuKfN",
+				"https://bit.ly/3n9Tw2l",
+				null
+		});
+		
+		for (int c = 0; c < nombresAct.size(); c++) {
+			//sistema.altaActividadDepo(nombresAct.get(c), nombreInst.get(c), descripcion.get(c), duracion.get(c), costo.get(c), fecha_registro.get(c), foto.get(c));
+		}
+		
+	}
+	
+	
+
 }

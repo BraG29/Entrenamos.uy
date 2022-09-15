@@ -47,7 +47,7 @@ public class IControlador {
 		return null;
 	}
 	
-	public ArrayList<String> seleccionCuponera(String nombreCup) {
+	public DtCuponera seleccionCuponera(String nombreCup) {
 		return null;
 	}
 	
@@ -59,7 +59,14 @@ public class IControlador {
 		
 
 
+
+	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo,
+			LocalDateTime fechaAlta) { //agregar foto para la actividad
+		
+	}
+
 	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL) {
+
 
 	}
 
@@ -91,6 +98,14 @@ public class IControlador {
 
         public ArrayList<String> consultarActividadDepo(String nombreInsti){
             return null;
+        }
+        
+        public ArrayList<String> consultarClases(String nombreActividad){   
+        	return null;
+        }
+        
+        public String[] getUnaClase(String nombreClase){	
+        	return null;
         }
         
         public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
