@@ -57,7 +57,6 @@ public class Socio extends Usuario {
 	}
 
 
-
 	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac, String urlImagen ) {
 		super(nickname, apellido, email, nombre, fechaNac, urlImagen);
 		// TODO Auto-generated constructor stub
