@@ -253,20 +253,34 @@ public class Controlador extends IControlador {
 		}
 		return listaCuponeras;
 	}
-	
-/*	
-	public ArrayList<String> seleccionCuponera(String nombreCup) {
+
+	public DtCuponera seleccionCuponera(String nombreCup) {
 		
 		EntityManager em = emf.createEntityManager();
 		Cuponera cup = null;
-		
+		String nombre= null, descripcion = null;
+		Integer cant_clase = 0;
+		Float descuento = 0F;
+		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
+		DtCuponera cupData = null;		
 		try {
 			em.getTransaction().begin();
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getData();
+			
+			nombre = cup.getNombreCup();
+			descripcion = cup.getDescripcion();
+			cant_clase = cup.getCantClases();
+			descuento = cup.getDescuento();
+			fecha_inicio = cup.getFechaInicio();
+			fecha_fin = cup.getFechaFin();
+			fecha_alta = cup.getFechaAlta();
+			//nombresActividades = cup.getActividades();
+			
+			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
+			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -274,11 +288,9 @@ public class Controlador extends IControlador {
 		} finally {
 			em.close();
 		}
-		
-		//cup.getNombres(); //esto le paso al combobox?
-		return null;
+		return cupData;
 	}
-	*/
+	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
@@ -337,14 +349,27 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
+            
+            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
+            
+
+            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
+            EntityManager em = emf.createEntityManager();
+        }
+        
+        //q carajos paso aca   att:Lucas
+            
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
+        	System.out.println("Antes de buscar la insti");
 
             Institucion insti = em.find(Institucion.class, nombreInsti);
+            System.out.println("Despues de buscar la insti"+insti.getNombreInst());
             
             if(insti != null){
                 //hay que hacer try and catch
                 try{
-                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.emf);
+                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
                 }catch(Exception e){
                     throw new IllegalArgumentException(e.getMessage());
                 }
@@ -368,7 +393,7 @@ public class Controlador extends IControlador {
             ArrayList<String> listaADevolver = new ArrayList<String>();            
             initConnection();
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            closeConnection();            
+            closeConnection();
             return listaADevolver;
         }
         
@@ -533,7 +558,7 @@ public class Controlador extends IControlador {
                 throw new IllegalArgumentException(e.getMessage());
             }   
         }
-      //------------------------------------------------------------------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------------------------------------------------------------------ 
         
       public void recordarInsti(String nombreInsti) {
     	  
@@ -541,6 +566,9 @@ public class Controlador extends IControlador {
     	  System.out.println(this.instiRecordada.getNombreInst());
       }
       
-    //------------------------------------------------------------------------------------------------------------------------------------------ 
-      
+//------------------------------------------------------------------------------------------------------------------------------------------ 
+      public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  return acti.getDTActividadDeportiva();
+      }
 }

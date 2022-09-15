@@ -114,27 +114,37 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManagerFactory emf){    
-        EntityManager em = emf.createEntityManager();
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManager em,EntityTransaction tran){    
+    	System.out.println("Antes de buscar la actidepo");
+    	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+    	System.out.println("Despues de buscar la actidepo");
+        //em.flush();
 
+        
         if(acti == null){
+        	System.out.println("antes de crear la actidepo");
             acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
-
-            
+            System.out.println("MITIMITI PORTEZUELO");
+            //this.actividades.add(acti);
+            System.out.println("despues de crear la actidepo");
             //arranco la transaccion
-            EntityTransaction transaccion = em.getTransaction();
             
-            transaccion.begin();
+            tran.begin();
+            em.flush();
+            
             em.persist(acti);
+            
+            tran.commit();
+            //NO ENTIENDO NADA VIEJAAAAAAAA
+            //posible flush needed
+            tran.begin();
+            em.flush();
             this.actividades.add(acti);
-            transaccion.commit();
-            //em.close();
-
-            //TIRAR ROLLBACK L8ER
+            tran.commit();
             
         }else{//acti existe
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
+        	tran.rollback();
             throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
     }
