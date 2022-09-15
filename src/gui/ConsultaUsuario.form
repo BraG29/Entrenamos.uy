@@ -34,8 +34,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="333" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="178" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -44,12 +44,12 @@
                           <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="ApellidoTF" min="-2" pref="611" max="-2" attributes="0"/>
-                          <Component id="NombeTF" min="-2" pref="611" max="-2" attributes="0"/>
-                          <Component id="EmailTF" alignment="1" min="-2" pref="611" max="-2" attributes="0"/>
-                          <Component id="FechaNacimientoTF" alignment="1" min="-2" pref="611" max="-2" attributes="0"/>
-                          <Component id="NicknameTF" alignment="1" min="-2" pref="611" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="EmailTF" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ApellidoTF" alignment="0" max="32767" attributes="0"/>
+                          <Component id="NombeTF" alignment="0" max="32767" attributes="0"/>
+                          <Component id="NicknameTF" alignment="0" max="32767" attributes="0"/>
+                          <Component id="FechaNacimientoTF" min="-2" pref="290" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -61,7 +61,7 @@
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="608" max="32767" attributes="0"/>
+              <EmptySpace pref="1084" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

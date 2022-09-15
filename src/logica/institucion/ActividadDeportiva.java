@@ -76,6 +76,7 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.IMG_URL = IMG;
         this.insti = institu;
+        this.clases = new ArrayList<>();
     }
     
     public ActividadDeportiva() {
