@@ -309,6 +309,7 @@ public class Controlador extends IControlador {
 			LocalDate fechaAlta, float descuento) {
 
 		try {
+			initConnection();
 			tran.begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);
@@ -355,33 +356,59 @@ public class Controlador extends IControlador {
             }  
         }
         
-        public ArrayList<String> getNombreInstituciones(){
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            //em.find(Institucion.class,);
-            
-            //List<Institucion> instis = em.createQuery("select i.nombreInst from Institucion i").getResultList();
-            
-            listaADevolver.addAll(em.createQuery("select i.nombreInst from Institucion i").getResultList());  
-            
-            return listaADevolver;
-        }
-        
-        public ArrayList<String> consultarActividadDepo(String nombreInsti){//no se quién me toco la función, pero esto debe devolver las ACTIVIDADES DEPORTIVAS, algo OBVIO que dice en el mismo nombre de la funcion.
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            
+    public ArrayList<String> getNombreInstituciones(){
+        ArrayList<String> listaADevolver = new ArrayList<String>();
+        initConnection();
+        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());  
+        closeConnection();
+        return listaADevolver;
+    }
+                    
+        public ArrayList<String> consultarActividadDepo(String nombreInsti){
+            ArrayList<String> listaADevolver = new ArrayList<String>();            
+            initConnection();
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            
-      
-            
+            closeConnection();            
             return listaADevolver;
         }
         
+        
+        public ArrayList<String> consultarClases(String nombreActividad){
+            ArrayList<String> listaADevolver = new ArrayList<String>();            
+            initConnection();
+            listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
+            closeConnection();            
+            return listaADevolver;
+        }
+        
+        public String[] getUnaClase(String nombreClase){
+        	String[] listaADevolver = new String[6];
+        	String urlDeLaClase = "";
+        	String cantMaxDeLaClase = "";
+        	String cantMinDeLaClase = "";
+        	String horaIniDeLaClase = "";
+        	String fechaDeLaClase = "";
+        	String registroDeLaClase = "";
+            
+        	initConnection();
+            
+            urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
+            cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
+            cantMinDeLaClase = em.createQuery("select cant_minima from Clase c where nombre = '" + nombreClase + "'").toString();
+            horaIniDeLaClase = em.createQuery("select hora_inicio from Clase c where nombre = '" + nombreClase + "'").toString();
+            fechaDeLaClase = em.createQuery("select fecha from Clase c where nombre = '" + nombreClase + "'").toString();
+            registroDeLaClase = em.createQuery("select fecha_registro from Clase c where nombre = '" + nombreClase + "'").toString();
+            
+            listaADevolver[0] = urlDeLaClase;
+            listaADevolver[1] = cantMaxDeLaClase;
+            listaADevolver[2] = cantMinDeLaClase;
+            listaADevolver[3] = horaIniDeLaClase;
+            listaADevolver[4] = fechaDeLaClase;
+            listaADevolver[5] = registroDeLaClase;
+            
+            closeConnection();            
+            return listaADevolver;
+        }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------

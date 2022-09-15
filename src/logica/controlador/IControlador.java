@@ -93,6 +93,14 @@ public class IControlador {
             return null;
         }
         
+        public ArrayList<String> consultarClases(String nombreActividad){   
+        	return null;
+        }
+        
+        public String[] getUnaClase(String nombreClase){	
+        	return null;
+        }
+        
         public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
             return null;
         }
