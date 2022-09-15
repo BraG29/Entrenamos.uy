@@ -55,6 +55,10 @@ public class Controlador extends IControlador {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 	private EntityTransaction tran;
+        
+        //Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
+        //Y el menu Principal Maneja cuando los abre y cierra
+        //No Abran ni Cierren conneciones en sus metodos, usen el em y el tran como vienen 
 
 	public void initConnection(){
 		this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
@@ -255,8 +259,12 @@ public class Controlador extends IControlador {
 	}
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
+            
+                //Kevin Viera:  Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
+                //              Y el menu Principal Maneja cuando los abre y cierra 
 		
-		EntityManager em = emf.createEntityManager();// cuidao
+		//EntityManager em = emf.createEntityManager();// cuidao
+                
 		Cuponera cup = null;
 		String nombre= null, descripcion = null;
 		Integer cant_clase = 0;
@@ -264,7 +272,9 @@ public class Controlador extends IControlador {
 		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
 		DtCuponera cupData = null;		
 		try {
-			em.getTransaction().begin();//cuidao 
+			//em.getTransaction().begin();//cuidao 
+                        tran.begin();//usar el Entity Transaction Definido en el Controlador
+                        
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
@@ -283,10 +293,12 @@ public class Controlador extends IControlador {
 			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {//cuidaaaaao
-				em.getTransaction().rollback();//ay mi madre el bicho
+				//em.getTransaction().rollback();//ay mi madre el bicho
+                                tran.rollback();
 			}
 		} finally {
-			em.close();//cuidaaaaaaaao
+			//em.close();//cuidaaaaaaaao
+                        //el em lo Cierra el Menu Principal
 		}
 		return cupData;
 	}
@@ -321,7 +333,7 @@ public class Controlador extends IControlador {
 			LocalDate fechaAlta, float descuento) {
 
 		try {
-			initConnection();
+			//initConnection(); Esto solo lo tiene que manejar el menu Principal
 			tran.begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);
@@ -339,7 +351,7 @@ public class Controlador extends IControlador {
 			}
 			ex.printStackTrace();
 		} finally {
-			closeConnection();
+			//closeConnection(); Esto solo lo tiene que manejar el menu Principal
 		}
 
 	}
@@ -384,26 +396,26 @@ public class Controlador extends IControlador {
         
     public ArrayList<String> getNombreInstituciones(){
         ArrayList<String> listaADevolver = new ArrayList<String>();
-        initConnection();
+        //initConnection();Esto solo lo tiene que manejar el menu Principal
         listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());  
-        closeConnection();
+        //closeConnection(); Esto solo lo tiene que manejar el menu Principal
         return listaADevolver;
     }
                     
         public ArrayList<String> consultarActividadDepo(String nombreInsti){
             ArrayList<String> listaADevolver = new ArrayList<String>();            
-            initConnection();
+            //initConnection(); Esto solo lo tiene que manejar el menu Principal
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            closeConnection();
+            //closeConnection(); Esto solo lo tiene que manejar el menu Principal
             return listaADevolver;
         }
         
         
         public ArrayList<String> consultarClases(String nombreActividad){
             ArrayList<String> listaADevolver = new ArrayList<String>();            
-            initConnection();
+            //initConnection(); Esto solo lo tiene que manejar el menu Principal
             listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
-            closeConnection();            
+            //closeConnection();  Esto solo lo tiene que manejar el menu Principal           
             return listaADevolver;
         }
         
@@ -416,7 +428,7 @@ public class Controlador extends IControlador {
         	String fechaDeLaClase = "";
         	String registroDeLaClase = "";
             
-        	initConnection();
+        	//initConnection(); Esto solo lo tiene que manejar el menu Principal
             
             urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
             cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
@@ -432,7 +444,7 @@ public class Controlador extends IControlador {
             listaADevolver[4] = fechaDeLaClase;
             listaADevolver[5] = registroDeLaClase;
             
-            closeConnection();            
+            //closeConnection(); Esto solo lo tiene que manejar el menu Principal        
             return listaADevolver;
         }
         
@@ -460,6 +472,7 @@ public class Controlador extends IControlador {
               
             return l;
         }
+        
         public ArrayList<DtInstitucion> ListarInstituciones(){//unused
             ArrayList<DtInstitucion> l = new ArrayList<DtInstitucion>();
             return l;
@@ -561,6 +574,7 @@ public class Controlador extends IControlador {
             
             try{
                 Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, this.em,this.tran);
+                if(claseDictada == null) System.out.println("claseDictada == null");
                 this.instiRecordada.darAltaClaseInsti(nombreActiDepo, claseDictada, em, tran);
             }catch(Exception e){
                 throw new IllegalArgumentException(e);

@@ -111,20 +111,29 @@ public class Profesor extends Usuario{
         Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
         System.out.println("despues de crear la clase");
         
-        //em.flush();
+        
         try {
         	tran.begin();
+                em.flush();
         	em.persist(claseADictar);
-        	this.claseDictada.add(claseADictar);
-        	tran.commit();
-        	
+                tran.commit();
+	
         }catch(Exception e) {
-        	System.out.println("WOWOWOWOWOWOWO");
+        	System.out.println("Persist WOWOWOW");
         	throw new IllegalArgumentException(e);
         }
         
-        
-    	
+        try {         
+                tran.begin();
+                em.flush();
+                this.claseDictada.add(claseADictar);
+        	tran.commit();
+        	
+        }catch(Exception e) {
+        	System.out.println("COMIT ADD CLASE WWOOWOWOW");
+        	throw new IllegalArgumentException(e);
+        }
+
     	return claseADictar;
     }
     

@@ -57,12 +57,14 @@ public class Institucion implements Serializable{
         this.nombreInst = nombreInst;
         this.descripcion = descripcion;
         this.instURL = instURL;
+        this.actividades = new ArrayList<>();
     }
     
     public Institucion(Institucion insti){
         this.nombreInst = insti.getNombreInst();
         this.descripcion = insti.getDescripcion();
         this.instURL = insti.getInstURL();
+        this.actividades = new ArrayList<>();
     }
 
       public Institucion() {
@@ -115,8 +117,11 @@ public class Institucion implements Serializable{
     }
     
     public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManager em,EntityTransaction tran){    
-    	System.out.println("Antes de buscar la actidepo");
+    	//System.out.println("Antes de buscar la actidepo");
+        //System.out.print("nombreActi");
+        System.out.println(nombreActividad);
     	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+        
     	System.out.println("Despues de buscar la actidepo");
 //    	EntityTransaction tranza = em.getTransaction();
         //em.flush();
@@ -150,13 +155,10 @@ public class Institucion implements Serializable{
            // em.flush();
             
             try{
-            	tran.begin();
-                this.actividades.add(acti);
-                em.persist(acti);
-                tran.commit();
+                em.persist(acti);  
+            	this.agregarActi(acti,em,tran);
                 
             }catch(Exception e) {
-            	tran.rollback();
             	System.out.println(e.getMessage());
             	throw new IllegalArgumentException(e);
             }
@@ -168,6 +170,21 @@ public class Institucion implements Serializable{
             //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
             throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
         }
+    }
+    
+    private void agregarActi(ActividadDeportiva acti,EntityManager em, EntityTransaction tran){
+        try{
+                tran.begin();
+                em.flush();
+                boolean existsInsti = em.contains(this);
+                boolean existsActi = em.contains(acti);
+                this.actividades.add(acti);
+                tran.commit();
+            }catch(Exception e) {
+            	tran.rollback();
+            	System.out.println(e.getMessage());
+            	throw new IllegalArgumentException(e);
+            }
     }
     
     

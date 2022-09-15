@@ -80,12 +80,7 @@ public class ActividadDeportiva implements Serializable {
     
     public ActividadDeportiva() {
     }
-    
-    
-    
 
-    
-    
     //Getters
     public String getNombreAct() {
         return nombreAct;
@@ -109,6 +104,10 @@ public class ActividadDeportiva implements Serializable {
 
     public Collection<Cuponera> getCuponeras() {
         return cuponeras;
+    }
+
+    public Institucion getInsti() {
+        return insti;
     }
     
     
@@ -137,6 +136,12 @@ public class ActividadDeportiva implements Serializable {
     public void setCuponeras(Collection<Cuponera> cuponeras) {
         this.cuponeras = cuponeras;
     }
+
+    public void setInsti(Institucion insti) {
+        this.insti = insti;
+    }
+    
+    
     
     public boolean agregarCup(Cuponera cup,EntityManager em,EntityTransaction tran){
         try{
