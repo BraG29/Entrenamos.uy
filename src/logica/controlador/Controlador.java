@@ -234,12 +234,17 @@ public class Controlador extends IControlador {
 		}
 		return listaCuponeras;
 	}
-	
-/*	
-	public ArrayList<String> seleccionCuponera(String nombreCup) {
+
+	public DtCuponera seleccionCuponera(String nombreCup) {
 		
 		EntityManager em = emf.createEntityManager();
 		Cuponera cup = null;
+		String nombre= null, descripcion = null;
+		Integer cant_clase = 0;
+		Float descuento = 0F;
+		LocalDateTime fecha_inicio = null, fecha_fin = null, fecha_alta = null;
+		//ArrayList<String> nombresActividades = new ArrayList<String>();
+		DtCuponera cupData = null;
 		
 		try {
 			em.getTransaction().begin();
@@ -247,7 +252,18 @@ public class Controlador extends IControlador {
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
-			cup.getData();
+			
+			nombre = cup.getNombreCup();
+			descripcion = cup.getDescripcion();
+			cant_clase = cup.getCantClases();
+			descuento = cup.getDescuento();
+			fecha_inicio = cup.getFechaInicio();
+			fecha_fin = cup.getFechaFin();
+			fecha_alta = cup.getFechaAlta();
+			//nombresActividades = cup.getActividades();
+			
+			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
+			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {
 				em.getTransaction().rollback();
@@ -255,11 +271,9 @@ public class Controlador extends IControlador {
 		} finally {
 			em.close();
 		}
-		
-		//cup.getNombres(); //esto le paso al combobox?
-		return null;
+		return cupData;
 	}
-	*/
+	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
 
@@ -322,7 +336,7 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
-        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
+        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
             
             //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
             

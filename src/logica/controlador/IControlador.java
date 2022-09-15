@@ -39,7 +39,7 @@ public class IControlador {
 		return null;
 	}
 	
-	public ArrayList<String> seleccionCuponera(String nombreCup) {
+	public DtCuponera seleccionCuponera(String nombreCup) {
 		return null;
 	}
 	
@@ -52,7 +52,7 @@ public class IControlador {
 
 
 	public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo,
-			LocalDateTime fechaAlta) {
+			LocalDateTime fechaAlta) { //agregar foto para la actividad
 
 	}
 

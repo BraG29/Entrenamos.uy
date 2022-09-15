@@ -156,27 +156,33 @@ public class AltaInstitucion extends JFrame {
 				Fabrica fab = new Fabrica();
 				IControlador controlador = fab.getInterface();
 				String nombreInst, descripcion, URL;
-				
-				//arreglar
+
 				if (txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseURL.getText().equals("Ingrese o pegue una URL") ||  txtIngreseNombreInst.getText().equals("")){ 
 					
 				//NOMBRE
-					txtIngreseNombreInst.setForeground(Color.RED);
-					lblErrorNombre.setForeground(Color.RED);
-					txtIngreseNombreInst.setBorder(BorderFactory.createLineBorder(Color.RED));
-					lblErrorNombre.setVisible(true);
-					
+					if(txtIngreseNombreInst.getText().equals("Ingrese nombre de institución") || txtIngreseNombreInst.getText().isEmpty()) {
+						txtIngreseNombreInst.setForeground(Color.RED);
+						lblErrorNombre.setForeground(Color.RED);
+						txtIngreseNombreInst.setBorder(BorderFactory.createLineBorder(Color.RED));
+						lblErrorNombre.setVisible(true);
+												
+					}
 				//DESC
-					txtIngreseDescripcion.setForeground(Color.RED);
-					lblErrorDesc.setForeground(Color.RED);
-					txtIngreseDescripcion.setForeground(Color.RED);
-					lblErrorDesc.setVisible(true);
+					if(txtIngreseDescripcion.getText().equals("Ingrese una descripción") || txtIngreseDescripcion.getText().isEmpty()) {
+						
+						txtIngreseDescripcion.setForeground(Color.RED);
+						lblErrorDesc.setForeground(Color.RED);
+						txtIngreseDescripcion.setForeground(Color.RED);
+						lblErrorDesc.setVisible(true);
+					}
 
 				//URL
-					txtIngreseURL.setForeground(Color.RED);
-					lblErrorURL.setForeground(Color.RED);
-					txtIngreseURL.setBorder(BorderFactory.createLineBorder(Color.RED));
-					lblErrorURL.setVisible(true);
+					if(txtIngreseURL.getText().equals("Ingrese una URL") || txtIngreseURL.getText().isEmpty()) {
+						txtIngreseURL.setForeground(Color.RED);
+						lblErrorURL.setForeground(Color.RED);
+						txtIngreseURL.setBorder(BorderFactory.createLineBorder(Color.RED));
+						lblErrorURL.setVisible(true);						
+					}
 	
 				}else {
 					nombreInst = txtIngreseNombreInst.getText();
