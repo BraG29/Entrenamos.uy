@@ -256,7 +256,7 @@ public class Controlador extends IControlador {
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
 		
-		EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();// cuidao
 		Cuponera cup = null;
 		String nombre= null, descripcion = null;
 		Integer cant_clase = 0;
@@ -264,8 +264,8 @@ public class Controlador extends IControlador {
 		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
 		DtCuponera cupData = null;		
 		try {
-			em.getTransaction().begin();
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada
+			em.getTransaction().begin();//cuidao 
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
@@ -282,11 +282,11 @@ public class Controlador extends IControlador {
 			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
 			return cupData;		
 		}catch (Exception ex) {
-			if (em != null) {
-				em.getTransaction().rollback();
+			if (em != null) {//cuidaaaaao
+				em.getTransaction().rollback();//ay mi madre el bicho
 			}
 		} finally {
-			em.close();
+			em.close();//cuidaaaaaaaao
 		}
 		return cupData;
 	}
@@ -349,16 +349,17 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
-        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
-            
-            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
-            
-
-            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
-            EntityManager em = emf.createEntityManager();
-        }
+//        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
+//            
+//            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
+//            
+//
+//            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
+//            EntityManager em = emf.createEntityManager();
+//        }
         
         //q carajos paso aca   att:Lucas
+        //posta, QUE MIERDA PASO LOKO?!?!?!?!?!?!?! att. el shody
             
         public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
         	System.out.println("Antes de buscar la insti");
