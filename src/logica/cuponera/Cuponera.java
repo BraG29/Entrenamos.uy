@@ -111,6 +111,7 @@ public class Cuponera implements Serializable {
 //Constructors------------------------------------------------------------------
 	// empty constructor
 	public Cuponera() {
+            this.actividades = new ArrayList<>();
 	}
 
 	// Full Constructor

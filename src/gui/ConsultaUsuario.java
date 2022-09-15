@@ -4,13 +4,20 @@
  */
 package gui;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
 import logica.datatypes.DtUsrKey;
 import logica.datatypes.DtUsuario;
+
+
 
 /**
  *
@@ -61,6 +68,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         UsuariosjList = new javax.swing.JList<>();
         jLabel9 = new javax.swing.JLabel();
+        jLabelImage = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -119,14 +127,16 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                             .addComponent(ApellidoTF)
                             .addComponent(NombeTF)
                             .addComponent(NicknameTF)
-                            .addComponent(FechaNacimientoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(FechaNacimientoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(172, 172, 172)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel9)))
-                .addContainerGap(1084, Short.MAX_VALUE))
+                .addContainerGap(855, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,8 +145,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(NicknameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,8 +165,10 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(FechaNacimientoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))))
-                .addContainerGap(204, Short.MAX_VALUE))
+                            .addComponent(jLabel7)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jLabelImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(317, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,6 +198,18 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             this.NicknameTF.setText(Usr.nickname);
             this.NombeTF.setText(Usr.nombre);
             
+            Image image = null;
+            try {
+                    URL url = new URL(Usr.imagenUrl);
+                    image = ImageIO.read(url).getScaledInstance(180, 180, 100);
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(image != null){
+                this.jLabelImage.setIcon(new ImageIcon(image));
+            }
+            else this.jLabelImage.setIcon(null);
 
         }
     }//GEN-LAST:event_UsuariosjListValueChanged
@@ -240,6 +263,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelImage;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables

@@ -51,6 +51,8 @@
                           <Component id="NicknameTF" alignment="0" max="32767" attributes="0"/>
                           <Component id="FechaNacimientoTF" min="-2" pref="290" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jLabelImage" min="-2" pref="199" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
@@ -61,7 +63,7 @@
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="1084" max="32767" attributes="0"/>
+              <EmptySpace pref="855" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,8 +74,7 @@
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" min="-2" pref="312" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="NicknameTF" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -100,8 +101,10 @@
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="jLabelImage" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="204" max="32767" attributes="0"/>
+              <EmptySpace pref="317" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -188,6 +191,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Lista de Usuarios:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelImage">
     </Component>
   </SubComponents>
 </Form>
