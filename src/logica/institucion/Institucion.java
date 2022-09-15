@@ -68,6 +68,7 @@ public class Institucion implements Serializable{
     }
 
       public Institucion() {
+          this.actividades = new ArrayList<>();
     }
     
     //Setters-----------------------------------------------------------------

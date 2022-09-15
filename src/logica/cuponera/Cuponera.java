@@ -111,6 +111,7 @@ public class Cuponera implements Serializable {
 //Constructors------------------------------------------------------------------
 	// empty constructor
 	public Cuponera() {
+            this.actividades = new ArrayList<>();
 	}
 
 	// Full Constructor
@@ -123,6 +124,7 @@ public class Cuponera implements Serializable {
 		this.descuento = descuento;
 		this.fechaAlta = fechaAlta;
 		this.cantClases = cantClases;
+                this.actividades = new ArrayList<>();
 	}
 
 //Methods-----------------------------------------------------------------------

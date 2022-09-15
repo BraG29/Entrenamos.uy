@@ -76,9 +76,13 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.IMG_URL = IMG;
         this.insti = institu;
+        this.clases = new ArrayList<>();
+        this.cuponeras = new ArrayList<>();
     }
     
     public ActividadDeportiva() {
+        this.clases = new ArrayList<>();
+        this.cuponeras = new ArrayList<>();
     }
 
     //Getters
