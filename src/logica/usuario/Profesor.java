@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.property.access.internal.PropertyAccessMapImpl.GetterImpl;
 
 import com.mysql.cj.Query;
+import java.util.ArrayList;
 
 import logica.clase.Clase;
 import logica.datatypes.DtProfesor;
@@ -46,7 +47,7 @@ public class Profesor extends Usuario{
     private Institucion institucion;
     
     public Profesor() {
-    	
+    	claseDictada = new ArrayList<>();
     }
     public Profesor(
     		String nickname, String apellido, String email, String nombre, LocalDate fechaNac, 
@@ -56,6 +57,7 @@ public class Profesor extends Usuario{
     	this.descripcion = descripcion;
     	this.sitioWeb = sitioWeb;
     	this.institucion = institucion;
+        claseDictada = new ArrayList<>();
     }
     
     
@@ -87,6 +89,17 @@ public class Profesor extends Usuario{
     public void setSitioWeb(String sitioWeb) {
         this.sitioWeb = sitioWeb;
     }
+
+    public Collection<Clase> getClaseDictada() {
+        return claseDictada;
+    }
+
+    public Institucion getInstitucion() {
+        return institucion;
+    }
+    
+    
+        
     
 //Methods-----------------------------------------------------------------------    
     @Override//child class implementation

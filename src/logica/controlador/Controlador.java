@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
+import logica.clase.Registro;
 
 import logica.institucion.Institucion;
 import logica.usuario.Profesor;
@@ -563,6 +564,13 @@ public class Controlador extends IControlador {
             else return false;
         }
         
+        public Usuario getUsuario(DtUsrKey usrKey){
+            
+            Usuario Usr = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
+            return Usr;
+            
+        }
+        
         //-----------------------------------------------------------------------------------------------------------------
         
         
@@ -637,4 +645,19 @@ public class Controlador extends IControlador {
     	  return claseADevolver;
       }
       
+      public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+          
+          
+          
+          Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
+                  
+          Collection<Registro> registros = ((Socio)s).getRegistro();
+          
+          ArrayList<String> output = new ArrayList<>();
+          
+          for(Registro r : registros){
+              output.add(r.getClaseAsociada().getNombreClase());
+          }
+          return output;
+      }
 }

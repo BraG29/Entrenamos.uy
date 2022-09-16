@@ -48,6 +48,12 @@ public class Registro implements Serializable {
     public void setCost(float cost) {
         this.cost = cost;
     }
+
+    public Clase getClaseAsociada() {
+        return claseAsociada;
+    }
+    
+    
 //Constructors------------------------------------------------------------------   
     //Empty Constructor
     public Registro() {

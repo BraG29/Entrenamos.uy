@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import logica.datatypes.*;
+import logica.datatypes.DtCuponera;
+import logica.usuario.Usuario;
 
 public class IControlador {
 	
@@ -139,4 +141,11 @@ public class IControlador {
         	return null;
         }
         
+        public Usuario getUsuario(DtUsrKey UsrKey){
+            return null;
+        }
+        
+        public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+            return null;
+        }
 }
