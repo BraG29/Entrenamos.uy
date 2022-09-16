@@ -74,6 +74,9 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento) {
 	}
+	public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+    	
+    }
         
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
         public ArrayList<DtCuponera> ListarCuponeras(){

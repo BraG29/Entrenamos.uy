@@ -397,26 +397,20 @@ public class Controlador extends IControlador {
         
     public ArrayList<String> getNombreInstituciones(){
         ArrayList<String> listaADevolver = new ArrayList<String>();
-        //initConnection();Esto solo lo tiene que manejar el menu Principal
-        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());  
-        //closeConnection(); Esto solo lo tiene que manejar el menu Principal
+        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());
         return listaADevolver;
     }
                     
         public ArrayList<String> consultarActividadDepo(String nombreInsti){
-            ArrayList<String> listaADevolver = new ArrayList<String>();            
-            //initConnection(); Esto solo lo tiene que manejar el menu Principal
+            ArrayList<String> listaADevolver = new ArrayList<String>();
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            //closeConnection(); Esto solo lo tiene que manejar el menu Principal
             return listaADevolver;
         }
         
         
         public ArrayList<String> consultarClases(String nombreActividad){
             ArrayList<String> listaADevolver = new ArrayList<String>();            
-            //initConnection(); Esto solo lo tiene que manejar el menu Principal
             listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
-            //closeConnection();  Esto solo lo tiene que manejar el menu Principal           
             return listaADevolver;
         }
         
@@ -428,8 +422,6 @@ public class Controlador extends IControlador {
         	String horaIniDeLaClase = "";
         	String fechaDeLaClase = "";
         	String registroDeLaClase = "";
-            
-        	//initConnection(); Esto solo lo tiene que manejar el menu Principal
             
             urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
             cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
@@ -444,9 +436,12 @@ public class Controlador extends IControlador {
             listaADevolver[3] = horaIniDeLaClase;
             listaADevolver[4] = fechaDeLaClase;
             listaADevolver[5] = registroDeLaClase;
-            
-            //closeConnection(); Esto solo lo tiene que manejar el menu Principal        
+                  
             return listaADevolver;
+        }
+        
+        public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+        	
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
