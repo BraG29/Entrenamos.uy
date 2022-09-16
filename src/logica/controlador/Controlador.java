@@ -199,7 +199,7 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("urlImagen"), imagen);
 			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
-			em.flush();
+			//em.flush();
 			tran.commit();
 		}catch(PersistenceException e) {
 			tran.rollback();
@@ -229,7 +229,7 @@ public class Controlador extends IControlador {
 			cu.set(rootProfesor.get("sitioWeb"), sitioWeb);
 			cu.where(cb.equal(rootProfesor.get("nickname"), this.uRecordado.getNickname()));
 			em.createQuery(cu).executeUpdate();
-			em.flush();
+			//em.flush();
 			tran.commit();
 		}catch(PersistenceException e) {
 			tran.rollback();
