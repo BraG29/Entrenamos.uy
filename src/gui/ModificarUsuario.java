@@ -63,6 +63,7 @@ public class ModificarUsuario extends JFrame {
 	private JTextArea textBiografia;
 	private JComboBox cBoxDia;
 	private JTextField txtFieldImagen;
+	//no me deja pushear
 
 	/**
 	 * Launch the application.
