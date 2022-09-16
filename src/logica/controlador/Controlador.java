@@ -257,6 +257,28 @@ public class Controlador extends IControlador {
 		}
 		return listaCuponeras;
 	}
+	
+	public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
+		
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreActi);
+		listaCuponeras = acti.getNombreCupo();
+		
+		//listaCuponeras.addAll(em.createNativeQuery("SELECT nom_cuponera FROM Actividad_Cuponera WHERE nom_actividad = " + "'" + nombreActi + "'").getResultList()) ;
+//		try {
+//			//tran.begin();
+//			
+//		}catch (Exception ex) {
+//			if (em != null) {
+//				tran.rollback();
+//			}
+//		} finally {
+//			//em.close();
+//		}
+		
+		//resultado = nombre
+		return listaCuponeras;
+	}
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
             
@@ -593,4 +615,26 @@ public class Controlador extends IControlador {
     	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
     	  return acti.getDTActividadDeportiva();
       }
+      
+      public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  listaADevolver = acti.getNombreClases();
+    	  return listaADevolver;
+      }
+      
+      public DtCuponera getDtCuponera(String nombreCupo){
+    	  Cuponera cupo = em.find(Cuponera.class, nombreCupo);
+    	  return cupo.getData();
+      }
+      
+      public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
+    	  System.out.println("Antes de buscar la Insti para la Clase");
+    	  Institucion insti = em.find(Institucion.class, nombreInsti);
+    	  System.out.println("Despues de buscar la Insti para la Clase");
+    	  
+    	  DtClase claseADevolver = insti.getDtClaseXActiDepo( nombreActi, nombreClase, em);
+    	  return claseADevolver;
+      }
+      
 }

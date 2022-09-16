@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import logica.datatypes.DtClase;
 import logica.institucion.ActividadDeportiva;
 
 @Entity
@@ -119,5 +120,12 @@ public class Clase implements Serializable{
 
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
-    } 
+    }
+    
+    public DtClase getData() {
+    	System.out.println("Antes de armar el DtClase");
+    	DtClase claseADevolver = new DtClase(this.nombreClase, this.fecha, this.horaIni, this.cantMin, this.cantMax, this.claseURL, this.fechaRegistro, this.horaFin, this.cantSocios);
+    	System.out.println("Despues de armar el DtClase");
+    	return claseADevolver;
+    }
 }

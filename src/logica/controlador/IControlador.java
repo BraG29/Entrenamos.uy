@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import logica.datatypes.*;
 
-import logica.datatypes.DtCuponera;
-
 public class IControlador {
 	
 	public void initConnection() {
@@ -126,4 +124,19 @@ public class IControlador {
         public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
         	return null;
         }
+        
+        public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
+        	return null;
+        }
+        
+        public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        public DtCuponera getDtCuponera(String nombreCupo) {
+        	return null;
+        }
+        public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
+        	return null;
+        }
+        
 }
