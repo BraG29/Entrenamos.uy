@@ -6,29 +6,28 @@ import java.time.LocalTime;
 
 public class DtClase {
     
-    private final String nombreClase;
-    private final LocalDate fecha;
-    private final LocalTime horaIni;
-    private final int cantMin;
-    private final int cantMax;
-    private final String claseURL;
-    private final LocalDate fechaRegistro;
+    public final String nombreClase;
+    public final LocalDate fecha;
+    public final LocalTime horaIni;
+    public final int cantMin;
+    public final int cantMax;
+    public final String claseURL;
+    public final LocalDate fechaRegistro;
     //atributos calculados:
-    private final LocalTime horaFin;
-    private final int cantSocios;
+    public final LocalTime horaFin;
+    public final int cantSocios;
 
     //El constructor no calcula ninguno de los atributos calculados tho
-    public DtClase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro, LocalTime horaFin, int cantSocios) {
+    public DtClase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMini, int cantMaxi, String claseURL, LocalDate fechaRegistro, LocalTime horaFin, int cantSocios) {
         this.nombreClase = nombreClase;
         this.fecha = fecha;
         this.horaIni = horaIni;
-        this.cantMin = cantMin;
-        this.cantMax = cantMax;
+        this.cantMin = cantMini;
+        this.cantMax = cantMaxi;
         this.claseURL = claseURL;
         this.fechaRegistro = fechaRegistro;
         this.horaFin = horaFin;
         this.cantSocios = cantSocios;
     }
-    
-    
+  
 }

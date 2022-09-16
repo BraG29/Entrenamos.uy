@@ -20,6 +20,7 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import logica.clase.Clase;
+import logica.datatypes.DtClase;
 import logica.datatypes.DtInstitucion;
 
 import java.io.Serializable;
@@ -201,6 +202,15 @@ public class Institucion implements Serializable{
         }
         
         
+    }
+    
+    public DtClase getDtClaseXActiDepo(String nombreActi,String nombreClase, EntityManager em) {
+    	System.out.println("Antes de buscar la ActiDepo para la Clase");
+    	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	System.out.println("Despues de buscar la ActiDepo para la Clase");
+    	
+    	DtClase claseADevolver = acti.getDtClaseXActiDepo(nombreClase, em);
+    	return claseADevolver;
     }
     
     

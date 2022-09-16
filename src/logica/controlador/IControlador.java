@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import logica.datatypes.*;
-
 import logica.datatypes.DtCuponera;
 import logica.usuario.Usuario;
 
@@ -128,6 +127,20 @@ public class IControlador {
         }
         
         public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+        	return null;
+        }
+        
+        public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
+        	return null;
+        }
+        
+        public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        public DtCuponera getDtCuponera(String nombreCupo) {
+        	return null;
+        }
+        public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
         	return null;
         }
         
