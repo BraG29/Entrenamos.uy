@@ -269,13 +269,13 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         	if(!this.listaClases.contains(this.comboLista.getSelectedItem().toString())) {
         		DtCuponera DtAUsar = controlador.getDtCuponera(this.comboLista.getSelectedItem().toString());
         		System.out.print(DtAUsar.nombreCup + DtAUsar.descripcion);
-        		ventanaConsulta consultaDevuelta = new ventanaConsulta(DtAUsar);
+        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
         		consultaDevuelta.setVisible(true);
         		
         	}else {
         		DtClase DtAUsar = controlador.getDtClaseXInsti(this.comboInsti.getSelectedItem().toString(),this.comboActi.getSelectedItem().toString(),this.comboLista.getSelectedItem().toString());
         		//System.out.print(DtAUsar.nombreClase + "ALGO PORfa");
-        		ventanaConsulta consultaDevuelta = new ventanaConsulta(DtAUsar);
+        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
         		consultaDevuelta.setVisible(true);
         	}
         	
