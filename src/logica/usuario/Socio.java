@@ -43,9 +43,9 @@ public class Socio extends Usuario {
 //		joinColumns = @JoinColumn(name="nick_socio", referencedColumnName="nickname"),
 //		inverseJoinColumns = @JoinColumn(name="id_reg"))
     private Collection<Registro> registro;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<CompraCuponera> compra;
+       
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<CompraCuponera> compra;
 	
 	
 	
@@ -55,6 +55,7 @@ public class Socio extends Usuario {
 		super();
 		// TODO Auto-generated constructor stub
                 compra = new ArrayList<>();// Siempren inicien el las colleciones
+                registro = new ArrayList<>();
 	}
 
 
@@ -63,6 +64,7 @@ public class Socio extends Usuario {
 		// TODO Auto-generated constructor stub
                 
                 compra = new ArrayList<>();// Siempren inicien el las colleciones
+                registro = new ArrayList<>();
 	}
 
 	public DtUsuario getDatosSocio() {
@@ -73,6 +75,12 @@ public class Socio extends Usuario {
 
 	public void registrarAClase(Clase c, LocalDate fecha){
         //needs implementation
+        }
+
+    public Collection<Registro> getRegistro() {
+        return registro;
     }
-    
+        
+        
+   
 }

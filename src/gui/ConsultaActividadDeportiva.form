@@ -36,7 +36,7 @@
                               <Component id="labelClases" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="labelFecha" alignment="0" pref="252" max="32767" attributes="0"/>
+                              <Component id="labelFechaAlta" alignment="0" pref="252" max="32767" attributes="0"/>
                               <Component id="labelCosto" alignment="0" max="32767" attributes="0"/>
                               <Component id="labelDuracion" alignment="0" max="32767" attributes="0"/>
                               <Component id="labelDesc" alignment="0" max="32767" attributes="0"/>
@@ -53,6 +53,7 @@
                                   <Component id="labelActi" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="labelFecha" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -81,7 +82,7 @@
                   <Component id="comboLista" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelClases" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="labelNombreAct" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelDesc" min="-2" max="-2" attributes="0"/>
@@ -90,8 +91,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelCosto" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelFechaAlta" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="labelFecha" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
           </Group>
           <Component id="panelAzul" max="32767" attributes="0"/>
@@ -228,12 +231,12 @@
         <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="labelCostoComponentShown"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelFecha">
+    <Component class="javax.swing.JLabel" name="labelFechaAlta">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel5"/>
       </Properties>
       <Events>
-        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="labelFechaComponentShown"/>
+        <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="labelFechaAltaComponentShown"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboActi">
@@ -254,6 +257,11 @@
     <Component class="javax.swing.JLabel" name="labelActi">
       <Properties>
         <Property name="text" type="java.lang.String" value="Actividad Deportiva"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="labelFecha">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
     </Component>
   </SubComponents>

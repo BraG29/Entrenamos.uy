@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
+import logica.clase.Registro;
 
 import logica.institucion.Institucion;
 import logica.usuario.Profesor;
@@ -257,6 +258,28 @@ public class Controlador extends IControlador {
 		}
 		return listaCuponeras;
 	}
+	
+	public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
+		
+		ArrayList<String> listaCuponeras = new ArrayList<String>();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreActi);
+		listaCuponeras = acti.getNombreCupo();
+		
+		//listaCuponeras.addAll(em.createNativeQuery("SELECT nom_cuponera FROM Actividad_Cuponera WHERE nom_actividad = " + "'" + nombreActi + "'").getResultList()) ;
+//		try {
+//			//tran.begin();
+//			
+//		}catch (Exception ex) {
+//			if (em != null) {
+//				tran.rollback();
+//			}
+//		} finally {
+//			//em.close();
+//		}
+		
+		//resultado = nombre
+		return listaCuponeras;
+	}
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
             
@@ -396,26 +419,20 @@ public class Controlador extends IControlador {
         
     public ArrayList<String> getNombreInstituciones(){
         ArrayList<String> listaADevolver = new ArrayList<String>();
-        //initConnection();Esto solo lo tiene que manejar el menu Principal
-        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());  
-        //closeConnection(); Esto solo lo tiene que manejar el menu Principal
+        listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());
         return listaADevolver;
     }
                     
         public ArrayList<String> consultarActividadDepo(String nombreInsti){
-            ArrayList<String> listaADevolver = new ArrayList<String>();            
-            //initConnection(); Esto solo lo tiene que manejar el menu Principal
+            ArrayList<String> listaADevolver = new ArrayList<String>();
             listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            //closeConnection(); Esto solo lo tiene que manejar el menu Principal
             return listaADevolver;
         }
         
         
         public ArrayList<String> consultarClases(String nombreActividad){
             ArrayList<String> listaADevolver = new ArrayList<String>();            
-            //initConnection(); Esto solo lo tiene que manejar el menu Principal
             listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
-            //closeConnection();  Esto solo lo tiene que manejar el menu Principal           
             return listaADevolver;
         }
         
@@ -427,8 +444,6 @@ public class Controlador extends IControlador {
         	String horaIniDeLaClase = "";
         	String fechaDeLaClase = "";
         	String registroDeLaClase = "";
-            
-        	//initConnection(); Esto solo lo tiene que manejar el menu Principal
             
             urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
             cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
@@ -443,9 +458,12 @@ public class Controlador extends IControlador {
             listaADevolver[3] = horaIniDeLaClase;
             listaADevolver[4] = fechaDeLaClase;
             listaADevolver[5] = registroDeLaClase;
-            
-            //closeConnection(); Esto solo lo tiene que manejar el menu Principal        
+                  
             return listaADevolver;
+        }
+        
+        public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+        	
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
@@ -541,6 +559,13 @@ public class Controlador extends IControlador {
             else return false;
         }
         
+        public Usuario getUsuario(DtUsrKey usrKey){
+            
+            Usuario Usr = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
+            return Usr;
+            
+        }
+        
         //-----------------------------------------------------------------------------------------------------------------
         
         
@@ -592,5 +617,42 @@ public class Controlador extends IControlador {
       public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
     	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
     	  return acti.getDTActividadDeportiva();
+      }
+      
+      public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  listaADevolver = acti.getNombreClases();
+    	  return listaADevolver;
+      }
+      
+      public DtCuponera getDtCuponera(String nombreCupo){
+    	  Cuponera cupo = em.find(Cuponera.class, nombreCupo);
+    	  return cupo.getData();
+      }
+      
+      public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
+    	  System.out.println("Antes de buscar la Insti para la Clase");
+    	  Institucion insti = em.find(Institucion.class, nombreInsti);
+    	  System.out.println("Despues de buscar la Insti para la Clase");
+    	  
+    	  DtClase claseADevolver = insti.getDtClaseXActiDepo( nombreActi, nombreClase, em);
+    	  return claseADevolver;
+      }
+      
+      public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+          
+          
+          
+          Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
+                  
+          Collection<Registro> registros = ((Socio)s).getRegistro();
+          
+          ArrayList<String> output = new ArrayList<>();
+          
+          for(Registro r : registros){
+              output.add(r.getClaseAsociada().getNombreClase());
+          }
+          return output;
       }
 }

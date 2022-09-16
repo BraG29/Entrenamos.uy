@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import logica.datatypes.*;
-
 import logica.datatypes.DtCuponera;
+import logica.usuario.Usuario;
 
 public class IControlador {
 	
@@ -73,6 +73,9 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento) {
 	}
+	public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+    	
+    }
         
         //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
         public ArrayList<DtCuponera> ListarCuponeras(){
@@ -125,5 +128,27 @@ public class IControlador {
         
         public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
         	return null;
+        }
+        
+        public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
+        	return null;
+        }
+        
+        public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        public DtCuponera getDtCuponera(String nombreCupo) {
+        	return null;
+        }
+        public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
+        	return null;
+        }
+        
+        public Usuario getUsuario(DtUsrKey UsrKey){
+            return null;
+        }
+        
+        public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+            return null;
         }
 }
