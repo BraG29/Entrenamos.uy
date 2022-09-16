@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import logica.datatypes.DtClase;
 import logica.institucion.ActividadDeportiva;
 
 @Entity
@@ -39,7 +40,7 @@ public class Clase implements Serializable{
     //Constructor, faltan los atributos calculados: horaFin y cantSocios.
     public Clase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro) {
         this.nombreClase = nombreClase;
-        this.fecha = fecha;
+        this.fecha = fecha; //fecha de inicio
         this.horaIni = horaIni;
         this.cantMin = cantMin;
         this.cantMax = cantMax;
@@ -119,5 +120,12 @@ public class Clase implements Serializable{
 
     public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
-    } 
+    }
+    
+    public DtClase getData() {
+    	System.out.println("Antes de armar el DtClase");
+    	DtClase claseADevolver = new DtClase(this.nombreClase, this.fecha, this.horaIni, this.cantMin, this.cantMax, this.claseURL, this.fechaRegistro, this.horaFin, this.cantSocios);
+    	System.out.println("Despues de armar el DtClase");
+    	return claseADevolver;
+    }
 }

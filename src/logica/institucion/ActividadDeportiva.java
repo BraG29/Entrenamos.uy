@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -28,6 +29,8 @@ import javax.persistence.EntityTransaction;
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
+import logica.datatypes.DtClase;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.EntityTransaction;
@@ -78,6 +81,26 @@ public class ActividadDeportiva implements Serializable {
         this.insti = institu;
         this.clases = new ArrayList<>();
         this.cuponeras = new ArrayList<>();
+    }
+    
+    public int getCantCupo() {
+    	return this.cuponeras.size();
+    }
+    
+    public ArrayList<String> getNombreCupo() {
+//    	ArrayList<Cuponera> cupos = ((List<Cuponera>)this.cuponeras);
+   	ArrayList<String> listaADevolver = new ArrayList<String>();
+   	
+//    	for(int i = 0;i < cupos.size();i++) {
+//    		listaADevolver.add(cupos.get(i).getNombreCup());
+//    	}
+    	
+    	for(Cuponera C : this.cuponeras) {
+    		listaADevolver.add(C.getNombreCup());
+    	}
+    	
+    	return listaADevolver;
+    	
     }
     
     public ActividadDeportiva() {
@@ -177,7 +200,11 @@ public class ActividadDeportiva implements Serializable {
     public ArrayList<String> getNombreClases(){
         ArrayList<String> nombreClases = new ArrayList<String>();
         
-        return nombreClases;
+        for(Clase C : this.clases) {
+    		nombreClases.add(C.getNombreClase());
+    	}
+    	
+    	return nombreClases;
     }
     
     public void darAltaClaseActi(Clase claseDictada, EntityManager em,EntityTransaction tran){
@@ -205,6 +232,17 @@ public class ActividadDeportiva implements Serializable {
         
         
         //arreglar el constructor de Clase
+    }
+    
+    public DtClase getDtClaseXActiDepo(String nombreClase,EntityManager em) {
+    	//this.clases
+    	System.out.println("Antes de buscar la Clase");
+    	Clase clase = em.find(Clase.class,nombreClase);
+    	System.out.println("Despues de buscar la Clase");
+    	
+    	DtClase claseADevolver = clase.getData();
+    	
+    	return claseADevolver;
     }
     
 }

@@ -10,11 +10,16 @@ import logica.controlador.Controlador;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
 import logica.datatypes.DtActividadDeportiva;
+import logica.datatypes.DtClase;
+import logica.datatypes.DtCuponera;
 
 
 
 
 public class ConsultaActividadDeportiva extends javax.swing.JFrame {
+	
+	private ArrayList<String> listaClases = new ArrayList<>();
+	private ArrayList<String> listaCuponeras = new ArrayList<>();
 
     /**
      * Creates new form ConsultaActividadDeportiva
@@ -26,15 +31,16 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         this.labelDesc.setVisible(false);
         this.labelDuracion.setVisible(false);
         this.labelCosto.setVisible(false);
-        this.labelFecha.setVisible(false);
+        this.labelFechaAlta.setVisible(false);
         this.labelClases.setVisible(false);
         this.labelActi.setVisible(false);
+        this.labelFecha.setVisible(false);
         
         this.comboLista.setVisible(false);
         this.comboActi.setVisible(false);
         
         
-        String[] holiwi = new String[] {"-","holiwi","owo"};
+        //String[] holiwi = new String[] {"-","holiwi","owo"};
         
         Fabrica fab = new Fabrica();
         IControlador controlador = fab.getInterface();
@@ -44,12 +50,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         for(int i = 0;i < arrStr.size();i++) {
         	this.comboInsti.addItem(arrStr.get(i));
         }
-        
-        //this.comboInsti.setModel(new DefaultComboBoxModel(holiwi));
-        
-          
-        
-        
+
     }
     
 
@@ -75,9 +76,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         labelDesc = new javax.swing.JLabel();
         labelDuracion = new javax.swing.JLabel();
         labelCosto = new javax.swing.JLabel();
-        labelFecha = new javax.swing.JLabel();
+        labelFechaAlta = new javax.swing.JLabel();
         comboActi = new javax.swing.JComboBox<>();
         labelActi = new javax.swing.JLabel();
+        labelFecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,10 +171,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             }
         });
 
-        labelFecha.setText("jLabel5");
-        labelFecha.addComponentListener(new java.awt.event.ComponentAdapter() {
+        labelFechaAlta.setText("jLabel5");
+        labelFechaAlta.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                labelFechaComponentShown(evt);
+                labelFechaAltaComponentShown(evt);
             }
         });
 
@@ -184,6 +186,8 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         });
 
         labelActi.setText("Actividad Deportiva");
+
+        labelFecha.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -201,7 +205,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(labelClases))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(labelFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                                .addComponent(labelFechaAlta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                                 .addComponent(labelCosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelDuracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelDesc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +217,8 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(labelActi))))))
+                                    .addComponent(labelActi)))
+                            .addComponent(labelFecha))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelAzul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -234,7 +239,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelClases))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelNombreAct)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelDesc)
@@ -243,8 +248,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelCosto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelFechaAlta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2))
             .addComponent(panelAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -254,10 +261,28 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 
     private void botonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultaActionPerformed
              
-        if(this.comboLista.getSelectedIndex() != 0){
-            //se abren los casos de uso del Lucas y EUwUgenio
+        if(this.comboLista.getSelectedIndex() != 0 && this.comboActi.getSelectedIndex() != 0 && this.comboInsti.getSelectedIndex() != 0){
+            //se abren los casos de uso del Lucas y EUwUgenio, MENTIRA
+        	Fabrica fab = new Fabrica();
+        	IControlador controlador = fab.getInterface();
+        	
+        	if(!this.listaClases.contains(this.comboLista.getSelectedItem().toString())) {
+        		DtCuponera DtAUsar = controlador.getDtCuponera(this.comboLista.getSelectedItem().toString());
+        		System.out.print(DtAUsar.nombreCup + DtAUsar.descripcion);
+        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
+        		consultaDevuelta.setVisible(true);
+        		
+        	}else {
+        		DtClase DtAUsar = controlador.getDtClaseXInsti(this.comboInsti.getSelectedItem().toString(),this.comboActi.getSelectedItem().toString(),this.comboLista.getSelectedItem().toString());
+        		//System.out.print(DtAUsar.nombreClase + "ALGO PORfa");
+        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
+        		consultaDevuelta.setVisible(true);
+        	}
+        	
+        	//controlador.
+            
         }else{
-            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","Porfavor seleccione una cuponera/lista",java.awt.Color.RED);
+            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","Hay campos sin rellenar",java.awt.Color.RED);
             errorVentana.setVisible(true);
             return;
         }
@@ -280,6 +305,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         	
         	//------------------_Itero para darle valor al comboBox de Actividades Deportivas------------------------------------
         	comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        	
         	
         	ArrayList<String> arrStr = controlador.consultarActividadDepo(comboInsti.getSelectedItem().toString());
         	for(int i = 0;i < arrStr.size();i++) {
@@ -304,18 +330,20 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelDesc.setVisible(false);
             this.labelDuracion.setVisible(false);
             this.labelCosto.setVisible(false);
-            this.labelFecha.setVisible(false);
+            this.labelFechaAlta.setVisible(false);
         }
         
     }//GEN-LAST:event_comboInstiActionPerformed
 
     private void comboListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboListaActionPerformed
     
-//        if(comboLista.getSelectedIndex() != 0){
-//            this.botonConsulta.setForeground(java.awt.Color.GRAY);
-//        }else{
-//            this.botonConsulta.setForeground(java.awt.Color.ORANGE);
-//        }
+//    	System.out.println("antes del clearear listaClases");
+//        this.listaClases.clear();
+//        this.listaClases.addAll(arrStr2);
+//        
+//        System.out.println("antes del clearear listaCuponeras");
+//        this.listaCuponeras.clear();
+//        this.listaCuponeras.addAll(arrStr);
         
 
     }//GEN-LAST:event_comboListaActionPerformed
@@ -340,9 +368,9 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         //this.labelCosto.setText("Costo: ");
     }//GEN-LAST:event_labelCostoComponentShown
 
-    private void labelFechaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelFechaComponentShown
+    private void labelFechaAltaComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_labelFechaAltaComponentShown
         //this.labelFecha.setText("Fecha registro: ");
-    }//GEN-LAST:event_labelFechaComponentShown
+    }//GEN-LAST:event_labelFechaAltaComponentShown
 
     private void comboActiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActiActionPerformed
 
@@ -371,18 +399,47 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelCosto.setVisible(true);
             this.labelCosto.setText("Costo: " +  Float.toString(dtActi.costo) + "$");
             
-            //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
-          //FALTA SABER Y PONER CUAL FECHA ES CUAL (porque actidepo tiene 2 fechas lmaaaao)
+            //mentira :3
             
-            this.labelFecha.setVisible(true);
-            this.labelFecha.setText(dtActi.fechaRegistro.toString());
+            this.labelFechaAlta.setVisible(true);
+            this.labelFechaAlta.setText("Fecha de Alta: " + dtActi.fechaRegistro.toString());
+            
+            ArrayList<String> arrStr = controlador.listaCuponerasRegistradasParaActiDepo(this.comboActi.getSelectedItem().toString());
+            ArrayList<String> arrStr2 = controlador.getClasesPorActiDepo(this.comboActi.getSelectedItem().toString());
+            
+            
+            comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            
+            System.out.println("antes del clearear listaClases");
+            this.listaClases.clear();
+            this.listaClases.addAll(arrStr2);
+            System.out.println(listaClases);
+            
+            
+            System.out.println("antes del clearear listaCuponeras");
+            this.listaCuponeras.clear();
+            this.listaCuponeras.addAll(arrStr);
+            System.out.println(listaCuponeras);
+            
+            
+            //System.out.println("antes de iterar");
+            for(int i = 0; i < arrStr.size();i++) {
+            	this.comboLista.addItem(arrStr.get(i));
+            	//this.listaCuponeras.add(arrStr.get(i));
+            }
+            
+            for(int i = 0; i < arrStr2.size();i++) {
+            	this.comboLista.addItem(arrStr2.get(i));
+            	//this.listaClases.add(arrStr2.get(i));
+            }
+            
+            System.out.println(dtActi.clases);
+            
+//            this.labelFecha.setVisible(true);
+//            this.labelFecha.setText("Fecha de Alta: " + dtActi.fecha);
             //System.out.println(comboActi.getSelectedIndex());
+            
+            //this.labe
             
         }else{
             //combos
@@ -394,7 +451,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelDesc.setVisible(false);
             this.labelDuracion.setVisible(false);
             this.labelCosto.setVisible(false);
-            this.labelFecha.setVisible(false);
+            this.labelFechaAlta.setVisible(false);
         }
         
     }//GEN-LAST:event_comboActiActionPerformed
@@ -448,6 +505,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private javax.swing.JLabel labelDesc;
     private javax.swing.JLabel labelDuracion;
     private javax.swing.JLabel labelFecha;
+    private javax.swing.JLabel labelFechaAlta;
     private javax.swing.JLabel labelNombreAct;
     private javax.swing.JPanel panelAzul;
     // End of variables declaration//GEN-END:variables
