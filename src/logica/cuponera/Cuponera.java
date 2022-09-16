@@ -156,7 +156,9 @@ public class Cuponera implements Serializable {
 	public DtCuponera getData() {
 		ArrayList<String> nomActis = new ArrayList<String>();
 		// nomActis.addAll(this.actividades.keySet());
-
+		for(ActividadDeportiva ac : this.actividades) {
+			nomActis.add(ac.getNombreAct());
+		}
 		DtCuponera output = new DtCuponera(this.nombreCup, this.descripcion, this.fechaInicio, this.fechaFin,
 				this.descuento, this.fechaAlta, this.cantClases, nomActis);
 		return output;

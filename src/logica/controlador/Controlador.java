@@ -237,19 +237,16 @@ public class Controlador extends IControlador {
 	}
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
-		
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		//EntityManager em = emf.createEntityManager();
 		java.util.List consultaCuponera = null;
 		try {
-			//tran.begin();
+			tran.begin();
 			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
 		}catch (Exception ex) {
 			if (em != null) {
 				tran.rollback();
 			}
-		} finally {
-			//em.close();
 		}
 		for (int i = 0; i < consultaCuponera.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
 			String nombresCuponeras = (String) consultaCuponera.get(i); //obtengo el nombre en el q estoy parado casteo a string xq consulta es de tipo List
@@ -262,24 +259,23 @@ public class Controlador extends IControlador {
             
                 //Kevin Viera:  Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
                 //              Y el menu Principal Maneja cuando los abre y cierra 
-		
-		//EntityManager em = emf.createEntityManager();// cuidao
-                
+		//EntityManager em = emf.createEntityManager();// cuidao        
 		Cuponera cup = null;
 		String nombre= null, descripcion = null;
 		Integer cant_clase = 0;
 		Float descuento = 0F;
 		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
-		DtCuponera cupData = null;		
+		DtCuponera cupData = null;
+		ArrayList<String> nombresActividades = new ArrayList<String>();
 		try {
 			//em.getTransaction().begin();//cuidao 
-                        tran.begin();//usar el Entity Transaction Definido en el Controlador
-                        
+			tran.begin();//usar el Entity Transaction Definido en el Controlador         
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}
 			
+			/*cup.getData()
 			nombre = cup.getNombreCup();
 			descripcion = cup.getDescripcion();
 			cant_clase = cup.getCantClases();
@@ -287,25 +283,24 @@ public class Controlador extends IControlador {
 			fecha_inicio = cup.getFechaInicio();
 			fecha_fin = cup.getFechaFin();
 			fecha_alta = cup.getFechaAlta();
-			//nombresActividades = cup.getActividades();
-			
-			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
+			nombresActividades = cup.getActividades();
+			List actividades = (List) cup.getActividades();
+			for (int i = 0; i < actividades.size(); i++) {
+				nombresActividades.add(nombre);
+			}*/
+			cupData = cup.getData();
 			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {//cuidaaaaao
 				//em.getTransaction().rollback();//ay mi madre el bicho
                                 tran.rollback();
 			}
-		} finally {
-			//em.close();//cuidaaaaaaaao
-                        //el em lo Cierra el Menu Principal
 		}
 		return cupData;
 	}
 	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
-
 		//EntityManager em = emf.createEntityManager();
 
 		try {

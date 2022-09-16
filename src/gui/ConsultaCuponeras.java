@@ -19,6 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,7 +34,7 @@ public class ConsultaCuponeras extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,8 +47,7 @@ public class ConsultaCuponeras extends JFrame {
 			}
 		});
 	}
-	
-	 
+	 */
 	/**
 	 * Create the frame.
 	 */
@@ -113,6 +113,7 @@ public class ConsultaCuponeras extends JFrame {
         panel_1.setLayout(null);
 		
 		//lbls actividad
+       
         JLabel lblNombreActividad = new JLabel("Nombre:");
         lblNombreActividad.setBounds(20, 83, 413, 15);
         panel_1.add(lblNombreActividad);
@@ -162,21 +163,19 @@ public class ConsultaCuponeras extends JFrame {
         
 		java.util.List cuponeras = sistema.listaCuponerasRegistradas();
 		
+		
 		for (int i = 0; i < cuponeras.size(); i++) {
 			comboBoxCuponera.addItem(cuponeras.get(i));
 		}
 		
-        //accion combobox Cuponera
-		String descripcion = null;
-		Integer cant_clase = 0, descuento = 0;
-		LocalDateTime fecha_inicio = null, fecha_fin = null, fecha_alta = null;
-		
-		
+        //accion combobox Cuponera	
 		comboBoxCuponera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nombre= comboBoxCuponera.getSelectedItem().toString();	//nombre de la cuponera q selecciono.
 				DtCuponera datosCup = sistema.seleccionCuponera(nombre);
-
+				
+				//controlar si esta vacio.
+				
 				int cuponera = comboBoxCuponera.getSelectedIndex();
 				if(cuponera != 0) {
 
@@ -204,20 +203,72 @@ public class ConsultaCuponeras extends JFrame {
 					lblSeleccioneUnaActividad.setVisible(true);
 					comboBoxActividad.setVisible(true);
 					
+					
+					 	//accion combobox actividad
+					String[] inicio = new String[] {"..."}; 
+			        comboBoxActividad.setModel(new DefaultComboBoxModel(inicio));
+			        
+			        String nombreAct = null;
+			        String descAct = null;
+			        Float duracion = null;
+			        Float costo = null;
+			        LocalDate fechaRegistro = null;
+			        
+			        java.util.List actividades = (java.util.List<String>)datosCup.actividades;
+			        for (int i = 0; i < actividades.size(); i++) {
+						comboBoxActividad.addItem(actividades.get(i));
+					}
+			        
+					comboBoxActividad.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							int actividad = comboBoxActividad.getSelectedIndex();
+							if(actividad >= 0) {
+								
+						        JLabel lblNombreActividad = new JLabel("Nombre:");
+								lblNombreActividad.setVisible(true);
+								
+								JLabel lblDescripcinActividad = new JLabel("Descripción:");
+								lblDescripcinActividad.setVisible(true);
+								
+								JLabel lblDuracin = new JLabel("Duración:");
+								lblDuracin.setVisible(true);
+								
+								JLabel lblCosto = new JLabel("Costo:");
+								lblCosto.setVisible(true);
+								
+								JLabel lblFechaDeRegistro = new JLabel("Fecha de registro:");
+								lblFechaDeRegistro.setVisible(true);
+								
+							}else {
+								lblNombreActividad.setVisible(false);
+								lblDescripcinActividad.setVisible(false);
+								lblDuracin.setVisible(false);
+								lblCosto.setVisible(false);
+								lblFechaDeRegistro.setVisible(false);
+							}
+						}
+					});
+					
 				}else {
-					lblNombre.setVisible(false);
-					lblDescripcin.setVisible(false);
-					lblFechaDeInicio.setVisible(false);
-					lblFechaDeFin.setVisible(false);
-					lblFechaDeCreacin.setVisible(false);
-					lblDescuento.setVisible(false);
-					lblCantidadDeClases.setVisible(false);
-					lblSeleccioneUnaActividad.setVisible(false);
-					comboBoxActividad.setVisible(false);
+					if(cuponera == 0) {
+						
+						lblNombre.setVisible(false);
+						lblDescripcin.setVisible(false);
+						lblFechaDeInicio.setVisible(false);
+						lblFechaDeFin.setVisible(false);
+						lblFechaDeCreacin.setVisible(false);
+						lblDescuento.setVisible(false);
+						lblCantidadDeClases.setVisible(false);
+						lblSeleccioneUnaActividad.setVisible(false);
+						comboBoxActividad.setVisible(false);
+						
+					}
+					
 				}
 			}
 		});
 
+		/*
 		//accion combobox actividad
 		comboBoxActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -237,7 +288,7 @@ public class ConsultaCuponeras extends JFrame {
 				}
 			}
 		});
-		
+		*/
 
         JButton btnCanclear = new JButton("X");
         btnCanclear.setBounds(396, 266, 49, 34);
