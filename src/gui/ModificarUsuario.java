@@ -47,6 +47,8 @@ import logica.datatypes.*;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JCheckBox;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ModificarUsuario extends JFrame {
 
@@ -85,9 +87,16 @@ public class ModificarUsuario extends JFrame {
 	 * Create the frame.
 	 */
 	public ModificarUsuario() {
+//		addWindowListener(new WindowAdapter() {
+//			@Override
+//			public void windowClosed(WindowEvent e) {
+//				setVisible(false);
+//			}
+//		});
 		setTitle("Modificar Usuario");
 		setBackground(SystemColor.inactiveCaption);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		setBounds(100, 100, 902, 396);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
@@ -281,6 +290,7 @@ public class ModificarUsuario extends JFrame {
 
 			listUsuarios.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent arg0) {
+					lblImagen.setIcon(null);
 					checkBoxEditar.setSelected(false);
 					editableFalse();
 					lblDatosUsr.setText("Datos para el usuario "+listUsuarios.getSelectedValue()+":");
@@ -309,11 +319,17 @@ public class ModificarUsuario extends JFrame {
 					Image imagen = null;
 					try {
 						URL url = new URL(txtFieldImagen.getText());
-						imagen = ImageIO.read(url).getScaledInstance(180, 180, 100);
+						URLConnection connection = (URLConnection) url.openConnection();
+	                    connection.setRequestProperty(
+	                            "User-Agent",
+	                            "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+						imagen = ImageIO.read(connection.getInputStream()).getScaledInstance(180, 180, 100);
 					} catch (IOException e) {
 						e.printStackTrace();
+					}finally {
+						
+						lblImagen.setIcon(new ImageIcon(imagen));
 					}
-					lblImagen.setIcon(new ImageIcon(imagen));
 				}
 			});
 			checkBoxEditar.addActionListener(new ActionListener() {
