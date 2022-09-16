@@ -39,7 +39,7 @@ public class Clase implements Serializable{
     //Constructor, faltan los atributos calculados: horaFin y cantSocios.
     public Clase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro) {
         this.nombreClase = nombreClase;
-        this.fecha = fecha;
+        this.fecha = fecha; //fecha de inicio
         this.horaIni = horaIni;
         this.cantMin = cantMin;
         this.cantMax = cantMax;

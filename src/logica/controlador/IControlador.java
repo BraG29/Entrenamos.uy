@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import logica.datatypes.*;
 
 import logica.datatypes.DtCuponera;
+import logica.usuario.Usuario;
 
 public class IControlador {
 	
@@ -125,5 +126,13 @@ public class IControlador {
         
         public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
         	return null;
+        }
+        
+        public Usuario getUsuario(DtUsrKey UsrKey){
+            return null;
+        }
+        
+        public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+            return null;
         }
 }
