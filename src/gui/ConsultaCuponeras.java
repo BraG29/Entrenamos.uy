@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logica.controlador.*;
+import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtCuponera;
 
 import javax.swing.JScrollPane;
@@ -53,7 +54,7 @@ public class ConsultaCuponeras extends JFrame {
 	 */
 	public ConsultaCuponeras() {
 		setTitle("Consulta de cuponeras de actividades deportivas");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 836, 328);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -219,12 +220,14 @@ public class ConsultaCuponeras extends JFrame {
 						comboBoxActividad.addItem(actividades.get(i));
 					}
 			        
+			        DtActividadDeportiva datosAct;
+			        
 					comboBoxActividad.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							int actividad = comboBoxActividad.getSelectedIndex();
 							if(actividad >= 0) {
 								
-						        JLabel lblNombreActividad = new JLabel("Nombre:");
+						        JLabel lblNombreActividad = new JLabel("Nombre: 	");
 								lblNombreActividad.setVisible(true);
 								
 								JLabel lblDescripcinActividad = new JLabel("Descripción:");

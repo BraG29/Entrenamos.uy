@@ -121,7 +121,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel19.setText("jLabel19");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setText("Nickname:");
 

@@ -234,8 +234,8 @@ public class Controlador extends IControlador {
 		}catch(PersistenceException e) {
 			tran.rollback();
 		}
-
 	}
+	
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
@@ -296,21 +296,7 @@ public class Controlador extends IControlador {
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
-			}
-			
-			/*cup.getData()
-			nombre = cup.getNombreCup();
-			descripcion = cup.getDescripcion();
-			cant_clase = cup.getCantClases();
-			descuento = cup.getDescuento();
-			fecha_inicio = cup.getFechaInicio();
-			fecha_fin = cup.getFechaFin();
-			fecha_alta = cup.getFechaAlta();
-			nombresActividades = cup.getActividades();
-			List actividades = (List) cup.getActividades();
-			for (int i = 0; i < actividades.size(); i++) {
-				nombresActividades.add(nombre);
-			}*/
+			}		
 			cupData = cup.getData();
 			return cupData;		
 		}catch (Exception ex) {

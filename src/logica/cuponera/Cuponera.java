@@ -124,7 +124,7 @@ public class Cuponera implements Serializable {
 		this.descuento = descuento;
 		this.fechaAlta = fechaAlta;
 		this.cantClases = cantClases;
-                this.actividades = new ArrayList<>();
+        this.actividades = new ArrayList<>();
 	}
 
 //Methods-----------------------------------------------------------------------
