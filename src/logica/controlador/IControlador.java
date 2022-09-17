@@ -159,4 +159,8 @@ public class IControlador {
         public DtActividadDeportiva getDtActividadDepo(String nomActi){
             return null;
         }
+        
+        public DtClase getDtClaseSocio (String nomClase){
+            return null;
+        }
 }
