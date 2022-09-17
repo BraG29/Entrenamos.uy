@@ -151,4 +151,12 @@ public class IControlador {
         public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
             return null;
         }
+        
+        public String getActividadDepoAsociadaClase(String nomClase, String insti){
+            return null; 
+        }
+        
+        public DtActividadDeportiva getDtActividadDepo(String nomActi){
+            return null;
+        }
 }

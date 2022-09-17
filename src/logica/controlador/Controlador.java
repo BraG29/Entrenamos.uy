@@ -636,9 +636,7 @@ public class Controlador extends IControlador {
       }
       
       public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
-          
-          
-          
+
           Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
                   
           Collection<Registro> registros = ((Socio)s).getRegistro();
@@ -649,5 +647,44 @@ public class Controlador extends IControlador {
               output.add(r.getClaseAsociada().getNombreClase());
           }
           return output;
+      }
+      
+      public String getActividadDepoAsociadaClase(String nomClase, String nomInsti){
+          
+          Institucion inst = em.find(Institucion.class, nomInsti);
+          
+          if(inst != null){
+              
+              ArrayList<String> actiDepos = inst.getActividadesDeportivas();
+
+              for(String s : actiDepos){
+                  
+                  ActividadDeportiva acti = em.find(ActividadDeportiva.class, s);
+                  if(acti != null){
+                      
+                      ArrayList<String> clasesDeActi = acti.getNombreClases();
+                      
+                      for(String str : clasesDeActi){
+                          boolean isAsosiated = nomClase.equals(str);
+                          if(isAsosiated == true)
+                          {
+                            return acti.getNombreAct();
+                          }
+                      }
+                      
+                  }
+                  
+              }
+              
+          }
+          return null; 
+      }
+      
+      public DtActividadDeportiva getDtActividadDepo(String nomActi){
+          ActividadDeportiva acti = em.find(ActividadDeportiva.class,nomActi);
+          if(acti != null){
+            return acti.getDTActividadDeportiva();
+          }
+          return null;
       }
 }
