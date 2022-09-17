@@ -7,6 +7,7 @@ package gui;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,6 +18,7 @@ import logica.clase.Clase;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
 import logica.datatypes.DtActividadDeportiva;
+import logica.datatypes.DtClase;
 import logica.datatypes.DtProfesor;
 import logica.datatypes.DtSocio;
 import logica.datatypes.DtUsrKey;
@@ -595,11 +597,11 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             this.UrlImagenTF.setText(DtUsr.imagenUrl);
             
             if(DtUsr instanceof DtProfesor){
+                this.cleanInfoSocio();
                 
                 this.BiografiaProfeTA.setEnabled(true);
                 this.DescripcionProfeTA.setEnabled(true);
-                this.SitioWebTF.setEnabled(true);
-                
+                this.SitioWebTF.setEnabled(true); 
                 this.BiografiaProfeTA.setText(((DtProfesor) DtUsr).biografia);
                 this.DescripcionProfeTA.setText(((DtProfesor) DtUsr).descripcion);
                 this.SitioWebTF.setText(((DtProfesor) DtUsr).sitioWeb);
@@ -620,22 +622,11 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         this.ClasesProfeCB.setModel(new DefaultComboBoxModel(nomClase));
                         this.ClasesProfeCB.setEnabled(true);
                         this.showActividadAsociada(this.ClasesProfeCB.getSelectedItem().toString(), insti);
-                        
+                        this.ActividadDepoAsociadaBT.setEnabled(true);
                         for (Clase c : clasesProfe){
                             if(c.getNombreClase().equals(this.ClasesProfeCB.getSelectedItem())){
-                                this.nomClassTF.setText(c.getNombreClase());
-                                this.fechaInicioTF.setText(c.getFecha().toString());
-                                this.fechaAltaTF.setText(c.getFechaRegistro().toString());
-                                this.horaInicioTF.setText(c.getHoraIni().toString());
-                                if(c.getHoraFin() != null) this.horaFinTF.setText(c.getHoraFin().toString());
-                                Integer minRegistros = c.getCantMin();
-                                Integer maxRegistros = c.getCantMax();
-                                Integer cantRegistros = c.getCantSocios();
-                                this.minRegistrosTF.setText(minRegistros.toString());
-                                this.maxRegistrosTF.setText(maxRegistros.toString());
-                                this.cantRegistrosTF.setText(cantRegistros.toString());
-                                this.urlClassTF.setText(c.getClaseURL());
-                                
+                                DtClase DtC = c.getData();
+                                this.showInfoClase(DtC);                               
                                 break;
                             }
                         }
@@ -644,13 +635,15 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         String [] s = new String[] {"Aun no dicta clases"};
                         this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
                         this.ClasesProfeCB.setEnabled(false);
+                        this.cleanInfoClase();
                     }
                 }
             }
             else if(DtUsr instanceof DtSocio){
-                
+                this.cleanInfoProfe();
+                this.clasesRegSocioCB.setEnabled(true);
                 ArrayList<String> claseRegistradaSocio = sistema.getClaseRegistradaSocio(((DtSocio)DtUsr));
-                if(claseRegistradaSocio != null){
+                if(claseRegistradaSocio != null && claseRegistradaSocio.size() != 0){
                     String[] claseRegSocio = new String [claseRegistradaSocio.size()];
                     int i = 0;
                     for(String s : claseRegistradaSocio){
@@ -658,16 +651,30 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         i++;
                     }
                     this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(claseRegSocio));
+                    
+                    for (String c : claseRegistradaSocio){
+                        if(c.equals(this.ClasesProfeCB.getSelectedItem())){
+                            DtClase DtC = sistema.getDtClaseSocio(c);    
+                            this.showInfoClase(DtC);                               
+                            break;
+                        }
+                    }
                 }
                 else{
                     String [] s = new String [] {"No Esta Registrado a ninguna Clase"};
                     this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(s));
+                    this.cleanInfoClase();
                 }
             }
             
             Image image = null;
             try {
                     URL url = new URL(DtUsr.imagenUrl);
+                    URLConnection connection = (URLConnection) url.openConnection();
+	            connection.setRequestProperty(
+                        "User-Agent",
+	                "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+                    image = ImageIO.read(connection.getInputStream()).getScaledInstance(180, 180, 100);
                     if(ImageIO.read(url) != null)
                     {
                         image = ImageIO.read(url).getScaledInstance(180, 180, 100);
@@ -676,11 +683,12 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             catch (IOException e) {
                 e.printStackTrace();
             }
+            finally {	
             if(image != null){
                 this.jLabelImage.setIcon(new ImageIcon(image));
             }
             else this.jLabelImage.setIcon(null);
-
+            }
         }
         
     }//GEN-LAST:event_UsuariosjListValueChanged
@@ -753,6 +761,54 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         }
     }
     
+    public void showInfoClase(DtClase c){
+        this.nomClassTF.setText(c.nombreClase);
+        this.fechaInicioTF.setText(c.fecha.toString());
+        this.fechaAltaTF.setText(c.fechaRegistro.toString());
+        this.horaInicioTF.setText(c.horaIni.toString());
+        if(c.horaFin != null) this.horaFinTF.setText(c.horaFin.toString());
+        Integer minRegistros = c.cantMin;
+        Integer maxRegistros = c.cantMax;
+        Integer cantRegistros = c.cantSocios;
+        this.minRegistrosTF.setText(minRegistros.toString());
+        this.maxRegistrosTF.setText(maxRegistros.toString());
+        this.cantRegistrosTF.setText(cantRegistros.toString());
+        this.urlClassTF.setText(c.claseURL);
+        
+    }
+    
+    public void cleanInfoClase(){
+        String empty = "";       
+        this.nomClassTF.setText(empty);
+        this.fechaInicioTF.setText(empty);
+        this.fechaAltaTF.setText(empty);
+        this.horaInicioTF.setText(empty);
+        this.minRegistrosTF.setText(empty);
+        this.maxRegistrosTF.setText(empty);
+        this.cantRegistrosTF.setText(empty);
+        this.urlClassTF.setText(empty);    
+    }
+    
+    public void cleanInfoSocio(){
+        String [] s = new String [] {""};
+        this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(s));
+        this.clasesRegSocioCB.setEnabled(false);
+    }
+    
+    public void cleanInfoProfe(){
+        String [] s = new String [] {""};
+        String str = "";
+        this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
+        this.ActividadDepoAsociadaTF.setText(str);
+        this.ActividadDepoAsociadaBT.setEnabled(false);
+        this.BiografiaProfeTA.setEnabled(false);
+        this.DescripcionProfeTA.setEnabled(false);
+        this.ClasesProfeCB.setEnabled(false);
+        this.SitioWebTF.setEnabled(false); 
+        this.BiografiaProfeTA.setText(str);
+        this.DescripcionProfeTA.setText(str);
+        this.SitioWebTF.setText(str);   
+    }
     
     
     /**

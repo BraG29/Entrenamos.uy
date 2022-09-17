@@ -141,7 +141,7 @@ public class Cuponera implements Serializable {
                 tran.begin();
                 em.flush();
                 this.actividades.add(acti);
-                this.cantClases =+ cantidadClases;
+                this.cantClases += cantidadClases;
                 tran.commit();
                 System.out.println("Should have worked...");
             }

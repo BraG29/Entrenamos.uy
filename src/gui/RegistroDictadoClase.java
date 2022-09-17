@@ -1,282 +1,265 @@
 package gui;
 
 import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
+import logica.controlador.Fabrica;
+import logica.controlador.IControlador;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import logica.controlador.Fabrica;
-import logica.controlador.IControlador;
+import java.awt.Color;
 
 public class RegistroDictadoClase extends javax.swing.JFrame {
-
-	private javax.swing.JComboBox<String> comboBoxInstituciones;
-	private javax.swing.JComboBox<String> comboBoxActividadesDeportivas;
-	private javax.swing.JComboBox<String> comboBoxClases;
+	private VentanaMensaje showMensaje;
+	private javax.swing.JButton btnCancelar;
+	private javax.swing.JButton btnAgregar;
+	private javax.swing.JComboBox<String> comboBoxActividad;
+	private javax.swing.JComboBox<String> comboBoxInstitucion;
+	private javax.swing.JComboBox<String> comboBoxClase;
 	private javax.swing.JComboBox<String> comboBoxSocios;
-	private javax.swing.JButton jButtonCancelar;
-	private javax.swing.JButton btnAceptar;
 	private javax.swing.JLabel labelTitulo;
-	private javax.swing.JLabel labelComboBoxInstituciones;
-	private javax.swing.JLabel labelComboBoxActividadesDeportivas;
-	private javax.swing.JLabel labelComboBoxClases;
-	private javax.swing.JLabel labelComboBoxSocios;
+	private javax.swing.JLabel labelInstitucion;
+	private javax.swing.JLabel labelActividad;
+	private javax.swing.JLabel labelClases;
+	private javax.swing.JLabel labelSocios;
 
 	public RegistroDictadoClase() {
 		initComponents();
-		this.labelComboBoxClases.setVisible(false);
-		this.labelComboBoxActividadesDeportivas.setVisible(false);
-		this.comboBoxClases.setVisible(false);
-		this.comboBoxActividadesDeportivas.setVisible(false);
+		this.labelActividad.setVisible(false);
+		this.labelClases.setVisible(false);
+		this.labelSocios.setVisible(false);
+		this.comboBoxActividad.setVisible(false);
+		this.comboBoxClase.setVisible(false);
+		this.comboBoxSocios.setVisible(false);
 
-		Fabrica f = new Fabrica();
-		IControlador sistema = f.getInterface();
-		ArrayList<String> listaInstituciones = sistema.getNombreInstituciones();
-		String[] arrayNombresInstituciones = new String[listaInstituciones.size()];
-		int i = 0;
-		for (String index : listaInstituciones) {
-			arrayNombresInstituciones[i] = index;
-			i++;
+		Fabrica fab = new Fabrica();
+		IControlador controlador = fab.getInterface();
+		ArrayList<String> arrStr = controlador.getNombreInstituciones();
+
+		for (int i = 0; i < arrStr.size(); i++) {
+			this.comboBoxInstitucion.addItem(arrStr.get(i));
 		}
-
-		this.comboBoxInstituciones.setModel(new DefaultComboBoxModel<String>(arrayNombresInstituciones));
-
 	}
 
+	@SuppressWarnings("unchecked")
 	private void initComponents() {
+		btnAgregar = new javax.swing.JButton();
+		btnCancelar = new javax.swing.JButton();
 		labelTitulo = new javax.swing.JLabel();
-		labelComboBoxClases = new javax.swing.JLabel();
-		labelComboBoxActividadesDeportivas = new javax.swing.JLabel();
-		labelComboBoxInstituciones = new javax.swing.JLabel();
-		labelComboBoxSocios = new javax.swing.JLabel();
-		jButtonCancelar = new javax.swing.JButton();
-		btnAceptar = new javax.swing.JButton();
-		comboBoxInstituciones = new javax.swing.JComboBox<>();
-		comboBoxClases = new javax.swing.JComboBox<>();
-		comboBoxActividadesDeportivas = new javax.swing.JComboBox<>();
+		labelInstitucion = new javax.swing.JLabel();
+		labelActividad = new javax.swing.JLabel();
+		labelClases = new javax.swing.JLabel();
+		labelSocios = new javax.swing.JLabel();
+		comboBoxInstitucion = new javax.swing.JComboBox<>();
+		comboBoxActividad = new javax.swing.JComboBox<>();
+		comboBoxClase = new javax.swing.JComboBox<>();
 		comboBoxSocios = new javax.swing.JComboBox<>();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		labelTitulo.setFont(new java.awt.Font("Noto Sans", 0, 18));
-		labelTitulo.setText("Consulta Dictado de Clases");
-		labelComboBoxInstituciones.setText("Institución");
-		labelComboBoxClases.setText("Clases");
-		labelComboBoxSocios.setText("Socios");
-		labelComboBoxActividadesDeportivas.setText("Actividad Deportiva");
+		labelTitulo.setText("Registro a Dictado de Clases");
+		labelInstitucion.setText("Institución");
+		labelActividad.setText("Actividad Deportiva");
+		labelClases.setText("Clases");
+		labelSocios.setText("Socios");
 
-		btnAceptar.setText("Aceptar");
-		jButtonCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+		btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
+		btnCancelar.setText("Atras");
+		btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				btnAceptarEvent(evt);
+				btnCancelarMouseClicked(evt);
 			}
 		});
 
-		jButtonCancelar.setBackground(new java.awt.Color(255, 51, 51));
-		jButtonCancelar.setText("Atras");
-		jButtonCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+		comboBoxInstitucion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+		comboBoxInstitucion.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				comboInstiActionPerformed(evt);
+			}
+		});
+
+		comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+		comboBoxActividad.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				comboActividadActionPerformed(evt);
+			}
+		});
+
+		comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+		comboBoxClase.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				comboClaseActionPerformed(evt);
+			}
+		});
+
+		btnAgregar.setText("Agregar");
+		btnAgregar.setForeground(Color.WHITE);
+		btnAgregar.setBackground(new Color(30, 144, 255));
+		btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				jButtonCancelar(evt);
-			}
-		});
-
-		comboBoxInstituciones.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboBoxInstitucionActionPerformed(evt);
-			}
-		});
-
-		comboBoxActividadesDeportivas.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboBoxActividadesActionPerformed(evt);
-			}
-		});
-
-		comboBoxClases.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboBoxClasesActionPerformed(evt);
-			}
-		});
-
-		comboBoxActividadesDeportivas.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				comboBoxSociosActionPerformed(evt);
+				btnAgregarMouseClicked(evt);
 			}
 		});
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addComponent(jButtonCancelar)
-						.addPreferredGap(ComponentPlacement.RELATED, 269, Short.MAX_VALUE).addComponent(btnAceptar))
-				.addGroup(layout.createSequentialGroup().addContainerGap()
-						.addGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(labelTitulo)
-								.addGroup(layout.createSequentialGroup()
-										.addComponent(comboBoxInstituciones, GroupLayout.PREFERRED_SIZE, 158,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(labelComboBoxInstituciones))))
-				.addGroup(layout.createSequentialGroup().addContainerGap()
-						.addGroup(layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBoxSocios, 0, 158, Short.MAX_VALUE)
-								.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(comboBoxActividadesDeportivas, 0, GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(comboBoxClases, 0, 158, Short.MAX_VALUE)))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(layout.createParallelGroup(Alignment.LEADING).addComponent(labelComboBoxClases)
-								.addComponent(labelComboBoxActividadesDeportivas).addComponent(labelComboBoxSocios))
-						.addContainerGap(133, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addContainerGap().addComponent(labelTitulo).addGap(18)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxInstituciones, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelComboBoxInstituciones))
-				.addGap(23)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxActividadesDeportivas, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelComboBoxActividadesDeportivas))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxClases, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelComboBoxClases))
-				.addGap(18)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(comboBoxSocios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(labelComboBoxSocios))
-				.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(jButtonCancelar)
-						.addComponent(btnAceptar))));
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup().addContainerGap()
+								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addGroup(layout.createSequentialGroup().addComponent(
+												btnCancelar)
+												.addPreferredGap(ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+												.addComponent(btnAgregar).addGap(22))
+										.addGroup(layout.createSequentialGroup().addGroup(layout
+												.createParallelGroup(Alignment.LEADING).addComponent(labelTitulo)
+												.addGroup(layout.createSequentialGroup()
+														.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+																.addComponent(comboBoxActividad, Alignment.LEADING, 0,
+																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+																.addComponent(comboBoxInstitucion, Alignment.LEADING, 0,
+																		158, Short.MAX_VALUE))
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addGroup(layout.createParallelGroup(Alignment.LEADING)
+																.addComponent(labelInstitucion)
+																.addComponent(labelActividad)))
+												.addGroup(layout.createSequentialGroup()
+														.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+																.addComponent(comboBoxSocios, 0,
+																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+																.addComponent(comboBoxClase, 0, 158, Short.MAX_VALUE))
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addGroup(layout.createParallelGroup(Alignment.LEADING)
+																.addComponent(labelSocios).addComponent(labelClases))))
+												.addContainerGap(139, Short.MAX_VALUE)))));
+		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(labelTitulo).addGap(18)
+						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBoxInstitucion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelInstitucion))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBoxActividad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelActividad))
+						.addGap(8)
+						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBoxClase, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelClases))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(comboBoxSocios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(labelSocios))
+						.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+						.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCancelar)
+								.addComponent(btnAgregar))
+						.addContainerGap()));
 		getContentPane().setLayout(layout);
+
 		pack();
 	}
 
-	private void comboBoxInstitucionActionPerformed(java.awt.event.ActionEvent evt) {
-		/*
-		 * if (comboBoxInstituciones.getSelectedIndex() != 0) {
-		 * 
-		 * 
-		 * } else { this.comboBoxActividadesDeportivas.setVisible(false);
-		 * this.labelComboBoxActividadesDeportivas.setVisible(false);
-		 * this.comboBoxClases.setVisible(false);
-		 * this.labelComboBoxClases.setVisible(false); }
-		 */
-		this.comboBoxActividadesDeportivas.setVisible(true);
-		this.labelComboBoxActividadesDeportivas.setVisible(true);
+	private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {
 
-		String institucionActual = comboBoxInstituciones.getSelectedItem().toString();
-
-		Fabrica f = new Fabrica();
-		IControlador sistema = f.getInterface();
-		ArrayList<String> listaActividadesDeportivas = sistema.consultarActividadDepo(institucionActual);
-		String[] arrayNombresActividadesDeportivas = new String[listaActividadesDeportivas.size()];
-		int i = 0;
-		for (String index : listaActividadesDeportivas) {
-			arrayNombresActividadesDeportivas[i] = index;
-			i++;
-		}
-
-		this.comboBoxActividadesDeportivas
-				.setModel(new DefaultComboBoxModel<String>(arrayNombresActividadesDeportivas));
-
-	}
-
-	private void comboBoxActividadesActionPerformed(java.awt.event.ActionEvent evt) {
-		/*
-		 * if (comboBoxActividadesDeportivas.getSelectedIndex() != 0) {
-		 * 
-		 * comboBoxClases.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
-		 * "-", "clase1", "clase2" }));
-		 * 
-		 * } else { this.comboBoxClases.setVisible(false);
-		 * this.labelComboBoxClases.setVisible(false); }
-		 */
-
-		this.comboBoxClases.setVisible(true);
-		this.labelComboBoxClases.setVisible(true);
-
-		String actividadActual = comboBoxActividadesDeportivas.getSelectedItem().toString();
-		Fabrica f = new Fabrica();
-		IControlador sistema = f.getInterface();
-		ArrayList<String> listaClases = sistema.consultarClases(actividadActual);
-		String[] arrayNombresClases = new String[listaClases.size()];
-		int i = 0;
-		for (String index : listaClases) {
-			arrayNombresClases[i] = index;
-			i++;
-		}
-
-		this.comboBoxClases.setModel(new DefaultComboBoxModel<String>(arrayNombresClases));
-	}
-
-	private void comboBoxClasesActionPerformed(java.awt.event.ActionEvent evt) {
-		Fabrica f = new Fabrica();
-		IControlador sistema = f.getInterface();
-		String[] listaClases = sistema.getUnaClase(comboBoxClases.getSelectedItem().toString());
-
-		/*
-		 * if (comboBoxClases.getSelectedIndex() != 0) { } else {
-		 * this.labelClaseURL.setVisible(false);
-		 * this.labelClaseCantMax.setVisible(false);
-		 * this.labelClaseCantMin.setVisible(false);
-		 * this.labelClaseHoraIni.setVisible(false);
-		 * this.labelClaseFecha.setVisible(false);
-		 * this.labelClaseRegistro.setVisible(false); }
-		 */
-	}
-
-	private void comboBoxSociosActionPerformed(java.awt.event.ActionEvent evt) {
-
-	}
-
-	private void btnAceptarEvent(java.awt.event.MouseEvent evt) {
-		
-		String inst = comboBoxInstituciones.getSelectedItem().toString();
-		String actD = comboBoxActividadesDeportivas.getSelectedItem().toString();
-		String clas = comboBoxClases.getSelectedItem().toString();
-		String soci = comboBoxSocios.getSelectedItem().toString();		
-		
-		try {
+		if (comboBoxInstitucion.getSelectedIndex() != 0) {
 			Fabrica fab = new Fabrica();
 			IControlador controlador = fab.getInterface();
-			controlador.registroDictadoClase(inst, actD, clas, soci);
 
-		} catch (Exception e) {
-			VentanaMensaje errorVentana = new VentanaMensaje("ERROR!", "Revise los campos.", java.awt.Color.RED);
-			errorVentana.setVisible(true);
-			return;
+			comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+
+			ArrayList<String> arrStr = controlador
+					.consultarActividadDepo(comboBoxInstitucion.getSelectedItem().toString());
+			for (int i = 0; i < arrStr.size(); i++) {
+				comboBoxActividad.addItem(arrStr.get(i));
+			}
+			this.comboBoxActividad.setVisible(true);
+			this.labelActividad.setVisible(true);
+
+		} else {
+			comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+			this.comboBoxActividad.setVisible(false);
+			this.comboBoxClase.setVisible(false);
+			this.comboBoxSocios.setVisible(false);
+			this.labelActividad.setVisible(false);
+			this.labelClases.setVisible(false);
+			this.labelSocios.setVisible(false);
 		}
 	}
 
-	private void jButtonCancelar(java.awt.event.MouseEvent evt) {
-		this.setVisible(false);
+	private void comboActividadActionPerformed(java.awt.event.ActionEvent evt) {
+		if (comboBoxActividad.getSelectedIndex() != 0) {
+			Fabrica fab = new Fabrica();
+			IControlador controlador = fab.getInterface();
+
+			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+
+			ArrayList<String> arrStr = controlador
+					.getClasesVigentesPorActiDepo(comboBoxActividad.getSelectedItem().toString());
+			for (int i = 0; i < arrStr.size(); i++) {
+				comboBoxClase.addItem(arrStr.get(i));
+			}
+			this.comboBoxClase.setVisible(true);
+			this.labelClases.setVisible(true);
+
+		} else {
+			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+			this.comboBoxClase.setVisible(false);
+			this.labelClases.setVisible(false);
+		}
 	}
 
-	public static void main(String args[]) {
+	private void comboClaseActionPerformed(java.awt.event.ActionEvent evt) {
+		if (comboBoxClase.getSelectedIndex() != 0) {
+			Fabrica fab = new Fabrica();
+			IControlador controlador = fab.getInterface();
+
+			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+
+			ArrayList<String> arrStr = controlador.getClasesPorActiDepo(comboBoxActividad.getSelectedItem().toString());
+			for (int i = 0; i < arrStr.size(); i++) {
+				comboBoxSocios.addItem(arrStr.get(i));
+			}
+
+			this.comboBoxSocios.setVisible(true);
+			this.labelSocios.setVisible(true);
+
+		} else {
+			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+			this.comboBoxSocios.setVisible(false);
+			this.labelSocios.setVisible(false);
+		}
+	}
+
+	private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {
 		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(RegistroDictadoClase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(RegistroDictadoClase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(RegistroDictadoClase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(RegistroDictadoClase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
+			if (comboBoxInstitucion.getSelectedIndex() == 0 && comboBoxActividad.getSelectedIndex() == 0
+					&& comboBoxClase.getSelectedIndex() == 0 && comboBoxSocios.getSelectedIndex() == 0) {
+				throw new IllegalArgumentException("Campos Incompletos");
+			} else {
+				Fabrica f = new Fabrica();
+				IControlador sistema = f.getInterface();
+				String clase, socio;
+				clase = comboBoxClase.getSelectedItem().toString();
+				socio = comboBoxSocios.getSelectedItem().toString();
 
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new RegistroDictadoClase().setVisible(true);
+				sistema.registroDictadoDeClase(clase, socio);
+
+				String mensajeConfirmacion = "Se ha registrado el usuario a esa clase.";
+				showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
+				showMensaje.setVisible(true);
 			}
-		});
+
+		} catch (Exception error) {
+			showMensaje = new VentanaMensaje("ERROR", error.getMessage(), Color.RED);
+			showMensaje.setVisible(true);
+		}
+	}
+
+	private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {
+		this.setVisible(false);
 	}
 }

@@ -25,6 +25,7 @@ public class IControlador {
 			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 
+	public void registroDictadoDeClase(String pClase, String pSocio) {	}
 
 	public ArrayList<DtUsrKey> listarUsuarios() {
 		return null;
@@ -140,6 +141,11 @@ public class IControlador {
         public ArrayList<String> getClasesPorActiDepo(String nombreActi){
         	return null;
         }
+        
+        public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        
         public DtCuponera getDtCuponera(String nombreCupo) {
         	return null;
         }
@@ -160,6 +166,10 @@ public class IControlador {
         }
         
         public DtActividadDeportiva getDtActividadDepo(String nomActi){
+            return null;
+        }
+        
+        public DtClase getDtClaseSocio (String nomClase){
             return null;
         }
 }

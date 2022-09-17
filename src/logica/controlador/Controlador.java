@@ -372,6 +372,24 @@ public class Controlador extends IControlador {
 
 	}
 
+	public void registroDictadoDeClase(String pClase, String pSocio) {
+
+		try {
+			tran.begin(); 
+			// TODO Pasa un id una fecha actual, un precio de actividad
+			// TODO Agrega a la coleccion de Socio
+			/*Registro reg = new Registro(pClase, pSocio);
+			reg.setNombreInst(nombreInst);
+			reg.setDescripcion(descripcion);
+			em.persist(reg);*/
+			tran.commit();
+		} catch (Exception ex) {
+			tran.rollback();
+			ex.printStackTrace();
+		}
+	}
+
+	
 	private static Controlador instance;
 
 	private void Controlador() {
@@ -619,6 +637,13 @@ public class Controlador extends IControlador {
     	  return listaADevolver;
       }
       
+      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  listaADevolver = acti.getNombreClases();
+    	  return listaADevolver;
+      }
+      
       public DtCuponera getDtCuponera(String nombreCupo){
     	  Cuponera cupo = em.find(Cuponera.class, nombreCupo);
     	  return cupo.getData();
@@ -684,5 +709,13 @@ public class Controlador extends IControlador {
             return acti.getDTActividadDeportiva();
           }
           return null;
+      }
+      
+      public DtClase getDtClaseSocio (String nomClase){  
+        Clase c = em.find(Clase.class, nomClase);
+        if(c != null){
+            return c.getData();
+        }
+        return null;
       }
 }
