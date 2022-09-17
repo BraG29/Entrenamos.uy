@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import logica.institucion.Institucion;
-
+import logica.institucion.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
@@ -279,33 +279,44 @@ public class Controlador extends IControlador {
 	}
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
-            
-                //Kevin Viera:  Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
-                //              Y el menu Principal Maneja cuando los abre y cierra 
-		//EntityManager em = emf.createEntityManager();// cuidao        
+               
 		Cuponera cup = null;
-		String nombre= null, descripcion = null;
-		Integer cant_clase = 0;
-		Float descuento = 0F;
-		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
 		DtCuponera cupData = null;
-		ArrayList<String> nombresActividades = new ArrayList<String>();
 		try {
-			//em.getTransaction().begin();//cuidao 
-			tran.begin();//usar el Entity Transaction Definido en el Controlador         
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
+			tran.begin();        
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}		
 			cupData = cup.getData();
 			return cupData;		
 		}catch (Exception ex) {
-			if (em != null) {//cuidaaaaao
-				//em.getTransaction().rollback();//ay mi madre el bicho
-                                tran.rollback();
+			if (em != null) {
+                tran.rollback();
 			}
 		}
 		return cupData;
+	}
+
+	public DtActividadDeportiva seleccionActividad(String nombreAct) {
+		
+		ActividadDeportiva act = null;
+		DtActividadDeportiva dataAct = null;
+		
+		try {
+			tran.begin();
+			act = em.find(ActividadDeportiva.class, nombreAct);
+			if(act == null){
+				throw new Exception("La actividad seleccionada no existe");
+			}
+			dataAct = act.getDTActividadDeportiva();
+			return dataAct;
+		}catch (Exception ex) {
+			if (em != null) {//cuidaaaaao
+                tran.rollback();
+			}
+		}
+		return null;
 	}
 	
 	//CU alta institucion deportiva
@@ -323,6 +334,7 @@ public class Controlador extends IControlador {
 			inst.setDescripcion(descripcion);
 			inst.setInstURL(URL);
 			em.persist(inst);
+			em.flush();
 			tran.commit();
 		} catch (Exception ex) {
 			tran.rollback();

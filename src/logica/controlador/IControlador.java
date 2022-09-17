@@ -51,6 +51,9 @@ public class IControlador {
 		return null;
 	}
 	
+	public DtActividadDeportiva seleccionActividad(String nombreAct) {
+		return null;
+	}
 	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL){
