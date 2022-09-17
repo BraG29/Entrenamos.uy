@@ -69,7 +69,7 @@ public class ConsultaDictadoClase extends javax.swing.JFrame {
 		comboBoxActividad = new javax.swing.JComboBox<>();
 		comboBoxClase = new javax.swing.JComboBox<>();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		labelTitulo.setFont(new java.awt.Font("Noto Sans", 0, 18));
 		labelTitulo.setText("Consulta de Dictado de Clases");

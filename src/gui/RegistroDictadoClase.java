@@ -54,7 +54,7 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 		comboBoxClase = new javax.swing.JComboBox<>();
 		comboBoxSocios = new javax.swing.JComboBox<>();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		labelTitulo.setFont(new java.awt.Font("Noto Sans", 0, 18));
 		labelTitulo.setText("Registro a Dictado de Clases");
