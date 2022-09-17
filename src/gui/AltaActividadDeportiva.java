@@ -56,7 +56,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         textIMG = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Dar de alta Actividad Deportiva");

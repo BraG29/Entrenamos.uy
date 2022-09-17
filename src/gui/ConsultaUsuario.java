@@ -143,6 +143,9 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel19.setText("jLabel19");
 
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         jFrame1.setMinimumSize(new java.awt.Dimension(400, 453));
         jFrame1.setResizable(false);
 
@@ -261,6 +264,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+
 
         jLabel3.setText("Nickname:");
 
@@ -633,7 +637,6 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         this.ClasesProfeCB.setEnabled(false);
                         this.cleanInfoClase();
                     }
-                    
                 }
             }
             else if(DtUsr instanceof DtSocio){

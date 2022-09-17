@@ -50,7 +50,7 @@ public class AltaCuponera extends javax.swing.JFrame {
 		comboBoxMesFin = new javax.swing.JComboBox();
 		comboBoxMesAlta = new javax.swing.JComboBox();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jLabelTitulo.setFont(new java.awt.Font("Noto Sans", 0, 18));
 		jLabelTitulo.setText("Alta de Cuponeras");

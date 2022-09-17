@@ -234,8 +234,8 @@ public class Controlador extends IControlador {
 		}catch(PersistenceException e) {
 			tran.rollback();
 		}
-
 	}
+	
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
@@ -296,21 +296,7 @@ public class Controlador extends IControlador {
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
-			}
-			
-			/*cup.getData()
-			nombre = cup.getNombreCup();
-			descripcion = cup.getDescripcion();
-			cant_clase = cup.getCantClases();
-			descuento = cup.getDescuento();
-			fecha_inicio = cup.getFechaInicio();
-			fecha_fin = cup.getFechaFin();
-			fecha_alta = cup.getFechaAlta();
-			nombresActividades = cup.getActividades();
-			List actividades = (List) cup.getActividades();
-			for (int i = 0; i < actividades.size(); i++) {
-				nombresActividades.add(nombre);
-			}*/
+			}		
 			cupData = cup.getData();
 			return cupData;		
 		}catch (Exception ex) {
@@ -374,6 +360,24 @@ public class Controlador extends IControlador {
 
 	}
 
+	public void registroDictadoDeClase(String pClase, String pSocio) {
+
+		try {
+			tran.begin(); 
+			// TODO Pasa un id una fecha actual, un precio de actividad
+			// TODO Agrega a la coleccion de Socio
+			/*Registro reg = new Registro(pClase, pSocio);
+			reg.setNombreInst(nombreInst);
+			reg.setDescripcion(descripcion);
+			em.persist(reg);*/
+			tran.commit();
+		} catch (Exception ex) {
+			tran.rollback();
+			ex.printStackTrace();
+		}
+	}
+
+	
 	private static Controlador instance;
 
 	private void Controlador() {
@@ -615,6 +619,13 @@ public class Controlador extends IControlador {
       }
       
       public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  listaADevolver = acti.getNombreClases();
+    	  return listaADevolver;
+      }
+      
+      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
     	  ArrayList<String> listaADevolver = new ArrayList<String>();
     	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
     	  listaADevolver = acti.getNombreClases();

@@ -81,7 +81,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         labelActi = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Consulta de Actividad Deportiva");
