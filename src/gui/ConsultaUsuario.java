@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import logica.clase.Clase;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
+import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtProfesor;
 import logica.datatypes.DtSocio;
 import logica.datatypes.DtUsrKey;
@@ -63,6 +64,25 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel19 = new javax.swing.JLabel();
+        jFrame1 = new javax.swing.JFrame();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        nomActiTFJ2 = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        descTAJ2 = new javax.swing.JTextArea();
+        jLabel31 = new javax.swing.JLabel();
+        duracionTFJ2 = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        costoTFJ2 = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        fechaRegTFJ2 = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        clasesActiJLJ2 = new javax.swing.JList<>();
+        jLabel35 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        cuponerasActiJLJ2 = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -121,7 +141,128 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel19.setText("jLabel19");
 
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jFrame1.setMinimumSize(new java.awt.Dimension(400, 453));
+        jFrame1.setResizable(false);
+
+        jLabel28.setText("Informacion Actividad Deportiva");
+
+        jLabel29.setText("Nombre:");
+
+        nomActiTFJ2.setEditable(false);
+
+        jLabel30.setText("Descripcion:");
+
+        descTAJ2.setEditable(false);
+        descTAJ2.setColumns(20);
+        descTAJ2.setLineWrap(true);
+        descTAJ2.setRows(5);
+        descTAJ2.setWrapStyleWord(true);
+        jScrollPane4.setViewportView(descTAJ2);
+
+        jLabel31.setText("Duracion:");
+
+        duracionTFJ2.setEditable(false);
+        duracionTFJ2.setText("jTextField2");
+
+        jLabel32.setText("Costo:");
+
+        costoTFJ2.setEditable(false);
+        costoTFJ2.setText("jTextField3");
+
+        jLabel33.setText("Fecha Alta:");
+
+        fechaRegTFJ2.setEditable(false);
+        fechaRegTFJ2.setText("jTextField4");
+
+        jLabel34.setText("Clases:");
+
+        clasesActiJLJ2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane5.setViewportView(clasesActiJLJ2);
+
+        jLabel35.setText("Cuponeras:");
+
+        cuponerasActiJLJ2.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane6.setViewportView(cuponerasActiJLJ2);
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel28)
+                .addGap(89, 89, 89))
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel34)
+                    .addComponent(jLabel33)
+                    .addComponent(jLabel32)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nomActiTFJ2)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                    .addComponent(duracionTFJ2)
+                    .addComponent(costoTFJ2)
+                    .addComponent(fechaRegTFJ2)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jScrollPane6))
+                .addContainerGap())
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(nomActiTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30))
+                .addGap(12, 12, 12)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(duracionTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(costoTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(fechaRegTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel34)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel35)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+
 
         jLabel3.setText("Nickname:");
 
@@ -187,12 +328,23 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel15.setText("Clases que Dicta:");
 
+        ClasesProfeCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClasesProfeCBActionPerformed(evt);
+            }
+        });
+
         jLabel12.setText("Actividad Deportiva Asociada a Clase:");
 
         ActividadDepoAsociadaTF.setEditable(false);
         ActividadDepoAsociadaTF.setFont(new java.awt.Font("Ubuntu", 0, 15)); // NOI18N
 
         ActividadDepoAsociadaBT.setText("Mostrar Mas Informacion");
+        ActividadDepoAsociadaBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActividadDepoAsociadaBTActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Clases Registradas:");
 
@@ -404,7 +556,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ClasesProfeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ActividadDepoAsociadaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -420,6 +572,8 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         //set Backend Access
         Fabrica f = new Fabrica();
 	IControlador sistema = f.getInterface();
+        
+        insti = null;
         
         DtUsrKey usrKey = null;
         
@@ -445,9 +599,11 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                 this.BiografiaProfeTA.setEnabled(true);
                 this.DescripcionProfeTA.setEnabled(true);
                 this.SitioWebTF.setEnabled(true);
+                
                 this.BiografiaProfeTA.setText(((DtProfesor) DtUsr).biografia);
                 this.DescripcionProfeTA.setText(((DtProfesor) DtUsr).descripcion);
                 this.SitioWebTF.setText(((DtProfesor) DtUsr).sitioWeb);
+                insti = ((DtProfesor) DtUsr).institucion;
                 
                 Usuario Usr = sistema.getUsuario(usrKey);
                  
@@ -463,8 +619,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         }
                         this.ClasesProfeCB.setModel(new DefaultComboBoxModel(nomClase));
                         this.ClasesProfeCB.setEnabled(true);
-                        
-                        ArrayList<String> actiDepo = ((Profesor)Usr).getInstitucion().getActividadesDeportivas();
+                        this.showActividadAsociada(this.ClasesProfeCB.getSelectedItem().toString(), insti);
                         
                         for (Clase c : clasesProfe){
                             if(c.getNombreClase().equals(this.ClasesProfeCB.getSelectedItem())){
@@ -490,21 +645,24 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
                         this.ClasesProfeCB.setEnabled(false);
                     }
-                    
                 }
             }
             else if(DtUsr instanceof DtSocio){
-                Usuario Usr = sistema.getUsuario(usrKey);
                 
                 ArrayList<String> claseRegistradaSocio = sistema.getClaseRegistradaSocio(((DtSocio)DtUsr));
-                
-                String[] claseRegSocio = new String [claseRegistradaSocio.size()];
-                int i = 0;
-                for(String s : claseRegistradaSocio){
-                    claseRegSocio[i] = s;
-                    i++;
+                if(claseRegistradaSocio != null){
+                    String[] claseRegSocio = new String [claseRegistradaSocio.size()];
+                    int i = 0;
+                    for(String s : claseRegistradaSocio){
+                        claseRegSocio[i] = s;
+                        i++;
+                    }
+                    this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(claseRegSocio));
                 }
-                this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(claseRegSocio));
+                else{
+                    String [] s = new String [] {"No Esta Registrado a ninguna Clase"};
+                    this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(s));
+                }
             }
             
             Image image = null;
@@ -527,6 +685,76 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         
     }//GEN-LAST:event_UsuariosjListValueChanged
 
+    private void ClasesProfeCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClasesProfeCBActionPerformed
+        String clase = this.ClasesProfeCB.getSelectedItem().toString();
+        this.showActividadAsociada(clase, insti);
+    }//GEN-LAST:event_ClasesProfeCBActionPerformed
+
+    private void ActividadDepoAsociadaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActividadDepoAsociadaBTActionPerformed
+        System.out.println("ActividadDepoAsociadaTF pressed");
+        this.jFrame1.setVisible(true);
+        Fabrica f = new Fabrica();
+	IControlador sistema = f.getInterface();
+        
+        DtActividadDeportiva acti = sistema.getDtActividadDepo(this.ActividadDepoAsociadaTF.getText());
+        
+        int minutes = (int) acti.duracion;
+        
+        int h = minutes / 60;
+        int m = minutes % 60;
+        
+        String dur = String.format("%02d:%02d", h, m);
+
+        this.nomActiTFJ2.setText(acti.nombreAct);
+        this.descTAJ2.setText(acti.descripcion);
+        this.duracionTFJ2.setText(dur);
+        this.costoTFJ2.setText(String.valueOf(acti.costo));
+        this.fechaRegTFJ2.setText(acti.fechaRegistro.toString());
+        
+        if(acti.clases != null){
+            String [] c = new String[acti.clases.size()];
+            int i = 0;
+            for(String s : acti.clases){
+                c[i] = s;
+            }
+            this.clasesActiJLJ2.setModel(new DefaultComboBoxModel(c));
+        }
+        else{
+            String [] c = new String[] {""};
+            this.clasesActiJLJ2.setModel(new DefaultComboBoxModel(c));
+        }
+        if(acti.cuponeras != null){
+            String [] c = new String[acti.cuponeras.size()];
+            int i = 0;
+            for(String s : acti.cuponeras){
+                c[i] = s;
+            }
+            this.cuponerasActiJLJ2.setModel(new DefaultComboBoxModel(c));
+        }
+        else{
+            String [] c = new String[] {""};
+            this.cuponerasActiJLJ2.setModel(new DefaultComboBoxModel(c));
+        }
+        
+    }//GEN-LAST:event_ActividadDepoAsociadaBTActionPerformed
+
+    public void showActividadAsociada(String nomClase, String Insti){
+        Fabrica f = new Fabrica();
+	IControlador sistema = f.getInterface();
+        String acti = sistema.getActividadDepoAsociadaClase(nomClase, Insti);
+        
+        if(acti != null){
+            this.ActividadDepoAsociadaTF.setEnabled(true);
+            this.ActividadDepoAsociadaTF.setText(acti);
+        }
+        else{
+            this.ActividadDepoAsociadaTF.setEnabled(false);
+            this.ActividadDepoAsociadaTF.setText("");
+        }
+    }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -577,11 +805,18 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField UrlImagenTF;
     private javax.swing.JList<String> UsuariosjList;
     private javax.swing.JTextField cantRegistrosTF;
+    private javax.swing.JList<String> clasesActiJLJ2;
     private javax.swing.JComboBox<String> clasesRegSocioCB;
+    private javax.swing.JTextField costoTFJ2;
+    private javax.swing.JList<String> cuponerasActiJLJ2;
+    private javax.swing.JTextArea descTAJ2;
+    private javax.swing.JTextField duracionTFJ2;
     private javax.swing.JTextField fechaAltaTF;
     private javax.swing.JTextField fechaInicioTF;
+    private javax.swing.JTextField fechaRegTFJ2;
     private javax.swing.JTextField horaFinTF;
     private javax.swing.JTextField horaInicioTF;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -602,7 +837,15 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -613,10 +856,15 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField maxRegistrosTF;
     private javax.swing.JTextField minRegistrosTF;
+    private javax.swing.JTextField nomActiTFJ2;
     private javax.swing.JTextField nomClassTF;
     private javax.swing.JTextField urlClassTF;
     // End of variables declaration//GEN-END:variables
+    private String insti;
 }
