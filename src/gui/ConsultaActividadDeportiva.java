@@ -1,10 +1,17 @@
 package gui;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 import logica.controlador.Controlador;
 import logica.controlador.Fabrica;
@@ -12,6 +19,11 @@ import logica.controlador.IControlador;
 import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtClase;
 import logica.datatypes.DtCuponera;
+import javax.swing.JLabel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Rectangle;
 
 
 
@@ -80,6 +92,8 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         comboActi = new javax.swing.JComboBox<>();
         labelActi = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
+        lblImagen.setBounds(new Rectangle(0, 0, 120, 120));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,19 +109,22 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
                 botonConsultaActionPerformed(evt);
             }
         });
+        
 
         javax.swing.GroupLayout panelAzulLayout = new javax.swing.GroupLayout(panelAzul);
-        panelAzul.setLayout(panelAzulLayout);
         panelAzulLayout.setHorizontalGroup(
-            panelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(botonConsulta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	panelAzulLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(botonConsulta, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        		.addComponent(lblImagen, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
         );
         panelAzulLayout.setVerticalGroup(
-            panelAzulLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAzulLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botonConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	panelAzulLayout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(panelAzulLayout.createSequentialGroup()
+        			.addComponent(lblImagen, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+        			.addComponent(botonConsulta, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
         );
+        panelAzul.setLayout(panelAzulLayout);
 
         jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setText("<---------");
@@ -383,6 +400,13 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             
             //combos
             this.comboLista.setVisible(true);
+            //mostrar la imagen
+            //cargar img en un txtField
+            
+            
+           
+            
+ 
             
             //labels
             this.labelClases.setVisible(true);
@@ -441,6 +465,30 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             
             //this.labe
             
+ Image imagen = null;
+            
+            try {
+				URL url = new URL(dtActi.imagen);
+				URLConnection connection = (URLConnection) url.openConnection();
+                connection.setRequestProperty(
+                        "User-Agent",
+                        "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+				imagen = ImageIO.read(connection.getInputStream()).getScaledInstance(120, 120, 100);
+			} catch (IOException e) {
+				//e.printStackTrace();
+				
+				if(e instanceof MalformedURLException) {
+					e = (MalformedURLException) e;
+					this.lblImagen.setText(e.getMessage());
+					
+				}
+				
+				
+			}  
+            finally {
+				
+				lblImagen.setIcon(new ImageIcon(imagen));	
+			}   
         }else{
             //combos
             this.comboLista.setVisible(false);
@@ -508,5 +556,5 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private javax.swing.JLabel labelFechaAlta;
     private javax.swing.JLabel labelNombreAct;
     private javax.swing.JPanel panelAzul;
-    // End of variables declaration//GEN-END:variables
+    private JLabel lblImagen;
 }
