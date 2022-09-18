@@ -713,7 +713,7 @@ public class Controlador extends IControlador {
           return null;
       }
       
-      public DtClase getDtClaseSocio (String nomClase){  
+      public DtClase getDtClase(String nomClase){  
         Clase c = em.find(Clase.class, nomClase);
         if(c != null){
             return c.getData();

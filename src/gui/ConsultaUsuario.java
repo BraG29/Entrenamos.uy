@@ -355,6 +355,12 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel16.setText("Clases Registradas:");
 
+        clasesRegSocioCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clasesRegSocioCBActionPerformed(evt);
+            }
+        });
+
         jLabel17.setText("Informacion de Clase:");
 
         jLabel18.setText("Nombre:");
@@ -628,13 +634,12 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         this.ClasesProfeCB.setEnabled(true);
                         this.showActividadAsociada(this.ClasesProfeCB.getSelectedItem().toString(), insti);
                         this.ActividadDepoAsociadaBT.setEnabled(true);
-                        for (Clase c : clasesProfe){
-                            if(c.getNombreClase().equals(this.ClasesProfeCB.getSelectedItem())){
-                                DtClase DtC = c.getData();
-                                this.showInfoClase(DtC);                               
-                                break;
-                            }
-                        }
+                           
+                                DtClase DtC = sistema.getDtClase(this.ClasesProfeCB.getSelectedItem().toString());
+                                if(DtC != null){
+                                    this.showInfoClase(DtC);                                    
+                                }
+                                else this.cleanInfoClase();
                     }
                     else{
                         String [] s = new String[] {"Aun no dicta clases"};
@@ -659,14 +664,12 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         i++;
                     }
                     this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(claseRegSocio));
-                    
-                    for (String c : claseRegistradaSocio){
-                        if(c.equals(this.ClasesProfeCB.getSelectedItem())){
-                            DtClase DtC = sistema.getDtClaseSocio(c);    
-                            this.showInfoClase(DtC);                               
-                            break;
+
+                        DtClase DtC = sistema.getDtClase(this.ClasesProfeCB.getSelectedItem().toString());    
+                        if(DtC != null){
+                            this.showInfoClase(DtC);                                    
                         }
-                    }
+                        else this.cleanInfoClase();                              
                 }
                 else{
                     String [] s = new String [] {"No Esta Registrado a ninguna Clase"};
@@ -777,6 +780,13 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             }
         
     }//GEN-LAST:event_ActividadDepoAsociadaBTActionPerformed
+
+    private void clasesRegSocioCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clasesRegSocioCBActionPerformed
+        Fabrica f = new Fabrica();
+	IControlador sistema = f.getInterface();
+        DtClase DtC = sistema.getDtClase(this.ClasesProfeCB.getSelectedItem().toString());    
+        this.showInfoClase(DtC); 
+    }//GEN-LAST:event_clasesRegSocioCBActionPerformed
 
     public void showActividadAsociada(String nomClase, String Insti){
         Fabrica f = new Fabrica();

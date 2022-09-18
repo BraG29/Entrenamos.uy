@@ -169,7 +169,7 @@ public class IControlador {
             return null;
         }
         
-        public DtClase getDtClaseSocio (String nomClase){
+        public DtClase getDtClase(String nomClase){
             return null;
         }
 }
