@@ -85,6 +85,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         cuponerasActiJLJ2 = new javax.swing.JList<>();
+        ActiDepoImageLB = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -143,10 +144,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         jLabel19.setText("jLabel19");
 
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jFrame1.setMinimumSize(new java.awt.Dimension(400, 453));
+        jFrame1.setMinimumSize(new java.awt.Dimension(520, 453));
         jFrame1.setResizable(false);
 
         jLabel28.setText("Informacion Actividad Deportiva");
@@ -197,64 +195,72 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(cuponerasActiJLJ2);
 
+        ActiDepoImageLB.setText(" ");
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel28)
-                .addGap(89, 89, 89))
             .addGroup(jFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel35)
-                    .addComponent(jLabel34)
-                    .addComponent(jLabel33)
-                    .addComponent(jLabel32)
-                    .addComponent(jLabel31)
-                    .addComponent(jLabel30)
-                    .addComponent(jLabel29))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nomActiTFJ2)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                    .addComponent(duracionTFJ2)
-                    .addComponent(costoTFJ2)
-                    .addComponent(fechaRegTFJ2)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jScrollPane6))
-                .addContainerGap())
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel30)
+                            .addComponent(jLabel29))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fechaRegTFJ2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(costoTFJ2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(duracionTFJ2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(nomActiTFJ2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ActiDepoImageLB, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(jLabel28)))
+                .addGap(18, 18, 18))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jLabel28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(nomActiTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30))
-                .addGap(12, 12, 12)
-                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel31)
-                    .addComponent(duracionTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel29)
+                            .addComponent(nomActiTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel30)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(duracionTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel31))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(costoTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel32)))
+                    .addComponent(ActiDepoImageLB, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel32)
-                    .addComponent(costoTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(fechaRegTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fechaRegTFJ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel34)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel34))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel35)
@@ -264,7 +270,6 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-
 
         jLabel3.setText("Nickname:");
 
@@ -635,6 +640,9 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                         String [] s = new String[] {"Aun no dicta clases"};
                         this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
                         this.ClasesProfeCB.setEnabled(false);
+                        String str = "";
+                        this.ActividadDepoAsociadaTF.setText(str);
+                        this.ActividadDepoAsociadaBT.setEnabled(false);
                         this.cleanInfoClase();
                     }
                 }
@@ -663,6 +671,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
                 else{
                     String [] s = new String [] {"No Esta Registrado a ninguna Clase"};
                     this.clasesRegSocioCB.setModel(new DefaultComboBoxModel(s));
+                    this.clasesRegSocioCB.setEnabled(false);
                     this.cleanInfoClase();
                 }
             }
@@ -744,6 +753,29 @@ public class ConsultaUsuario extends javax.swing.JFrame {
             this.cuponerasActiJLJ2.setModel(new DefaultComboBoxModel(c));
         }
         
+        Image image = null;
+            try {
+                    URL url = new URL(acti.IMG_URL);
+                    URLConnection connection = (URLConnection) url.openConnection();
+	            connection.setRequestProperty(
+                        "User-Agent",
+	                "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
+                    image = ImageIO.read(connection.getInputStream()).getScaledInstance(180, 180, 100);
+                    if(ImageIO.read(url) != null)
+                    {
+                        image = ImageIO.read(url).getScaledInstance(180, 180, 100);
+                    }
+            } 
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            finally{
+            if(image != null){
+                this.ActiDepoImageLB.setIcon(new ImageIcon(image));
+            }
+            else this.ActiDepoImageLB.setIcon(null);   
+            }
+        
     }//GEN-LAST:event_ActividadDepoAsociadaBTActionPerformed
 
     public void showActividadAsociada(String nomClase, String Insti){
@@ -798,9 +830,9 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     public void cleanInfoProfe(){
         String [] s = new String [] {""};
         String str = "";
-        this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
         this.ActividadDepoAsociadaTF.setText(str);
         this.ActividadDepoAsociadaBT.setEnabled(false);
+        this.ClasesProfeCB.setModel(new DefaultComboBoxModel(s));
         this.BiografiaProfeTA.setEnabled(false);
         this.DescripcionProfeTA.setEnabled(false);
         this.ClasesProfeCB.setEnabled(false);
@@ -847,6 +879,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ActiDepoImageLB;
     private javax.swing.JButton ActividadDepoAsociadaBT;
     private javax.swing.JTextField ActividadDepoAsociadaTF;
     private javax.swing.JTextField ApellidoTF;

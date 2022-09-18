@@ -187,12 +187,16 @@ public class ActividadDeportiva implements Serializable {
     
     public DtActividadDeportiva getDTActividadDeportiva(){
         ArrayList<String> strClases = new ArrayList<String>();
-        //strClases.addAll(clases.keySet());
+        for(Clase c : this.clases){
+            strClases.add(c.getNombreClase());
+        }
         
         ArrayList<String> strCuponeras = new ArrayList<String>();
-        //strCuponeras.addAll(cuponeras.keySet());
+        for(Cuponera c : this.cuponeras){
+            strCuponeras.add(c.getNombreCup());
+        }
         
-        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras,this.IMG_URL);
         return DtActi;
     }
     
