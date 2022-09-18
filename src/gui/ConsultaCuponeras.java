@@ -157,7 +157,6 @@ public class ConsultaCuponeras extends JFrame {
 		Fabrica fab = new Fabrica();
 		IControlador sistema = fab.getInterface();
 		
-		
 		//le paso la lista de cuponeras al combobox
 		String[] inicio = new String[] {"..."}; 
         comboBoxCuponera.setModel(new DefaultComboBoxModel(inicio));
@@ -205,49 +204,48 @@ public class ConsultaCuponeras extends JFrame {
 					comboBoxActividad.setVisible(true);
 					
 					
-					 	//accion combobox actividad
+					//accion combobox actividad
 					String[] inicio = new String[] {"..."}; 
 			        comboBoxActividad.setModel(new DefaultComboBoxModel(inicio));
-			        
-			        String nombreAct = null;
-			        String descAct = null;
-			        Float duracion = null;
-			        Float costo = null;
-			        LocalDate fechaRegistro = null;
-			        
+			        	        
 			        java.util.List actividades = (java.util.List<String>)datosCup.actividades;
 			        for (int i = 0; i < actividades.size(); i++) {
 						comboBoxActividad.addItem(actividades.get(i));
 					}
-			        
-			        DtActividadDeportiva datosAct;
-			        
+       
 					comboBoxActividad.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
+							
+							String nombreActi = comboBoxActividad.getSelectedItem().toString();							
+							DtActividadDeportiva datosAct = sistema.seleccionActividad(nombreActi);
+							
 							int actividad = comboBoxActividad.getSelectedIndex();
-							if(actividad >= 0) {
+							
+							if(actividad != 0) {						
 								
-						        JLabel lblNombreActividad = new JLabel("Nombre: 	");
+						        lblNombreActividad.setText("Nombre: " + datosAct.nombreAct);
 								lblNombreActividad.setVisible(true);
 								
-								JLabel lblDescripcinActividad = new JLabel("Descripción:");
+								lblDescripcinActividad.setText("Descripción: " + datosAct.descripcion);
 								lblDescripcinActividad.setVisible(true);
 								
-								JLabel lblDuracin = new JLabel("Duración:");
+								lblDuracin.setText("Duración: " + datosAct.duracion);
 								lblDuracin.setVisible(true);
 								
-								JLabel lblCosto = new JLabel("Costo:");
+								lblCosto.setText("Costo: " + datosAct.costo);
 								lblCosto.setVisible(true);
 								
-								JLabel lblFechaDeRegistro = new JLabel("Fecha de registro:");
+								lblFechaDeRegistro.setText("Fecha de registro: " + datosAct.fechaRegistro);
 								lblFechaDeRegistro.setVisible(true);
 								
 							}else {
-								lblNombreActividad.setVisible(false);
-								lblDescripcinActividad.setVisible(false);
-								lblDuracin.setVisible(false);
-								lblCosto.setVisible(false);
-								lblFechaDeRegistro.setVisible(false);
+								if(actividad == 0) {
+									lblNombreActividad.setVisible(false);
+									lblDescripcinActividad.setVisible(false);
+									lblDuracin.setVisible(false);
+									lblCosto.setVisible(false);
+									lblFechaDeRegistro.setVisible(false);									
+								}
 							}
 						}
 					});
@@ -265,8 +263,7 @@ public class ConsultaCuponeras extends JFrame {
 						lblSeleccioneUnaActividad.setVisible(false);
 						comboBoxActividad.setVisible(false);
 						
-					}
-					
+					}					
 				}
 			}
 		});
