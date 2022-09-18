@@ -755,7 +755,7 @@ public class ConsultaUsuario extends javax.swing.JFrame {
         
         Image image = null;
             try {
-                    URL url = new URL(acti.IMG_URL);
+                    URL url = new URL(acti.imagen);
                     URLConnection connection = (URLConnection) url.openConnection();
 	            connection.setRequestProperty(
                         "User-Agent",

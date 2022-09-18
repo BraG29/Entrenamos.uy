@@ -661,15 +661,17 @@ public class Controlador extends IControlador {
       public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
 
           Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
-                  
-          Collection<Registro> registros = ((Socio)s).getRegistro();
+          if(s != null){        
+            Collection<Registro> registros = ((Socio)s).getRegistro();
           
-          ArrayList<String> output = new ArrayList<>();
+            ArrayList<String> output = new ArrayList<>();
           
-          for(Registro r : registros){
-              output.add(r.getClaseAsociada().getNombreClase());
+            for(Registro r : registros){
+                output.add(r.getClaseAsociada().getNombreClase());
+            }
+            return output;
           }
-          return output;
+          return null;
       }
       
       public String getActividadDepoAsociadaClase(String nomClase, String nomInsti){
