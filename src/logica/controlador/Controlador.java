@@ -164,7 +164,9 @@ public class Controlador extends IControlador {
 		//EntityManager em = emf.createEntityManager();
 		Usuario u = null;
 		try {
+			em.clear();
 			//tran.begin();
+			//em.flush();
 			u = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
 			this.uRecordado = u;
 		} catch (PersistenceException e) {
