@@ -25,7 +25,6 @@ public class IControlador {
 			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 
-
 	public ArrayList<DtUsrKey> listarUsuarios() {
 		return null;
 	}
@@ -51,6 +50,9 @@ public class IControlador {
 		return null;
 	}
 	
+	public DtActividadDeportiva seleccionActividad(String nombreAct) {
+		return null;
+	}
 	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL){
@@ -73,7 +75,7 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento) {
 	}
-	public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+	public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
     	
     }
         
@@ -137,6 +139,15 @@ public class IControlador {
         public ArrayList<String> getClasesPorActiDepo(String nombreActi){
         	return null;
         }
+        
+        public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        
+        public ArrayList<String> getSociosHabilitados(String nombreClase) {
+        	return null;
+        }
+        
         public DtCuponera getDtCuponera(String nombreCupo) {
         	return null;
         }
@@ -149,6 +160,18 @@ public class IControlador {
         }
         
         public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+            return null;
+        }
+        
+        public String getActividadDepoAsociadaClase(String nomClase, String insti){
+            return null; 
+        }
+        
+        public DtActividadDeportiva getDtActividadDepo(String nomActi){
+            return null;
+        }
+        
+        public DtClase getDtClase(String nomClase){
             return null;
         }
 }

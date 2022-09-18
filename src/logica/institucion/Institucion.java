@@ -97,7 +97,11 @@ public class Institucion implements Serializable{
     
     public ArrayList<String> getActividadesDeportivas(){
         ArrayList<String> ActividadesNom = new ArrayList<String>();
-        //ActividadesNom.addAll(this.actividades.keySet()); 
+        
+        for(ActividadDeportiva a : this.actividades){
+            ActividadesNom.add(a.getNombreAct());
+        }
+        
         return ActividadesNom;
     }
     

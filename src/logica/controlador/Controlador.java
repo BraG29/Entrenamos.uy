@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import logica.institucion.Institucion;
-
+import logica.institucion.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
@@ -236,23 +236,20 @@ public class Controlador extends IControlador {
 		}catch(PersistenceException e) {
 			tran.rollback();
 		}
-
 	}
+	
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
-		
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		//EntityManager em = emf.createEntityManager();
 		java.util.List consultaCuponera = null;
 		try {
-			//tran.begin();
+			tran.begin();
 			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
 		}catch (Exception ex) {
 			if (em != null) {
 				tran.rollback();
 			}
-		} finally {
-			//em.close();
 		}
 		for (int i = 0; i < consultaCuponera.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
 			String nombresCuponeras = (String) consultaCuponera.get(i); //obtengo el nombre en el q estoy parado casteo a string xq consulta es de tipo List
@@ -284,53 +281,48 @@ public class Controlador extends IControlador {
 	}
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
-            
-                //Kevin Viera:  Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
-                //              Y el menu Principal Maneja cuando los abre y cierra 
-		
-		//EntityManager em = emf.createEntityManager();// cuidao
-                
+               
 		Cuponera cup = null;
-		String nombre= null, descripcion = null;
-		Integer cant_clase = 0;
-		Float descuento = 0F;
-		LocalDate fecha_inicio = null, fecha_fin = null, fecha_alta = null;
-		DtCuponera cupData = null;		
+		DtCuponera cupData = null;
 		try {
-			//em.getTransaction().begin();//cuidao 
-                        tran.begin();//usar el Entity Transaction Definido en el Controlador
-                        
-			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  CUIDAO
+			tran.begin();        
+			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
-			}
-			
-			nombre = cup.getNombreCup();
-			descripcion = cup.getDescripcion();
-			cant_clase = cup.getCantClases();
-			descuento = cup.getDescuento();
-			fecha_inicio = cup.getFechaInicio();
-			fecha_fin = cup.getFechaFin();
-			fecha_alta = cup.getFechaAlta();
-			//nombresActividades = cup.getActividades();
-			
-			cupData = new DtCuponera(nombre, descripcion, fecha_inicio, fecha_fin, descuento, fecha_alta, cant_clase, null);
+			}		
+			cupData = cup.getData();
 			return cupData;		
 		}catch (Exception ex) {
-			if (em != null) {//cuidaaaaao
-				//em.getTransaction().rollback();//ay mi madre el bicho
-                                tran.rollback();
+			if (em != null) {
+                tran.rollback();
 			}
-		} finally {
-			//em.close();//cuidaaaaaaaao
-                        //el em lo Cierra el Menu Principal
 		}
 		return cupData;
+	}
+
+	public DtActividadDeportiva seleccionActividad(String nombreAct) {
+		
+		ActividadDeportiva act = null;
+		DtActividadDeportiva dataAct = null;
+		
+		try {
+			tran.begin();
+			act = em.find(ActividadDeportiva.class, nombreAct);
+			if(act == null){
+				throw new Exception("La actividad seleccionada no existe");
+			}
+			dataAct = act.getDTActividadDeportiva();
+			return dataAct;
+		}catch (Exception ex) {
+			if (em != null) {//cuidaaaaao
+                tran.rollback();
+			}
+		}
+		return null;
 	}
 	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
-
 		//EntityManager em = emf.createEntityManager();
 
 		try {
@@ -344,6 +336,7 @@ public class Controlador extends IControlador {
 			inst.setDescripcion(descripcion);
 			inst.setInstURL(URL);
 			em.persist(inst);
+			em.flush();
 			tran.commit();
 		} catch (Exception ex) {
 			tran.rollback();
@@ -380,7 +373,7 @@ public class Controlador extends IControlador {
 		}
 
 	}
-
+	
 	private static Controlador instance;
 
 	private void Controlador() {
@@ -464,8 +457,23 @@ public class Controlador extends IControlador {
             return listaADevolver;
         }
         
-        public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+        public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
+        	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
+        	Socio socioActual = em.find(Socio.class, pNombreSocio);
+        	Float costo = actividadDeportivaActual.getCosto();
+        	LocalDate fecha = LocalDate.now();
         	
+        	try {
+    			tran.begin();
+    			em.createQuery("update Clase c set cant_socios = (cant_socios+1) where c.nombre = '" + pNombreClase + "'");
+    			Registro reg = new Registro(fecha, costo);
+    			em.persist(reg);
+    			socioActual.registrarAClase(reg);
+    			tran.commit();
+    		} catch (Exception ex) {
+    			tran.rollback();
+    			ex.printStackTrace();
+    		}
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
@@ -628,6 +636,24 @@ public class Controlador extends IControlador {
     	  return listaADevolver;
       }
       
+      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ArrayList<String> listaDeClases = new ArrayList<String>();
+
+    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    	  listaDeClases = acti.getNombreClases();
+    	  for (int i = 0; i < listaDeClases.size(); i++) {
+    		  listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
+    	  }
+    	  return listaADevolver;
+      }
+      
+      public ArrayList<String> getSociosHabilitados(String nombreClase) {
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
+    	  return listaADevolver;
+      }
+      
       public DtCuponera getDtCuponera(String nombreCupo){
     	  Cuponera cupo = em.find(Cuponera.class, nombreCupo);
     	  return cupo.getData();
@@ -643,18 +669,65 @@ public class Controlador extends IControlador {
       }
       
       public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
-          
-          
-          
+
           Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
-                  
-          Collection<Registro> registros = ((Socio)s).getRegistro();
+          if(s != null){        
+            Collection<Registro> registros = ((Socio)s).getRegistro();
           
-          ArrayList<String> output = new ArrayList<>();
+            ArrayList<String> output = new ArrayList<>();
           
-          for(Registro r : registros){
-              output.add(r.getClaseAsociada().getNombreClase());
+            for(Registro r : registros){
+                output.add(r.getClaseAsociada().getNombreClase());
+            }
+            return output;
           }
-          return output;
+          return null;
+      }
+      
+      public String getActividadDepoAsociadaClase(String nomClase, String nomInsti){
+          
+          Institucion inst = em.find(Institucion.class, nomInsti);
+          
+          if(inst != null){
+              
+              ArrayList<String> actiDepos = inst.getActividadesDeportivas();
+
+              for(String s : actiDepos){
+                  
+                  ActividadDeportiva acti = em.find(ActividadDeportiva.class, s);
+                  if(acti != null){
+                      
+                      ArrayList<String> clasesDeActi = acti.getNombreClases();
+                      
+                      for(String str : clasesDeActi){
+                          boolean isAsosiated = nomClase.equals(str);
+                          if(isAsosiated == true)
+                          {
+                            return acti.getNombreAct();
+                          }
+                      }
+                      
+                  }
+                  
+              }
+              
+          }
+          return null; 
+      }
+      
+      public DtActividadDeportiva getDtActividadDepo(String nomActi){
+          ActividadDeportiva acti = em.find(ActividadDeportiva.class,nomActi);
+          if(acti != null){
+            return acti.getDTActividadDeportiva();
+          }
+          return null;
+      }
+      
+      public DtClase getDtClase(String nomClase){  
+        Clase c = em.find(Clase.class, nomClase);
+        if(c != null){
+            return c.getData();
+        }
+        return null;
       }
 }

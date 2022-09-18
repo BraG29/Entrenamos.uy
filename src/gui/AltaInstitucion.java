@@ -51,7 +51,7 @@ public class AltaInstitucion extends JFrame {
 	 */
 	public AltaInstitucion() {
 		setTitle("Alta institución deportiva");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 502, 335);
 		contentPane = new JPanel();
 		contentPane.addMouseListener(new MouseAdapter() {
