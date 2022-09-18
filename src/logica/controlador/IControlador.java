@@ -25,8 +25,6 @@ public class IControlador {
 			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 
-	public void registroDictadoDeClase(String pClase, String pSocio) {	}
-
 	public ArrayList<DtUsrKey> listarUsuarios() {
 		return null;
 	}
@@ -77,7 +75,7 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento) {
 	}
-	public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+	public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
     	
     }
         
@@ -143,6 +141,10 @@ public class IControlador {
         }
         
         public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
+        	return null;
+        }
+        
+        public ArrayList<String> getSociosHabilitados(String nombreClase) {
         	return null;
         }
         

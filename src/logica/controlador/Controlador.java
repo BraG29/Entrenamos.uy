@@ -371,24 +371,6 @@ public class Controlador extends IControlador {
 		}
 
 	}
-
-	public void registroDictadoDeClase(String pClase, String pSocio) {
-
-		try {
-			tran.begin(); 
-			// TODO Pasa un id una fecha actual, un precio de actividad
-			// TODO Agrega a la coleccion de Socio
-			/*Registro reg = new Registro(pClase, pSocio);
-			reg.setNombreInst(nombreInst);
-			reg.setDescripcion(descripcion);
-			em.persist(reg);*/
-			tran.commit();
-		} catch (Exception ex) {
-			tran.rollback();
-			ex.printStackTrace();
-		}
-	}
-
 	
 	private static Controlador instance;
 
@@ -473,8 +455,23 @@ public class Controlador extends IControlador {
             return listaADevolver;
         }
         
-        public void registroDictadoClase(String inst, String actD, String clas, String soci) {
+        public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
+        	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
+        	Socio socioActual = em.find(Socio.class, pNombreSocio);
+        	Float costo = actividadDeportivaActual.getCosto();
+        	LocalDate fecha = LocalDate.now();
         	
+        	try {
+    			tran.begin();
+    			em.createQuery("update Clase c set cant_socios = (cant_socios+1) where c.nombre = '" + pNombreClase + "'");
+    			Registro reg = new Registro(fecha, costo);
+    			em.persist(reg);
+    			socioActual.registrarAClase(reg);
+    			tran.commit();
+    		} catch (Exception ex) {
+    			tran.rollback();
+    			ex.printStackTrace();
+    		}
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------
@@ -637,10 +634,21 @@ public class Controlador extends IControlador {
     	  return listaADevolver;
       }
       
-      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi){
+      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
     	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  ArrayList<String> listaDeClases = new ArrayList<String>();
+
     	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-    	  listaADevolver = acti.getNombreClases();
+    	  listaDeClases = acti.getNombreClases();
+    	  for (int i = 0; i < listaDeClases.size(); i++) {
+    		  listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
+    	  }
+    	  return listaADevolver;
+      }
+      
+      public ArrayList<String> getSociosHabilitados(String nombreClase) {
+    	  ArrayList<String> listaADevolver = new ArrayList<String>();
+    	  listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
     	  return listaADevolver;
       }
       

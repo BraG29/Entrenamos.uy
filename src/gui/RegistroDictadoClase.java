@@ -219,7 +219,7 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 
 			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
-			ArrayList<String> arrStr = controlador.getClasesPorActiDepo(comboBoxActividad.getSelectedItem().toString());
+			ArrayList<String> arrStr = controlador.getSociosHabilitados(comboBoxClase.getSelectedItem().toString());
 			for (int i = 0; i < arrStr.size(); i++) {
 				comboBoxSocios.addItem(arrStr.get(i));
 			}
@@ -236,21 +236,23 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 
 	private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {
 		try {
-			if (comboBoxInstitucion.getSelectedIndex() == 0 && comboBoxActividad.getSelectedIndex() == 0
-					&& comboBoxClase.getSelectedIndex() == 0 && comboBoxSocios.getSelectedIndex() == 0) {
-				throw new IllegalArgumentException("Campos Incompletos");
-			} else {
+			if (comboBoxInstitucion.getSelectedIndex() != 0 && comboBoxActividad.getSelectedIndex() != 0
+					&& comboBoxClase.getSelectedIndex() != 0 && comboBoxSocios.getSelectedIndex() != 0) 
+			{
 				Fabrica f = new Fabrica();
 				IControlador sistema = f.getInterface();
-				String clase, socio;
+				String actividad, clase, socio;
+				actividad = comboBoxActividad.getSelectedItem().toString();
 				clase = comboBoxClase.getSelectedItem().toString();
 				socio = comboBoxSocios.getSelectedItem().toString();
-
-				sistema.registroDictadoDeClase(clase, socio);
-
+				
+				sistema.registroDictadoClase(actividad, clase, socio);
+				
 				String mensajeConfirmacion = "Se ha registrado el usuario a esa clase.";
 				showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 				showMensaje.setVisible(true);
+			} else {
+				throw new IllegalArgumentException("Campos Incompletos");
 			}
 
 		} catch (Exception error) {
