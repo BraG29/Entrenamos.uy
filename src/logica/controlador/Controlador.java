@@ -242,10 +242,10 @@ public class Controlador extends IControlador {
 	public ArrayList<String> listaCuponerasRegistradas() {
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		//EntityManager em = emf.createEntityManager();
-		java.util.List consultaCuponera = null;
+		ArrayList<String> consultaCuponera = null;
 		try {
 			tran.begin();
-			consultaCuponera = em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
+			consultaCuponera = (ArrayList<String>) em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
 		}catch (Exception ex) {
 			if (em != null) {
 				tran.rollback();
@@ -287,6 +287,7 @@ public class Controlador extends IControlador {
 		try {
 			tran.begin();        
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  
+			
 			if(cup == null){
 				throw new Exception("La cuponera seleccionada no existe");
 			}		
@@ -352,6 +353,7 @@ public class Controlador extends IControlador {
 
 		try {
 			//initConnection(); Esto solo lo tiene que manejar el menu Principal
+			em.clear();
 			tran.begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);

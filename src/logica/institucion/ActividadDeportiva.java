@@ -213,8 +213,14 @@ public class ActividadDeportiva implements Serializable {
     }
     
     public void darAltaClaseActi(Clase claseDictada, EntityManager em,EntityTransaction tran){
+    	
+    	System.out.println(tran.isActive());
+    	if(tran.isActive()) {
+    		tran.commit();
+    	}
        
     	try {
+    		//em.clear();
     		tran.begin();
     		this.clases.add(claseDictada);
     		tran.commit();
