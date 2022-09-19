@@ -59,14 +59,19 @@ public class Registro implements Serializable {
     public Registro() {
     }
     //Full Constructor
-    public Registro(LocalDate fecha, float cost) {
+    public Registro(LocalDate fecha, float cost, Clase c) {
         this.fecha = fecha;
         this.cost = cost;
+        this.claseAsociada = c;
+    }
+
+    public boolean esRegistroDe(Clase c){//needs implementation
+    	if(claseAsociada == c) {
+    		return true;
+    	}
+    	return false;
     }
     
-    public Clase esRegistroDe(){//needs implementation
-        Clase output = null; 
-        return output;
-    }
+
     
 }

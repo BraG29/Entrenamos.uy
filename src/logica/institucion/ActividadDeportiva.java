@@ -30,6 +30,7 @@ import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtClase;
+import net.bytebuddy.description.type.RecordComponentDescription.ForLoadedRecordComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -253,6 +254,17 @@ public class ActividadDeportiva implements Serializable {
     	DtClase claseADevolver = clase.getData();
     	
     	return claseADevolver;
+    }
+    
+    public Clase getClase(String nomClase) {
+    	Clase c = null;
+    	for(Clase cl : clases) {
+    		if(cl.getNombreClase() == nomClase) {
+    			c = cl;
+    			break;
+    		}
+    	}
+    	return c;
     }
     
 }

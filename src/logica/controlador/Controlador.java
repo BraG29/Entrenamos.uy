@@ -164,7 +164,9 @@ public class Controlador extends IControlador {
 		//EntityManager em = emf.createEntityManager();
 		Usuario u = null;
 		try {
+			em.clear();
 			//tran.begin();
+			//em.flush();
 			u = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
 			this.uRecordado = u;
 		} catch (PersistenceException e) {
@@ -379,38 +381,27 @@ public class Controlador extends IControlador {
 	private void Controlador() {
 	}
         
-//        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){ //agregar foto
-//            
-//            //System.out.println(nombreActividad + nombreInsti + desc + dura + costo + fechaAlta);
-//            
-//
-//            //Institucion insti = new Institucion(em.find(Institucion)(Institucion.class, nombreInsti));
-//            EntityManager em = emf.createEntityManager();
-//        }
-        
-        //q carajos paso aca   att:Lucas
-        //posta, QUE MIERDA PASO LOKO?!?!?!?!?!?!?! att. el shody
             
-        public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
-        	System.out.println("Antes de buscar la insti");
+    public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
+    	System.out.println("Antes de buscar la insti");
 
-            Institucion insti = em.find(Institucion.class, nombreInsti);
-            System.out.println("Despues de buscar la insti "+insti.getNombreInst());
+        Institucion insti = em.find(Institucion.class, nombreInsti);
+        System.out.println("Despues de buscar la insti "+insti.getNombreInst());
+        
+        if(insti != null){
+            //hay que hacer try and catch
+            try{
+                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
+            }catch(Exception e){
+                throw new IllegalArgumentException(e.getMessage());
+            }
             
-            if(insti != null){
-                //hay que hacer try and catch
-                try{
-                    insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
-                }catch(Exception e){
-                    throw new IllegalArgumentException(e.getMessage());
-                }
-                
-            }else{
-                //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
-                throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
-                //excepción de que insti no existe
-            }  
-        }
+        }else{
+            //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
+            throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
+            //excepción de que insti no existe
+        }  
+    }
         
     public ArrayList<String> getNombreInstituciones(){
         ArrayList<String> listaADevolver = new ArrayList<String>();
@@ -457,23 +448,16 @@ public class Controlador extends IControlador {
             return listaADevolver;
         }
         
-        public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
+        public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
+        	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);
+        	
         	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
-        	Socio socioActual = em.find(Socio.class, pNombreSocio);
+        	Clase c = actividadDeportivaActual.getClase(pNombreClase);
+        	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
         	Float costo = actividadDeportivaActual.getCosto();
         	LocalDate fecha = LocalDate.now();
-        	
-        	try {
-    			tran.begin();
-    			em.createQuery("update Clase c set cant_socios = (cant_socios+1) where c.nombre = '" + pNombreClase + "'");
-    			Registro reg = new Registro(fecha, costo);
-    			em.persist(reg);
-    			socioActual.registrarAClase(reg);
-    			tran.commit();
-    		} catch (Exception ex) {
-    			tran.rollback();
-    			ex.printStackTrace();
-    		}
+			socioActual.registrarAClase(c, fecha, costo, tran, em);
+    		
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------

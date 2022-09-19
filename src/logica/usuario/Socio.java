@@ -14,6 +14,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.FetchType;
 //import javax.persistence.JoinColumns;
 import javax.persistence.JoinColumn;
@@ -24,6 +26,7 @@ import javax.persistence.MapKey;
 //import javax.persistence.OneToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.transaction.Transaction;
 
 import logica.clase.Clase;
 import logica.clase.Registro;
@@ -72,8 +75,26 @@ public class Socio extends Usuario {
 		return dtS;
 	}
 
-	public void registrarAClase(Registro pRegistro) {
-		this.registro.add(pRegistro);
+	public void registrarAClase(Clase c, LocalDate fecha, float costo, EntityTransaction tran, EntityManager em) {
+		for(Registro r: registro) {
+			if(r.esRegistroDe(c)) {
+				throw new IllegalArgumentException(
+						"El socio ingresado ya esta registrado a la clase");
+			}
+		}
+		Registro reg = new Registro(fecha, costo, c);
+		try {
+			em.clear();
+			tran.begin();
+			em.persist(reg);
+			registro.add(reg);
+			tran.commit();
+			
+		} catch (Exception e) {
+			tran.rollback();
+		}
+		
+		
 	}
 
 	public Collection<Registro> getRegistro() {
