@@ -259,7 +259,7 @@ public class ActividadDeportiva implements Serializable {
     public Clase getClase(String nomClase) {
     	Clase c = null;
     	for(Clase cl : clases) {
-    		if(cl.getNombreClase() == nomClase) {
+    		if(cl.getNombreClase().equals(nomClase)) {
     			c = cl;
     			break;
     		}
