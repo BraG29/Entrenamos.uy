@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import logica.datatypes.*;
-import logica.datatypes.DtCuponera;
 import logica.usuario.Usuario;
 
 public class IControlador {
@@ -75,7 +74,7 @@ public class IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento) {
 	}
-	public void registroDictadoClase(String pNombreActividad, String pNombreClase, String pNombreSocio) {
+	public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
     	
     }
         
