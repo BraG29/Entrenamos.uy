@@ -447,15 +447,13 @@ public class Controlador extends IControlador {
         }
         
         public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
-        	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);
-        	
+        	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
         	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
         	Clase c = actividadDeportivaActual.getClase(pNombreClase);
         	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
         	Float costo = actividadDeportivaActual.getCosto();
         	LocalDate fecha = LocalDate.now();
 			socioActual.registrarAClase(c, fecha, costo, tran, em);
-    		
         }
         
       //------------------------------------------------------------------------------------------------------------------------------------------

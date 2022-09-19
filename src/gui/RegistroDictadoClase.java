@@ -3,6 +3,8 @@ package gui;
 import java.util.ArrayList;
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
+import logica.datatypes.DtUsrKey;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -219,10 +221,20 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 
 			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
-			ArrayList<String> arrStr = controlador.getSociosHabilitados(comboBoxClase.getSelectedItem().toString());
-			for (int i = 0; i < arrStr.size(); i++) {
-				comboBoxSocios.addItem(arrStr.get(i));
+			ArrayList<DtUsrKey> listaKeys = controlador.listarUsuarios();
+			String[] arrayKeys = new String[listaKeys.size()];
+			int i = 0;
+			for (DtUsrKey keyUsr : listaKeys) {
+				arrayKeys[i] = keyUsr.nickname + "/" + keyUsr.email;
+				comboBoxSocios.addItem(arrayKeys[i]);
+				i++;
 			}
+
+			/*
+			 * ArrayList<String> arrStr =
+			 * controlador.getSociosHabilitados(comboBoxClase.getSelectedItem().toString());
+			 * for (int i = 0; i < arrStr.size(); i++) { }
+			 */
 
 			this.comboBoxSocios.setVisible(true);
 			this.labelSocios.setVisible(true);
@@ -237,17 +249,19 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 	private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {
 		try {
 			if (comboBoxInstitucion.getSelectedIndex() != 0 && comboBoxActividad.getSelectedIndex() != 0
-					&& comboBoxClase.getSelectedIndex() != 0 && comboBoxSocios.getSelectedIndex() != 0) 
-			{
+					&& comboBoxClase.getSelectedIndex() != 0 && comboBoxSocios.getSelectedIndex() != 0) {
 				Fabrica f = new Fabrica();
 				IControlador sistema = f.getInterface();
 				String actividad, clase, socio;
+
+				String[] nickAndEmail = this.comboBoxSocios.getSelectedItem().toString().split("/", 0);
+				DtUsrKey dtSocio = new DtUsrKey(nickAndEmail[0], nickAndEmail[1]);
+
 				actividad = comboBoxActividad.getSelectedItem().toString();
 				clase = comboBoxClase.getSelectedItem().toString();
-				socio = comboBoxSocios.getSelectedItem().toString();
-				
-				sistema.registroDictadoClase(actividad, clase, socio);
-				
+
+				sistema.registroDictadoClase(actividad, clase, dtSocio);
+
 				String mensajeConfirmacion = "Se ha registrado el usuario a esa clase.";
 				showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 				showMensaje.setVisible(true);
