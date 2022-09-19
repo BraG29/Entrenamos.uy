@@ -324,6 +324,10 @@ public class AltaClase extends javax.swing.JFrame {
                 	String[] nickAndEmail = this.comboProfe.getSelectedItem().toString().split("/",0);
                 	DtUsrKey dtProfe = new DtUsrKey(nickAndEmail[0],nickAndEmail[1]);
                 	controlador.darAltaClase(nombreInsti,this.comboActiDepo.getSelectedItem().toString() ,nombreClase, fechaInicio,dtProfe  , sociosMin, sociosMax, URL, fechaAlta);
+                	
+                	VentanaMensaje ventanaExito = new VentanaMensaje("EXITO!", "Se dió de alta la clase!", java.awt.Color.GREEN);
+                	ventanaExito.setVisible(true);
+                	
                 }catch(Exception e) {
                 	VentanaMensaje ventanaError = new VentanaMensaje("ERROR!", e.getMessage(),java.awt.Color.RED);
                 	ventanaError.setVisible(true);
