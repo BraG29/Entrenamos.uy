@@ -104,7 +104,8 @@ public class Controlador extends IControlador {
 			if (i == null) {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
-			Profesor p = new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
+			Profesor p =
+					new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
 			tran.begin();
 			em.persist(p);
 			em.flush();

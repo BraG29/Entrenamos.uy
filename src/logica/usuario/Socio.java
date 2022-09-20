@@ -86,15 +86,12 @@ public class Socio extends Usuario {
 		try {
 			em.clear();
 			tran.begin();
-			em.persist(reg);
 			registro.add(reg);
+			em.persist(reg);
 			tran.commit();
-			
 		} catch (Exception e) {
 			tran.rollback();
 		}
-		
-		
 	}
 
 	public Collection<Registro> getRegistro() {
