@@ -340,7 +340,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             return;
         }
         
-        VentanaMensaje ventanaSatisfactoria = new VentanaMensaje("Actividad Deportiva","Se dio de alta la actividad satisfactoriamente",java.awt.Color.green);
+        VentanaMensaje ventanaSatisfactoria = new VentanaMensaje("Actividad Deportiva","Se dio de alta la actividad satisfactoriamente",java.awt.Color.green.darker());
         ventanaSatisfactoria.setVisible(true);
         
         
