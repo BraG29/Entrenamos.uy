@@ -128,7 +128,7 @@ public class AltaInstitucion extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(278, 273, 117, 25);
+		btnCancelar.setBounds(126, 273, 117, 25);
 		contentPane.add(btnCancelar);
 		
 		JLabel lblErrorNombre = new JLabel("Por favor, ingrese un nombre.");
@@ -198,7 +198,7 @@ public class AltaInstitucion extends JFrame {
 				
 			}
 		});
-		btnCrear.setBounds(130, 273, 117, 25);
+		btnCrear.setBounds(272, 273, 117, 25);
 		contentPane.add(btnCrear);
 		
 		JLabel lblCamposObligatorios = new JLabel("* Campos obligatorios");

@@ -26,12 +26,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import javax.swing.JTextField;
 
 public class ConsultaCuponeras extends JFrame {
 
 	private JPanel contentPane;
 	private ConsultaActividadDeportiva menuActividadDeportiva;
 	private VentanaMensaje errorWindow;
+	private JTextField txtDescripcion;
+	private JTextField txtNombreCup;
+	private JTextField txtDescripcionCup;
+	private JTextField txtDescuentoCup;
+	private JTextField txtAltaCup;
+	private JTextField txtInicioCup;
+	private JTextField txtFinCup;
+	private JTextField txtCantClases;
+	private JTextField txtNombreAct;
+	private JTextField txtDuracion;
+	private JTextField txtCosto;
+	private JTextField txtAltaAct;
 
 	/**
 	 * Launch the application.
@@ -55,7 +68,7 @@ public class ConsultaCuponeras extends JFrame {
 	public ConsultaCuponeras() {
 		setTitle("Consulta de cuponeras de actividades deportivas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 836, 328);
+		setBounds(100, 100, 519, 574);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,95 +76,107 @@ public class ConsultaCuponeras extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(0, 0, 388, 300);
+		panel.setBounds(0, 0, 514, 547);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		//lbls cuponera
+		//lbls y txtfields cuponera
 		JLabel lblCantidadDeClases = new JLabel("Cantidad de clases:");
-		lblCantidadDeClases.setBounds(12, 266, 290, 15);
+		lblCantidadDeClases.setBounds(12, 279, 149, 15);
 		panel.add(lblCantidadDeClases);
-		lblCantidadDeClases.setVisible(false);
+		
+		
+		txtCantClases = new JTextField();
+		txtCantClases.setBounds(157, 277, 326, 19);
+		panel.add(txtCantClases);
+		txtCantClases.setColumns(10);
 		
 		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setBounds(12, 158, 278, 15);
+		lblDescuento.setBounds(12, 171, 86, 15);
 		panel.add(lblDescuento);
-		lblDescuento.setVisible(false);
+		
+		txtDescuentoCup = new JTextField();
+		txtDescuentoCup.setBounds(107, 169, 376, 19);
+		panel.add(txtDescuentoCup);
+		txtDescuentoCup.setColumns(10);
 		
 		JLabel lblFechaDeFin = new JLabel("Fecha de fin:");
-		lblFechaDeFin.setBounds(12, 239, 364, 15);
+		lblFechaDeFin.setBounds(12, 252, 99, 15);
 		panel.add(lblFechaDeFin);
-		lblFechaDeFin.setVisible(false);
+		txtFinCup = new JTextField();
+		txtFinCup.setBounds(119, 248, 364, 19);
+		panel.add(txtFinCup);
+		txtFinCup.setColumns(10);
 		
 		JLabel lblFechaDeInicio = new JLabel("Fecha de inicio:");
-		lblFechaDeInicio.setBounds(12, 212, 364, 15);
+		lblFechaDeInicio.setBounds(12, 225, 120, 15);
 		panel.add(lblFechaDeInicio);
-		lblFechaDeInicio.setVisible(false);
+		
+		txtInicioCup = new JTextField();
+		txtInicioCup.setBounds(137, 223, 346, 19);
+		panel.add(txtInicioCup);
+		txtInicioCup.setColumns(10);
+		
 		
 		JLabel lblFechaDeCreacin = new JLabel("Fecha de creación:");
-		lblFechaDeCreacin.setBounds(12, 185, 364, 15);
+		lblFechaDeCreacin.setBounds(12, 198, 139, 15);
 		panel.add(lblFechaDeCreacin);
-		lblFechaDeCreacin.setVisible(false);
+		
+		txtAltaCup = new JTextField();
+		txtAltaCup.setBounds(157, 196, 326, 19);
+		panel.add(txtAltaCup);
+		txtAltaCup.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(12, 78, 376, 15);
+		lblNombre.setBounds(12, 78, 65, 15);
 		panel.add(lblNombre);
+		
+		txtNombreCup = new JTextField();
+		txtNombreCup.setBounds(78, 76, 405, 19);
+		panel.add(txtNombreCup);
+		txtNombreCup.setColumns(10);
+
+		JLabel lblDescripcin = new JLabel("Descripción:");
+		lblDescripcin.setBounds(12, 105, 92, 15);
+		panel.add(lblDescripcin);
+
+		txtDescripcionCup = new JTextField();
+		txtDescripcionCup.setBounds(107, 105, 376, 54);
+		panel.add(txtDescripcionCup);
+		txtDescripcionCup.setColumns(10);
+		
+		//quito visibilidad de lables y text fields
 		lblNombre.setVisible(false);
+		lblDescripcin.setVisible(false);
+		lblFechaDeCreacin.setVisible(false);
+		lblFechaDeInicio.setVisible(false);
+		lblFechaDeFin.setVisible(false);
+		lblCantidadDeClases.setVisible(false);
+		lblDescuento.setVisible(false);
+		txtNombreCup.setVisible(false);
+		txtDescripcionCup.setVisible(false);
+		txtAltaCup.setVisible(false);
+		txtInicioCup.setVisible(false);
+		txtFinCup.setVisible(false);
+		txtCantClases.setVisible(false);
+		txtDescuentoCup.setVisible(false);
+		
+		//quito edicion de los text fields
+		txtNombreCup.setEditable(false);
+		txtDescripcionCup.setEditable(false);
+		txtAltaCup.setEditable(false);
+		txtInicioCup.setEditable(false);
+		txtFinCup.setEditable(false);
+		txtCantClases.setEditable(false);
+		txtDescuentoCup.setEditable(false);
 		
 		JLabel lblSeleccionCuponera = new JLabel("Seleccione una cuponera:");
-		lblSeleccionCuponera.setBounds(52, 19, 183, 15);
+		lblSeleccionCuponera.setBounds(172, 19, 183, 15);
 		panel.add(lblSeleccionCuponera);
 		
-		JLabel lblDescripcin = new JLabel("Descripción:");
-		lblDescripcin.setBounds(12, 96, 364, 35);
-		panel.add(lblDescripcin);
-		lblDescripcin.setVisible(false);
-		
-		JPanel panel_1 = new JPanel();
-        panel_1.setBackground(Color.YELLOW);
-        panel_1.setBounds(389, 0, 445, 300);
-        contentPane.add(panel_1);
-        panel_1.setLayout(null);
-		
-		//lbls actividad
-       
-        JLabel lblNombreActividad = new JLabel("Nombre:");
-        lblNombreActividad.setBounds(20, 83, 413, 15);
-        panel_1.add(lblNombreActividad);
-        lblNombreActividad.setVisible(false);
-        
-        JLabel lblDescripcinActividad = new JLabel("Descripción:");
-        lblDescripcinActividad.setBounds(20, 110, 413, 15);
-        panel_1.add(lblDescripcinActividad);
-        lblDescripcinActividad.setVisible(false);
-        
-        JLabel lblDuracin = new JLabel("Duración:");
-        lblDuracin.setBounds(20, 168, 404, 15);
-        panel_1.add(lblDuracin);
-        lblDuracin.setVisible(false);
-        
-        JLabel lblCosto = new JLabel("Costo:");
-        lblCosto.setBounds(20, 195, 149, 15);
-        panel_1.add(lblCosto);
-        lblCosto.setVisible(false);
-        
-        JLabel lblFechaDeRegistro = new JLabel("Fecha de registro:");
-        lblFechaDeRegistro.setBounds(20, 222, 413, 15);
-        panel_1.add(lblFechaDeRegistro);
-        lblFechaDeRegistro.setVisible(false);
-      
-	       
-        JLabel lblSeleccioneUnaActividad = new JLabel("Seleccione una actividad:");
-        lblSeleccioneUnaActividad.setBounds(135, 22, 180, 15);
-        panel_1.add(lblSeleccioneUnaActividad);
-        lblSeleccioneUnaActividad.setVisible(true);
-
-        JComboBox comboBoxActividad = new JComboBox();
-        comboBoxActividad.setBounds(100, 49, 228, 24);
-        panel_1.add(comboBoxActividad);
         
 		JComboBox comboBoxCuponera = new JComboBox();
-		comboBoxCuponera.setBounds(52, 46, 183, 24);
+		comboBoxCuponera.setBounds(172, 46, 183, 24);
 		panel.add(comboBoxCuponera);
 		
 		Fabrica fab = new Fabrica();
@@ -161,8 +186,93 @@ public class ConsultaCuponeras extends JFrame {
 		String[] inicio = new String[] {"..."}; 
         comboBoxCuponera.setModel(new DefaultComboBoxModel(inicio));
         
+        JComboBox comboBoxActividad = new JComboBox();
+        comboBoxActividad.setBounds(172, 336, 183, 24);
+        comboBoxActividad.setVisible(false);
+        panel.add(comboBoxActividad);
+        
+   
+        JLabel lblSeleccioneUnaActividad = new JLabel("Seleccione una actividad:");
+	    lblSeleccioneUnaActividad.setBounds(175, 309, 180, 15);
+	    panel.add(lblSeleccioneUnaActividad);
+	     
+	    
+	    //lbls actividad
+       
+        JLabel lblNombreActividad = new JLabel("Nombre:");
+        lblNombreActividad.setBounds(12, 369, 65, 15);
+        panel.add(lblNombreActividad);
+        
+        txtNombreAct = new JTextField();
+        txtNombreAct.setBounds(86, 367, 397, 19);
+        panel.add(txtNombreAct);
+        txtNombreAct.setColumns(10);
+        
+        
+        JLabel lblDescripcinActividad = new JLabel("Descripción:");
+        lblDescripcinActividad.setBounds(12, 396, 92, 15);
+        panel.add(lblDescripcinActividad);
+        
+        txtDescripcion = new JTextField();
+        txtDescripcion.setBounds(119, 396, 364, 54);
+        panel.add(txtDescripcion);
+        txtDescripcion.setColumns(10);
+        
+        JLabel lblDuracin = new JLabel("Duración:");
+        lblDuracin.setBounds(12, 464, 75, 15);
+        panel.add(lblDuracin);
+        
+        txtDuracion = new JTextField();
+        txtDuracion.setBounds(93, 462, 390, 19);
+        panel.add(txtDuracion);
+        txtDuracion.setColumns(10);
+
+        JLabel lblCosto = new JLabel("Costo:");
+        lblCosto.setBounds(12, 491, 53, 15);
+        panel.add(lblCosto);
+        
+        txtCosto = new JTextField();
+        txtCosto.setBounds(67, 491, 416, 19);
+        panel.add(txtCosto);
+        txtCosto.setColumns(10);
+        
+        JLabel lblFechaDeRegistro = new JLabel("Fecha de registro:");
+        lblFechaDeRegistro.setBounds(12, 522, 139, 15);
+        panel.add(lblFechaDeRegistro);
+        
+        txtAltaAct = new JTextField();
+        txtAltaAct.setBounds(164, 520, 319, 19);
+        panel.add(txtAltaAct);
+        txtAltaAct.setColumns(10);
+        
+        JLabel lblErrorActividades = new JLabel("No hay actividades en esta cuponera");
+        lblErrorActividades.setForeground(Color.RED);
+        lblErrorActividades.setBounds(140, 383, 296, 15);
+        panel.add(lblErrorActividades);
+        
+        //coloco visibilidad de todo en false
+        lblErrorActividades.setVisible(false);
+        txtNombreAct.setVisible(false);
+        txtDuracion.setVisible(false);
+        txtCosto.setVisible(false);
+        txtAltaAct.setVisible(false);
+        txtDescripcion.setVisible(false);
+        lblFechaDeRegistro.setVisible(false);
+        lblCosto.setVisible(false);
+        lblDuracin.setVisible(false);
+        lblDescripcinActividad.setVisible(false);
+        lblNombreActividad.setVisible(false);
+        lblSeleccioneUnaActividad.setVisible(false);
+        
+        //quito edicion de los text field
+        txtNombreAct.setEditable(false);
+        txtDuracion.setEditable(false);
+        txtCosto.setEditable(false);
+        txtAltaAct.setEditable(false);
+        txtDescripcion.setEditable(false);
+        
+        
 		java.util.List cuponeras = sistema.listaCuponerasRegistradas();
-		
 		
 		for (int i = 0; i < cuponeras.size(); i++) {
 			comboBoxCuponera.addItem(cuponeras.get(i));
@@ -181,27 +291,39 @@ public class ConsultaCuponeras extends JFrame {
 				
 				int cuponera = comboBoxCuponera.getSelectedIndex();
 				if(cuponera != 0) {
-
-					lblNombre.setText("Nombre: " + datosCup.nombreCup);
+					
+					txtNombreCup.setText(datosCup.nombreCup);
 					lblNombre.setVisible(true);
+					txtNombreCup.setVisible(true);
 					
-					lblDescripcin.setText("Descripción: " + datosCup.descripcion);
+					txtDescripcionCup.setText(datosCup.descripcion);
 					lblDescripcin.setVisible(true);
+					txtDescripcionCup.setVisible(true);
 					
-					lblFechaDeInicio.setText("Fecha de inicio: " + datosCup.fechaInicio);
+					lblFechaDeInicio.setText("Fecha de inicio: ");
+					txtInicioCup.setText("" + datosCup.fechaInicio);
 					lblFechaDeInicio.setVisible(true);
+					txtInicioCup.setVisible(true);
 					
-					lblFechaDeFin.setText("Fecha de fin: " + datosCup.fechaFin);
+					lblFechaDeFin.setText("Fecha de fin: ");
+					txtFinCup.setText("" + datosCup.fechaFin);
 					lblFechaDeFin.setVisible(true);
+					txtFinCup.setVisible(true);
 					
-					lblFechaDeCreacin.setText("Fecha de creación: " + datosCup.fechaAlta);
+					lblFechaDeCreacin.setText("Fecha de creación: ");
+					txtAltaCup.setText("" + datosCup.fechaAlta);
 					lblFechaDeCreacin.setVisible(true);
+					txtAltaCup.setVisible(true);
 					
-					lblDescuento.setText("Descuento: " + datosCup.descuento);
+					lblDescuento.setText("Descuento: ");
+					txtDescuentoCup.setText("" + datosCup.descuento + "%");
 					lblDescuento.setVisible(true);
+					txtDescuentoCup.setVisible(true);
 					
-					lblCantidadDeClases.setText("Cantidad de clases: " + datosCup.cantClases);
+					lblCantidadDeClases.setText("Cantidad de clases: ");
+					txtCantClases.setText("" + datosCup.cantClases);
 					lblCantidadDeClases.setVisible(true);
+					txtCantClases.setVisible(true);
 					
 					lblSeleccioneUnaActividad.setVisible(true);
 					comboBoxActividad.setVisible(true);
@@ -226,24 +348,41 @@ public class ConsultaCuponeras extends JFrame {
 							int actividad = comboBoxActividad.getSelectedIndex();
 							
 							if(actividad != 0) {						
+								//lblErrorActividades.setVisible(false);
 								
-						        lblNombreActividad.setText("Nombre: " + datosAct.nombreAct);
+						        lblNombreActividad.setText("Nombre: ");
+						        txtNombreAct.setText(datosAct.nombreAct);
 								lblNombreActividad.setVisible(true);
+								txtNombreAct.setVisible(true);
 								
-								lblDescripcinActividad.setText("Descripción: " + datosAct.descripcion);
+								lblDescripcinActividad.setText("Descripción: ");
+								txtDescripcion.setText(datosAct.descripcion);
+								txtDescripcion.setVisible(true);
 								lblDescripcinActividad.setVisible(true);
 								
-								lblDuracin.setText("Duración: " + datosAct.duracion);
+								lblDuracin.setText("Duración: ");
+								txtDuracion.setText(datosAct.duracion + " mins");
 								lblDuracin.setVisible(true);
+								txtDuracion.setVisible(true);
 								
-								lblCosto.setText("Costo: " + datosAct.costo);
+								lblCosto.setText("Costo: ");
+								txtCosto.setText(datosAct.costo + "$");
 								lblCosto.setVisible(true);
+								txtCosto.setVisible(true);
 								
-								lblFechaDeRegistro.setText("Fecha de registro: " + datosAct.fechaRegistro);
+								lblFechaDeRegistro.setText("Fecha de registro: ");
+								txtAltaAct.setText("" + datosAct.fechaRegistro);
 								lblFechaDeRegistro.setVisible(true);
+								txtAltaAct.setVisible(true);
 								
 							}else {
 								if(actividad == 0) {
+									//lblErrorActividades.setVisible(true);
+									txtNombreCup.setVisible(false);
+									txtDescripcion.setVisible(false);
+									txtDuracion.setVisible(false);
+									txtCosto.setVisible(false);
+									txtAltaAct.setVisible(false);
 									lblNombreActividad.setVisible(false);
 									lblDescripcinActividad.setVisible(false);
 									lblDuracin.setVisible(false);
@@ -256,7 +395,13 @@ public class ConsultaCuponeras extends JFrame {
 					
 				}else {
 					if(cuponera == 0) {
-						
+						txtNombreCup.setVisible(false);
+						txtDescripcionCup.setVisible(false);
+						txtAltaCup.setVisible(false);
+						txtInicioCup.setVisible(false);
+						txtFinCup.setVisible(false);
+						txtDescuentoCup.setVisible(false);
+						txtCantClases.setVisible(false);
 						lblNombre.setVisible(false);
 						lblDescripcin.setVisible(false);
 						lblFechaDeInicio.setVisible(false);
@@ -271,39 +416,6 @@ public class ConsultaCuponeras extends JFrame {
 				}
 			}
 		});
-
-		/*
-		//accion combobox actividad
-		comboBoxActividad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int actividad = comboBoxActividad.getSelectedIndex();
-				if(actividad != 0) {
-					lblNombreActividad.setVisible(true);
-					lblDescripcinActividad.setVisible(true);
-					lblDuracin.setVisible(true);
-					lblCosto.setVisible(true);
-					lblFechaDeRegistro.setVisible(true);
-				}else {
-					lblNombreActividad.setVisible(false);
-					lblDescripcinActividad.setVisible(false);
-					lblDuracin.setVisible(false);
-					lblCosto.setVisible(false);
-					lblFechaDeRegistro.setVisible(false);
-				}
-			}
-		});
-		*/
-
-        JButton btnCanclear = new JButton("X");
-        btnCanclear.setBounds(396, 266, 49, 34);
-        panel_1.add(btnCanclear);
-        btnCanclear.setForeground(Color.WHITE);
-        btnCanclear.setBackground(Color.RED);
-        btnCanclear.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		setVisible(false);
-        	}
-        });
         
        
         

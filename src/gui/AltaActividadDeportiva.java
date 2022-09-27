@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import logica.controlador.IControlador;
 import logica.controlador.Fabrica;
+import java.util.ArrayList;
 
 public class AltaActividadDeportiva extends javax.swing.JFrame {
 
@@ -19,10 +20,35 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
      * Creates new form AltaActividadDeportiva
      */
     public AltaActividadDeportiva() {
-//        Fabrica fab = new Fabrica();
-//        IControlador controlador = fab.getInterface();
+        Fabrica fab = new Fabrica();
+        IControlador controlador = fab.getInterface();
         
         initComponents();
+        
+        ArrayList<String> arrStr = controlador.getNombreInstituciones();
+        
+        for(int i = 0; i < arrStr.size();i++){
+            this.comboInsti.addItem(arrStr.get(i));
+        }
+        
+        
+            //----------------escondo labels----------------------------
+            this.lblNombre.setVisible(false);
+            this.lblDesc.setVisible(false);
+            this.lblDura.setVisible(false);
+            this.lblURL.setVisible(false);
+            this.lblCosto.setVisible(false);
+            this.lblMMDDAA.setVisible(false);
+            //----------------escondo los fields---------------------------
+            this.fieldDesc.setVisible(false);
+            this.fieldDuracion.setVisible(false);
+            this.fieldNombre.setVisible(false);
+            this.textIMG.setVisible(false);
+            //----------------escondo los spinners---------------------------
+            this.spinnerCosto.setVisible(false);
+            this.spinnerFecha.setVisible(false);
+
+            
     }
     
 //     public AltaActividadDeportiva(IControlador controlador) {
@@ -43,35 +69,28 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        fieldInstiDepo = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         fieldNombre = new javax.swing.JTextField();
         fieldDesc = new javax.swing.JTextField();
         fieldDuracion = new javax.swing.JTextField();
         spinnerCosto = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
+        lblCosto = new javax.swing.JLabel();
         spinnerFecha = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
+        lblMMDDAA = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         textIMG = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        lblDesc = new javax.swing.JLabel();
+        lblDura = new javax.swing.JLabel();
+        lblURL = new javax.swing.JLabel();
+        comboInsti = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
         jLabel1.setText("Dar de alta Actividad Deportiva");
-
-        fieldInstiDepo.setText("Escriba la institución deportiva");
-        fieldInstiDepo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fieldInstiDepoMouseClicked(evt);
-            }
-        });
-        fieldInstiDepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldInstiDepoActionPerformed(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 204));
 
@@ -92,7 +111,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,11 +158,11 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 
         spinnerCosto.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
-        jLabel3.setText("Costo $");
+        lblCosto.setText("Costo $");
 
         spinnerFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1661233467001L), null, null, java.util.Calendar.DAY_OF_YEAR));
 
-        jLabel4.setText("MM/DD/AA");
+        lblMMDDAA.setText("MM/DD/AA");
 
         jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setText("<---------");
@@ -165,36 +184,54 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             }
         });
 
+        lblNombre.setText("Nombre");
+
+        lblDesc.setText("Descripción");
+
+        lblDura.setText("Duración");
+
+        lblURL.setText("URL IMG");
+
+        comboInsti.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        comboInsti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboInstiActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Institución");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(spinnerCosto)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel3))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(spinnerFecha)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel4))
-                                .addComponent(textIMG)
-                                .addComponent(fieldInstiDepo)))
-                        .addComponent(fieldNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(comboInsti, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(spinnerFecha)
+                                    .addComponent(spinnerCosto)
+                                    .addComponent(textIMG, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                    .addComponent(fieldNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldDesc, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldDuracion, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDura)
+                                    .addComponent(lblNombre)
+                                    .addComponent(lblMMDDAA)
+                                    .addComponent(lblCosto)
+                                    .addComponent(lblDesc)
+                                    .addComponent(lblURL)
+                                    .addComponent(jLabel2))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,34 +239,40 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldInstiDepo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDesc))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDura))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(lblMMDDAA))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinnerCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(lblCosto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(textIMG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textIMG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblURL))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fieldInstiDepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldInstiDepoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldInstiDepoActionPerformed
 
     private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
         // TODO add your handling code here:
@@ -246,12 +289,6 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void fieldInstiDepoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldInstiDepoMouseClicked
-        if(fieldInstiDepo.getText().equals("Escriba la institución deportiva")){
-            fieldInstiDepo.setText("");
-        }
-    }//GEN-LAST:event_fieldInstiDepoMouseClicked
 
     private void fieldNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldNombreMouseClicked
         if(fieldNombre.getText().equals("Escriba el nombre")){
@@ -273,7 +310,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         String nombreActividad = fieldNombre.getText();
-        String nombreInsti = fieldInstiDepo.getText();
+        String nombreInsti = this.comboInsti.getSelectedItem().toString();
         String desc = fieldDesc.getText();
         
         try{//se intenta parsear el float
@@ -303,7 +340,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             return;
         }
         
-        VentanaMensaje ventanaSatisfactoria = new VentanaMensaje("Actividad Deportiva","Se dio de alta la actividad satisfactoriamente",java.awt.Color.GREEN);
+        VentanaMensaje ventanaSatisfactoria = new VentanaMensaje("Actividad Deportiva","Se dio de alta la actividad satisfactoriamente",java.awt.Color.green);
         ventanaSatisfactoria.setVisible(true);
         
         
@@ -329,6 +366,46 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             this.textIMG.setText("");
         }
     }//GEN-LAST:event_textIMGMouseClicked
+
+    private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
+        // TODO add your handling code here:
+        if(this.comboInsti.getSelectedIndex() != 0){
+            //----------------muestro labels----------------------------
+            this.lblNombre.setVisible(true);
+            this.lblDesc.setVisible(true);
+            this.lblDura.setVisible(true);
+            this.lblURL.setVisible(true);
+            this.lblCosto.setVisible(true);
+            this.lblMMDDAA.setVisible(true);
+            //----------------muestro los fields---------------------------
+            this.fieldDesc.setVisible(true);
+            this.fieldDuracion.setVisible(true);
+            this.fieldNombre.setVisible(true);
+            this.textIMG.setVisible(true);
+            //----------------muestro los spinners-----------------------
+            this.spinnerCosto.setVisible(true);
+            this.spinnerFecha.setVisible(true);
+            
+            
+        }else{
+            //----------------escondo labels----------------------------
+            this.lblNombre.setVisible(false);
+            this.lblDesc.setVisible(false);
+            this.lblDura.setVisible(false);
+            this.lblURL.setVisible(false);
+            this.lblCosto.setVisible(false);
+            this.lblMMDDAA.setVisible(false);
+            //----------------escondo los fields---------------------------
+            this.fieldDesc.setVisible(false);
+            this.fieldDuracion.setVisible(false);
+            this.fieldNombre.setVisible(false);
+            this.textIMG.setVisible(false);
+            //----------------escondo los spinners---------------------------
+            this.spinnerCosto.setVisible(false);
+            this.spinnerFecha.setVisible(false);
+            
+        }
+    }//GEN-LAST:event_comboInstiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,16 +443,21 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboInsti;
     private javax.swing.JTextField fieldDesc;
     private javax.swing.JTextField fieldDuracion;
-    private javax.swing.JTextField fieldInstiDepo;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblCosto;
+    private javax.swing.JLabel lblDesc;
+    private javax.swing.JLabel lblDura;
+    private javax.swing.JLabel lblMMDDAA;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblURL;
     private javax.swing.JSpinner spinnerCosto;
     private javax.swing.JSpinner spinnerFecha;
     private javax.swing.JTextField textIMG;
