@@ -17,9 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,6 +39,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -45,6 +50,7 @@ import java.awt.Image;
 
 import logica.datatypes.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JCheckBox;
 import java.awt.event.WindowAdapter;
@@ -64,7 +70,7 @@ public class ModificarUsuario extends JFrame {
 	private JComboBox cBoxMes;
 	private JTextArea textBiografia;
 	private JComboBox cBoxDia;
-	private JTextField txtFieldImagen;
+	private JButton btnCambioImg;
 	//no me deja pushear
 
 	/**
@@ -106,17 +112,17 @@ public class ModificarUsuario extends JFrame {
 		try {
 			Fabrica f = new Fabrica();
 			IControlador sistema = f.getInterface();
-			ArrayList<DtUsrKey> listaKeys = sistema.listarUsuarios();
-			String[] arrayKeys = new String[listaKeys.size()];
+			ArrayList<DtUsuario> datosUsr = sistema.listarUsuarios();
+			String[] arrayUsrs = new String[datosUsr.size()];
 			int i = 0;
-			for (DtUsrKey keyUsr : listaKeys) {
-				arrayKeys[i] = keyUsr.nickname + "<" + keyUsr.email + ">";
+			for (DtUsuario usr : datosUsr) {
+				arrayUsrs[i] = usr.nickname;
 				i++;
 			}
 			JList listUsuarios = new JList();
 			listUsuarios.setFont(new Font("Dialog", Font.BOLD, 10));
 			listUsuarios.setModel(new AbstractListModel() {
-				String[] values = arrayKeys;
+				String[] values = arrayUsrs;
 
 				public int getSize() {
 					return values.length;
@@ -126,7 +132,24 @@ public class ModificarUsuario extends JFrame {
 					return values[index];
 				}
 			});
-
+			
+			JPanel panelFileChooser = new JPanel();
+			panelFileChooser.setBounds(0, 0, 607, 326);
+			contentPane.add(panelFileChooser);
+			panelFileChooser.setVisible(false);
+			panelFileChooser.setLayout(null);
+			
+			JFileChooser fCImagen = new JFileChooser();
+			fCImagen.setBounds(0, 0, 606, 326);
+			panelFileChooser.add(fCImagen);
+			fCImagen.setAcceptAllFileFilterUsed(false);
+			FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
+			FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
+			FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
+			fCImagen.addChoosableFileFilter(filterJPG);
+			fCImagen.addChoosableFileFilter(filterPNG);
+			fCImagen.addChoosableFileFilter(filterJPEG);
+			
 			JScrollPane scrollPaneList = new JScrollPane(listUsuarios);
 			scrollPaneList.setBounds(12, 24, 259, 302);
 			contentPane.add(scrollPaneList);
@@ -199,14 +222,10 @@ public class ModificarUsuario extends JFrame {
 			checkBoxEditar.setBounds(337, 35, 70, 23);
 			panelSocio.add(checkBoxEditar);
 			
-			JLabel lblImagen_1 = new JLabel("Imagen(URL):");
-			lblImagen_1.setBounds(12, 128, 102, 15);
-			panelSocio.add(lblImagen_1);
-			
-			txtFieldImagen = new JTextField();
-			txtFieldImagen.setBounds(116, 126, 277, 19);
-			panelSocio.add(txtFieldImagen);
-			txtFieldImagen.setColumns(10);
+			btnCambioImg = new JButton("Cambiar Imagen");
+			btnCambioImg.setEnabled(false);
+			btnCambioImg.setBounds(12, 120, 158, 25);
+			panelSocio.add(btnCambioImg);
 
 			JPanel panelProfesor = new JPanel();
 			panelProfesor.setBorder(null);
@@ -217,6 +236,19 @@ public class ModificarUsuario extends JFrame {
 			panelProfesor.setLayout(null);
 			//panelProfesor.setVisible(false);
 
+			btnCambioImg.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					panelFileChooser.setVisible(true);
+					btnCambioImg.setVisible(false);
+				}
+			});
+
+			fCImagen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					panelFileChooser.setVisible(false);
+					btnCambioImg.setVisible(true);
+				}
+			});
 			JLabel lblInstitucion = new JLabel("Institución:");
 			lblInstitucion.setBounds(12, 0, 86, 15);
 			panelProfesor.add(lblInstitucion);
@@ -259,6 +291,7 @@ public class ModificarUsuario extends JFrame {
 			txtFieldInstitucion.setBounds(108, -2, 141, 19);
 			panelProfesor.add(txtFieldInstitucion);
 			txtFieldInstitucion.setColumns(10);
+			
 
 			JButton btnCancelar = new JButton("Cancelar");
 			btnCancelar.addActionListener(new ActionListener() {
@@ -293,10 +326,17 @@ public class ModificarUsuario extends JFrame {
 					lblImagen.setIcon(null);
 					checkBoxEditar.setSelected(false);
 					editableFalse();
-					lblDatosUsr.setText("Datos para el usuario "+listUsuarios.getSelectedValue()+":");
-					DtUsuario dtU;
-					int indexJList = listUsuarios.getSelectedIndex();
-					dtU = sistema.getDatosUsuario(listaKeys.get(indexJList));
+					DtUsuario dtU = null;
+					String selectedNick = (String)listUsuarios.getSelectedValue();
+					for(DtUsuario dtUsr : datosUsr) {
+						if(dtUsr.nickname.equals(selectedNick)) {
+							dtU = dtUsr;
+							break;
+						}
+					}
+					//int indexJList = listUsuarios.getSelectedIndex();
+					lblDatosUsr.setText(
+							"Datos para el usuario "+dtU.nickname+"<"+dtU.email+">"+":");
 					if (dtU instanceof DtSocio) {
 						panelProfesor.setVisible(false);
 						panelSocio.setVisible(true);
@@ -315,20 +355,16 @@ public class ModificarUsuario extends JFrame {
 					cBoxMes.setSelectedIndex(dtU.fechaNac.getMonthValue());
 					cBoxDia.setSelectedIndex(dtU.fechaNac.getDayOfMonth());
 					txtFieldAnio.setText(String.valueOf(dtU.fechaNac.getYear()));
-					txtFieldImagen.setText(dtU.imagenUrl);
+					String rutaDir = System.getProperty("user.dir");
 					Image imagen = null;
 					try {
-						URL url = new URL(txtFieldImagen.getText());
-						URLConnection connection = (URLConnection) url.openConnection();
-	                    connection.setRequestProperty(
-	                            "User-Agent",
-	                            "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
-						imagen = ImageIO.read(connection.getInputStream()).getScaledInstance(180, 180, 100);
+						imagen = ImageIO.read(new File(rutaDir+"/src/imgUsers/"+"."+dtU.nickname));
+						imagen = imagen.getScaledInstance(180, 180, 100);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}finally {
-						
-						lblImagen.setIcon(new ImageIcon(imagen));
+						if(imagen != null)
+							lblImagen.setIcon(new ImageIcon(imagen));
 					}
 				}
 			});
@@ -351,16 +387,36 @@ public class ModificarUsuario extends JFrame {
 						LocalDate fNac = LocalDate.of(Integer.parseInt(txtFieldAnio.getText()),
 								cBoxMes.getSelectedIndex(),
 								cBoxDia.getSelectedIndex());
-						String imagen = txtFieldImagen.getText();
 						if(!panelProfesor.isVisible()) {
-							sistema.modificarDatos(nombre, apellido, fNac, imagen);
+							sistema.modificarDatos((String)listUsuarios.getSelectedValue(), nombre, apellido, fNac);
 						}else {
 							String institucion = txtFieldInstitucion.getText();
 							String descripcion = txtFieldDescripcion.getText();
 							String biografia = textBiografia.getText();
 							String sitioWeb = txtFieldSitioWeb.getText();
-							sistema.modificarDatos(nombre, apellido, fNac, imagen, institucion, descripcion, biografia, sitioWeb);
+							sistema.modificarDatos(
+									(String)listUsuarios.getSelectedValue(),
+									nombre, apellido, fNac, institucion, descripcion, biografia, sitioWeb);
 						}
+						String rutaDir = System.getProperty("user.dir");
+						if(fCImagen.getSelectedFile() != null) {
+							Image imgMuestra = null;
+							File img = fCImagen.getSelectedFile();
+							try {
+								imgMuestra = ImageIO.read(img).getScaledInstance(180, 180, 100);
+								Files.copy(
+										Paths.get(img.getPath()),
+										Paths.get(rutaDir+"/src/imgUsers/"+"."+(String)listUsuarios.getSelectedValue()),
+										StandardCopyOption.REPLACE_EXISTING);
+							} catch (IOException e) {
+								System.out.println(e.getMessage());
+							}
+							finally {
+								lblImagen.setIcon(new ImageIcon(imgMuestra));
+							}
+						}
+						
+						
 						showMensaje = new VentanaMensaje("DATOS MODIFICADOS", "Los datos se modificaron correctamente", Color.BLACK);
 						showMensaje.setVisible(true);
 					} catch (IllegalArgumentException error) {
@@ -388,8 +444,7 @@ public class ModificarUsuario extends JFrame {
 		textBiografia.setEditable(false);
 		cBoxMes.setEnabled(false);
 		cBoxDia.setEnabled(false);
-		txtFieldImagen.setEditable(false);
-
+		btnCambioImg.setEnabled(false);
 	}
 
 	private void editableTrue() {
@@ -402,6 +457,6 @@ public class ModificarUsuario extends JFrame {
 		textBiografia.setEditable(true);
 		cBoxMes.setEnabled(true);
 		cBoxDia.setEnabled(true);
-		txtFieldImagen.setEditable(true);
+		btnCambioImg.setEnabled(true);
 	}
 }

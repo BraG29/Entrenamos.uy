@@ -51,8 +51,8 @@ public class Profesor extends Usuario{
     }
     public Profesor(
     		String nickname, String apellido, String email, String nombre, LocalDate fechaNac, 
-    		String urlImagen, String biografia, String descripcion, String sitioWeb, Institucion institucion) {
-    	super( nickname,  apellido,  email,  nombre, fechaNac, urlImagen);
+    		String biografia, String descripcion, String sitioWeb, Institucion institucion) {
+    	super( nickname,  apellido,  email,  nombre, fechaNac);
     	this.biografia = biografia;
     	this.descripcion = descripcion;
     	this.sitioWeb = sitioWeb;
@@ -88,7 +88,7 @@ public class Profesor extends Usuario{
 
     public void setSitioWeb(String sitioWeb) {
         this.sitioWeb = sitioWeb;
-    }
+    } 
 
     public Collection<Clase> getClaseDictada() {
         return claseDictada;
@@ -112,7 +112,7 @@ public class Profesor extends Usuario{
     public DtUsuario getDatosProfe(){ 
     	DtUsuario dtP = new DtProfesor(
         		this.nickname, this.email, this.nombre, this.apellido, 
-        		this.fechaNac, this.urlImagen, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
+        		this.fechaNac, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
     	return dtP;
 
     }

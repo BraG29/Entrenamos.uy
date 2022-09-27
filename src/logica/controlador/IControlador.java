@@ -17,27 +17,23 @@ public class IControlador {
 		
 	}
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
 	}
 	
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, 
-			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
+			String institucion, String descripcion, String biografia, String sitioWeb) {
 	}
 
-	public ArrayList<DtUsrKey> listarUsuarios() {
+	public ArrayList<DtUsuario> listarUsuarios() {
 		return null;
 	}
 
-	public DtUsuario getDatosUsuario(DtUsrKey usrKey) {
-		return null;
-	}
-
-	public void modificarDatos(String nombre, String apellido, LocalDate fechaNac, String imagen) {
+	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac) {
 
 	}
 
-	public void modificarDatos(String nombre, String apellido, LocalDate fechaNac, String institucion,
-			String imagen, String descripcion, String biografia, String sitioWeb) {
+	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, String institucion,
+			String descripcion, String biografia, String sitioWeb) {
 	}
 
 	//CU Consulta de cuponeras de actividades deportivas

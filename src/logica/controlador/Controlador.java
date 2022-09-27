@@ -17,6 +17,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transaction;
@@ -50,7 +51,7 @@ import logica.institucion.Institucion;
 public class Controlador extends IControlador {
 	
 	private String nombreCup;
-	private Usuario uRecordado;
+	//private Usuario uRecordado;
 	private Institucion instiRecordada;
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf;
@@ -73,11 +74,11 @@ public class Controlador extends IControlador {
 	}
 
 	
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, String imagen) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
 
 		//EntityManager em = emf.createEntityManager();
 		try {
-			Socio s = new Socio(nick, apellido, email, nombre, fechaNac, imagen);
+			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
 			tran.begin();
 			em.persist(s);
 			em.flush();
@@ -97,7 +98,7 @@ public class Controlador extends IControlador {
 	}
 
 	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String imagen, String institucion, String descripcion, String biografia, String sitioWeb) {
+			String institucion, String descripcion, String biografia, String sitioWeb) {
 		//EntityManager em = emf.createEntityManager();
 		try {
 			Institucion i = em.find(Institucion.class, institucion);
@@ -105,7 +106,7 @@ public class Controlador extends IControlador {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			Profesor p =
-					new Profesor(nick, apellido, email, nombre, fechaNac, imagen, biografia, descripcion, sitioWeb, i);
+					new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
 			tran.begin();
 			em.persist(p);
 			em.flush();
@@ -129,67 +130,34 @@ public class Controlador extends IControlador {
 		return instance;
 	}
 
-	public ArrayList<DtUsrKey> listarUsuarios() {
+	public ArrayList<DtUsuario> listarUsuarios() {
 		//EntityManager em = emf.createEntityManager();
-		ArrayList listUsuarios = new ArrayList<DtUsrKey>();
-		java.util.List listNickSocio = null;
-		java.util.List listEmailSocio = null;
-		java.util.List listNickProfe = null;
-		java.util.List listEmailProfe = null;
-		try {
-			//tran.begin();
-			listNickSocio = em.createQuery("SELECT nickname FROM Socio").getResultList();
-			listEmailSocio = em.createQuery("SELECT email FROM Socio").getResultList();
-			listNickProfe = em.createQuery("SELECT nickname FROM Profesor").getResultList();
-			listEmailProfe = em.createQuery("SELECT email FROM Profesor").getResultList();
-		}catch(PersistenceException e) {
-			//tran.rollback();
+		ArrayList datosUsr = new ArrayList<DtUsuario>();
+		DtUsuario dtU = null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
+		Root<Usuario> rootUsr = cq.from(Usuario.class);
+		cq.select(rootUsr);
+		List usuarios = em.createQuery(cq).getResultList();
+		
+		for(int i = 0; i < usuarios.size(); i++) {
+			Usuario u = (Usuario) usuarios.get(i);
+			
+			if(u instanceof Profesor) {
+				Profesor p = (Profesor)u;
+				dtU = p.getDatosProfe();
+			}else {
+				Socio s = (Socio)u;
+				dtU = s.getDatosSocio();
+			}
+			datosUsr.add(dtU);
 		}
-		for(int i = 0; i < listNickSocio.size(); i++) {
-			String nS = (String)listNickSocio.get(i);
-			String eS = (String)listEmailSocio.get(i);
-			DtUsrKey keySocio = new DtUsrKey(nS, eS);
-			listUsuarios.add(keySocio);
-		}
-		for(int i = 0; i < listNickProfe.size(); i++) {
-			String nP = (String)listNickProfe.get(i);
-			String eP = (String)listEmailProfe.get(i);
-			DtUsrKey keyProfe = new DtUsrKey(nP, eP);
-			listUsuarios.add(keyProfe);
-		}
-		//em.close();
-		return listUsuarios;
-	}
-
-	public DtUsuario getDatosUsuario(DtUsrKey usrKey) {
-		//EntityManager em = emf.createEntityManager();
-		Usuario u = null;
-		try {
-			em.clear();
-			//tran.begin();
-			//em.flush();
-			u = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
-			this.uRecordado = u;
-		} catch (PersistenceException e) {
-			tran.rollback();
-		}
-		if(u instanceof Profesor) {
-			Profesor p = (Profesor)u;
-			DtUsuario dtP = p.getDatosProfe();
-			//em.close();
-			return dtP;
-		}else {
-			Socio s = (Socio)u;
-			DtUsuario dtS = s.getDatosSocio();
-			//em.close();
-			return dtS;
-		}
+		
+		return datosUsr;
 	}
 
 
-
-
-	public void modificarDatos(String nombre,String apellido,LocalDate fechaNac, String imagen) {
+	public void modificarDatos(String nickname, String nombre,String apellido,LocalDate fechaNac) {
 		//EntityManager em = emf.createEntityManager();
 		try {
 			tran.begin();
@@ -199,8 +167,7 @@ public class Controlador extends IControlador {
 			cu.set(rootSocio.get("nombre"), nombre);
 			cu.set(rootSocio.get("apellido"), apellido);
 			cu.set(rootSocio.get("fechaNac"), fechaNac);
-			cu.set(rootSocio.get("urlImagen"), imagen);
-			cu.where(cb.equal(rootSocio.get("nickname"), this.uRecordado.getNickname()));
+			cu.where(cb.equal(rootSocio.get("nickname"), nickname));
 			em.createQuery(cu).executeUpdate();
 			//em.flush();
 			tran.commit();
@@ -209,7 +176,7 @@ public class Controlador extends IControlador {
 		}
 	}
 	public void modificarDatos(
-			String nombre,String apellido,LocalDate fechaNac, String imagen,
+			String nickname, String nombre,String apellido,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 		
 		//EntityManager em = emf.createEntityManager();
@@ -225,12 +192,11 @@ public class Controlador extends IControlador {
 			cu.set(rootProfesor.get("nombre"), nombre);
 			cu.set(rootProfesor.get("apellido"), apellido);
 			cu.set(rootProfesor.get("fechaNac"), fechaNac);
-			cu.set(rootProfesor.get("urlImagen"), imagen);
 			cu.set(rootProfesor.get("institucion"), nuevaInst);
 			cu.set(rootProfesor.get("biografia"), biografia);
 			cu.set(rootProfesor.get("descripcion"), descripcion);
 			cu.set(rootProfesor.get("sitioWeb"), sitioWeb);
-			cu.where(cb.equal(rootProfesor.get("nickname"), this.uRecordado.getNickname()));
+			cu.where(cb.equal(rootProfesor.get("nickname"), nickname));
 			em.createQuery(cu).executeUpdate();
 			//em.flush();
 			tran.commit();

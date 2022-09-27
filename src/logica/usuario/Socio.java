@@ -61,8 +61,8 @@ public class Socio extends Usuario {
 		registro = new ArrayList<>();
 	}
 
-	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac, String urlImagen) {
-		super(nickname, apellido, email, nombre, fechaNac, urlImagen);
+	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
+		super(nickname, apellido, email, nombre, fechaNac);
 		// TODO Auto-generated constructor stub
 
 		compra = new ArrayList<>();// Siempren inicien el las colleciones
@@ -70,8 +70,7 @@ public class Socio extends Usuario {
 	}
 
 	public DtUsuario getDatosSocio() {
-		DtUsuario dtS = new DtSocio(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac,
-				this.urlImagen);
+		DtUsuario dtS = new DtSocio(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
 		return dtS;
 	}
 

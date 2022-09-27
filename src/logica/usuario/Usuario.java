@@ -30,8 +30,6 @@ public class Usuario implements Serializable {
     protected String apellido;
     @Column(name="fecha_nacimiento")
     protected LocalDate fechaNac;
-    @Column(name="imagen")
-    protected String urlImagen;
     
 // Getters and Setters----------------------------------------------------------
     public String getNickname() {
@@ -74,26 +72,18 @@ public class Usuario implements Serializable {
 		this.apellido = apellido;
 	}
 	
-	public String getUrlImagen() {
-		return urlImagen;
-	}
-
-	public void setUrlImagen(String urlImagen) {
-		this.urlImagen = urlImagen;
-	}
 
 	//Constructors------------------------------------------------------------------
     //Empty constructor
     public Usuario() {
 	}
     //Full constructor
-    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac, String urlImagen) {
+    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
         this.nickname = nickname;
         this.email = email;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNac = fechaNac;
-        this.urlImagen = urlImagen;
         // Falta la imagen .png
     }
     public Usuario(String nickname, String email) {

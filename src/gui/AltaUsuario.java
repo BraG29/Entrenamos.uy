@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.hibernate.boot.cfgxml.spi.CfgXmlAccessService;
 
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
@@ -16,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JToolBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
@@ -25,6 +30,15 @@ import java.awt.event.ItemEvent;
 import javax.swing.JRadioButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,6 +47,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
@@ -51,7 +66,6 @@ public class AltaUsuario extends JFrame {
 	private JTextField txtFieldInstitucion;
 	private JTextField txtFieldDescripcion;
 	private JTextField txtFieldSitioWeb;
-	private JTextField txtFieldImagen;
 
 	/**
 	 * Launch the application.
@@ -82,7 +96,25 @@ public class AltaUsuario extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		JPanel panelFileChooser = new JPanel();
+		panelFileChooser.setBounds(0, 0, 450, 370);
+		contentPane.add(panelFileChooser);
+		panelFileChooser.setVisible(false);
+		panelFileChooser.setLayout(null);
+		
+		JFileChooser fCImagen = new JFileChooser();
+		fCImagen.setBounds(0, 0, 450, 358);
+		panelFileChooser.add(fCImagen);
+		fCImagen.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
+		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
+		FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
+		fCImagen.addChoosableFileFilter(filterJPG);
+		fCImagen.addChoosableFileFilter(filterPNG);
+		fCImagen.addChoosableFileFilter(filterJPEG);
+		
+		
 		JLabel lblTipoUsr = new JLabel("Tipo de Usuario:");
 		lblTipoUsr.setBounds(12, 38, 122, 15);
 		contentPane.add(lblTipoUsr);
@@ -185,10 +217,9 @@ public class AltaUsuario extends JFrame {
 		lblImagen.setBounds(12, 173, 100, 15);
 		panelSocio.add(lblImagen);
 		
-		txtFieldImagen = new JTextField();
-		txtFieldImagen.setColumns(10);
-		txtFieldImagen.setBounds(124, 173, 250, 19);
-		panelSocio.add(txtFieldImagen);
+		JButton btnExportarImagen = new JButton("Exportar Imagen");
+		btnExportarImagen.setBounds(122, 169, 150, 25);
+		panelSocio.add(btnExportarImagen);
 
 		JPanel panelProfesor = new JPanel();
 		panelProfesor.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -198,6 +229,23 @@ public class AltaUsuario extends JFrame {
 		contentPane.add(panelProfesor);
 		panelProfesor.setLayout(null);
 		panelProfesor.setVisible(false);
+		
+		btnExportarImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelFileChooser.setVisible(true);
+				panelSocio.setVisible(false);
+				panelProfesor.setVisible(false);
+			}
+		});
+
+		fCImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelFileChooser.setVisible(false);
+				panelSocio.setVisible(true);
+				if(cBoxTipoUsr.getSelectedIndex() == 2)
+					panelProfesor.setVisible(true);
+			}
+		});
 
 		JLabel lblInstitucion = new JLabel("Institución:*");
 		lblInstitucion.setBounds(12, 12, 89, 15);
@@ -291,7 +339,7 @@ public class AltaUsuario extends JFrame {
 						if (txtFieldNombre.getText().isEmpty() || txtFieldNick.getText().isEmpty()
 								|| txtFieldApellido.getText().isEmpty() || txtEmail.getText().isEmpty()
 								|| cBoxMes.getSelectedIndex() == 0 || cBoxDia.getSelectedIndex() == 0
-								|| txtFieldAnio.getText().isEmpty() || txtFieldImagen.getText().isEmpty()) {
+								|| txtFieldAnio.getText().isEmpty() || fCImagen.getSelectedFile() == null) {
 							throw new IllegalArgumentException(errorCamposClave);
 						} else if (cBoxTipoUsr.getSelectedIndex() == 2 && (txtFieldInstitucion.getText().isEmpty()
 								|| txtFieldDescripcion.getText().isEmpty())) {
@@ -301,26 +349,36 @@ public class AltaUsuario extends JFrame {
 							Fabrica f = new Fabrica();
 							IControlador sistema = f.getInterface();
 							LocalDate fechaNac;
-							String nickname, nombre, apellido, email, imagen;
+							String nickname, nombre, apellido, email;
 							nickname = txtFieldNick.getText();
 							nombre = txtFieldNombre.getText();
 							apellido = txtFieldApellido.getText();
 							email = txtEmail.getText();
-							imagen = txtFieldImagen.getText();
 							fechaNac = LocalDate.of(Integer.parseInt(txtFieldAnio.getText()),
 									cBoxMes.getSelectedIndex(),
 									cBoxDia.getSelectedIndex());
 							if (cBoxTipoUsr.getSelectedIndex() == 1) {
-								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, imagen);
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac);
 							} else {
 								String institucion, descripcion, biografia, sitioWeb;
 								institucion = txtFieldInstitucion.getText();
 								descripcion = txtFieldDescripcion.getText();
 								biografia = textBiografia.getText();
 								sitioWeb = txtFieldSitioWeb.getText();
-								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, imagen, 
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, 
 										institucion, descripcion, biografia, sitioWeb);
 							}
+							File imagen = fCImagen.getSelectedFile();
+							try {
+								String rutaDir = System.getProperty("user.dir");
+								Files.copy(
+										Paths.get(imagen.getPath()),
+										Paths.get(rutaDir+"/src/imgUsers/"+"."+txtFieldNick.getText()),
+										StandardCopyOption.REPLACE_EXISTING);
+							} catch (IOException ioError) {
+								throw ioError;
+							}
+							
 							String mensajeConfirmacion = "Se ha dado de alta al usuario " + nickname + " en el sistema";
 							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 							showMensaje.setVisible(true);
