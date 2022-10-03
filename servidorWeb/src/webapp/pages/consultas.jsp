@@ -207,3 +207,4 @@
     </div>
   </div>
 </main>
+<jsp:include page="./../template/footer.jsp"/>

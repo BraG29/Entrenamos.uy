@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="container fixed-bottom">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <span class="mb-3 mb-md-0 text-muted">2022 Entrenamos.UY</span>
-        </div>
-
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3">
-                <a class="text-muted" href="https://github.com/BraG29/Entrenamos.uy">
-                    <img src="github-sign.png" style="width:2em; height:2em">
-                </a>
-            </li>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 active">Actividades</a></li>
+            <li><a href="#" class="nav-link px-2">Cuponeras</a></li>
+            <li><a href="#" class="nav-link px-2">Clases</a></li>
+            <li><a href="#" class="nav-link px-2">Usuarios</a></li>
         </ul>
-    </footer>
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-primary me-2">Iniciar Sesión</button>
+            <button type="button" class="btn btn-primary me-2">Registrarse</button>
+        </div>
+    </header>
 </div>

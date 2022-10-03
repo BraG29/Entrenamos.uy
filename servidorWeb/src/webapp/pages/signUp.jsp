@@ -45,6 +45,7 @@
     <button class="w-100 btn btn-lg btn-primary" type="submit">Registro</button>
     </form>
 </main>
+<jsp:include page="./../template/footer.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
     var dateControler = {

@@ -44,3 +44,4 @@
         <button class="w-100 btn btn-lg btn-primary" type="submit">Crear Actividad</button>
     </form>
 </main>
+<jsp:include page="./../template/footer.jsp"/>
