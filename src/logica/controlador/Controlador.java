@@ -34,6 +34,7 @@ import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
@@ -349,7 +350,7 @@ public class Controlador extends IControlador {
 	}
         
             
-    public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
+    public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta){
     	System.out.println("Antes de buscar la insti");
 
         Institucion insti = em.find(Institucion.class, nombreInsti);
@@ -358,7 +359,7 @@ public class Controlador extends IControlador {
         if(insti != null){
             //hay que hacer try and catch
             try{
-                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
+                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta, this.em, this.tran);
             }catch(Exception e){
                 throw new IllegalArgumentException(e.getMessage());
             }
@@ -569,7 +570,7 @@ public class Controlador extends IControlador {
       public void recordarInsti(String nombreInsti) {
     	  
     	  this.instiRecordada = this.em.find(Institucion.class,nombreInsti);
-    	  System.out.println(this.instiRecordada.getNombreInst());
+    	  System.out.println("se recordo la insti: " +this.instiRecordada.getNombreInst());
       }
       
 //------------------------------------------------------------------------------------------------------------------------------------------ 
@@ -679,4 +680,55 @@ public class Controlador extends IControlador {
         }
         return null;
       }
+      
+      public HashMap<String, ArrayList<Object>> getHashInstisAndProfes(){
+    	  
+    	  HashMap<String, ArrayList<Object>> hashADevolver = new HashMap<>();
+    	  ArrayList<String> listaDeInstis = new ArrayList<>();
+    	  
+    	  listaDeInstis.addAll(this.getNombreInstituciones());
+    	  
+    	  for(int i = 0; i < listaDeInstis.size(); i++) {
+    		  
+    		  ArrayList<Object> listaDeListas = new ArrayList<>();//creo el ArrayList de objetos genericos.
+    		  listaDeListas.add(this.consultarActividadDepo(listaDeInstis.get(i)));//a la primera posicion le paso un ArrayList con todos los nombres de las ActisDepo.
+    		  listaDeListas.add(this.consultarProfe(listaDeInstis.get(i)));//a la 2nda posicion le paso un ArrayList de DtUsrKey con todos los profes de esta Insti.
+    		  
+    		  hashADevolver.put(listaDeInstis.get(i), listaDeListas);//armo el hashmap
+    	  }
+    	  return hashADevolver;
+      }
+      
+      
+      
+      public DtInstitucion getDtInsti(String nombreInsti) {
+    	  return em.find(Institucion.class, nombreInsti).getDTInstitucion();
+      }
+      
+      
+      
+      public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis() {
+    	  HashMap<String,ArrayList<DtActividadDeportiva>> hashADevolver = new HashMap<>();
+    	  
+    	  ArrayList<String> listaNomInstis = this.getNombreInstituciones();
+    	  
+    	  
+    	  
+    	  for(int i = 0; i < listaNomInstis.size();i++) {
+    		  
+    		  ArrayList<String> listaActis = this.consultarActividadDepo(listaNomInstis.get(i));
+			  ArrayList<DtActividadDeportiva> listaDtActi = new ArrayList<>();
+    		  for(int c = 0;c < listaActis.size();c++ ) {
+    			  
+
+    			  listaDtActi.add(this.getDtActividadDepo(listaActis.get(c)));
+    		  }
+    		  
+    		  hashADevolver.put(listaNomInstis.get(i),listaDtActi);
+    	  }
+    	  
+    	  return hashADevolver;
+		}
+      
+      
 }

@@ -1,11 +1,13 @@
 package gui;
 
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
@@ -32,10 +34,8 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 	
 	private ArrayList<String> listaClases = new ArrayList<>();
 	private ArrayList<String> listaCuponeras = new ArrayList<>();
-
-    /**
-     * Creates new form ConsultaActividadDeportiva
-     */
+	private HashMap<String,ArrayList<DtActividadDeportiva>> hashInfo = new HashMap<>();
+	
     public ConsultaActividadDeportiva() {
         initComponents();
         
@@ -57,7 +57,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         Fabrica fab = new Fabrica();
         IControlador controlador = fab.getInterface();
         
-        ArrayList<String> arrStr = controlador.getNombreInstituciones();
+        this.hashInfo = controlador.getHashInstisAndDtActis();
+        
+        ArrayList<String> arrStr = new ArrayList<String>();
+        arrStr.addAll(this.hashInfo.keySet());
         
         for(int i = 0;i < arrStr.size();i++) {
         	this.comboInsti.addItem(arrStr.get(i));
@@ -295,9 +298,6 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
         		consultaDevuelta.setVisible(true);
         	}
-        	
-        	//controlador.
-            
         }else{
             VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","Hay campos sin rellenar",java.awt.Color.RED);
             errorVentana.setVisible(true);
@@ -317,16 +317,19 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         
         if(comboInsti.getSelectedIndex() != 0){
             //acá iria la función que consulta a la BdD por las Actividades Deportivas------------------------------------------
-        	Fabrica fab = new Fabrica();
-        	IControlador controlador = fab.getInterface();
+//        	Fabrica fab = new Fabrica();
+//        	IControlador controlador = fab.getInterface();
         	
         	//------------------_Itero para darle valor al comboBox de Actividades Deportivas------------------------------------
         	comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         	
+        	//
+        	//ArrayList<String> arrStr = controlador.consultarActividadDepo(comboInsti.getSelectedItem().toString());
+        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString());
         	
-        	ArrayList<String> arrStr = controlador.consultarActividadDepo(comboInsti.getSelectedItem().toString());
-        	for(int i = 0;i < arrStr.size();i++) {
-        		comboActi.addItem(arrStr.get(i));
+        	
+        	for(int i = 0;i < arrDtActi.size();i++) {
+        		comboActi.addItem(arrDtActi.get(i).nombreAct);
         	}
         	//--------------------muestro el resto de componentes----------------------------------------------------------------
             this.comboActi.setVisible(true);
@@ -348,6 +351,8 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelDuracion.setVisible(false);
             this.labelCosto.setVisible(false);
             this.labelFechaAlta.setVisible(false);
+			this.lblImagen.setText("");
+			this.lblImagen.setVisible(false);
         }
         
     }//GEN-LAST:event_comboInstiActionPerformed
@@ -393,21 +398,14 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 
         if(comboInsti.getSelectedIndex() != 0 && comboActi.getSelectedIndex() != 0){
             //acá iria la función que consulta a la BdD por los datos de la Actividad Deportiva
-        	Fabrica fab = new Fabrica();
-        	IControlador controlador = fab.getInterface();
-        	
-        	DtActividadDeportiva dtActi = controlador.getDtActividadDeportiva(this.comboActi.getSelectedItem().toString());
-            
+
+        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString());
+        	DtActividadDeportiva dtActi = arrDtActi.get(comboActi.getSelectedIndex()-1);//ver bien lo del -1
             //combos
             this.comboLista.setVisible(true);
             //mostrar la imagen
             //cargar img en un txtField
-            
-            
-           
-            
- 
-            
+
             //labels
             this.labelClases.setVisible(true);
             
@@ -423,14 +421,16 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelCosto.setVisible(true);
             this.labelCosto.setText("Costo: " +  Float.toString(dtActi.costo) + "$");
             
+            this.lblImagen.setVisible(true);
+            
             //mentira :3
             
             this.labelFechaAlta.setVisible(true);
             this.labelFechaAlta.setText("Fecha de Alta: " + dtActi.fechaRegistro.toString());
             
-            ArrayList<String> arrStr = controlador.listaCuponerasRegistradasParaActiDepo(this.comboActi.getSelectedItem().toString());
-            ArrayList<String> arrStr2 = controlador.getClasesPorActiDepo(this.comboActi.getSelectedItem().toString());
-            
+            //consigo los DtActividades pertinentes
+            ArrayList<String> arrStr = dtActi.cuponeras;
+            ArrayList<String> arrStr2 = dtActi.clases;
             
             comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             
@@ -457,38 +457,26 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             	//this.listaClases.add(arrStr2.get(i));
             }
             
+            
+            
             System.out.println(dtActi.clases);
+
             
-//            this.labelFecha.setVisible(true);
-//            this.labelFecha.setText("Fecha de Alta: " + dtActi.fecha);
-            //System.out.println(comboActi.getSelectedIndex());
-            
-            //this.labe
-            
- Image imagen = null;
-            
-            try {
-				URL url = new URL(dtActi.imagen);
-				URLConnection connection = (URLConnection) url.openConnection();
-                connection.setRequestProperty(
-                        "User-Agent",
-                        "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0");
-				imagen = ImageIO.read(connection.getInputStream()).getScaledInstance(120, 120, 100);
+            String rutaDir = System.getProperty("user.dir");
+            Image imagen = null;
+			try {
+				imagen = ImageIO.read(new File(rutaDir+"/src/imgActis/"+"."+ comboActi.getSelectedItem().toString()));//busco la imagen
+				imagen = imagen.getScaledInstance(120, 120, 120);
 			} catch (IOException e) {
-				//e.printStackTrace();
-				
-				if(e instanceof MalformedURLException) {
-					e = (MalformedURLException) e;
-					this.lblImagen.setText(e.getMessage());
-					
+				e.printStackTrace();
+			}finally {
+				if(imagen != null) {
+					lblImagen.setIcon(new ImageIcon(imagen));
+				}else {
+					lblImagen.setIcon(null);
+					lblImagen.setText("No se encontró la foto asociada");
 				}
-				
-				
-			}  
-            finally {
-				
-				lblImagen.setIcon(new ImageIcon(imagen));	
-			}   
+			}
         }else{
             //combos
             this.comboLista.setVisible(false);

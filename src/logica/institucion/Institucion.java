@@ -122,7 +122,7 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManager em,EntityTransaction tran){    
+    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, EntityManager em,EntityTransaction tran){    
     	//System.out.println("Antes de buscar la actidepo");
         //System.out.print("nombreActi");
         System.out.println(nombreActividad);
@@ -135,7 +135,7 @@ public class Institucion implements Serializable{
         
         if(acti == null){
         	System.out.println("antes de crear la actidepo");
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
+            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
 //            System.out.println("MITIMITI PORTEZUELO");
 //            //this.actividades.add(acti);
            System.out.println("despues de crear la actidepo");

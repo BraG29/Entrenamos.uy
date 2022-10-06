@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.persistence.EntityManager;
 
@@ -11,20 +12,18 @@ import logica.controlador.IControlador;
 import logica.controlador.Fabrica;
 import java.util.ArrayList;
 
+import logica.datatypes.DtInstitucion;
 import logica.datatypes.DtUsrKey;
 
 
 public class AltaClase extends javax.swing.JFrame {
-
+	
+	private HashMap<String, ArrayList<Object>> instisGuardadas = new HashMap<>();
     
      public LocalDateTime convertirALocalDateTime(Date dateAConvertir){
         return dateAConvertir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
      
-    
-    /**
-     * Creates new form AltaClase
-     */
     public AltaClase() {
         initComponents();
         
@@ -56,11 +55,17 @@ public class AltaClase extends javax.swing.JFrame {
         Fabrica fab = new Fabrica();
         IControlador controlador =  fab.getInterface();
         
-        ArrayList<String> arrList = controlador.getNombreInstituciones();//consigo los nombres en ArrayList<String> de las instituciones que hay
+        this.instisGuardadas = controlador.getHashInstisAndProfes();//consigo un hashmap con todas las instis con sus ActisDepo y Profes
 
-        for (int i = 0; i < arrList.size(); i++){//itero para darles el valor 
-            this.comboInsti.addItem(arrList.get(i)); 
+        
+        ArrayList<String> arrInsti = new ArrayList<>();//array temporal para guardar los nombres de las Instis
+    	arrInsti.addAll(instisGuardadas.keySet());//consigo los nombres
+    	
+        for (int i = 0; i < arrInsti.size(); i++){//itero para darles el valor 	
+            this.comboInsti.addItem(arrInsti.get(i)); //lleno el comboInsti con las Instis
         }
+        
+        
 
     }
 
@@ -389,15 +394,19 @@ public class AltaClase extends javax.swing.JFrame {
             Fabrica fab = new Fabrica();
             IControlador controlador = fab.getInterface();
             
-            ArrayList<String> arrStrActiDepo = controlador.consultarActividadDepo(this.comboInsti.getSelectedItem().toString());//consigo las Actis Depos de la BdD
+            //ArrayList<String> arrStrActiDepo = controlador.consultarActividadDepo(this.comboInsti.getSelectedItem().toString());//consigo las Actis Depos de la BdD
+            ArrayList<String> arrStrActiDepo = new ArrayList<>();
+            arrStrActiDepo.addAll((ArrayList<String>) this.instisGuardadas.get(this.comboInsti.getSelectedItem().toString()).get(0));
+            
             controlador.recordarInsti(comboInsti.getSelectedItem().toString());//le mando el nombre del Insti para que el Controlador lo recuerde a pedido de BRAIAN
             
             for (int i = 0; i < arrStrActiDepo.size(); i++){//itero para darles el valor 
             this.comboActiDepo.addItem(arrStrActiDepo.get(i)); 
             }
             
-            ArrayList<DtUsrKey> arrStrProfe = controlador.consultarProfe(this.comboInsti.getSelectedItem().toString());
-            
+            //ArrayList<DtUsrKey> arrStrProfe = controlador.consultarProfe(this.comboInsti.getSelectedItem().toString());
+            ArrayList<DtUsrKey> arrStrProfe = new ArrayList<>();
+            arrStrProfe.addAll((ArrayList<DtUsrKey>) this.instisGuardadas.get(comboInsti.getSelectedItem().toString()).get(1));
             for (int i = 0; i < arrStrProfe.size(); i++){//itero para darles el valor
             	
             	this.comboProfe.addItem(arrStrProfe.get(i).nickname + "/" + arrStrProfe.get(i).email) ; 
