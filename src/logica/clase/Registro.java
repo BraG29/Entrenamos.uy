@@ -9,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import logica.usuario.Socio;
 
 /**
  *
@@ -25,9 +28,12 @@ public class Registro implements Serializable {
     private LocalDate fecha;
     private float cost;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="nom_clase")
     private Clase claseAsociada;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Socio socio;
 //Getters and Setters-----------------------------------------------------------
     public int getId() {
         return id;

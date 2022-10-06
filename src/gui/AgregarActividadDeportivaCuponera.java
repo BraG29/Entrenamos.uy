@@ -4,6 +4,7 @@
  */
 package gui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,6 +25,8 @@ import logica.datatypes.DtCuponera;
 import logica.datatypes.DtInstitucion;
 public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
 
+	
+	VentanaMensaje msj;
     /**
      * Creates new form AgregarActividadDeportivaCuponera
      */
@@ -241,12 +244,16 @@ public class AgregarActividadDeportivaCuponera extends javax.swing.JFrame {
         }
         if(success == true){
             //Call backend, send data
-            boolean persisted = sistema.agregarActividadCuponera(nombreCup,nombreActi,cantClasses);
-            if(persisted==true){
-                System.out.println("Success!");
-                this.ListarActis();
-            }
-            else System.out.println("Error!");
+        	try {
+        		sistema.agregarActividadCuponera(nombreCup,nombreActi,cantClasses);
+        		this.ListarActis();
+        		
+        	}catch (IllegalArgumentException e) {
+        		System.out.println(e.getMessage());
+			}
+        }else {
+        	msj = new VentanaMensaje("Error", "Formato de numero invalido", Color.RED); 
+        	msj.setVisible(true);
         }
         
     }//GEN-LAST:event_GuardarBTActionPerformed

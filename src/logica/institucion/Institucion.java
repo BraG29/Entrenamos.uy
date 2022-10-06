@@ -45,10 +45,7 @@ public class Institucion implements Serializable{
 //	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
 //    private Collection<ActividadDeportiva> actividades;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Institucion_Actividad",
-	joinColumns = @JoinColumn(name="nom_institucion"),
-	inverseJoinColumns = @JoinColumn(name="nom_actividad"))
+    @OneToMany(mappedBy = "insti", cascade = CascadeType.ALL)
     private Collection<ActividadDeportiva> actividades;
 
 
@@ -122,90 +119,21 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public void darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,String IMG_URL, EntityManager em,EntityTransaction tran){    
-    	//System.out.println("Antes de buscar la actidepo");
-        //System.out.print("nombreActi");
-        System.out.println(nombreActividad);
-    	ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
-        
-    	System.out.println("Despues de buscar la actidepo");
-//    	EntityTransaction tranza = em.getTransaction();
-        //em.flush();
+    public ActividadDeportiva darAltaActividadDeportiva(
+		String nombreActividad, String nombreInsti, String desc, float dura, 
+		float costo, LocalDateTime fechaAlta){  
+		ActividadDeportiva acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
+		this.agregarActi(acti);
+		return acti;
+               
+    }
+    
+    private void agregarActi(ActividadDeportiva acti){
+		this.actividades.add(acti);
+    }
 
-        
-        if(acti == null){
-        	System.out.println("antes de crear la actidepo");
-            acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta,IMG_URL, this);
-//            System.out.println("MITIMITI PORTEZUELO");
-//            //this.actividades.add(acti);
-           System.out.println("despues de crear la actidepo");
-//            
-//            System.out.println(tran.isActive());
-//            //arranco la transaccion
-//            
-//            //em.flush();
-//            
-//            
-////            tranza.commit();
-//            System.out.println("entre el primer y 2ndo tran");
-            //NO ENTIENDO NADA VIEJAAAAAAAA
-            //posible flush needed
-            
-            
-            //em.flush();
-//            tran.begin();
-////            tranza.begin();
-//            
-////            tranza.commit();
-//            tran.commit();
-           // em.flush();
-            
-            try{
-                em.persist(acti);  
-            	this.agregarActi(acti,em,tran);
-                
-            }catch(Exception e) {
-            	System.out.println(e.getMessage());
-            	throw new IllegalArgumentException(e);
-            }
-            
-            
-            
-            
-        }else{//acti existe
-            //tirar una excepcion, obviamente detallando que la actividad deportiva ya existe
-            throw new IllegalArgumentException("La actividad: " + nombreActividad + " ya existe");
-        }
-    }
-    
-    private void agregarActi(ActividadDeportiva acti,EntityManager em, EntityTransaction tran){
-        try{
-                tran.begin();
-                em.flush();
-                boolean existsInsti = em.contains(this);
-                boolean existsActi = em.contains(acti);
-                this.actividades.add(acti);
-                tran.commit();
-            }catch(Exception e) {
-            	tran.rollback();
-            	System.out.println(e.getMessage());
-            	throw new IllegalArgumentException(e);
-            }
-    }
-    
-    
-    public void darAltaClaseInsti(String nombreActiDepo,Clase claseDictada, EntityManager em, EntityTransaction tran){
-        System.out.println("Antes de crear la acti depo");
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActiDepo);
-        System.out.println("Despues de crear la acti depo");
-        
-        try {
-        	acti.darAltaClaseActi(claseDictada, em, tran);
-        }catch(Exception e) {
-        	throw new IllegalArgumentException("no se pudo encontrar la Actividad Deportiva asociada");
-        }
-        
-        
+    public void darAltaClaseInsti(ActividadDeportiva actiDepo,Clase claseDictada){
+        	actiDepo.darAltaClaseActi(claseDictada);
     }
     
     public DtClase getDtClaseXActiDepo(String nombreActi,String nombreClase, EntityManager em) {

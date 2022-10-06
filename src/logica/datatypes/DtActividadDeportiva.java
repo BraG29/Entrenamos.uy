@@ -11,9 +11,8 @@ public class DtActividadDeportiva {
     public final LocalDateTime fechaRegistro;
     public final ArrayList<String> clases;
     public final ArrayList<String> cuponeras;
-    public final String imagen;
     
-    public DtActividadDeportiva(String nomAct, String desc, float dura, float cost, LocalDateTime fecha, ArrayList<String> clase, ArrayList<String> cupo,String IMG){
+    public DtActividadDeportiva(String nomAct, String desc, float dura, float cost, LocalDateTime fecha, ArrayList<String> clase, ArrayList<String> cupo){
         this.nombreAct = nomAct;
         this.descripcion = desc;
         this.duracion = dura;
@@ -21,6 +20,5 @@ public class DtActividadDeportiva {
         this.fechaRegistro = fecha; //checkear que esto se permita :7
         this.clases = clase;
         this.cuponeras = cupo;
-        this.imagen = IMG;
     }
 }

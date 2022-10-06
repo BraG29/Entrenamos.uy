@@ -41,7 +41,7 @@ import logica.datatypes.DtUsuario;
 @Entity
 public class Socio extends Usuario {
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "socio" ,cascade = CascadeType.ALL)
 //	@JoinColumn(name="nick_socio", referencedColumnName="nickname")
 //	@JoinColumn(name="id_reg", referencedColumnName="id")
 //	@JoinTable(name="Socio_Reg",
@@ -49,7 +49,7 @@ public class Socio extends Usuario {
 //		inverseJoinColumns = @JoinColumn(name="id_reg"))
 	private Collection<Registro> registro;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "socio", cascade = CascadeType.ALL)
 	private Collection<CompraCuponera> compra;
 
 	// methods-----------------------------------------------------------------------
@@ -74,23 +74,7 @@ public class Socio extends Usuario {
 		return dtS;
 	}
 
-	public void registrarAClase(Clase c, LocalDate fecha, float costo, EntityTransaction tran, EntityManager em) {
-		for(Registro r: registro) {
-			if(r.esRegistroDe(c)) {
-				throw new IllegalArgumentException(
-						"El socio ingresado ya esta registrado a la clase");
-			}
-		}
-		Registro reg = new Registro(fecha, costo, c);
-		try {
-			em.clear();
-			tran.begin();
-			registro.add(reg);
-			em.persist(reg);
-			tran.commit();
-		} catch (Exception e) {
-			tran.rollback();
-		}
+	public void registrarAClase(Clase c, LocalDate fecha, float costo) {
 	}
 
 	public Collection<Registro> getRegistro() {

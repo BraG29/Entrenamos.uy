@@ -39,7 +39,7 @@ public class Profesor extends Usuario{
     @Column(name="sitio_web")
     public String sitioWeb;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
     private Collection<Clase> claseDictada;//taba mal escrito "Dicatada", aviso por si rompe algo lmao
     
     @ManyToOne(cascade = CascadeType.ALL)
@@ -117,36 +117,13 @@ public class Profesor extends Usuario{
 
     }
     
-    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta,EntityManager em , EntityTransaction tran) {
+    public Clase darAltaClaseProfe(
+    		String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,
+    		int sociosMin,int sociosMax,String URL,LocalDate fechaAlta) {
+    	
     	LocalTime horaIni = fechaInicio.toLocalTime();
-
-        System.out.println("antes de crear la clase");
         Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
-        System.out.println("despues de crear la clase");
-        
-        
-        try {
-        	tran.begin();
-                em.flush();
-        	em.persist(claseADictar);
-                tran.commit();
-	
-        }catch(Exception e) {
-        	System.out.println("Persist WOWOWOW");
-        	throw new IllegalArgumentException(e);
-        }
-        
-        try {         
-                tran.begin();
-                em.flush();
-                this.claseDictada.add(claseADictar);
-        	tran.commit();
-        	
-        }catch(Exception e) {
-        	System.out.println("COMIT ADD CLASE WWOOWOWOW");
-        	throw new IllegalArgumentException(e);
-        }
-
+        this.claseDictada.add(claseADictar);
     	return claseADictar;
     }
     

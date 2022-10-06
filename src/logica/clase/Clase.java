@@ -4,13 +4,22 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collection;
 
+import javax.management.loading.PrivateClassLoader;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.ManyToAny;
 
 import logica.datatypes.DtClase;
 import logica.institucion.ActividadDeportiva;
+import logica.usuario.Profesor;
 
 @Entity
 public class Clase implements Serializable{
@@ -34,6 +43,16 @@ public class Clase implements Serializable{
     private LocalTime horaFin;
     @Column(name="cant_socios")
     private int cantSocios;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "actividad_deportiva")
+    private ActividadDeportiva claseDe;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Profesor profesor;
+    
+    @OneToMany(mappedBy = "claseAsociada", cascade = CascadeType.ALL)
+    private Collection<Registro> registros; 
     
     
     

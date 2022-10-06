@@ -8,12 +8,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
 
 import java.util.ArrayList;
@@ -41,6 +43,9 @@ public class Cuponera implements Serializable {
 
 	@ManyToMany(mappedBy = "cuponeras")
 	private Collection<ActividadDeportiva> actividades;
+	
+	@OneToMany(mappedBy = "cuponeraAsociada", cascade = CascadeType.ALL)
+	private Collection<CompraCuponera> compras;
 
 //Getters and Setters-----------------------------------------------------------
 	public String getNombreCup() {
@@ -134,23 +139,10 @@ public class Cuponera implements Serializable {
 		return output; // placeholder
 	}
 
-	public boolean aniadirAD(ActividadDeportiva acti, int cantidadClases,EntityManager em,EntityTransaction tran) {
-            try{
-                
-                acti.agregarCup(this, em, tran);
-                tran.begin();
-                em.flush();
-                this.actividades.add(acti);
-                this.cantClases += cantidadClases;
-                tran.commit();
-                System.out.println("Should have worked...");
-            }
-            catch(Exception ex){
-                System.out.println(ex.getMessage());
-                tran.rollback();
-                return false;
-            }
-            return true;
+	public void aniadirAD(ActividadDeportiva acti, int cantidadClases) {
+        acti.agregarCup(this);
+        this.actividades.add(acti);
+        this.cantClases += cantidadClases;
 	}
 
 	public DtCuponera getData() {

@@ -7,7 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import logica.usuario.Socio;
 /**
  *
  * @author elinzar
@@ -21,9 +24,12 @@ public class CompraCuponera {
     private int id;
 	private LocalDate fecha;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="nom_cuponera")
     private Cuponera cuponeraAsociada;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Socio socio;
 //Getters and Setters-----------------------------------------------------------
     public LocalDate getFecha() {
         return fecha;

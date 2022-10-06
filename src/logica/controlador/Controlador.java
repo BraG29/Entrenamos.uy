@@ -48,80 +48,29 @@ import logica.datatypes.*;
 import logica.institucion.ActividadDeportiva;
 import logica.institucion.Institucion;
 
-public class Controlador extends IControlador {
+public class Controlador implements IControlador {
 	
 	private String nombreCup;
 	//private Usuario uRecordado;
 	private Institucion instiRecordada;
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf;
-	private EntityManager em;
-	private EntityTransaction tran;
         
         //Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
         //Y el menu Principal Maneja cuando los abre y cierra
         //No Abran ni Cierren conneciones en sus metodos, usen el em y el tran como vienen 
 
+	private static Controlador instance;
+
+	private void Controlador() {
+	}
+    
 	public void initConnection(){
 		this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
-		this.em = emf.createEntityManager();
-		this.tran = em.getTransaction();
 	}
 	
 	public void closeConnection(){
-		this.em.close();
 		this.emf.close();
-	}
-
-	
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
-
-		//EntityManager em = emf.createEntityManager();
-		try {
-			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
-			tran.begin();
-			em.persist(s);
-			em.flush();
-			this.tran.commit();
-			System.out.println("Usuario creado");
-		} catch (PersistenceException e) {
-			tran.rollback();
-			SQLException eSQL = (SQLException) e.getCause().getCause();
-			if (eSQL.getErrorCode() == 1062) {
-				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
-			} else {
-				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
-			}
-
-		}
-		//em.close();
-	}
-
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
-		//EntityManager em = emf.createEntityManager();
-		try {
-			Institucion i = em.find(Institucion.class, institucion);
-			if (i == null) {
-				throw new IllegalArgumentException("No existe la institucion");
-			}
-			Profesor p =
-					new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
-			tran.begin();
-			em.persist(p);
-			em.flush();
-			tran.commit();
-			System.out.println("Usuario creado");
-		} catch (PersistenceException e) {
-			tran.rollback();
-			SQLException eSQL = (SQLException) e.getCause().getCause();
-			if (eSQL.getErrorCode() == 1062) {
-				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
-			} else {
-				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
-			}
-		}
-		//em.close();
 	}
 
 	public static Controlador getInstance() {
@@ -129,9 +78,61 @@ public class Controlador extends IControlador {
 			instance = new Controlador();
 		return instance;
 	}
+	
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
+			em.persist(s);
+			em.flush();
+			em.getTransaction().commit();
+			System.out.println("Usuario creado");
+		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+			SQLException eSQL = (SQLException) e.getCause().getCause();
+			if (eSQL.getErrorCode() == 1062) {
+				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
+			} else {
+				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
+			}
+
+		}
+		em.clear();
+		em.close();
+	}
+
+	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
+			String institucion, String descripcion, String biografia, String sitioWeb) {
+		EntityManager em = emf.createEntityManager();
+		try {
+			Institucion i = em.find(Institucion.class, institucion);
+			if (i == null) {
+				throw new IllegalArgumentException("No existe la institucion");
+			}
+			Profesor p =
+					new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+			em.getTransaction().begin();
+			em.persist(p);
+			em.flush();
+			em.getTransaction().commit();
+			System.out.println("Usuario creado");
+		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+			SQLException eSQL = (SQLException) e.getCause().getCause();
+			if (eSQL.getErrorCode() == 1062) {
+				throw new IllegalArgumentException("Ya existe un Usuario con ese nick o email");
+			} else {
+				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
+			}
+		}
+		em.clear();
+		em.close();
+	}
 
 	public ArrayList<DtUsuario> listarUsuarios() {
-		//EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		ArrayList datosUsr = new ArrayList<DtUsuario>();
 		DtUsuario dtU = null;
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -152,15 +153,15 @@ public class Controlador extends IControlador {
 			}
 			datosUsr.add(dtU);
 		}
-		
+		em.clear();
+		em.close();
 		return datosUsr;
 	}
 
-
 	public void modificarDatos(String nickname, String nombre,String apellido,LocalDate fechaNac) {
-		//EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		try {
-			tran.begin();
+			em.getTransaction().begin();
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaUpdate<Socio> cu = cb.createCriteriaUpdate(Socio.class);
 			Root<Socio> rootSocio = cu.from(Socio.class);
@@ -170,18 +171,21 @@ public class Controlador extends IControlador {
 			cu.where(cb.equal(rootSocio.get("nickname"), nickname));
 			em.createQuery(cu).executeUpdate();
 			//em.flush();
-			tran.commit();
+			em.getTransaction().commit();
 		}catch(PersistenceException e) {
-			tran.rollback();
+			em.getTransaction().rollback();
 		}
+		em.clear();
+		em.close();
 	}
+	
 	public void modificarDatos(
 			String nickname, String nombre,String apellido,LocalDate fechaNac,
 			String institucion, String descripcion, String biografia, String sitioWeb) {
 		
-		//EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		try {
-			tran.begin();
+			em.getTransaction().begin();
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaUpdate<Profesor> cu = cb.createCriteriaUpdate(Profesor.class);
 			Root<Profesor> rootProfesor = cu.from(Profesor.class);
@@ -199,23 +203,25 @@ public class Controlador extends IControlador {
 			cu.where(cb.equal(rootProfesor.get("nickname"), nickname));
 			em.createQuery(cu).executeUpdate();
 			//em.flush();
-			tran.commit();
+			em.getTransaction().commit();
 		}catch(PersistenceException e) {
-			tran.rollback();
+			em.getTransaction().rollback();
 		}
+		em.clear();
+		em.close();
 	}
 	
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas() {
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
-		//EntityManager em = emf.createEntityManager();
+		EntityManager em = emf.createEntityManager();
 		ArrayList<String> consultaCuponera = null;
 		try {
-			tran.begin();
+			em.getTransaction().begin();
 			consultaCuponera = (ArrayList<String>) em.createQuery("SELECT nombreCup FROM Cuponera").getResultList();//resultado = nombre
 		}catch (Exception ex) {
 			if (em != null) {
-				tran.rollback();
+				em.getTransaction().rollback();
 			}
 		}
 		for (int i = 0; i < consultaCuponera.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
@@ -227,17 +233,18 @@ public class Controlador extends IControlador {
 	
 	public ArrayList<String> listaCuponerasRegistradasParaActiDepo(String nombreActi) {
 		
+		EntityManager em = emf.createEntityManager();
 		ArrayList<String> listaCuponeras = new ArrayList<String>();
 		ActividadDeportiva acti = em.find(ActividadDeportiva.class,nombreActi);
 		listaCuponeras = acti.getNombreCupo();
 		
 		//listaCuponeras.addAll(em.createNativeQuery("SELECT nom_cuponera FROM Actividad_Cuponera WHERE nom_actividad = " + "'" + nombreActi + "'").getResultList()) ;
 //		try {
-//			//tran.begin();
+//			//em.getTransaction().begin();
 //			
 //		}catch (Exception ex) {
 //			if (em != null) {
-//				tran.rollback();
+//				em.getTransaction().rollback();
 //			}
 //		} finally {
 //			//em.close();
@@ -249,10 +256,11 @@ public class Controlador extends IControlador {
 
 	public DtCuponera seleccionCuponera(String nombreCup) {
                
+		EntityManager em = emf.createEntityManager();
 		Cuponera cup = null;
 		DtCuponera cupData = null;
 		try {
-			tran.begin();        
+			em.getTransaction().begin();        
 			cup = em.find(Cuponera.class, nombreCup); //busco cuponera seleccionada  
 			
 			if(cup == null){
@@ -262,7 +270,7 @@ public class Controlador extends IControlador {
 			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {
-                tran.rollback();
+                em.getTransaction().rollback();
 			}
 		}
 		return cupData;
@@ -272,45 +280,46 @@ public class Controlador extends IControlador {
 		
 		ActividadDeportiva act = null;
 		DtActividadDeportiva dataAct = null;
-		
+		EntityManager em = emf.createEntityManager();
 		try {
-			tran.begin();
+			em.getTransaction().begin();
 			act = em.find(ActividadDeportiva.class, nombreAct);
 			if(act == null){
 				throw new Exception("La actividad seleccionada no existe");
 			}
 			dataAct = act.getDTActividadDeportiva();
-			return dataAct;
 		}catch (Exception ex) {
-			if (em != null) {//cuidaaaaao
-                tran.rollback();
-			}
+			em.getTransaction().rollback();
 		}
-		return null;
+		em.clear();
+		em.close();
+		return dataAct;
 	}
 	
 	//CU alta institucion deportiva
 	public void altaInstitucion(String nombreInst, String descripcion, String URL) {
-		//EntityManager em = emf.createEntityManager();
+		
+		EntityManager em = emf.createEntityManager();
 
 		try {
 			Institucion existe = em.find(Institucion.class,nombreInst); //devuelve null si no existe
 			if(existe != null) {
 				throw new Exception("La institución ingresada ya existe");
 			}
-			tran.begin();
+			em.getTransaction().begin();
 			Institucion inst = new Institucion(nombreInst, descripcion, URL);
 			inst.setNombreInst(nombreInst);
 			inst.setDescripcion(descripcion);
 			inst.setInstURL(URL);
 			em.persist(inst);
 			em.flush();
-			tran.commit();
+			em.getTransaction().commit();
 		} catch (Exception ex) {
-			tran.rollback();
+			em.getTransaction().rollback();
 			ex.printStackTrace();
 		} finally {
-			//em.close();
+			em.clear();
+			em.close();
 		}
 
 	}
@@ -318,10 +327,11 @@ public class Controlador extends IControlador {
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate fechaIni, LocalDate fechaFin,
 			LocalDate fechaAlta, float descuento) {
 
+		EntityManager em = emf.createEntityManager();
 		try {
 			//initConnection(); Esto solo lo tiene que manejar el menu Principal
 			em.clear();
-			tran.begin();
+			em.getTransaction().begin();
 			Cuponera nuevaCuponera = new Cuponera(nombreCup, descripcion, fechaIni, fechaFin, descuento, fechaAlta, 0);
 			nuevaCuponera.setNombreCup(nombreCup);
 			nuevaCuponera.setDescripcion(descripcion);
@@ -331,352 +341,405 @@ public class Controlador extends IControlador {
 			nuevaCuponera.setFechaAlta(fechaAlta);
 			nuevaCuponera.setCantClases(0);
 			em.persist(nuevaCuponera);
-			tran.commit();
+			em.getTransaction().commit();
 		} catch (Exception ex) {
 			if (em != null) {
-				tran.rollback();
+				em.getTransaction().rollback();
 			}
 			ex.printStackTrace();
 		} finally {
-			//closeConnection(); Esto solo lo tiene que manejar el menu Principal
+			em.clear();
+			em.close();
 		}
 
 	}
-	
-	private static Controlador instance;
-
-	private void Controlador() {
-	}
-        
-            
-    public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta, String IMG_URL){
-    	System.out.println("Antes de buscar la insti");
-
+	            
+    public void altaActividadDepo(String nombreActividad, String nombreInsti, String desc, 
+    	float dura, float costo, LocalDateTime fechaAlta){
+    	EntityManager em = emf.createEntityManager();
         Institucion insti = em.find(Institucion.class, nombreInsti);
-        System.out.println("Despues de buscar la insti "+insti.getNombreInst());
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActividad);
+        if(acti != null) {
+        	throw new IllegalArgumentException("Ya existe una Actividad Deportiva con ese nombre");
+        }
+        if(insti == null) {
+        	throw new IllegalArgumentException("No existe la institucion");
+        }
         
-        if(insti != null){
-            //hay que hacer try and catch
-            try{
-                insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta,IMG_URL, this.em, this.tran);
-            }catch(Exception e){
-                throw new IllegalArgumentException(e.getMessage());
-            }
-            
-        }else{
-            //System.out.println("TODO MAL ANDA AMIGOOOOOOO");
-            throw new IllegalArgumentException("No existe la institucion: " + nombreInsti);
-            //excepción de que insti no existe
-        }  
+        try{
+        	em.getTransaction().begin();
+            acti = insti.darAltaActividadDeportiva(nombreActividad, nombreInsti, desc, dura, costo, fechaAlta);
+            em.persist(acti);
+            em.getTransaction().commit();
+        }catch(Exception e){
+        	em.getTransaction().rollback();
+            throw new IllegalArgumentException(e.getMessage());
+        }
+		em.clear();
+		em.close(); 
     }
         
     public ArrayList<String> getNombreInstituciones(){
+    	EntityManager em = emf.createEntityManager();
         ArrayList<String> listaADevolver = new ArrayList<String>();
         listaADevolver.addAll(em.createQuery("select nombreInst from Institucion").getResultList());
+		em.clear();
+		em.close();
         return listaADevolver;
     }
                     
-        public ArrayList<String> consultarActividadDepo(String nombreInsti){
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-            listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());  
-            return listaADevolver;
-        }
+    public ArrayList<String> consultarActividadDepo(String nombreInsti){
+    	EntityManager em = emf.createEntityManager();
+        ArrayList<String> listaADevolver = new ArrayList<String>();
+        listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());
+		em.clear();
+		em.close();  
+        return listaADevolver;
+    }
         
         
-        public ArrayList<String> consultarClases(String nombreActividad){
-            ArrayList<String> listaADevolver = new ArrayList<String>();            
-            listaADevolver.addAll(em.createQuery("select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" + nombreActividad + "')").getResultList());
-            return listaADevolver;
-        }
+    public ArrayList<String> consultarClases(String nombreActividad){
+    	EntityManager em = emf.createEntityManager();
+        ArrayList<String> listaADevolver = new ArrayList<String>();            
+        listaADevolver.addAll(
+        		em.createQuery(
+        				"select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" 
+        				+ nombreActividad + "')").getResultList());
+		em.clear();
+		em.close();
+        return listaADevolver;
+    }
+    
+    public String[] getUnaClase(String nombreClase){
+    	EntityManager em = emf.createEntityManager();
+    	String[] listaADevolver = new String[6];
+    	String urlDeLaClase = "";
+    	String cantMaxDeLaClase = "";
+    	String cantMinDeLaClase = "";
+    	String horaIniDeLaClase = "";
+    	String fechaDeLaClase = "";
+    	String registroDeLaClase = "";
         
-        public String[] getUnaClase(String nombreClase){
-        	String[] listaADevolver = new String[6];
-        	String urlDeLaClase = "";
-        	String cantMaxDeLaClase = "";
-        	String cantMinDeLaClase = "";
-        	String horaIniDeLaClase = "";
-        	String fechaDeLaClase = "";
-        	String registroDeLaClase = "";
-            
-            urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
-            cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
-            cantMinDeLaClase = em.createQuery("select cant_minima from Clase c where nombre = '" + nombreClase + "'").toString();
-            horaIniDeLaClase = em.createQuery("select hora_inicio from Clase c where nombre = '" + nombreClase + "'").toString();
-            fechaDeLaClase = em.createQuery("select fecha from Clase c where nombre = '" + nombreClase + "'").toString();
-            registroDeLaClase = em.createQuery("select fecha_registro from Clase c where nombre = '" + nombreClase + "'").toString();
-            
-            listaADevolver[0] = urlDeLaClase;
-            listaADevolver[1] = cantMaxDeLaClase;
-            listaADevolver[2] = cantMinDeLaClase;
-            listaADevolver[3] = horaIniDeLaClase;
-            listaADevolver[4] = fechaDeLaClase;
-            listaADevolver[5] = registroDeLaClase;
-                  
-            return listaADevolver;
-        }
+        urlDeLaClase = em.createQuery("select URL from Clase c where nombre = '" + nombreClase + "'").toString();
+        cantMaxDeLaClase = em.createQuery("select cant_maxima from Clase c where nombre = '" + nombreClase + "'").toString();
+        cantMinDeLaClase = em.createQuery("select cant_minima from Clase c where nombre = '" + nombreClase + "'").toString();
+        horaIniDeLaClase = em.createQuery("select hora_inicio from Clase c where nombre = '" + nombreClase + "'").toString();
+        fechaDeLaClase = em.createQuery("select fecha from Clase c where nombre = '" + nombreClase + "'").toString();
+        registroDeLaClase = em.createQuery("select fecha_registro from Clase c where nombre = '" + nombreClase + "'").toString();
         
-        public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
-        	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
-        	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
-        	Clase c = actividadDeportivaActual.getClase(pNombreClase);
-        	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
-        	Float costo = actividadDeportivaActual.getCosto();
-        	LocalDate fecha = LocalDate.now();
-			socioActual.registrarAClase(c, fecha, costo, tran, em);
-        }
-        
-      //------------------------------------------------------------------------------------------------------------------------------------------
-        //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
-        public ArrayList<DtCuponera> ListarCuponeras(){//unused
-            //call entity manager and do the query
-            //EntityManager em = emf.createEntityManager();
-            
-            List<Cuponera> list = em.createQuery("SELECT c FROM Cuponera c").getResultList();
-            
-            ArrayList<DtCuponera> l = null;
-            
-            for(Cuponera cup : list)
-            {
-                Collection<String> actividades = null;
-                Collection<ActividadDeportiva> Actis = cup.getActividades();
-                for(ActividadDeportiva a : Actis)
-                {
-                    actividades.add(a.getNombreAct());
-                }
-                DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
-                l.add(DtCup);
-            }
+        listaADevolver[0] = urlDeLaClase;
+        listaADevolver[1] = cantMaxDeLaClase;
+        listaADevolver[2] = cantMinDeLaClase;
+        listaADevolver[3] = horaIniDeLaClase;
+        listaADevolver[4] = fechaDeLaClase;
+        listaADevolver[5] = registroDeLaClase;
+		em.clear();
+		em.close();
               
-            return l;
-        }
+        return listaADevolver;
+    }
         
-        public ArrayList<DtInstitucion> ListarInstituciones(){//unused
-            ArrayList<DtInstitucion> l = new ArrayList<DtInstitucion>();
-            return l;
+    public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
+    	EntityManager em = emf.createEntityManager();
+    	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
+    	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
+    	Clase c = actividadDeportivaActual.getClase(pNombreClase);
+    	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
+    	Float costo = actividadDeportivaActual.getCosto();
+    	LocalDate fecha = LocalDate.now();
+		socioActual.registrarAClase(c, fecha, costo);
+		em.clear();
+		em.close();
+    }
+    
+  //------------------------------------------------------------------------------------------------------------------------------------------
+    //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
+    public ArrayList<DtCuponera> ListarCuponeras(){//unused
+        //call entity manager and do the query
+        EntityManager em = emf.createEntityManager();
+        
+        List<Cuponera> list = em.createQuery("SELECT c FROM Cuponera c").getResultList();
+        
+        ArrayList<DtCuponera> l = null;
+        
+        for(Cuponera cup : list)
+        {
+            Collection<String> actividades = null;
+            Collection<ActividadDeportiva> Actis = cup.getActividades();
+            for(ActividadDeportiva a : Actis)
+            {
+                actividades.add(a.getNombreAct());
+            }
+            DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
+            l.add(DtCup);
         }
+		em.clear();
+		em.close();
+          
+        return l;
+    }
+    
+    
 //------------------------------------------------------------------------------------------------------------------------------------------        
-        public ArrayList<String> getNombreCuponeras(){
-            
-            ArrayList<String> listaADevolver = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponera c").getResultList());
-            
-            return listaADevolver;
-            
+    public ArrayList<String> getNombreCuponeras(){
+        
+        ArrayList<String> listaADevolver = new ArrayList<String>();
+        
+        EntityManager em = emf.createEntityManager();
+        
+        listaADevolver.addAll(em.createQuery("select c.nombreCup from Cuponera c").getResultList());
+
+		em.clear();
+		em.close();
+        return listaADevolver;
+        
+    }
+    
+    public ArrayList<String> getActisDeCuponera(String nombreCup){
+        ArrayList<ActividadDeportiva> listaActis= new ArrayList<>();
+        ArrayList<String> listaADevolver = new ArrayList<>(); 
+        String findQuery = "select c.actividades from Cuponera c WHERE c.nombreCup = :nombre";
+        EntityManager em = emf.createEntityManager();
+        
+        Query find = em.createQuery(findQuery);
+        find.setParameter("nombre",nombreCup);
+        listaActis.addAll(find.getResultList());
+         
+        for(ActividadDeportiva actis : listaActis){
+            System.out.println(actis.getNombreAct());
+            listaADevolver.add(actis.getNombreAct());
+        }
+		em.clear();
+		em.close();
+        
+        return listaADevolver;
+    }
+    
+    public void agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
+    	
+    	EntityManager em = emf.createEntityManager();
+        
+        //Find Objects
+        Cuponera cup = em.find(Cuponera.class, nombreCup);
+        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+        if(cup == null || acti == null) {
+        	throw new IllegalArgumentException("Actividad deportiva o cuponera invalido");
         }
         
-        public ArrayList<String> getActisDeCuponera(String nombreCup){
-            ArrayList<ActividadDeportiva> listaActis= new ArrayList<>();
-            ArrayList<String> listaADevolver = new ArrayList<>(); 
-            String findQuery = "select c.actividades from Cuponera c WHERE c.nombreCup = :nombre";
-            
-            
-            Query find = em.createQuery(findQuery);
-            find.setParameter("nombre",nombreCup);
-            listaActis.addAll(find.getResultList());
-             
-            for(ActividadDeportiva actis : listaActis){
-                System.out.println(actis.getNombreAct());
-                listaADevolver.add(actis.getNombreAct());
-            }
-            
-            return listaADevolver;
+        //If Objects Found Attempt to Persist, else return False
+      
+            //attempt to Persist
+    	try {
+    		em.clear();
+    		em.getTransaction().begin();
+    		cup.aniadirAD(acti, cantClases); //ya no vamos a pasar Entity manager ni transacciones
+			em.getTransaction().commit();
+		} catch (Exception e) {
+			em.getTransaction().rollback();
+			System.out.println(e.getMessage());
+			
+		}
+            //if successful, return true, else false
+    }
+    
+    public Usuario getUsuario(DtUsrKey usrKey){
+    	
+    	EntityManager em = emf.createEntityManager();
+        Usuario Usr = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
+        em.clear();
+        em.close();
+        return Usr;
+        
+    }
+    
+    //-----------------------------------------------------------------------------------------------------------------
+    
+    
+    public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
+        ArrayList<String> listaNick = new ArrayList<String>();
+        ArrayList<String> listaEmails = new ArrayList<String>();
+        
+        EntityManager em = emf.createEntityManager();
+        
+        listaNick.addAll(em.createQuery("select p.nickname from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
+        listaEmails.addAll(em.createQuery("select p.email from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
+        
+        ArrayList<DtUsrKey> listaADevolver = new ArrayList<DtUsrKey>();
+        for(int i = 0; i < listaNick.size();i++) {
+        	
+        	listaADevolver.add(new DtUsrKey(listaNick.get(i),listaEmails.get(i)));
+        	//listaADevolver.add(listaNick.get(i) + " / " + listaEmails.get(i));
         }
         
-        public boolean agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
-            
-            //debug
-            System.out.println("In agregarActividadCuponera");
-            System.out.println(nombreCup);
-            System.out.println(nombreActi);
-            System.out.println(cantClases);
-            
-            //Find Objects
-            Cuponera cup = em.find(Cuponera.class, nombreCup);
-            ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-            
-            //More Debug
-            System.out.println("Cup Name: ");
-            System.out.println(cup.getNombreCup());
-            System.out.println("Acti Name: ");
-            System.out.println(acti.getNombreAct());
-            
-            //If Objects Found Attempt to Persist, else return False
-            if(cup != null && acti != null)
-            {
-                //attempt to Persist
-                boolean success = cup.aniadirAD(acti, cantClases, em, tran);
-                //if successful, return true, else false
-                if(success == true)
-                {
-                    return true;
-                }
-                else return false;
-            }
-            else return false;
-        }
-        
-        public Usuario getUsuario(DtUsrKey usrKey){
-            
-            Usuario Usr = em.find(Usuario.class, new Usuario(usrKey.nickname,usrKey.email));
-            return Usr;
-            
-        }
-        
-        //-----------------------------------------------------------------------------------------------------------------
-        
-        
-        public ArrayList<DtUsrKey> consultarProfe(String nombreInsti){
-            ArrayList<String> listaNick = new ArrayList<String>();
-            ArrayList<String> listaEmails = new ArrayList<String>();
-            
-            //EntityManager em = emf.createEntityManager();
-            
-            listaNick.addAll(em.createQuery("select p.nickname from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
-            listaEmails.addAll(em.createQuery("select p.email from Profesor p WHERE institucion =" + "'" + nombreInsti + "'").getResultList());
-            
-            ArrayList<DtUsrKey> listaADevolver = new ArrayList<DtUsrKey>();
-            for(int i = 0; i < listaNick.size();i++) {
-            	
-            	listaADevolver.add(new DtUsrKey(listaNick.get(i),listaEmails.get(i)));
-            	//listaADevolver.add(listaNick.get(i) + " / " + listaEmails.get(i));
-            }
-            
-            //System.out.println(list.toString());
-            return listaADevolver;
-        }
+        //System.out.println(list.toString());
+		em.clear();
+		em.close();
+        return listaADevolver;
+    }
 //----------------------------------------------------------------------------------------------------------------------------------------------------       
-        public void darAltaClase(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio,DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+    public void darAltaClase(
+    		String nombreInsti,String nombreActiDepo, String nombreClase,LocalDateTime fechaInicio,
+    		DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
 
-            System.out.println("Antes de crear el profe");
-            Profesor profe = em.find(Profesor.class, new Usuario(profeKey.nickname,profeKey.email));
-            System.out.println("despues de crear el profe");
-            
-            //em.flush();
-            
-            try{
-                Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, this.em,this.tran);
-                if(claseDictada == null) System.out.println("claseDictada == null");
-                this.instiRecordada.darAltaClaseInsti(nombreActiDepo, claseDictada, em, tran);
-            }catch(Exception e){
-                throw new IllegalArgumentException(e);
-            }   
-        }
+    	EntityManager em = emf.createEntityManager();
+        Profesor profe = em.find(Profesor.class, new Usuario(profeKey.nickname,profeKey.email));
+        ActividadDeportiva actiDepo = em.find(ActividadDeportiva.class, nombreActiDepo);
+        
+        try{
+        	em.getTransaction().begin();
+            Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta);
+            em.persist(claseDictada);
+            this.instiRecordada.darAltaClaseInsti(actiDepo, claseDictada);
+            em.getTransaction().commit();
+        }catch(Exception e){
+        	em.getTransaction().rollback();
+            throw new IllegalArgumentException(e);
+        } 
+		em.clear();
+		em.close();  
+    }
 //------------------------------------------------------------------------------------------------------------------------------------------ 
         
-      public void recordarInsti(String nombreInsti) {
-    	  
-    	  this.instiRecordada = this.em.find(Institucion.class,nombreInsti);
-    	  System.out.println(this.instiRecordada.getNombreInst());
-      }
+	public void recordarInsti(String nombreInsti) {
+		  
+		EntityManager em = emf.createEntityManager();
+		this.instiRecordada = em.find(Institucion.class,nombreInsti);
+		em.clear();
+		em.close();
+		System.out.println(this.instiRecordada.getNombreInst());
+	}
       
 //------------------------------------------------------------------------------------------------------------------------------------------ 
-      public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
-    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-    	  return acti.getDTActividadDeportiva();
-      }
+	public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
+		EntityManager em = emf.createEntityManager();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+		em.clear();
+		em.close();
+		return acti.getDTActividadDeportiva();
+	}
       
-      public ArrayList<String> getClasesPorActiDepo(String nombreActi){
-    	  ArrayList<String> listaADevolver = new ArrayList<String>();
-    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-    	  listaADevolver = acti.getNombreClases();
-    	  return listaADevolver;
-      }
+	public ArrayList<String> getClasesPorActiDepo(String nombreActi){
+		EntityManager em = emf.createEntityManager();
+		ArrayList<String> listaADevolver = new ArrayList<String>();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+		listaADevolver = acti.getNombreClases();
+		em.clear();
+		em.close();
+		return listaADevolver;
+	}
+  
+	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
+		EntityManager em = emf.createEntityManager();
+		ArrayList<String> listaADevolver = new ArrayList<String>();
+		ArrayList<String> listaDeClases = new ArrayList<String>();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+		listaDeClases = acti.getNombreClases();
+		for (int i = 0; i < listaDeClases.size(); i++) {
+			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
+		}
+		em.clear();
+		em.close();
+		return listaADevolver;
+	}
+  
+	public ArrayList<String> getSociosHabilitados(String nombreClase) {
+		EntityManager em = emf.createEntityManager();
+		ArrayList<String> listaADevolver = new ArrayList<String>();
+		listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
+		em.clear();
+		em.close();
+		return listaADevolver;
+	}
+  
+	public DtCuponera getDtCuponera(String nombreCupo){
+		EntityManager em = emf.createEntityManager();
+		Cuponera cupo = em.find(Cuponera.class, nombreCupo);
+		em.clear();
+		em.close();
+		return cupo.getData();
+	}
+  
+	public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
+		EntityManager em = emf.createEntityManager();
+		System.out.println("Antes de buscar la Insti para la Clase");
+		Institucion insti = em.find(Institucion.class, nombreInsti);
+		System.out.println("Despues de buscar la Insti para la Clase");
+		    	  
+		DtClase claseADevolver = insti.getDtClaseXActiDepo( nombreActi, nombreClase, em);
+		em.clear();
+		em.close();
+		return claseADevolver;
+	}
       
-      public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
-    	  ArrayList<String> listaADevolver = new ArrayList<String>();
-    	  ArrayList<String> listaDeClases = new ArrayList<String>();
+	public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
+		
+		EntityManager em = emf.createEntityManager();
+		Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
+		ArrayList<String> output = new ArrayList<>();
+		if(s != null){        
+			Collection<Registro> registros = ((Socio)s).getRegistro();
+			for(Registro r : registros){
+				output.add(r.getClaseAsociada().getNombreClase());
+			}
+		}
+		em.clear();
+		em.close();
+		return output;
+	}
+      
+	public String getActividadDepoAsociadaClase(String nomClase, String nomInsti){
 
-    	  ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-    	  listaDeClases = acti.getNombreClases();
-    	  for (int i = 0; i < listaDeClases.size(); i++) {
-    		  listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
-    	  }
-    	  return listaADevolver;
-      }
+		EntityManager em = emf.createEntityManager();
+		Institucion inst = em.find(Institucion.class, nomInsti);
+		String nombreAct = null;
+		if(inst != null){
+		      
+			ArrayList<String> actiDepos = inst.getActividadesDeportivas();
+			
+			for(String s : actiDepos){
+			      
+				ActividadDeportiva acti = em.find(ActividadDeportiva.class, s);
+				if(acti != null){
+				      
+					ArrayList<String> clasesDeActi = acti.getNombreClases();
+					  
+					for(String str : clasesDeActi){
+						boolean isAsosiated = nomClase.equals(str);
+						if(isAsosiated == true)
+						{
+							nombreAct = acti.getNombreAct();
+						}
+					}
+				      
+				}
+			      
+			}
+			      
+		}
+		em.clear();
+		em.close();
+		return nombreAct; 
+	}
       
-      public ArrayList<String> getSociosHabilitados(String nombreClase) {
-    	  ArrayList<String> listaADevolver = new ArrayList<String>();
-    	  listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
-    	  return listaADevolver;
-      }
-      
-      public DtCuponera getDtCuponera(String nombreCupo){
-    	  Cuponera cupo = em.find(Cuponera.class, nombreCupo);
-    	  return cupo.getData();
-      }
-      
-      public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
-    	  System.out.println("Antes de buscar la Insti para la Clase");
-    	  Institucion insti = em.find(Institucion.class, nombreInsti);
-    	  System.out.println("Despues de buscar la Insti para la Clase");
-    	  
-    	  DtClase claseADevolver = insti.getDtClaseXActiDepo( nombreActi, nombreClase, em);
-    	  return claseADevolver;
-      }
-      
-      public ArrayList<String> getClaseRegistradaSocio(DtSocio socio){
-
-          Usuario s = em.find(Usuario.class, new Usuario(socio.nickname,socio.email));
-          if(s != null){        
-            Collection<Registro> registros = ((Socio)s).getRegistro();
-          
-            ArrayList<String> output = new ArrayList<>();
-          
-            for(Registro r : registros){
-                output.add(r.getClaseAsociada().getNombreClase());
-            }
-            return output;
-          }
-          return null;
-      }
-      
-      public String getActividadDepoAsociadaClase(String nomClase, String nomInsti){
-          
-          Institucion inst = em.find(Institucion.class, nomInsti);
-          
-          if(inst != null){
-              
-              ArrayList<String> actiDepos = inst.getActividadesDeportivas();
-
-              for(String s : actiDepos){
-                  
-                  ActividadDeportiva acti = em.find(ActividadDeportiva.class, s);
-                  if(acti != null){
-                      
-                      ArrayList<String> clasesDeActi = acti.getNombreClases();
-                      
-                      for(String str : clasesDeActi){
-                          boolean isAsosiated = nomClase.equals(str);
-                          if(isAsosiated == true)
-                          {
-                            return acti.getNombreAct();
-                          }
-                      }
-                      
-                  }
-                  
-              }
-              
-          }
-          return null; 
-      }
-      
-      public DtActividadDeportiva getDtActividadDepo(String nomActi){
-          ActividadDeportiva acti = em.find(ActividadDeportiva.class,nomActi);
-          if(acti != null){
-            return acti.getDTActividadDeportiva();
-          }
-          return null;
-      }
-      
-      public DtClase getDtClase(String nomClase){  
-        Clase c = em.find(Clase.class, nomClase);
-        if(c != null){
-            return c.getData();
-        }
-        return null;
-      }
+	public DtActividadDeportiva getDtActividadDepo(String nomActi){
+		EntityManager em = emf.createEntityManager();
+		ActividadDeportiva acti = em.find(ActividadDeportiva.class,nomActi);
+		DtActividadDeportiva datosAC = null;
+		if(acti != null){
+			datosAC = acti.getDTActividadDeportiva();
+		}
+		em.clear();
+		em.close();
+		return datosAC;
+	}
+	  
+	public DtClase getDtClase(String nomClase){ 
+		EntityManager em = emf.createEntityManager(); 
+		Clase c = em.find(Clase.class, nomClase);
+		DtClase datosClase = null;
+		if(c != null){
+			datosClase = c.getData();
+		}
+		return datosClase;
+	}
 }

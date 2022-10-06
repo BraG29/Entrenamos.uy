@@ -52,7 +52,6 @@ public class ActividadDeportiva implements Serializable {
     private float costo;
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
-    private String IMG_URL;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="Actividad_Cuponera",
@@ -60,25 +59,21 @@ public class ActividadDeportiva implements Serializable {
     	inverseJoinColumns = @JoinColumn(name="nom_cuponera"))
     private Collection<Cuponera> cuponeras;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Actividad_Clase",
-		joinColumns = @JoinColumn(name="nom_actividad"),
-		inverseJoinColumns = @JoinColumn(name="nom_clase"))
+    @OneToMany(mappedBy = "claseDe",cascade = CascadeType.ALL)
     private Collection<Clase> clases;
 
-    
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "institucion")
     private Institucion insti;
    
 
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro,String IMG, Institucion institu) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.costo = costo;
         this.fechaRegistro = fechaRegistro;
-        this.IMG_URL = IMG;
         this.insti = institu;
         this.clases = new ArrayList<>();
         this.cuponeras = new ArrayList<>();
@@ -171,19 +166,8 @@ public class ActividadDeportiva implements Serializable {
     
     
     
-    public boolean agregarCup(Cuponera cup,EntityManager em,EntityTransaction tran){
-        try{
-            tran.begin();
-            em.flush();
-            this.cuponeras.add(cup);
-            tran.commit();
-            return true;
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-            tran.rollback();
-        }
-        return false;
+    public void agregarCup(Cuponera cup){
+    	this.cuponeras.add(cup);
     }
     
     public DtActividadDeportiva getDTActividadDeportiva(){
@@ -197,7 +181,7 @@ public class ActividadDeportiva implements Serializable {
             strCuponeras.add(c.getNombreCup());
         }
         
-        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras,this.IMG_URL);
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
         return DtActi;
     }
     
@@ -212,37 +196,8 @@ public class ActividadDeportiva implements Serializable {
     	return nombreClases;
     }
     
-    public void darAltaClaseActi(Clase claseDictada, EntityManager em,EntityTransaction tran){
-    	
-    	System.out.println(tran.isActive());
-    	if(tran.isActive()) {
-    		tran.commit();
-    	}
-       
-    	try {
-    		//em.clear();
-    		tran.begin();
+    public void darAltaClaseActi(Clase claseDictada){
     		this.clases.add(claseDictada);
-    		tran.commit();
-        }catch(Exception e) {
-        	tran.rollback();
-        	System.out.println("UWUWUWUWUWU");
-        	throw new IllegalArgumentException(e.getMessage());
-        }
-    	
-//        System.out.println("antes de hacer la transaccion");
-//        EntityTransaction transaccion = em.getTransaction();
-//        transaccion.begin();
-//        
-//        em.persist(clase);
-//        
-//        transaccion.commit();
-//        
-//        System.out.println("despues de hacer la transaccion");
-        
-        
-        
-        //arreglar el constructor de Clase
     }
     
     public DtClase getDtClaseXActiDepo(String nombreClase,EntityManager em) {

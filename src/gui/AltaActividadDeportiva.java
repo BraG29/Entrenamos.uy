@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import logica.controlador.IControlador;
@@ -11,6 +12,7 @@ import logica.controlador.Fabrica;
 import java.util.ArrayList;
 
 public class AltaActividadDeportiva extends javax.swing.JFrame {
+	
 
     public LocalDateTime convertirALocalDateTime(Date dateAConvertir){
         return dateAConvertir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -326,7 +328,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             IControlador controlador =  fab.getInterface();
             
             try{//se intenta persistir los datos
-                controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta,URL_IMG);
+                controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
                 
             }catch(Exception e){//algo malió sal en la persistición
                 VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
