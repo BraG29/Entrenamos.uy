@@ -57,7 +57,7 @@ public class Clase implements Serializable{
     
     
     //Constructor, faltan los atributos calculados: horaFin y cantSocios.
-    public Clase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro) {
+    public Clase(String nombreClase, LocalDate fecha, LocalTime horaIni, int cantMin, int cantMax, String claseURL, LocalDate fechaRegistro, Profesor profe, ActividadDeportiva actiDepo ) {
         this.nombreClase = nombreClase;
         this.fecha = fecha; //fecha de inicio
         this.horaIni = horaIni;
@@ -65,6 +65,8 @@ public class Clase implements Serializable{
         this.cantMax = cantMax;
         this.claseURL = claseURL;
         this.fechaRegistro = fechaRegistro;
+        this.profesor = profe;
+        this.claseDe = actiDepo;
     }
     
     public Clase() {

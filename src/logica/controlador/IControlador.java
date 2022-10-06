@@ -86,6 +86,7 @@ public interface IControlador {
     public ArrayList<String> getSociosHabilitados(String nombreClase);
     
     public DtCuponera getDtCuponera(String nombreCupo);
+    
     public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase);
     
     public Usuario getUsuario(DtUsrKey UsrKey);
@@ -97,5 +98,11 @@ public interface IControlador {
     public DtActividadDeportiva getDtActividadDepo(String nomActi);
     
     public DtClase getDtClase(String nomClase);
+    
+    public HashMap<String, ArrayList<Object>> getHashInstisAndProfes();
+    
+    public DtInstitucion getDtInsti(String nombreInsti);
+    
+    public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis();
 
 }

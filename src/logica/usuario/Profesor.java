@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import logica.clase.Clase;
 import logica.datatypes.DtProfesor;
 import logica.datatypes.DtUsuario;
+import logica.institucion.ActividadDeportiva;
 import logica.institucion.Institucion;
 
 /**
@@ -117,12 +118,10 @@ public class Profesor extends Usuario{
 
     }
     
-    public Clase darAltaClaseProfe(
-    		String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,
-    		int sociosMin,int sociosMax,String URL,LocalDate fechaAlta) {
+    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, ActividadDeportiva actiDepo) {
     	
     	LocalTime horaIni = fechaInicio.toLocalTime();
-        Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta);
+        Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta ,this, actiDepo); //por alguna razón tengo que pasarle un objeto profesor a una clase, cuidado con la visibildad
         this.claseDictada.add(claseADictar);
     	return claseADictar;
     }

@@ -34,6 +34,7 @@ import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud.Delete;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
@@ -388,10 +389,10 @@ public class Controlador implements IControlador {
         return listaADevolver;
     }
                     
-    public ArrayList<String> consultarActividadDepo(String nombreInsti){
+    public ArrayList<String> consultarActividadDepo(String nombreInsti){//ARREGLAR
     	EntityManager em = emf.createEntityManager();
         ArrayList<String> listaADevolver = new ArrayList<String>();
-        listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE insti_nombre = " + "'" + nombreInsti + "'").getResultList());
+        listaADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE institucion = " + "'" + nombreInsti + "'").getResultList());
 		em.clear();
 		em.close();  
         return listaADevolver;
@@ -402,9 +403,7 @@ public class Controlador implements IControlador {
     	EntityManager em = emf.createEntityManager();
         ArrayList<String> listaADevolver = new ArrayList<String>();            
         listaADevolver.addAll(
-        		em.createQuery(
-        				"select nombre from Clase c where nombre in (select nom_clase from Actividad_Clase ac where nom_actividad = '" 
-        				+ nombreActividad + "')").getResultList());
+        		em.createQuery("select nombre from Clase c where actividad_deportiva = '" + nombreActividad + "'").getResultList());
 		em.clear();
 		em.close();
         return listaADevolver;
@@ -577,23 +576,23 @@ public class Controlador implements IControlador {
         return listaADevolver;
     }
 //----------------------------------------------------------------------------------------------------------------------------------------------------       
-    public void darAltaClase(
-    		String nombreInsti,String nombreActiDepo, String nombreClase,LocalDateTime fechaInicio,
-    		DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
+    public void darAltaClase(String nombreInsti,String nombreActiDepo, String nombreClase,LocalDateTime fechaInicio, DtUsrKey profeKey ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta){
 
     	EntityManager em = emf.createEntityManager();
+    	
         Profesor profe = em.find(Profesor.class, new Usuario(profeKey.nickname,profeKey.email));
         ActividadDeportiva actiDepo = em.find(ActividadDeportiva.class, nombreActiDepo);
         
         try{
         	em.getTransaction().begin();
-            Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta);
+            Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, actiDepo);
+            
+            //this.instiRecordada.darAltaClaseInsti(actiDepo, claseDictada);
             em.persist(claseDictada);
-            this.instiRecordada.darAltaClaseInsti(actiDepo, claseDictada);
             em.getTransaction().commit();
         }catch(Exception e){
         	em.getTransaction().rollback();
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException(e.getMessage());
         } 
 		em.clear();
 		em.close();  
@@ -741,5 +740,49 @@ public class Controlador implements IControlador {
 			datosClase = c.getData();
 		}
 		return datosClase;
+	}
+	
+	public HashMap<String, ArrayList<Object>> getHashInstisAndProfes(){
+   	  
+   	   HashMap<String, ArrayList<Object>> hashADevolver = new HashMap<>();
+   	   ArrayList<String> listaDeInstis = new ArrayList<>();
+   	  
+   	   listaDeInstis.addAll(this.getNombreInstituciones());
+   	  
+   	   for(int i = 0; i < listaDeInstis.size(); i++) {
+   		  
+   		   ArrayList<Object> listaDeListas = new ArrayList<>();//creo el ArrayList de objetos genericos.
+   		   listaDeListas.add(this.consultarActividadDepo(listaDeInstis.get(i)));//a la primera posicion le paso un ArrayList con todos los nombres de las ActisDepo.
+   		   listaDeListas.add(this.consultarProfe(listaDeInstis.get(i)));//a la 2nda posicion le paso un ArrayList de DtUsrKey con todos los profes de esta Insti.
+   		  
+   		   hashADevolver.put(listaDeInstis.get(i), listaDeListas);//armo el hashmap
+   	   }
+   	   return hashADevolver;
+   	   }
+     
+     
+     public DtInstitucion getDtInsti(String nombreInsti) {
+    	 EntityManager em = emf.createEntityManager();
+    	 return em.find(Institucion.class, nombreInsti).getDTInstitucion();
+     }
+     
+     
+     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis() {
+    	 
+    	 HashMap<String,ArrayList<DtActividadDeportiva>> hashADevolver = new HashMap<>();
+   	  
+   	  	 ArrayList<String> listaNomInstis = this.getNombreInstituciones();
+   	  
+   	  	 for(int i = 0; i < listaNomInstis.size();i++) {
+   		  
+   	  		 ArrayList<String> listaActis = this.consultarActividadDepo(listaNomInstis.get(i));
+   	  		 ArrayList<DtActividadDeportiva> listaDtActi = new ArrayList<>();
+   	  		 
+	   		 for(int c = 0; c < listaActis.size();c++) {
+	   			 listaDtActi.add(this.getDtActividadDepo(listaActis.get(c)));
+	   		 }
+	   	 hashADevolver.put(listaNomInstis.get(i),listaDtActi);
+   	  	 }
+   	  	 return hashADevolver;
 	}
 }
