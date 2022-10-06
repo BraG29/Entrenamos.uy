@@ -3,6 +3,7 @@ package logica.controlador;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import logica.datatypes.*;
 import logica.usuario.Usuario;
@@ -96,4 +97,5 @@ public interface IControlador {
     public DtActividadDeportiva getDtActividadDepo(String nomActi);
     
     public DtClase getDtClase(String nomClase);
+
 }

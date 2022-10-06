@@ -370,10 +370,10 @@ public class AltaUsuario extends JFrame {
 							}
 							File imagen = fCImagen.getSelectedFile();
 							try {
-								String rutaDir = System.getProperty("user.dir");
+								String rutaDir = System.getProperty("user.dir");//llega hasta el proyecto
 								Files.copy(
 										Paths.get(imagen.getPath()),
-										Paths.get(rutaDir+"/src/imgUsers/"+"."+txtFieldNick.getText()),
+										Paths.get(rutaDir+"/src/imgUsers/"+"."+txtFieldNick.getText()), //txtField es el nombre del usuario
 										StandardCopyOption.REPLACE_EXISTING);
 							} catch (IOException ioError) {
 								throw ioError;

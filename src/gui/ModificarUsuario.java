@@ -358,7 +358,7 @@ public class ModificarUsuario extends JFrame {
 					String rutaDir = System.getProperty("user.dir");
 					Image imagen = null;
 					try {
-						imagen = ImageIO.read(new File(rutaDir+"/src/imgUsers/"+"."+dtU.nickname));
+						imagen = ImageIO.read(new File(rutaDir+"/src/imgUsers/"+"."+dtU.nickname));//busco la imagen
 						imagen = imagen.getScaledInstance(180, 180, 100);
 					} catch (IOException e) {
 						e.printStackTrace();
