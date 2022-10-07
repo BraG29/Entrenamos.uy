@@ -107,4 +107,8 @@ public interface IControlador {
     
     //CU Aceptar/Rechazar actividad deportiva
     public ArrayList<String> listaActividadesIngresada();
+
+    public void altaCategoria(String nomCategoria);
+
+
 }

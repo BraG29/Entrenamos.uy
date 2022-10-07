@@ -218,10 +218,10 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         		
         		if(vntaFileChooser == null) {
         			try {
-            			vntFileChooser = new VentanaFileChooser();
+            			vntaFileChooser = new VentanaFileChooser();
                 		//vntFileChooser.setVisible(true);
                 		
-            			archivoAUsar = vntFileChooser.getArchivo();
+            			archivoAUsar = vntaFileChooser.getArchivo();
             			lblIMG_Seleccionada.setText("");
             			Image imgMuestra = ImageIO.read(archivoAUsar).getScaledInstance(100, 100, 100);
             			lblIMG_Seleccionada.setIcon(new ImageIcon(imgMuestra));
@@ -363,11 +363,11 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             IControlador controlador =  fab.getInterface();
             
             try{//se intenta persistir los datos
+            	
                 controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
 
-                
-                File imagen = this.vntFileChooser.getArchivo();
-                if(imagen != null) {
+                if(vntaFileChooser != null) {
+                	File imagen = archivoAUsar;
                     try {
         				String rutaDir = System.getProperty("user.dir");//llega hasta el proyecto
         				Files.copy(
