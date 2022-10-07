@@ -47,9 +47,11 @@ public class ActividadDeportiva implements Serializable {
 	@Id
 	@Column(name="nombre")
     private String nombreAct;
+	
     private String descripcion;
     private float duracion;//en minutos gente
     private float costo;
+    
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
     
@@ -65,6 +67,12 @@ public class ActividadDeportiva implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "institucion")
     private Institucion insti;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Actividad_Categorias",
+    	joinColumns = @JoinColumn(name="nom_actividad"),
+    	inverseJoinColumns = @JoinColumn(name="nom_categoria"))
+    private Collection<Categoria> categoriasAsociadas;
    
 
     

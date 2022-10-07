@@ -22,7 +22,6 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transaction;
 import javax.persistence.Query;
-//import javax.persistence.
 
 
 import org.hibernate.jpa.internal.util.PessimisticNumberParser;
@@ -784,5 +783,39 @@ public class Controlador implements IControlador {
 	   	 hashADevolver.put(listaNomInstis.get(i),listaDtActi);
    	  	 }
    	  	 return hashADevolver;
-	}
+	 }
+     
+     public void altaCategoria(String nomCat) {
+    	 EntityManager em = emf.createEntityManager();
+    	 
+    	 try {
+    		 Categoria Cat = em.find(Categoria.class, nomCat);
+    		 
+    		 if(Cat != null) {
+    			 throw new IllegalArgumentException("La Categoría ya existe");
+        	 }
+    	 }
+    	 catch(Exception e) {
+    		 em.clear();
+    		 em.close();
+    		 throw e;
+    	 }
+    	 
+    	 
+    	 try{
+        		 em.getTransaction().begin();
+        		 
+        		 Categoria catAAniadir = new Categoria(nomCat);
+        		 em.persist(catAAniadir);
+        		 
+        		 em.getTransaction().commit();
+        		 
+    	 } catch (Exception ex) {
+ 			em.getTransaction().rollback();
+ 			ex.printStackTrace();
+ 		} finally {
+ 			em.clear();
+ 			em.close();
+ 		}
+     }
 }
