@@ -284,8 +284,8 @@ public class ConsultaCuponeras extends JFrame {
 				String nombre= comboBoxCuponera.getSelectedItem().toString();	//nombre de la cuponera q selecciono.
 				System.out.println("combo box = " + comboBoxCuponera.getSelectedItem().toString());
 				
-				//DtCuponera datosCup = sistema.seleccionCuponera(nombre);
-				DtCuponera datosCup = sistema.getDtCuponera(nombre);
+				DtCuponera datosCup = sistema.seleccionCuponera(nombre);
+				//DtCuponera datosCup = sistema.getDtCuponera(nombre);
 				System.out.println("datoscup = " + datosCup.nombreCup + " "+ datosCup.descripcion);
 				//controlar si esta vacio.
 				
@@ -342,8 +342,8 @@ public class ConsultaCuponeras extends JFrame {
 						public void actionPerformed(ActionEvent arg0) {
 							
 							String nombreActi = comboBoxActividad.getSelectedItem().toString();							
-							//DtActividadDeportiva datosAct = sistema.seleccionActividad(nombreActi);
-							DtActividadDeportiva datosAct = sistema.getDtActividadDepo(nombreActi);
+							DtActividadDeportiva datosAct = sistema.seleccionActividad(nombreActi);
+							//DtActividadDeportiva datosAct = sistema.getDtActividadDepo(nombreActi);
 							
 							int actividad = comboBoxActividad.getSelectedIndex();
 							

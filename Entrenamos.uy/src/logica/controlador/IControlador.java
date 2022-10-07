@@ -104,5 +104,7 @@ public interface IControlador {
     public DtInstitucion getDtInsti(String nombreInsti);
     
     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis();
-
+    
+    //CU Aceptar/Rechazar actividad deportiva
+    public ArrayList<String> listaActividadesIngresada();
 }
