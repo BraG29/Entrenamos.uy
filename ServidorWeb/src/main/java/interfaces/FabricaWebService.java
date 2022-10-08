@@ -16,49 +16,75 @@ public class FabricaWebService {
 	public class UsuarioController implements IUsuarioController {
 		
 		@Override
-		public Set<String> obtenerInstituciones() {}
+		public Set<String> obtenerInstituciones() {
+			return null;
+		}
 		
 		@Override
-		public Set<String> obtenerUsuarios() {}
+		public Set<String> obtenerUsuarios() {
+			return null;
+		}
 		
 		@Override
-		public int ingresarDatosUsuario(DtUsuario datoUser) {}
+		public int ingresarDatosUsuario(DtUsuario datoUser) {
+			return 0;
+		}
 	}
 
 	public class ActividadDeportivaController implements IActividadDeportivaController {
 		@Override
-		public Set<String> obtenerInstituciones() {}
+		public Set<String> obtenerInstituciones() {
+			return null;
+		}
 
 		@Override
-		public Boolean ingresarDatosActividadDeportiva(String nombreInsti, DtActividadDeportiva datosAD) {}
+		public Boolean ingresarDatosActividadDeportiva(String nombreInsti, DtActividadDeportiva datosAD) {
+			return null;
+		}
 
 		@Override
-		public Set<String> obtenerActividades(String ins) {}
+		public Set<String> obtenerActividades(String ins) {
+			return null;
+		}
 	}
 
 	public class DictadoClaseController implements IDictadoClaseController {
 		@Override
-		public Set<String> obtenerUsuarios() {}
+		public Set<String> obtenerUsuarios() {
+			return null;
+		}
 		
 		@Override
-		public Set<String> obtenerInstituciones() {}
+		public Set<String> obtenerInstituciones() {
+			return null;
+		}
 
 		@Override
-		public String obtenerInstitucionActDep(String actDep) {}
+		public String obtenerInstitucionActDep(String actDep) {
+			return null;
+		}
 
 		@Override
-		public Set<String> obtenerActividades(String ins) {}
+		public Set<String> obtenerActividades(String ins) {
+			return null;
+		}
 	}
 
 	public class CuponeraController implements ICuponeraController {
 		@Override
-		public Set<String> getNombreCuponeras() {}
+		public Set<String> getNombreCuponeras() {
+			return null;
+		}
 
 		@Override
-		public DtCuponera seleccionarCuponera(String nombre) {}
+		public DtCuponera seleccionarCuponera(String nombre) {
+			return null;
+		}
 
 		@Override
-		public Set<String> getNombreCuponerasSinRecibos() {}
+		public Set<String> getNombreCuponerasSinRecibos() {
+			return null;
+		}
 	}
 
 	public IActividadDeportivaController getIActDeportivaController() {

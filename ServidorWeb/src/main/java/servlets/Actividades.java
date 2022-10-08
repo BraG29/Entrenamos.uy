@@ -1,29 +1,26 @@
 package servlets;
 
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-
-import interfaces.FabricaWebService;
 
 @WebServlet("/actividades")
 public class Actividades extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	public Actividades() {
 		super();
 	}
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 
 		} catch (Exception e) {
-			request.getRequestDispatcher("/pages/404.jsp").forward(request, response);
+			request.getRequestDispatcher("./../webapp/pages/404.jsp").forward(request, response);
 			return;
 		}
 

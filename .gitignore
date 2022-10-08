@@ -14,7 +14,7 @@
 /Entrenamos.uy/mtj.tmp/
 
 # Package Files #
-#*.jar
+*.jar
 *.war
 *.nar
 *.ear
@@ -27,6 +27,7 @@
 .vscode
 hs_err_pid*
 /.metadata/
+/Servers/
 /Entrenamos.uy/bin/
 /Entrenamos.uy/.settings/
 /Entrenamos.uy/nbproject/private/
