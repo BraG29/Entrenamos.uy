@@ -65,6 +65,12 @@ public class ActividadDeportiva implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "institucion")
     private Institucion insti;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Actividad_Categorias",
+    	joinColumns = @JoinColumn(name="nom_actividad"),
+    	inverseJoinColumns = @JoinColumn(name="nom_categoria"))
+    private Collection<Categoria> categoriasAsociadas;
    
 
     

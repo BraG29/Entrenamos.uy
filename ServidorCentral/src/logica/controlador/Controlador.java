@@ -796,4 +796,63 @@ public class Controlador implements IControlador {
    	  	 }
    	  	 return hashADevolver;
 	}
+     
+     
+    //CU Aceptar/Rechazar actividad deportiva
+     //NO FUNCIONA HASTA QUE CREAR ACTIVIDAD DEPORTIVA TENGA ESTADO EN SU CONSTRUCTOR.
+     public ArrayList<String> listaActividadesIngresada(){
+     /*	ArrayList<String> listaActividad = new ArrayList<String>();
+ 		EntityManager em = emf.createEntityManager();
+ 		ArrayList<String> consultaActividad = new ArrayList<String>();
+ 		try {
+ 			em.getTransaction().begin();
+ 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where estado= 'Ingresada' ").getResultList();//nombre Actividades con estado Ingresada
+ 		}catch (Exception ex) {
+ 			if (em != null) {
+ 				em.getTransaction().rollback();
+ 			}
+ 		}
+ 		for (int i = 0; i < consultaActividad.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
+ 			String nombresActividadesIngresadas = (String)consultaActividad.get(i);
+ 			listaActividad.add(nombresActividadesIngresadas);//agrego a la lista
+ 		}
+ 		//return listaActividad;
+    	 */ 
+    	 return null;
+     }
+    
+     
+     public void altaCategoria(String nomCat) {
+    	 EntityManager em = emf.createEntityManager();
+    	 
+    	 try {
+    		 Categoria Cat = em.find(Categoria.class, nomCat);
+    		 
+    		 if(Cat != null) {
+    			 throw new IllegalArgumentException("La Categoría ya existe");
+        	 }
+    	 }
+    	 catch(Exception e) {
+    		 em.clear();
+    		 em.close();
+    		 throw e;
+    	 }
+    	 
+    	 
+    	 try{
+        		 em.getTransaction().begin();
+        		 
+        		 Categoria catAAniadir = new Categoria(nomCat);
+        		 em.persist(catAAniadir);
+        		 
+        		 em.getTransaction().commit();
+        		 
+    	 } catch (Exception ex) {
+ 			em.getTransaction().rollback();
+ 			ex.printStackTrace();
+ 		} finally {
+ 			em.clear();
+ 			em.close();
+ 		}
+     }
 }

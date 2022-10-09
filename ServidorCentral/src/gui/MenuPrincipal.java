@@ -48,6 +48,7 @@ public class MenuPrincipal extends JFrame {
     private AgregarActividadDeportivaCuponera menuAgregarActividad; //º10 Agregar actividad deportiva a cuponera    
     private ConsultaCuponeras menuCuponeras; //º11 Consulta de cuponeras de actividades deportivas
     private AltaInstitucion menuAltaInstitucion; // º12 Alta de institucion
+    private AltaCategoria menuAltaCategoria; // °13 Alta de Categoria
 
 
 	/**
@@ -82,7 +83,7 @@ public class MenuPrincipal extends JFrame {
 		setTitle("Menu Principal");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 638, 314);
+		setBounds(100, 100, 638, 356);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -214,6 +215,16 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnAltaInstitucion.setBounds(322, 248, 298, 25);
 		contentPane.add(btnAltaInstitucion);
+		
+		JButton btnAltaCategoria = new JButton("Alta Categoria");
+		btnAltaCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuAltaCategoria = new AltaCategoria();
+				menuAltaCategoria.setVisible(true);
+			}
+		});
+		btnAltaCategoria.setBounds(12, 288, 298, 25);
+		contentPane.add(btnAltaCategoria);
 
 	}
 
