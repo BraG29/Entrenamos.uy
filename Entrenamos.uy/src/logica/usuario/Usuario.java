@@ -2,6 +2,7 @@ package logica.usuario;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.jar.Attributes.Name;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,8 @@ import javax.persistence.InheritanceType;
 
 import logica.datatypes.DtUsuario;
 import logica.datatypes.DtUsrKey;
-/**
- *
- * @author elinzar
- */
+
+
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Usuario implements Serializable {
@@ -26,6 +25,7 @@ public class Usuario implements Serializable {
 	@Id
 	@Column(unique = true)
     protected String email;
+	protected String contrasenia;
     protected String nombre;
     protected String apellido;
     @Column(name="fecha_nacimiento")
@@ -78,9 +78,10 @@ public class Usuario implements Serializable {
     public Usuario() {
 	}
     //Full constructor
-    public Usuario(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
+    public Usuario(String nickname, String apellido, String email, String pass, String nombre, LocalDate fechaNac) {
         this.nickname = nickname;
         this.email = email;
+        this.contrasenia = pass;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNac = fechaNac;

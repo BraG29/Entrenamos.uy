@@ -1,7 +1,13 @@
 package logica.controlador;
 import logica.clase.Clase;
 import logica.cuponera.Cuponera;
+
+import java.io.File;
+import java.io.IOException;
 import java.lang.management.GarbageCollectorMXBean;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -22,6 +28,7 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transaction;
 import javax.persistence.Query;
+//import javax.persistence.
 
 
 import org.hibernate.jpa.internal.util.PessimisticNumberParser;
@@ -56,15 +63,12 @@ public class Controlador implements IControlador {
 	//en menu  principal hay un ejemplo de instancia de entity manager
 	private EntityManagerFactory emf;
         
-        //Se Supone que el Entity Manager y el Entity Transaction ya los define el controlador
-        //Y el menu Principal Maneja cuando los abre y cierra
-        //No Abran ni Cierren conneciones en sus metodos, usen el em y el tran como vienen 
-
 	private static Controlador instance;
 
 	private void Controlador() {
 	}
     
+	
 	public void initConnection(){
 		this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
 	}
@@ -79,16 +83,27 @@ public class Controlador implements IControlador {
 		return instance;
 	}
 	
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac) {
+	void guardarImagen(File img, String nombre, String folder) {
+		String rutaDir = System.getProperty("user.dir");//llega hasta el proyecto
+		try {
+			Files.copy(
+					Paths.get(img.getPath()),
+					Paths.get(rutaDir+"/src/"+folder+"/"+"."+nombre),
+					StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new IllegalArgumentException("No se ha podido guardar la imagen");
+		}
+	}
+	
+	public void altaUsuario(String nick, String nombre, String apellido, String email, String pass, LocalDate fechaNac, File img) {
 
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
-			Socio s = new Socio(nick, apellido, email, nombre, fechaNac);
+			Socio s = new Socio(nick, apellido, email, pass, nombre, fechaNac);
 			em.persist(s);
 			em.flush();
 			em.getTransaction().commit();
-			System.out.println("Usuario creado");
 		} catch (PersistenceException e) {
 			em.getTransaction().rollback();
 			SQLException eSQL = (SQLException) e.getCause().getCause();
@@ -97,14 +112,14 @@ public class Controlador implements IControlador {
 			} else {
 				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
 			}
-
 		}
+		guardarImagen(img, nick, "imgUsers");
 		em.clear();
 		em.close();
 	}
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
+	public void altaUsuario(String nick, String nombre, String apellido, String email, String pass, LocalDate fechaNac,
+			String institucion, String descripcion, String biografia, String sitioWeb, File img) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			Institucion i = em.find(Institucion.class, institucion);
@@ -112,12 +127,11 @@ public class Controlador implements IControlador {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
 			Profesor p =
-					new Profesor(nick, apellido, email, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+					new Profesor(nick, apellido, email, pass, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
 			em.getTransaction().begin();
 			em.persist(p);
 			em.flush();
 			em.getTransaction().commit();
-			System.out.println("Usuario creado");
 		} catch (PersistenceException e) {
 			em.getTransaction().rollback();
 			SQLException eSQL = (SQLException) e.getCause().getCause();
@@ -127,6 +141,7 @@ public class Controlador implements IControlador {
 				throw new IllegalArgumentException("No se ha podido dar de alta al usuario");
 			}
 		}
+		guardarImagen(img, nick, "imgUsers");
 		em.clear();
 		em.close();
 	}
@@ -267,6 +282,7 @@ public class Controlador implements IControlador {
 				throw new Exception("La cuponera seleccionada no existe");
 			}		
 			cupData = cup.getData();
+			return cupData;		
 		}catch (Exception ex) {
 			if (em != null) {
                 em.getTransaction().rollback();
@@ -515,28 +531,24 @@ public class Controlador implements IControlador {
     public void agregarActividadCuponera(String nombreCup,String nombreActi,int cantClases){
     	
     	EntityManager em = emf.createEntityManager();
-        
-        //Find Objects
-        Cuponera cup = em.find(Cuponera.class, nombreCup);
-        ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-        if(cup == null || acti == null) {
-        	throw new IllegalArgumentException("Actividad deportiva o cuponera invalido");
-        }
-        
-        //If Objects Found Attempt to Persist, else return False
-      
-            //attempt to Persist
     	try {
     		em.clear();
     		em.getTransaction().begin();
+            Cuponera cup = em.find(Cuponera.class, nombreCup);
+            ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+	        if(cup == null || acti == null) {
+	        	throw new IllegalArgumentException("Actividad deportiva o cuponera invalido");
+	        }           
     		cup.aniadirAD(acti, cantClases); //ya no vamos a pasar Entity manager ni transacciones
+            acti.agregarCup(cup);
 			em.getTransaction().commit();
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			em.getTransaction().rollback();
 			System.out.println(e.getMessage());
 			
+		}catch (IllegalArgumentException e) {
+			throw e;
 		}
-            //if successful, return true, else false
     }
     
     public Usuario getUsuario(DtUsrKey usrKey){
@@ -583,10 +595,9 @@ public class Controlador implements IControlador {
         
         try{
         	em.getTransaction().begin();
-            Clase claseDictada = profe.darAltaClaseProfe(nombreInsti,nombreActiDepo, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, actiDepo);
-            
-            //this.instiRecordada.darAltaClaseInsti(actiDepo, claseDictada);
+            Clase claseDictada = profe.darAltaClaseProfe(nombreInsti, nombreClase, fechaInicio , sociosMin, sociosMax, URL,fechaAlta, actiDepo);
             em.persist(claseDictada);
+            actiDepo.darAltaClaseActi(claseDictada);
             em.getTransaction().commit();
         }catch(Exception e){
         	em.getTransaction().rollback();
@@ -650,10 +661,12 @@ public class Controlador implements IControlador {
   
 	public DtCuponera getDtCuponera(String nombreCupo){
 		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
 		Cuponera cupo = em.find(Cuponera.class, nombreCupo);
+		DtCuponera dtCupo = cupo.getData();
 		em.clear();
 		em.close();
-		return cupo.getData();
+		return dtCupo;
 	}
   
 	public DtClase getDtClaseXInsti(String nombreInsti,String nombreActi, String nombreClase) {
@@ -783,62 +796,4 @@ public class Controlador implements IControlador {
    	  	 }
    	  	 return hashADevolver;
 	}
-     
-    //CU Aceptar/Rechazar actividad deportiva
-     //NO FUNCIONA HASTA QUE CREAR ACTIVIDAD DEPORTIVA TENGA ESTADO EN SU CONSTRUCTOR.
-     public ArrayList<String> listaActividadesIngresada(){
-     /*	ArrayList<String> listaActividad = new ArrayList<String>();
- 		EntityManager em = emf.createEntityManager();
- 		ArrayList<String> consultaActividad = new ArrayList<String>();
- 		try {
- 			em.getTransaction().begin();
- 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where estado= 'Ingresada' ").getResultList();//nombre Actividades con estado Ingresada
- 		}catch (Exception ex) {
- 			if (em != null) {
- 				em.getTransaction().rollback();
- 			}
- 		}
- 		for (int i = 0; i < consultaActividad.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
- 			String nombresActividadesIngresadas = (String)consultaActividad.get(i);
- 			listaActividad.add(nombresActividadesIngresadas);//agrego a la lista
- 		}
- 		//return listaActividad;
-    	 */ 
-    	 return null;
-     }
-    
-     
-     public void altaCategoria(String nomCat) {
-    	 EntityManager em = emf.createEntityManager();
-    	 
-    	 try {
-    		 Categoria Cat = em.find(Categoria.class, nomCat);
-    		 
-    		 if(Cat != null) {
-    			 throw new IllegalArgumentException("La Categoría ya existe");
-        	 }
-    	 }
-    	 catch(Exception e) {
-    		 em.clear();
-    		 em.close();
-    		 throw e;
-    	 }
-    	 
-    	 
-    	 try{
-        		 em.getTransaction().begin();
-        		 
-        		 Categoria catAAniadir = new Categoria(nomCat);
-        		 em.persist(catAAniadir);
-        		 
-        		 em.getTransaction().commit();
-        		 
-    	 } catch (Exception ex) {
- 			em.getTransaction().rollback();
- 			ex.printStackTrace();
- 		} finally {
- 			em.clear();
- 			em.close();
- 		}
-     }
 }
