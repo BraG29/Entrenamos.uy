@@ -140,6 +140,7 @@ public class Cuponera implements Serializable {
 	}
 
 	public void aniadirAD(ActividadDeportiva acti, int cantidadClases) {
+        acti.agregarCup(this);
         this.actividades.add(acti);
         this.cantClases += cantidadClases;
 	}

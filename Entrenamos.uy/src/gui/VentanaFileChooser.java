@@ -18,6 +18,7 @@ public class VentanaFileChooser extends JFrame {
 	private JPanel contentPane;
 	private File archivo;
 
+	private JFileChooser fileChooser;
 	
 //	public static void main(String[] args) {
 //		EventQueue.invokeLater(new Runnable() {
@@ -37,36 +38,39 @@ public class VentanaFileChooser extends JFrame {
 	 */
 	public VentanaFileChooser() {
 		//setVisible(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		JFileChooser fileChooser = new JFileChooser();
-		contentPane.add(fileChooser, BorderLayout.CENTER);
 		
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
-		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
-		FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
-		fileChooser.addChoosableFileFilter(filterJPG);
-		fileChooser.addChoosableFileFilter(filterPNG);
-		fileChooser.addChoosableFileFilter(filterJPEG);
+		this.fileChooser = new JFileChooser();
+
 		
-		fileChooser.addActionListener(new ActionListener() {
+		this.fileChooser.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				archivo = fileChooser.getSelectedFile();
 				setVisible(false);
+				archivo = fileChooser.getSelectedFile();
 			}
 		});
-		fileChooser.showOpenDialog(null);
+		contentPane.add(this.fileChooser, BorderLayout.CENTER);
+		
+		this.fileChooser.setAcceptAllFileFilterUsed(false);
+		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
+		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
+		FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
+		this.fileChooser.addChoosableFileFilter(filterJPG);
+		this.fileChooser.addChoosableFileFilter(filterPNG);
+		this.fileChooser.addChoosableFileFilter(filterJPEG);
+		
+		this.fileChooser.showOpenDialog(null);
 	}
 	
 	public File getArchivo() {
-		//setVisible(false);
+		setVisible(false);
 		return this.archivo;
 	}
 

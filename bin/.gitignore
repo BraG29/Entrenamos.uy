@@ -1,0 +1,37 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+#Ignorar imagenes
+/Entrenamos.uy/src/imgUsers/
+
+# Mobile Tools for Java (J2ME)
+/Entrenamos.uy/mtj.tmp/
+
+# Package Files #
+#*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+.settings
+.vscode
+hs_err_pid*
+/.metadata/
+/Entrenamos.uy/bin/
+/Entrenamos.uy/.settings/
+/Entrenamos.uy/nbproject/private/
+/Entrenamos.uy/build/
+/Entrenamos.uy/dist/
+/Entrenamos.uy/nbbuild/
+/Entrenamos.uy/target/
+/Entrenamos.uy/nbproject/

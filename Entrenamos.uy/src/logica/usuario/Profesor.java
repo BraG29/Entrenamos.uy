@@ -51,9 +51,9 @@ public class Profesor extends Usuario{
     	claseDictada = new ArrayList<>();
     }
     public Profesor(
-    		String nickname, String apellido, String email, String pass, String nombre, LocalDate fechaNac, 
+    		String nickname, String apellido, String email, String nombre, LocalDate fechaNac, 
     		String biografia, String descripcion, String sitioWeb, Institucion institucion) {
-    	super( nickname,  apellido,  email, pass, nombre, fechaNac);
+    	super( nickname,  apellido,  email,  nombre, fechaNac);
     	this.biografia = biografia;
     	this.descripcion = descripcion;
     	this.sitioWeb = sitioWeb;
@@ -118,7 +118,7 @@ public class Profesor extends Usuario{
 
     }
     
-    public Clase darAltaClaseProfe(String nombreInsti,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, ActividadDeportiva actiDepo) {
+    public Clase darAltaClaseProfe(String nombreInsti,String nombreActiDepo,String nombreClase,LocalDateTime fechaInicio ,int sociosMin,int sociosMax,String URL,LocalDate fechaAlta, ActividadDeportiva actiDepo) {
     	
     	LocalTime horaIni = fechaInicio.toLocalTime();
         Clase claseADictar = new Clase(nombreClase, fechaInicio.toLocalDate(), horaIni, sociosMin, sociosMax, URL, fechaAlta ,this, actiDepo); //por alguna razón tengo que pasarle un objeto profesor a una clase, cuidado con la visibildad

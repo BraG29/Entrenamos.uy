@@ -53,13 +53,10 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JPasswordField;
 
 public class AltaUsuario extends JFrame {
 
 	private VentanaMensaje showMensaje;
-	private VentanaFileChooser fcImagen;
-	private File archivo;
 	private JPanel contentPane;
 	private JTextField txtFieldNick;
 	private JTextField txtFieldNombre;
@@ -69,7 +66,6 @@ public class AltaUsuario extends JFrame {
 	private JTextField txtFieldInstitucion;
 	private JTextField txtFieldDescripcion;
 	private JTextField txtFieldSitioWeb;
-	private JPasswordField passFieldContrasenia;
 
 	/**
 	 * Launch the application.
@@ -94,15 +90,29 @@ public class AltaUsuario extends JFrame {
 		setTitle("Alta Usuario");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 551, 558);
+		setBounds(100, 100, 452, 517);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JPanel panelFileChooser = new JPanel();
+		panelFileChooser.setBounds(0, 0, 450, 370);
+		contentPane.add(panelFileChooser);
+		panelFileChooser.setVisible(false);
+		panelFileChooser.setLayout(null);
+		
+		JFileChooser fCImagen = new JFileChooser();
+		fCImagen.setBounds(0, 0, 450, 358);
+		panelFileChooser.add(fCImagen);
+		fCImagen.setAcceptAllFileFilterUsed(false);
 		FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
 		FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
 		FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
+		fCImagen.addChoosableFileFilter(filterJPG);
+		fCImagen.addChoosableFileFilter(filterPNG);
+		fCImagen.addChoosableFileFilter(filterJPEG);
 		
 		
 		JLabel lblTipoUsr = new JLabel("Tipo de Usuario:");
@@ -118,7 +128,7 @@ public class AltaUsuario extends JFrame {
 		panelSocio.setForeground(new Color(51, 51, 51));
 		panelSocio.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panelSocio.setBackground(SystemColor.activeCaptionBorder);
-		panelSocio.setBounds(12, 63, 374, 230);
+		panelSocio.setBounds(12, 63, 374, 206);
 		contentPane.add(panelSocio);
 		panelSocio.setLayout(null);
 		panelSocio.setVisible(false);
@@ -140,7 +150,7 @@ public class AltaUsuario extends JFrame {
 		panelSocio.add(lblEmail);
 
 		JLabel lblFechaNac = new JLabel("Fecha de Nacimiento:*");
-		lblFechaNac.setBounds(12, 151, 167, 15);
+		lblFechaNac.setBounds(12, 117, 167, 15);
 		panelSocio.add(lblFechaNac);
 
 		txtFieldNick = new JTextField();
@@ -166,15 +176,15 @@ public class AltaUsuario extends JFrame {
 		JComboBox cBoxMes = new JComboBox();
 		cBoxMes.setModel(new DefaultComboBoxModel(new String[] { "-", "Enero", "Febrero", "Marzo", "Abril", "Mayo",
 				"Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
-		cBoxMes.setBounds(52, 168, 113, 24);
+		cBoxMes.setBounds(53, 137, 113, 24);
 		panelSocio.add(cBoxMes);
 
 		JLabel lblMes = new JLabel("Mes:");
-		lblMes.setBounds(12, 173, 48, 15);
+		lblMes.setBounds(12, 142, 48, 15);
 		panelSocio.add(lblMes);
 
 		JComboBox cBoxDia = new JComboBox();
-		cBoxDia.setBounds(205, 168, 48, 24);
+		cBoxDia.setBounds(204, 137, 48, 24);
 		panelSocio.add(cBoxDia);
 
 		cBoxMes.addActionListener(new ActionListener() {
@@ -185,11 +195,11 @@ public class AltaUsuario extends JFrame {
 		});
 
 		JLabel lblDia = new JLabel("Dia:");
-		lblDia.setBounds(170, 173, 48, 15);
+		lblDia.setBounds(171, 142, 48, 15);
 		panelSocio.add(lblDia);
 
 		JLabel lblAnio = new JLabel("Año:");
-		lblAnio.setBounds(265, 173, 32, 15);
+		lblAnio.setBounds(259, 142, 32, 15);
 		panelSocio.add(lblAnio);
 
 		txtFieldAnio = new JTextField();
@@ -199,41 +209,44 @@ public class AltaUsuario extends JFrame {
 					e.consume();
 			}
 		});
-		txtFieldAnio.setBounds(300, 169, 62, 24);
+		txtFieldAnio.setBounds(300, 137, 62, 24);
 		panelSocio.add(txtFieldAnio);
 		txtFieldAnio.setColumns(10);
 		
-		JLabel lblIMGChooser = new JLabel("Imagen(URL):*");
-		lblIMGChooser.setBounds(12, 210, 100, 15);
-		panelSocio.add(lblIMGChooser);
+		JLabel lblImagen = new JLabel("Imagen(URL):*");
+		lblImagen.setBounds(12, 173, 100, 15);
+		panelSocio.add(lblImagen);
 		
 		JButton btnExportarImagen = new JButton("Exportar Imagen");
-		btnExportarImagen.setBounds(130, 205, 150, 25);
+		btnExportarImagen.setBounds(122, 169, 150, 25);
 		panelSocio.add(btnExportarImagen);
-		
-		JLabel lblContrasenia = new JLabel("Contraseña:*");
-		lblContrasenia.setBounds(12, 119, 100, 15);
-		panelSocio.add(lblContrasenia);
-		
-		passFieldContrasenia = new JPasswordField();
-		passFieldContrasenia.setBounds(112, 120, 174, 19);
-		panelSocio.add(passFieldContrasenia);
 
 		JPanel panelProfesor = new JPanel();
 		panelProfesor.setBorder(new EmptyBorder(0, 0, 0, 0));
 		panelProfesor.setBackground(SystemColor.activeCaptionBorder);
 		panelProfesor.setForeground(Color.WHITE);
-		panelProfesor.setBounds(12, 305, 426, 179);
+		panelProfesor.setBounds(12, 262, 426, 179);
 		contentPane.add(panelProfesor);
 		panelProfesor.setLayout(null);
 		panelProfesor.setVisible(false);
 		
 		btnExportarImagen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fcImagen = new VentanaFileChooser();
-				//fcImagen.setVisible(true);
+				panelFileChooser.setVisible(true);
+				panelSocio.setVisible(false);
+				panelProfesor.setVisible(false);
 			}
 		});
+
+		fCImagen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelFileChooser.setVisible(false);
+				panelSocio.setVisible(true);
+				if(cBoxTipoUsr.getSelectedIndex() == 2)
+					panelProfesor.setVisible(true);
+			}
+		});
+
 		JLabel lblInstitucion = new JLabel("Institución:*");
 		lblInstitucion.setBounds(12, 12, 89, 15);
 		panelProfesor.add(lblInstitucion);
@@ -279,11 +292,11 @@ public class AltaUsuario extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnCancelar.setBounds(36, 496, 117, 25);
+		btnCancelar.setBounds(32, 453, 117, 25);
 		contentPane.add(btnCancelar);
 
 		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(269, 496, 117, 25);
+		btnConfirmar.setBounds(269, 453, 117, 25);
 		contentPane.add(btnConfirmar);
 
 		JLabel lblTitulo = new JLabel("Alta de Usuario");
@@ -295,10 +308,6 @@ public class AltaUsuario extends JFrame {
 		JLabel lblObligatorios = new JLabel("* Campos Obligatorios");
 		lblObligatorios.setBounds(267, 38, 171, 15);
 		contentPane.add(lblObligatorios);
-		
-		JLabel lblImagen = new JLabel("");
-		lblImagen.setBounds(422, 63, 100, 100);
-		contentPane.add(lblImagen);
 		cBoxTipoUsr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 //				int op = comboBoxTipoUsr.getSelectedIndex();
@@ -323,16 +332,14 @@ public class AltaUsuario extends JFrame {
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String errorCamposClave = "Por favor rellene todos los campos claves";
-				String pass = new String(passFieldContrasenia.getPassword()); 
-				archivo = fcImagen.getArchivo();
 				try {
 					if (cBoxTipoUsr.getSelectedIndex() == 0) {
 						throw new IllegalArgumentException("Por favor elija un tipo de Usuario");
 					} else {
 						if (txtFieldNombre.getText().isEmpty() || txtFieldNick.getText().isEmpty()
 								|| txtFieldApellido.getText().isEmpty() || txtEmail.getText().isEmpty()
-								|| pass.isEmpty() || cBoxMes.getSelectedIndex() == 0 || cBoxDia.getSelectedIndex() == 0
-								|| txtFieldAnio.getText().isEmpty() || archivo == null) {
+								|| cBoxMes.getSelectedIndex() == 0 || cBoxDia.getSelectedIndex() == 0
+								|| txtFieldAnio.getText().isEmpty() || fCImagen.getSelectedFile() == null) {
 							throw new IllegalArgumentException(errorCamposClave);
 						} else if (cBoxTipoUsr.getSelectedIndex() == 2 && (txtFieldInstitucion.getText().isEmpty()
 								|| txtFieldDescripcion.getText().isEmpty())) {
@@ -351,15 +358,25 @@ public class AltaUsuario extends JFrame {
 									cBoxMes.getSelectedIndex(),
 									cBoxDia.getSelectedIndex());
 							if (cBoxTipoUsr.getSelectedIndex() == 1) {
-								sistema.altaUsuario(nickname, nombre, apellido, email, pass, fechaNac, archivo);
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac);
 							} else {
 								String institucion, descripcion, biografia, sitioWeb;
 								institucion = txtFieldInstitucion.getText();
 								descripcion = txtFieldDescripcion.getText();
 								biografia = textBiografia.getText();
 								sitioWeb = txtFieldSitioWeb.getText();
-								sistema.altaUsuario(nickname, nombre, apellido, email, pass,fechaNac,
-										institucion, descripcion, biografia, sitioWeb, archivo);
+								sistema.altaUsuario(nickname, nombre, apellido, email, fechaNac, 
+										institucion, descripcion, biografia, sitioWeb);
+							}
+							File imagen = fCImagen.getSelectedFile();
+							try {
+								String rutaDir = System.getProperty("user.dir");//llega hasta el proyecto
+								Files.copy(
+										Paths.get(imagen.getPath()),
+										Paths.get(rutaDir+"/src/imgUsers/"+"."+txtFieldNick.getText()), //txtField es el nombre del usuario
+										StandardCopyOption.REPLACE_EXISTING);
+							} catch (IOException ioError) {
+								throw ioError;
 							}
 							
 							String mensajeConfirmacion = "Se ha dado de alta al usuario " + nickname + " en el sistema";

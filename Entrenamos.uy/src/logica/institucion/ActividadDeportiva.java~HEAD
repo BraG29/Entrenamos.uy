@@ -59,12 +59,6 @@ public class ActividadDeportiva implements Serializable {
     	inverseJoinColumns = @JoinColumn(name="nom_cuponera"))
     private Collection<Cuponera> cuponeras;
     
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="Actividad_Categorias",
-    	joinColumns = @JoinColumn(name="nom_actividad"),
-    	inverseJoinColumns = @JoinColumn(name="nom_categoria"))
-    private Collection<Categoria> categoriasAsociadas;
-    
     @OneToMany(mappedBy = "claseDe",cascade = CascadeType.ALL)
     private Collection<Clase> clases;
 
@@ -82,7 +76,7 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.insti = institu;
         this.clases = new ArrayList<>();
-     //   this.cuponeras = new ArrayList<>();
+        this.cuponeras = new ArrayList<>();
     }
     
     public int getCantCupo() {
