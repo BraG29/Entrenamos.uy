@@ -61,8 +61,8 @@ public class Socio extends Usuario {
 		registro = new ArrayList<>();
 	}
 
-	public Socio(String nickname, String apellido, String email, String nombre, LocalDate fechaNac) {
-		super(nickname, apellido, email, nombre, fechaNac);
+	public Socio(String nickname, String apellido, String email, String pass, String nombre, LocalDate fechaNac) {
+		super(nickname, apellido, email, pass, nombre, fechaNac);
 		// TODO Auto-generated constructor stub
 
 		compra = new ArrayList<>();// Siempren inicien el las colleciones

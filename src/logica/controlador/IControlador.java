@@ -1,5 +1,6 @@
 package logica.controlador;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,10 +15,10 @@ public interface IControlador {
 	
 	public void closeConnection();
 
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac);
+	public void altaUsuario(String nick, String nombre, String apellido, String email, String pass, LocalDate fechaNac, File img);
 	
-	public void altaUsuario(String nick, String nombre, String apellido, String email, LocalDate fechaNac, 
-			String institucion, String descripcion, String biografia, String sitioWeb);
+	public void altaUsuario(String nick, String nombre, String apellido, String email, String pass, LocalDate fechaNac, 
+			String institucion, String descripcion, String biografia, String sitioWeb, File img);
 
 	public ArrayList<DtUsuario> listarUsuarios();
 

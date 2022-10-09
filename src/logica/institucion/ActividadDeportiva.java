@@ -76,7 +76,7 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.insti = institu;
         this.clases = new ArrayList<>();
-        this.cuponeras = new ArrayList<>();
+     //   this.cuponeras = new ArrayList<>();
     }
     
     public int getCantCupo() {
