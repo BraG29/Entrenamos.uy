@@ -37,13 +37,13 @@ public class MenuPrincipal extends JFrame {
     
     private JPanel contentPane;
     private AltaUsuario menuAltaUsuario; //º1 alta usuario
-    private ConsultaUsuario menuConsultaUsuario; //º2 consulta usuario
+    //private ConsultaUsuario menuConsultaUsuario; //º2 consulta usuario
     private ModificarUsuario menuModificarUsuario; // º3 modificar datos usuario
     private AltaActividadDeportiva menuAltaActividad;//º4 alta actividad deportiva
     private ConsultaActividadDeportiva menuConsultaActividad; // º5 consulta de actividad deportiva
     private AltaClase menuAltaClase; // º6 alta dictado de clase
     private ConsultaDictadoClase menuConsultaDictadoClase; // º7 consulta de dictado de clase
-    private RegistroDictadoClase menuRegistroDictadoClase; // º8 Registro a dictado de clase
+    //private RegistroDictadoClase menuRegistroDictadoClase; // º8 Registro a dictado de clase
     private AltaCuponera menuAltaCuponera; // º9 Crear cuponera de actividades deportivas
     private AgregarActividadDeportivaCuponera menuAgregarActividad; //º10 Agregar actividad deportiva a cuponera    
     private ConsultaCuponeras menuCuponeras; //º11 Consulta de cuponeras de actividades deportivas
@@ -108,8 +108,8 @@ public class MenuPrincipal extends JFrame {
 		JButton btnConsultaUsuario = new JButton("Consulta de Usuario");
 		btnConsultaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				menuConsultaUsuario = new ConsultaUsuario();
-				menuConsultaUsuario.setVisible(true);
+				//menuConsultaUsuario = new ConsultaUsuario();
+				//menuConsultaUsuario.setVisible(true);
 			}
 		});
 		btnConsultaUsuario.setBounds(12, 100, 298, 25);
@@ -168,8 +168,8 @@ public class MenuPrincipal extends JFrame {
 		JButton btnRegistroAClase = new JButton("Registro a dictado de Clase");
 		btnRegistroAClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				menuRegistroDictadoClase = new RegistroDictadoClase();
-				menuRegistroDictadoClase.setVisible(true);
+				//menuRegistroDictadoClase = new RegistroDictadoClase();
+				//menuRegistroDictadoClase.setVisible(true);
 			}
 		});
 		btnRegistroAClase.setBounds(322, 100, 298, 25);
