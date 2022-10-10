@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="./../templates/headerSignInSignUp.jsp"/>
 
 <div class="row justify-content-center">
     <div class="col-md-12 col-sm-12">
