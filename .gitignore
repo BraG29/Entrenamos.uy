@@ -13,6 +13,9 @@
 # Mobile Tools for Java (J2ME)
 /Entrenamos.uy/mtj.tmp/
 
+# Carpeta bin
+/bin/
+
 # Package Files #
 *.jar
 *.war
@@ -36,3 +39,4 @@ hs_err_pid*
 /Entrenamos.uy/nbbuild/
 /Entrenamos.uy/target/
 /Entrenamos.uy/nbproject/
+/bin/

@@ -47,11 +47,9 @@ public class ActividadDeportiva implements Serializable {
 	@Id
 	@Column(name="nombre")
     private String nombreAct;
-	
     private String descripcion;
     private float duracion;//en minutos gente
     private float costo;
-    
     @Column(name="fecha_registro")
     private LocalDateTime fechaRegistro;
     
@@ -84,7 +82,7 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.insti = institu;
         this.clases = new ArrayList<>();
-        this.cuponeras = new ArrayList<>();
+     //   this.cuponeras = new ArrayList<>();
     }
     
     public int getCantCupo() {

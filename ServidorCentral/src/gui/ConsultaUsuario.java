@@ -1,36 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package gui;
-
-import java.awt.Image;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import javax.imageio.ImageIO;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import logica.clase.Clase;
-import logica.controlador.Fabrica;
-import logica.controlador.IControlador;
-import logica.datatypes.DtActividadDeportiva;
-import logica.datatypes.DtClase;
-import logica.datatypes.DtProfesor;
-import logica.datatypes.DtSocio;
-import logica.datatypes.DtUsrKey;
-import logica.datatypes.DtUsuario;
-import logica.usuario.*;
-
-
-/**
- *
- * @author elinzar
- */
-public class ConsultaUsuario extends javax.swing.JFrame {
+///*
+// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+// * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+// */
+//package gui;
+//
+//import java.awt.Image;
+//import java.io.IOException;
+//import java.net.URL;
+//import java.net.URLConnection;
+//import java.util.ArrayList;
+//import java.util.Collection;
+//import java.util.Iterator;
+//import javax.imageio.ImageIO;
+//import javax.swing.DefaultComboBoxModel;
+//import javax.swing.ImageIcon;
+//import logica.clase.Clase;
+//import logica.controlador.Fabrica;
+//import logica.controlador.IControlador;
+//import logica.datatypes.DtActividadDeportiva;
+//import logica.datatypes.DtClase;
+//import logica.datatypes.DtProfesor;
+//import logica.datatypes.DtSocio;
+//import logica.datatypes.DtUsrKey;
+//import logica.datatypes.DtUsuario;
+//import logica.usuario.*;
+//
+//
+///**
+// *
+// * @author elinzar
+// */
+//public class ConsultaUsuario extends javax.swing.JFrame {
 //
 //    /**
 //     * Creates new form ConsultaUsuario
@@ -966,4 +966,4 @@ public class ConsultaUsuario extends javax.swing.JFrame {
 //    private javax.swing.JTextField urlClassTF;
 //    // End of variables declaration//GEN-END:variables
 //    private String insti;
-}
+//}

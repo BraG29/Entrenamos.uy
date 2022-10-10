@@ -1,16 +1,16 @@
-package gui;
-
-import java.util.ArrayList;
-import logica.controlador.Fabrica;
-import logica.controlador.IControlador;
-import logica.datatypes.DtUsrKey;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-
-public class RegistroDictadoClase extends javax.swing.JFrame {
+//package gui;
+//
+//import java.util.ArrayList;
+//import logica.controlador.Fabrica;
+//import logica.controlador.IControlador;
+//import logica.datatypes.DtUsrKey;
+//
+//import javax.swing.GroupLayout.Alignment;
+//import javax.swing.GroupLayout;
+//import javax.swing.LayoutStyle.ComponentPlacement;
+//import java.awt.Color;
+//
+//public class RegistroDictadoClase extends javax.swing.JFrame {
 //	private VentanaMensaje showMensaje;
 //	private javax.swing.JButton btnCancelar;
 //	private javax.swing.JButton btnAgregar;
@@ -278,4 +278,4 @@ public class RegistroDictadoClase extends javax.swing.JFrame {
 //	private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {
 //		this.setVisible(false);
 //	}
-}
+//}
