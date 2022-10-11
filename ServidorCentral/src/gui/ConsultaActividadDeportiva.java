@@ -288,8 +288,44 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         	
         	if(!this.listaClases.contains(this.comboLista.getSelectedItem().toString())) {
         		DtCuponera DtAUsar = controlador.getDtCuponera(this.comboLista.getSelectedItem().toString());
+        		
+        		ArrayList<String> arrCat = new ArrayList<>();
+        		ArrayList<String> arrActisAMostrar = new ArrayList<>();
+        		arrActisAMostrar.addAll(DtAUsar.actividades);
+        		
+        		for(int i = 0;i < arrActisAMostrar.size();i++) {
+        			 ArrayList<String> arr = controlador.getCategoriaXActi(arrActisAMostrar.get(i));
+        			 
+        			 for(int c = 0; c < arr.size();c++) {
+        				 arrCat.add(arrActisAMostrar.get(i) + "/" + arr.get(c));
+        			 }
+        		}
+        		
+        		
+        		//String[] arrActi = (String[])DtAUsar.actividades.toArray();
+        		
+        		//for(int i = 0;i < DtAUsar.actividades.size();i++) {//consigo el tamaño del arr de las actividades de las cuponeras
+        			
+        			//for(int c = 0;c < this.hashInfo.get(this.comboInsti.getSelectedItem().toString()).size();c++) {//itero dentro del ArrayList de DtActividades para la institucion que estoy parado
+        				
+        				//if(this.hashInfo.get(this.comboInsti.getSelectedItem().toString()).get(c).nombreAct.equals(arrActi[i])) {//si encontre la DtActividad correspondiente al nombre de la actividad donde está parada arrActi
+        					
+        					//for(int z = 0; z < this.hashInfo.get(this.comboInsti.getSelectedItem().toString()).get(c).categorias.size();z++) {
+        				//}
+//        				arrCat.add(arrActi[i] + "/" + arrActi.);
+        			//}
+        			
+        			//arrCat.add(arrActi[i] + "/" + this.hashInfo.get(this.comboInsti.getSelectedItem().toString()).));
+        			
+//        			for(int c = 0;c < arrActi.length;c++) {
+//        				arrCat.add(arrActi[i] + "/" + arrActi.);
+//        			}
+        			
+        			
+        		//}
+        		
         		System.out.print(DtAUsar.nombreCup + DtAUsar.descripcion);
-        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar);
+        		VentanaConsulta consultaDevuelta = new VentanaConsulta(DtAUsar,arrCat);
         		consultaDevuelta.setVisible(true);
         		
         	}else {

@@ -44,7 +44,7 @@ public interface IControlador {
 
 	public void altaActividadDepo(
 			String nombreActividad, String nombreInsti, String desc, 
-			float dura, float costo, LocalDateTime fechaAlta);
+			float dura, float costo, LocalDateTime fechaAlta,ArrayList<String> catSeleccionadas);
 
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento);
@@ -108,9 +108,12 @@ public interface IControlador {
     
 
     public void altaCategoria(String nomCategoria);
+    
+    public void guardarImagen(File img, String nombre, String folder);
+    
+    public ArrayList<String> getAllCategorias();
 
-    
-    
+   
     //CU Aceptar/Rechazar actividad deportiva
     public ArrayList<String> listaActividadesIngresada();
     
@@ -123,4 +126,6 @@ public interface IControlador {
     //CU dejar de seguir usuario
     public void unfollowUsr(String seguidor, String seguido);
     
+    public ArrayList<String> getCategoriaXActi(String actiDepo);
+
 }

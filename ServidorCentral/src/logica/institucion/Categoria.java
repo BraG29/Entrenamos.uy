@@ -24,4 +24,8 @@ public class Categoria implements Serializable {
 	public Categoria() {
 		
 	}
+	
+	public String getNombreCategoria() {
+		return this.nombreCat;
+	}
 }
