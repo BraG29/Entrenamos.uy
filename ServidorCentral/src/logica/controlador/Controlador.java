@@ -801,12 +801,12 @@ public class Controlador implements IControlador {
     //CU Aceptar/Rechazar actividad deportiva
      //NO FUNCIONA HASTA QUE CREAR ACTIVIDAD DEPORTIVA TENGA ESTADO EN SU CONSTRUCTOR.
      public ArrayList<String> listaActividadesIngresada(){
-     /*	ArrayList<String> listaActividad = new ArrayList<String>();
- 		EntityManager em = emf.createEntityManager();
+	  EntityManager em = emf.createEntityManager();
+		ArrayList<String> listaActividad = new ArrayList<String>();
  		ArrayList<String> consultaActividad = new ArrayList<String>();
  		try {
  			em.getTransaction().begin();
- 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where estado= 'Ingresada' ").getResultList();//nombre Actividades con estado Ingresada
+ 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where estado = 0 ").getResultList();//nombre Actividades con estado Ingresada
  		}catch (Exception ex) {
  			if (em != null) {
  				em.getTransaction().rollback();
@@ -816,11 +816,31 @@ public class Controlador implements IControlador {
  			String nombresActividadesIngresadas = (String)consultaActividad.get(i);
  			listaActividad.add(nombresActividadesIngresadas);//agrego a la lista
  		}
- 		//return listaActividad;
-    	 */ 
-    	 return null;
+ 		return listaActividad;
+    	 
      }
     
+     public void estadoAceptada(String nombreAct) {
+    	 /*EntityManager em = emf.createEntityManager();
+			ActividadDeportiva actdepo = em.find(ActividadDeportiva.class, nombreAct);
+    	  * 
+		    	 setEstado(1); 
+    	  */
+     }
+
+     public void estadoRechazada(String nombreAct) {   	 
+    	 /*EntityManager em = emf.createEntityManager();
+			ActividadDeportiva actdepo = em.find(ActividadDeportiva.class, nombreAct);
+ 	  * 
+		    	 setEstado(2); 
+ 	  */     }
+     
+     //CU seguir usuario
+     public void followUsr(String seguidor, String seguido){}
+     
+     //CU dejar de seguir usuario
+     public void unfollowUsr(String seguidor, String seguido){}
+     
      
      public void altaCategoria(String nomCat) {
     	 EntityManager em = emf.createEntityManager();

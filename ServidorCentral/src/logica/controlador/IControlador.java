@@ -106,10 +106,21 @@ public interface IControlador {
     
     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis();
     
-    //CU Aceptar/Rechazar actividad deportiva
-    public ArrayList<String> listaActividadesIngresada();
 
     public void altaCategoria(String nomCategoria);
 
+    
+    
+    //CU Aceptar/Rechazar actividad deportiva
+    public ArrayList<String> listaActividadesIngresada();
+    
+    public void estadoAceptada(String nombreAct);
 
+    public void estadoRechazada(String nombreAct);
+    
+    //CU seguir usuario
+    public void followUsr(String seguidor, String seguido);
+    //CU dejar de seguir usuario
+    public void unfollowUsr(String seguidor, String seguido);
+    
 }
