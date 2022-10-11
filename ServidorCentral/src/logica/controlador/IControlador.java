@@ -44,7 +44,7 @@ public interface IControlador {
 
 	public void altaActividadDepo(
 			String nombreActividad, String nombreInsti, String desc, 
-			float dura, float costo, LocalDateTime fechaAlta);
+			float dura, float costo, LocalDateTime fechaAlta,ArrayList<String> catSeleccionadas);
 
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento);
@@ -110,6 +110,10 @@ public interface IControlador {
     public ArrayList<String> listaActividadesIngresada();
 
     public void altaCategoria(String nomCategoria);
+    
+    public void guardarImagen(File img, String nombre, String folder);
+    
+    public ArrayList<String> getAllCategorias();
 
-
+    public ArrayList<String> getCategoriaXActi(String actiDepo);
 }
