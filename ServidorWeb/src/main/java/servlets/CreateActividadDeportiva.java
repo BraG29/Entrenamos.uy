@@ -8,12 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class Logout extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+import interfaces.FabricaWebService;
+import interfaces.IActividadDeportivaController;
 
-	public Logout() {
+@WebServlet("/createactividaddeportiva")
+public class CreateActividadDeportiva extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private static IActividadDeportivaController iActividad;
+
+	public CreateActividadDeportiva() {
 		super();
+		iActividad = FabricaWebService.getInstance().getIActDeportivaController();
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

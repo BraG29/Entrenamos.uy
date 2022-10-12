@@ -12,9 +12,9 @@
 </head>
 
 <body>
-<jsp:include page="./../templates/headerProfesor.jsp"/>
+<jsp:include page="./../templates/headerCommon.jsp"/>
 <main class="form-signup w-50 m-auto">
-    <form>
+    <form action="createactividaddeportiva" method="POST">
         <h1 class="h3 mb-3 fw-normal">Dar de alta una Actividad Deportiva</h1>
 
         <div class="form-floating my-2">

@@ -8,31 +8,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/actividades")
-public class Actividades extends HttpServlet {
+@WebServlet("/selectactividaddeportiva")
+public class SelectActividadDeportiva extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Actividades() {
+	public SelectActividadDeportiva() {
 		super();
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-
+			
 		} catch (Exception e) {
-			request.getRequestDispatcher("./../webapp/pages/404.jsp").forward(request, response);
+			response.sendRedirect("./../webapp/pages/500.jsp");
 			return;
 		}
-
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 }

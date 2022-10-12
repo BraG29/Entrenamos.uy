@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 //import interfaces.FabricaWebService;
 //import logica.datatypes.DtCuponera;
 
-@WebServlet("/cuponeras")
-public class Cuponeras extends HttpServlet {
+@WebServlet("/selectcuponera")
+public class SelectCuponera extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public Cuponeras() {
+	public SelectCuponera() {
     	super();
     }
 
@@ -23,8 +23,12 @@ public class Cuponeras extends HttpServlet {
     	response.sendRedirect("pages/403.jsp");
     }
     
-	protected void doGet(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request,  response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
 	}
 
 	/*private DtCuponera buscarCuponera(String pNombre) throws ServletException, IOException {

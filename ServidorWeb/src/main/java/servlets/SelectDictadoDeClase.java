@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/logout")
-public class Logout extends HttpServlet {
+@WebServlet ("/selectdictadodeclase")
+public class SelectDictadoDeClase extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	public Logout() {
-		super();
+	
+    public SelectDictadoDeClase() {
+        super();
+    }
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
 	}
-
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
@@ -27,4 +27,5 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
+	
 }

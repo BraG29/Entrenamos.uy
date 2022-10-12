@@ -8,6 +8,8 @@
     <title>Entrenamos.uy</title>
 </head>
 <body>
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+<jsp:include page="./../templates/headerVisitante.jsp"/>
+<h1>Texto genérico sobre lo necesario que es la gimnasia.</h1>
+<jsp:include page="./../templates/footer.jsp"/>
 </body>
 </html>

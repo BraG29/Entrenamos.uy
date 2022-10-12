@@ -12,8 +12,9 @@
 </head>
 
 <body>
+<jsp:include page="./../templates/headerSignInSignUp.jsp"/>
 <main class="form-signin w-50 m-auto">
-    <form>
+    <form action="login" method="POST">
     <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
 
     <div class="form-floating my-3">
