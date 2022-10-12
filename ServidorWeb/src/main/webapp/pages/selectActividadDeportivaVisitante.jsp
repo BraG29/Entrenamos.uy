@@ -12,6 +12,7 @@
 </head>
 
 <body>
+<jsp:include page="./../templates/headerVisitante.jsp"/>
 <main>
   <div class="album py-5 bg-light">
     <div class="container">

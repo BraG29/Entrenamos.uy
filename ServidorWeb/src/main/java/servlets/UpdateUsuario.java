@@ -8,21 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import interfaces.FabricaWebService;
-import interfaces.IActividadDeportivaController;
-
-@WebServlet("/altaActividadDeportiva")
-public class AltaActividadDeportiva extends HttpServlet {
+@WebServlet("/updateusuario")
+public class UpdateUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static IActividadDeportivaController iActividad;
 
-	public AltaActividadDeportiva() {
+	public UpdateUsuario() {
 		super();
-		iActividad = FabricaWebService.getInstance().getIActDeportivaController();
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

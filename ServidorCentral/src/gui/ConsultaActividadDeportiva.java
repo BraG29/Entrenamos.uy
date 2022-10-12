@@ -21,6 +21,8 @@ import logica.controlador.IControlador;
 import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtClase;
 import logica.datatypes.DtCuponera;
+import logica.datatypes.DtInstitucion;
+
 import javax.swing.JLabel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -34,7 +36,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 	
 	private ArrayList<String> listaClases = new ArrayList<>();
 	private ArrayList<String> listaCuponeras = new ArrayList<>();
-	private HashMap<String,ArrayList<DtActividadDeportiva>> hashInfo = new HashMap<>();
+	private HashMap<String,DtInstitucion> hashInfo = new HashMap<>();
 	
     public ConsultaActividadDeportiva() {
         initComponents();
@@ -57,10 +59,11 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         Fabrica fab = new Fabrica();
         IControlador controlador = fab.getInterface();
         
-        this.hashInfo = controlador.getHashInstisAndDtActis();
+        this.hashInfo = controlador.getHashDtInstis();
         
         ArrayList<String> arrStr = new ArrayList<String>();
-        arrStr.addAll(this.hashInfo.keySet());
+        //arrStr.addAll(this.hashInfo.keySet());
+        
         
         for(int i = 0;i < arrStr.size();i++) {
         	this.comboInsti.addItem(arrStr.get(i));

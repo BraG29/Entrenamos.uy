@@ -144,6 +144,9 @@ public class ActividadDeportiva implements Serializable {
         return insti;
     }
     
+    public Estado getEstado() {
+    	return estadoActual;
+    }
     
 
     //Setters
@@ -175,13 +178,16 @@ public class ActividadDeportiva implements Serializable {
         this.insti = insti;
     }
     
-    
+    public void setEstado(Estado statusAct) {
+    	this.estadoActual = statusAct;
+    }
     
     public void agregarCup(Cuponera cup){
     	this.cuponeras.add(cup);
     }
     
     public DtActividadDeportiva getDTActividadDeportiva(){
+    	
         ArrayList<DtClase> listClases = null;
         for(Clase c : this.clases){
         	DtClase cl = c.getData();

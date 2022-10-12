@@ -8,20 +8,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet ("/login")
+@WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public Login() {
-        super();
-    }
-    
-    protected void processRequest(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
-    	
-    } 
-
-	protected void doPost(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request,  response);
+		super();
 	}
 
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		processRequest(request, response);
+	}
 }
