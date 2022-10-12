@@ -810,48 +810,56 @@ public class Controlador implements IControlador {
      
      
     //CU Aceptar/Rechazar actividad deportiva
-     //NO FUNCIONA HASTA QUE CREAR ACTIVIDAD DEPORTIVA TENGA ESTADO EN SU CONSTRUCTOR.
      public ArrayList<String> listaActividadesIngresada(){
 	  EntityManager em = emf.createEntityManager();
 		ArrayList<String> listaActividad = new ArrayList<String>();
  		ArrayList<String> consultaActividad = new ArrayList<String>();
  		try {
  			em.getTransaction().begin();
- 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where estado = 0 ").getResultList();//nombre Actividades con estado Ingresada
+ 			consultaActividad = (ArrayList<String>) em.createQuery("SELECT nombreAct FROM ActividadDeportiva where Estado = 0 ").getResultList();//nombre Actividades con estado Ingresada
  		}catch (Exception ex) {
  			if (em != null) {
  				em.getTransaction().rollback();
  			}
  		}
+ 		
  		for (int i = 0; i < consultaActividad.size(); i++) {//itero y agrego nombres a la lista que voy a retornar ekisde
  			String nombresActividadesIngresadas = (String)consultaActividad.get(i);
  			listaActividad.add(nombresActividadesIngresadas);//agrego a la lista
  		}
+ 		
+ 		em.clear();
+		em.close();
+		
  		return listaActividad;
     	 
      }
     
-     public void estadoAceptada(String nombreAct) {
-    	 /*EntityManager em = emf.createEntityManager();
-			ActividadDeportiva actdepo = em.find(ActividadDeportiva.class, nombreAct);
-    	  * 
-		    	 setEstado(1); 
-    	  */
+     public void rechazoAceptoActividad(String nombreActividad, int Estado) {
+    	EntityManager em = emf.createEntityManager();
+		try {
+			ActividadDeportiva act = em.find(ActividadDeportiva.class, nombreActividad);
+			em.getTransaction().begin();
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaUpdate<ActividadDeportiva> cu = cb.createCriteriaUpdate(ActividadDeportiva.class);
+			Root<ActividadDeportiva> rootAct = cu.from(ActividadDeportiva.class);
+			cu.set(rootAct.get("estadoActual"), Estado);
+			cu.where(cb.equal(rootAct.get("nombreAct"), nombreActividad));
+			em.createQuery(cu).executeUpdate();
+			em.getTransaction().commit();
+		}catch(PersistenceException e) {
+			em.getTransaction().rollback();
+		}
+		em.clear();
+		em.close();
      }
 
-     public void estadoRechazada(String nombreAct) {   	 
-    	 /*EntityManager em = emf.createEntityManager();
-			ActividadDeportiva actdepo = em.find(ActividadDeportiva.class, nombreAct);
- 	  * 
-		    	 setEstado(2); 
- 	  */     }
      
      //CU seguir usuario
      public void followUsr(String seguidor, String seguido){}
      
      //CU dejar de seguir usuario
      public void unfollowUsr(String seguidor, String seguido){}
-     
      
      public void altaCategoria(String nomCat) {
     	 EntityManager em = emf.createEntityManager();

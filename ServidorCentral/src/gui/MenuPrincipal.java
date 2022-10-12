@@ -49,7 +49,7 @@ public class MenuPrincipal extends JFrame {
     private ConsultaCuponeras menuCuponeras; //º11 Consulta de cuponeras de actividades deportivas
     private AltaInstitucion menuAltaInstitucion; // º12 Alta de institucion
     private AltaCategoria menuAltaCategoria; // °13 Alta de Categoria
-
+    private AceptarRechazarActividades menuAceptarRechazarActs;
 
 	/**
 	 * Launch the application.
@@ -225,7 +225,16 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnAltaCategoria.setBounds(12, 288, 298, 25);
 		contentPane.add(btnAltaCategoria);
+		
+		JButton btnAceptarRechazar = new JButton("Aceptar/Rechazar actividades");
+		btnAceptarRechazar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuAceptarRechazarActs = new AceptarRechazarActividades();
+				menuAceptarRechazarActs.setVisible(true);
+			}
+		});
+		btnAceptarRechazar.setBounds(322, 288, 302, 25);
+		contentPane.add(btnAceptarRechazar);
 
 	}
-
 }
