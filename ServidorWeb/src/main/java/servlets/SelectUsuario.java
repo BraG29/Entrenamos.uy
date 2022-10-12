@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet ("/selectusuario")
-public class SelectDictadoDeClase extends HttpServlet {
+public class SelectUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-    public SelectDictadoDeClase() {
+    public SelectUsuario() {
         super();
     }
     
