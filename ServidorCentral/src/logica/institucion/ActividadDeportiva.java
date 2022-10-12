@@ -72,9 +72,11 @@ public class ActividadDeportiva implements Serializable {
     	inverseJoinColumns = @JoinColumn(name="nom_categoria"))
     private Collection<Categoria> categoriasAsociadas;
    
+    @Column(name = "Estado")
+    private Estado estadoActual;
 
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu,ArrayList<Categoria> arrCat) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -82,7 +84,9 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.insti = institu;
         this.clases = new ArrayList<>();
+        this.estadoActual = Estado.INGRESADA;
      //   this.cuponeras = new ArrayList<>();
+        this.categoriasAsociadas = arrCat;
     }
     
     public int getCantCupo() {
@@ -187,7 +191,12 @@ public class ActividadDeportiva implements Serializable {
             strCuponeras.add(c.getNombreCup());
         }
         
-        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
+        ArrayList<String> strCategorias = new ArrayList<String>();
+        for(Categoria c : this.categoriasAsociadas){
+            strCategorias.add(c.getNombreCategoria());
+        }
+        
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras, strCategorias);
         return DtActi;
     }
     

@@ -25,8 +25,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.awt.Image;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class AltaActividadDeportiva extends javax.swing.JFrame {
 	
@@ -34,8 +40,10 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     public LocalDateTime convertirALocalDateTime(Date dateAConvertir){
         return dateAConvertir.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
-    private File archivoAUsar;
+    private File archivoAUsar = null;
     private VentanaFileChooser vntaFileChooser = null;
+    
+    
     /**
      * Creates new form AltaActividadDeportiva
      */
@@ -43,14 +51,25 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         Fabrica fab = new Fabrica();
         IControlador controlador = fab.getInterface();
         
+        
         initComponents();
         
         ArrayList<String> arrStr = controlador.getNombreInstituciones();
+        ArrayList<String> arrCat = controlador.getAllCategorias();
         
+        DefaultListModel listModel;
+        
+        listModel = new DefaultListModel<>();
+        
+        for(int i = 0; i < arrCat.size();i++) {
+        	listModel.addElement(arrCat.get(i));
+        }
+
         for(int i = 0; i < arrStr.size();i++){
             this.comboInsti.addItem(arrStr.get(i));
         }
         
+        this.list.setModel(listModel);
         
             //----------------escondo labels----------------------------
             this.lblNombre.setVisible(false);
@@ -59,6 +78,9 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             this.lblURL.setVisible(false);
             this.lblCosto.setVisible(false);
             this.lblMMDDAA.setVisible(false);
+            lblCategorias.setVisible(false);
+            list.setVisible(false);
+            panelDeScroleo.setVisible(false);
             //this.lblIMG_Seleccionada
             //----------------escondo los fields---------------------------
             this.fieldDesc.setVisible(false);
@@ -71,6 +93,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 
             
     }
+    
     
 //     public AltaActividadDeportiva(IControlador controlador) {
 //        Fabrica fab = new Fabrica();
@@ -102,6 +125,9 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         lblURL = new javax.swing.JLabel();
         comboInsti = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        //lblCategorias = new JLabel();
+        lblCategorias = new JLabel("Categorias"); //no le pongas el tipo al principio pajero
+        list = new JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -216,7 +242,6 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         	
         	public void actionPerformed(ActionEvent arg0) {//----------------------------cuando toco el boton de importar imagen-----------------------------------------
         		
-        		if(vntaFileChooser == null) {
         			try {
             			vntaFileChooser = new VentanaFileChooser();
                 		//vntFileChooser.setVisible(true);
@@ -228,47 +253,64 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
 
             		}catch(Exception e) {
             			System.out.println(e);
+            			//vntaFileChooser.setVisible(true);
+            			lblIMG_Seleccionada.setText("");
             		}
-        		}else {
-        			vntaFileChooser.setVisible(true);
-        			lblIMG_Seleccionada.setText("");
-        		}
+        		
         		
         		
         	}
         });
+        
+        panelDeScroleo = new JScrollPane();
+        panelDeScroleo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jButton2)
+        				.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        					.addGroup(layout.createSequentialGroup()
+        						.addContainerGap()
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addComponent(jLabel1)
+        							.addGroup(layout.createSequentialGroup()
+        								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        									.addComponent(fieldDesc, Alignment.TRAILING, 171, 171, Short.MAX_VALUE)
+        									.addComponent(fieldDuracion, Alignment.TRAILING, 171, 171, Short.MAX_VALUE)
+        									.addComponent(fieldNombre, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+        									.addComponent(comboInsti, Alignment.TRAILING, 0, 171, Short.MAX_VALUE)
+        									.addComponent(spinnerFecha, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+        									.addComponent(spinnerCosto, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+        								.addPreferredGap(ComponentPlacement.RELATED)
+        								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        									.addComponent(lblDura)
+        									.addComponent(lblNombre)
+        									.addComponent(lblMMDDAA)
+        									.addComponent(lblCosto)
+        									.addComponent(lblDesc)
+        									.addComponent(jLabel2))))
+        						.addGap(29))
+        					.addGroup(layout.createSequentialGroup()
+        						.addGap(37)
+        						.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        							.addGroup(layout.createSequentialGroup()
+        								.addGap(161)
+        								.addComponent(lblURL))
+        							.addComponent(btnImportarIMG))
+        						.addPreferredGap(ComponentPlacement.RELATED))
+        					.addGroup(layout.createSequentialGroup()
+        						.addContainerGap()
+        						.addComponent(panelDeScroleo, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+        						.addPreferredGap(ComponentPlacement.RELATED)
+        						.addComponent(lblCategorias, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+        						.addGap(8)))
         				.addGroup(layout.createSequentialGroup()
-        					.addContainerGap()
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jLabel1)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(fieldDesc, Alignment.TRAILING, 171, 171, Short.MAX_VALUE)
-        								.addComponent(fieldDuracion, Alignment.TRAILING, 171, 171, Short.MAX_VALUE)
-        								.addComponent(fieldNombre, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-        								.addComponent(comboInsti, Alignment.TRAILING, 0, 171, Short.MAX_VALUE)
-        								.addComponent(spinnerFecha, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-        								.addComponent(spinnerCosto, GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-        								.addGroup(layout.createSequentialGroup()
-        									.addGap(25)
-        									.addComponent(btnImportarIMG)))
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        								.addComponent(lblURL)
-        								.addComponent(lblDura)
-        								.addComponent(lblNombre)
-        								.addComponent(lblMMDDAA)
-        								.addComponent(lblCosto)
-        								.addComponent(lblDesc)
-        								.addComponent(jLabel2))))))
-        			.addGap(29)
+        					.addComponent(jButton2)
+        					.addPreferredGap(ComponentPlacement.RELATED)))
         			.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -300,14 +342,34 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(lblCosto)
         				.addComponent(spinnerCosto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(lblURL)
-        				.addComponent(btnImportarIMG))
-        			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(jButton2))
-        		.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+        				.addComponent(btnImportarIMG)
+        				.addComponent(lblURL))
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(panelDeScroleo, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+        					.addGap(30)
+        					.addComponent(jButton2))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(42)
+        					.addComponent(lblCategorias)
+        					.addContainerGap())))
+        		.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
         );
+        
+        
+        list.setModel(new AbstractListModel() {
+        	String[] values = new String[] {};
+        	public int getSize() {
+        		return values.length;
+        	}
+        	public Object getElementAt(int index) {
+        		return values[index];
+        	}
+        });
+        panelDeScroleo.setViewportView(list);
         getContentPane().setLayout(layout);
 
         pack();
@@ -348,45 +410,37 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldDuracionMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    	ArrayList<String> catSeleccionadas = new ArrayList<String>();
         String nombreActividad = fieldNombre.getText();
         String nombreInsti = this.comboInsti.getSelectedItem().toString();
         String desc = fieldDesc.getText();
         
         try{//se intenta parsear el float
-            float dura = Float.parseFloat(fieldDuracion.getText());             
+            float dura = Float.parseFloat(fieldDuracion.getText()); 
+            //VER PARA QUE EL ERROR QUE TIRE SEA CORRESPONDIENTE A LO QUE PASA
+            
             float costo = Float.parseFloat(spinnerCosto.getValue().toString());
             LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
             
-            //String URL_IMG = this.textIMG.getText();
-            
+            catSeleccionadas.addAll(this.list.getSelectedValuesList());
+            if(catSeleccionadas.equals("") || catSeleccionadas.equals(null) || catSeleccionadas.equals("[]") || catSeleccionadas.isEmpty()) {
+            	throw new IllegalArgumentException("Categoria no puede estar vacio");
+            }
+
             Fabrica fab = new Fabrica();
             IControlador controlador =  fab.getInterface();
             
-            try{//se intenta persistir los datos
             	
-                controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta);
+            controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta,catSeleccionadas);
 
-                if(vntaFileChooser != null) {
-                	File imagen = archivoAUsar;
-                    try {
-        				String rutaDir = System.getProperty("user.dir");//llega hasta el proyecto
-        				Files.copy(
-        						Paths.get(imagen.getPath()),
-        						Paths.get(rutaDir+"/src/imgActis/"+"."+ this.fieldNombre.getText()), //txtField es el nombre del usuario
-        						StandardCopyOption.REPLACE_EXISTING);
-        			} catch (IOException ioError) {
-        				throw ioError;
-        			}
-                }
-                
-            }catch(Exception e){//algo malió sal en la persistición
-                VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
-                errorVentana.setVisible(true);
-                return;
+            if(this.archivoAUsar != null) {
+                controlador.guardarImagen(this.archivoAUsar,this.fieldNombre.getText(),"imgActis");
             }
+                
+         
             
         }catch(Exception e){//fallo el parseo del float
-            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","caracteres invalidos en campo Duracion",java.awt.Color.RED);
+            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
             errorVentana.setVisible(true);
             return;
         }
@@ -418,6 +472,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             this.lblCosto.setVisible(true);
             this.lblMMDDAA.setVisible(true);
             this.lblIMG_Seleccionada.setVisible(true);
+            lblCategorias.setVisible(true);
             //----------------muestro los fields---------------------------
             this.fieldDesc.setVisible(true);
             this.fieldDuracion.setVisible(true);
@@ -428,8 +483,10 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             //----------------muestro los spinners-----------------------
             this.spinnerCosto.setVisible(true);
             this.spinnerFecha.setVisible(true);
-            
-            
+            //----------------muestro LA LISTA----------------------------
+            this.panelDeScroleo.setVisible(true);
+            this.list.setVisible(true);
+
         }else{
             //----------------escondo labels----------------------------
             this.lblNombre.setVisible(false);
@@ -439,6 +496,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
             this.lblCosto.setVisible(false);
             this.lblMMDDAA.setVisible(false);
             this.lblIMG_Seleccionada.setVisible(false);
+            this.lblCategorias.setVisible(false);
             //----------------escondo los fields---------------------------
             this.fieldDesc.setVisible(false);
             this.fieldDuracion.setVisible(false);
@@ -507,4 +565,7 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     private JButton btnImportarIMG;
     private VentanaFileChooser vntFileChooser;
     private JLabel lblIMG_Seleccionada;
+    private JList list;
+    private javax.swing.JLabel lblCategorias;
+    private JScrollPane panelDeScroleo;
 }

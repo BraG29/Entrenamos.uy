@@ -16,7 +16,7 @@ public class DtCuponera {
     public final float descuento;
     public final LocalDate fechaAlta;
     public final int cantClases;
-    public final Collection<String> actividades;
+    public final Collection<String> actividades;//se podra pasar de collection a ArrayList<String> plz?
 
     public DtCuponera(String nombreCup, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, float descuento, LocalDate fechaAlta, int cantClases, Collection<String> actis) {
         this.nombreCup = nombreCup;
