@@ -44,7 +44,7 @@ public interface IControlador {
 
 	public void altaActividadDepo(
 			String nombreActividad, String nombreInsti, String desc, 
-			float dura, float costo, LocalDateTime fechaAlta);
+			float dura, float costo, LocalDateTime fechaAlta,ArrayList<String> catSeleccionadas);
 
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento);
@@ -105,5 +105,27 @@ public interface IControlador {
     public DtInstitucion getDtInsti(String nombreInsti);
     
     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis();
+    
+
+    public void altaCategoria(String nomCategoria);
+    
+    public void guardarImagen(File img, String nombre, String folder);
+    
+    public ArrayList<String> getAllCategorias();
+
+   
+    //CU Aceptar/Rechazar actividad deportiva
+    public ArrayList<String> listaActividadesIngresada();
+    
+    public void estadoAceptada(String nombreAct);
+
+    public void estadoRechazada(String nombreAct);
+    
+    //CU seguir usuario
+    public void followUsr(String seguidor, String seguido);
+    //CU dejar de seguir usuario
+    public void unfollowUsr(String seguidor, String seguido);
+    
+    public ArrayList<String> getCategoriaXActi(String actiDepo);
 
 }

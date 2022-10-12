@@ -123,10 +123,8 @@ public class Institucion implements Serializable{
         return DtInsti;
     }
     
-    public ActividadDeportiva darAltaActividadDeportiva(
-		String nombreActividad, String nombreInsti, String desc, float dura, 
-		float costo, LocalDateTime fechaAlta){  
-		ActividadDeportiva acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this);
+    public ActividadDeportiva darAltaActividadDeportiva(String nombreActividad, String nombreInsti, String desc, float dura, float costo, LocalDateTime fechaAlta,ArrayList<Categoria> arrCat){  
+		ActividadDeportiva acti = new ActividadDeportiva(nombreActividad, desc, dura, costo, fechaAlta, this,arrCat);
 		this.agregarActi(acti);
 		return acti;
                

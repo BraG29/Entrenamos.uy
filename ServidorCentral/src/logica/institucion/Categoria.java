@@ -14,8 +14,8 @@ public class Categoria implements Serializable {
 	@Id
 	private String nombreCat;
 	
-//	@ManyToMany(mappedBy = "categoriasAsociadas",cascade = CascadeType.ALL)
-//	private Collection<ActividadDeportiva> actisAsociadas;
+	@ManyToMany(mappedBy = "categoriasAsociadas",cascade = CascadeType.ALL)
+	private Collection<ActividadDeportiva> actisAsociadas;
 	
 	public Categoria(String nomCategoria) {
 		this.nombreCat = nomCategoria;
@@ -23,5 +23,9 @@ public class Categoria implements Serializable {
 	
 	public Categoria() {
 		
+	}
+	
+	public String getNombreCategoria() {
+		return this.nombreCat;
 	}
 }

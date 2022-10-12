@@ -66,10 +66,18 @@ public class ActividadDeportiva implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "institucion")
     private Institucion insti;
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Actividad_Categorias",
+    	joinColumns = @JoinColumn(name="nom_actividad"),
+    	inverseJoinColumns = @JoinColumn(name="nom_categoria"))
+    private Collection<Categoria> categoriasAsociadas;
    
+    @Column(name = "Estado")
+    private Estado estadoActual;
 
     
-    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu) {
+    public ActividadDeportiva(String nombreAct, String descripcion, float duracion, float costo, LocalDateTime fechaRegistro, Institucion institu,ArrayList<Categoria> arrCat) {
         this.nombreAct = nombreAct;
         this.descripcion = descripcion;
         this.duracion = duracion;
@@ -77,7 +85,9 @@ public class ActividadDeportiva implements Serializable {
         this.fechaRegistro = fechaRegistro;
         this.insti = institu;
         this.clases = new ArrayList<>();
+        this.estadoActual = Estado.INGRESADA;
      //   this.cuponeras = new ArrayList<>();
+        this.categoriasAsociadas = arrCat;
     }
     
     public int getCantCupo() {
@@ -183,9 +193,13 @@ public class ActividadDeportiva implements Serializable {
             listCuponeras.add(c.getData());
         }
         
+        ArrayList<String> strCategorias = new ArrayList<String>();
+        for(Categoria c : this.categoriasAsociadas){
+        	strCategorias.add(c.getNombreCategoria());
+        }
         DtActividadDeportiva DtActi = new DtActividadDeportiva(
-        		this.nombreAct, this.descripcion, this.duracion, 
-        		this.costo, this.fechaRegistro, listClases, listCuponeras);
+        		this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, 
+        		this.insti.getDTInstitucion(), listClases, listCuponeras, strCategorias);
         return DtActi;
     }
     

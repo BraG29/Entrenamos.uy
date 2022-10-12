@@ -2,8 +2,16 @@ package gui;
 import logica.datatypes.DtCuponera;
 
 import java.text.Format;
+import java.util.ArrayList;
 
 import logica.datatypes.DtClase;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.JLabel;
 
 public class VentanaConsulta extends javax.swing.JFrame {
 
@@ -17,19 +25,7 @@ public class VentanaConsulta extends javax.swing.JFrame {
     public VentanaConsulta(Object DtAUsar){
         initComponents();
         
-        if(DtAUsar.getClass().equals(DtCuponera.class)) {
-        	DtCuponera cupo = ((DtCuponera) DtAUsar);
-        	this.labelTitulo.setText("Consulta de Cuponera");
-        	this.label1.setText("Nombre :" + cupo.nombreCup);
-        	this.label2.setText("Descripcion: " + cupo.descripcion);
-        	this.label3.setText("Cant. clases: "+ cupo.cantClases);
-        	this.label4.setText("Descuento: " + cupo.descuento + "%");
-        	this.label5.setText("Fecha de Inicio: " + cupo.fechaInicio);
-        	this.label6.setText("Fecha de Fin: " + cupo.fechaFin);
-        	this.label7.setText("Fecha de Alta: " + cupo.fechaAlta);
-
-        	
-        }else {
+        
         	DtClase clase = ((DtClase) DtAUsar);
         	this.labelTitulo.setText("Consulta de Clase");
         	this.label1.setText("Nombre :" + clase.nombreClase);
@@ -39,8 +35,35 @@ public class VentanaConsulta extends javax.swing.JFrame {
         	this.label5.setText("Hora Inicio: " + clase.horaIni);
         	this.label6.setText("Fecha de Registro: " + clase.fechaRegistro);
         	this.label7.setText("URL: " + clase.claseURL);
-        	;
+        	this.lblNewLabel.setVisible(false);
+        	this.list.setVisible(false);
+        	this.scrollPane.setVisible(false);
         }
+    
+    
+    public VentanaConsulta(Object DtAUsar, ArrayList<String> arrCat){
+        initComponents();
+        
+        	DtCuponera cupo = ((DtCuponera) DtAUsar);
+        	this.labelTitulo.setText("Consulta de Cuponera");
+        	this.label1.setText("Nombre :" + cupo.nombreCup);
+        	this.label2.setText("Descripcion: " + cupo.descripcion);
+        	this.label3.setText("Cant. clases: "+ cupo.cantClases);
+        	this.label4.setText("Descuento: " + cupo.descuento + "%");
+        	this.label5.setText("Fecha de Inicio: " + cupo.fechaInicio);
+        	this.label6.setText("Fecha de Fin: " + cupo.fechaFin);
+        	this.label7.setText("Fecha de Alta: " + cupo.fechaAlta);
+        	
+        	DefaultListModel listModel;
+            
+            listModel = new DefaultListModel<>();
+            
+            for(int i = 0; i < arrCat.size();i++) {
+            	listModel.addElement(arrCat.get(i));
+            }
+            this.list.setModel(listModel);
+        	
+       
     }
 
     /**
@@ -114,52 +137,82 @@ public class VentanaConsulta extends javax.swing.JFrame {
                 botonSalidaActionPerformed(evt);
             }
         });
+        
+        scrollPane = new JScrollPane();
+        
+        lblNewLabel = new JLabel("Categorias");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonSalida)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTitulo)
-                            .addComponent(label4)
-                            .addComponent(label1)
-                            .addComponent(label2)
-                            .addComponent(label3)
-                            .addComponent(label7)
-                            .addComponent(label6)
-                            .addComponent(label5))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-                .addComponent(panelAzul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(labelTitulo))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label1))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label2))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label3))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label4))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label5))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label6))
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(label7))
+        				.addComponent(botonSalida)
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(lblNewLabel)
+        			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        			.addComponent(panelAzul, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(label2)
-                .addGap(12, 12, 12)
-                .addComponent(label3)
-                .addGap(12, 12, 12)
-                .addComponent(label4)
-                .addGap(12, 12, 12)
-                .addComponent(label5)
-                .addGap(12, 12, 12)
-                .addComponent(label6)
-                .addGap(12, 12, 12)
-                .addComponent(label7)
-                .addGap(24, 24, 24)
-                .addComponent(botonSalida)
-                .addGap(0, 0, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(panelAzul, GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(6)
+        			.addComponent(labelTitulo)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label1)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label2)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label3)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label4)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label5)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label6)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(label7)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(botonSalida))
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        			.addContainerGap(260, Short.MAX_VALUE)
+        			.addComponent(lblNewLabel)
+        			.addGap(77))
         );
+        
+        list = new JList();
+        scrollPane.setViewportView(list);
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -218,5 +271,7 @@ public class VentanaConsulta extends javax.swing.JFrame {
     private javax.swing.JLabel label7;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel panelAzul;
-    // End of variables declaration//GEN-END:variables
+    private JLabel lblNewLabel;
+    private JList list;
+    private JScrollPane scrollPane;
 }
