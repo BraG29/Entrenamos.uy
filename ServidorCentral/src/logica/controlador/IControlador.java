@@ -104,7 +104,7 @@ public interface IControlador {
     
     public DtInstitucion getDtInsti(String nombreInsti);
     
-    public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis();
+    public HashMap<String,DtInstitucion> getHashDtInstis();
     
 
     public void altaCategoria(String nomCategoria);

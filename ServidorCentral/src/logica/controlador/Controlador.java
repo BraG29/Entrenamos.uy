@@ -785,25 +785,22 @@ public class Controlador implements IControlador {
      
      public DtInstitucion getDtInsti(String nombreInsti) {
     	 EntityManager em = emf.createEntityManager();
-    	 return em.find(Institucion.class, nombreInsti).getDTInstitucion();
+    	 DtInstitucion dTinsti = em.find(Institucion.class, nombreInsti).getDTInstitucion();
+    	 em.clear();
+    	 em.close();
+    	 return dTinsti;
      }
      
      
-     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis() {
+     public HashMap<String,DtInstitucion> getHashDtInstis() {
     	 
-    	 HashMap<String,ArrayList<DtActividadDeportiva>> hashADevolver = new HashMap<>();
-   	  
+    	 HashMap<String,DtInstitucion> hashADevolver = new HashMap<>();
+    	 
    	  	 ArrayList<String> listaNomInstis = this.getNombreInstituciones();
    	  
    	  	 for(int i = 0; i < listaNomInstis.size();i++) {
    		  
-   	  		 ArrayList<String> listaActis = this.consultarActividadDepo(listaNomInstis.get(i));
-   	  		 ArrayList<DtActividadDeportiva> listaDtActi = new ArrayList<>();
-   	  		 
-	   		 for(int c = 0; c < listaActis.size();c++) {
-	   			 listaDtActi.add(this.getDtActividadDepo(listaActis.get(c)));
-	   		 }
-	   	 hashADevolver.put(listaNomInstis.get(i),listaDtActi);
+   	  		 hashADevolver.put(listaNomInstis.get(i),getDtInsti(listaNomInstis.get(i)));
    	  	 }
    	  	 return hashADevolver;
 	}
