@@ -113,7 +113,7 @@ public class Institucion implements Serializable{
     }
     
     public DtInstitucion getDTInstitucion(){
-    	ArrayList<DtActividadDeportiva> listDt = null;
+    	ArrayList<DtActividadDeportiva> listDt = new ArrayList<>();
     	for(ActividadDeportiva ac : actividades) {
     		DtActividadDeportiva dtAct = ac.getDTActividadDeportiva();
     		listDt.add(dtAct);
