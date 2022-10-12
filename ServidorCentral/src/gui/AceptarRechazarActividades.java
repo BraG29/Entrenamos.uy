@@ -41,7 +41,7 @@ public class AceptarRechazarActividades extends JFrame {
 	 */
 	public AceptarRechazarActividades() {
 		setTitle("Aceptar o rechazar actividades");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 451, 242);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,18 +79,17 @@ public class AceptarRechazarActividades extends JFrame {
 		comboBoxActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String actividadSeleccionada = comboBoxActividad.getSelectedItem().toString();// obtengo nombre de actividad a cambiar estado
-				
 				//actividad aceptada
 				btnAceptar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						sistema.estadoAceptada(actividadSeleccionada);
+						sistema.rechazoAceptoActividad(actividadSeleccionada, 1);
 					}
 				});
 				
 				//actividad rechazada
 				btnRechazar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						sistema.estadoRechazada(actividadSeleccionada);
+						sistema.rechazoAceptoActividad(actividadSeleccionada, 2);
 					}
 				});
 			} 

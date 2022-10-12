@@ -117,9 +117,7 @@ public interface IControlador {
     //CU Aceptar/Rechazar actividad deportiva
     public ArrayList<String> listaActividadesIngresada();
     
-    public void estadoAceptada(String nombreAct);
-
-    public void estadoRechazada(String nombreAct);
+    public void rechazoAceptoActividad(String nombreActividad, int Estado);
     
     //CU seguir usuario
     public void followUsr(String seguidor, String seguido);
