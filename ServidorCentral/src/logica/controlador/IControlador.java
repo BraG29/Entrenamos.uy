@@ -22,10 +22,10 @@ public interface IControlador {
 
 	public ArrayList<DtUsuario> listarUsuarios();
 
-	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac);
+	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, File img);
 
 	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, String institucion,
-			String descripcion, String biografia, String sitioWeb);
+			String descripcion, String biografia, String sitioWeb, File img);
 
 	//CU Consulta de cuponeras de actividades deportivas
 	public ArrayList<String> listaCuponerasRegistradas();

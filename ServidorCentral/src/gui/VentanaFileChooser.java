@@ -37,6 +37,7 @@ public class VentanaFileChooser extends JFrame {
 	 */
 	public VentanaFileChooser() {
 		//setVisible(true);
+		archivo = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -57,8 +58,10 @@ public class VentanaFileChooser extends JFrame {
 		fileChooser.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
-				
-				archivo = fileChooser.getSelectedFile();
+				//actionCommand	"ApproveSelection" (id=97)
+				//actionCommand	"CancelSelection" (id=64)	
+				if(arg0.getActionCommand() == "ApproveSelection")
+					archivo = fileChooser.getSelectedFile();
 				setVisible(false);
 			}
 		});

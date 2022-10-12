@@ -8,7 +8,7 @@
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3">
                 <a class="text-muted" href="https://github.com/BraG29/Entrenamos.uy">
-                    <img src="../assets/github-sign.png" style="width:2em; height:2em">
+                    <img src="github-sign.png" style="width:2em; height:2em">
                 </a>
             </li>
         </ul>

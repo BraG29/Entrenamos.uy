@@ -70,7 +70,7 @@ public class Socio extends Usuario {
 	}
 
 	public DtUsuario getDatosSocio() {
-		DtUsuario dtS = new DtSocio(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac);
+		DtUsuario dtS = new DtSocio(this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, getImagen());
 		return dtS;
 	}
 

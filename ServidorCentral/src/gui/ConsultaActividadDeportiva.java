@@ -465,8 +465,15 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelFechaAlta.setText("Fecha de Alta: " + dtActi.fechaRegistro.toString());
             
             //consigo los DtActividades pertinentes
-            ArrayList<String> arrStr = dtActi.cuponeras;
-            ArrayList<String> arrStr2 = dtActi.clases;
+            ArrayList<String> arrStr = null;
+            ArrayList<String> arrStr2 = null;
+            
+            for(DtCuponera dtCup : dtActi.cuponeras) {
+            	arrStr.add(dtCup.nombreCup);
+            }
+            for(DtClase dtCla : dtActi.clases) {
+            	arrStr.add(dtCla.nombreClase);
+            }
             
             comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             

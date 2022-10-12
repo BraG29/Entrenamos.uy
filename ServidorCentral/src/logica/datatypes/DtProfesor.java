@@ -1,5 +1,6 @@
 package logica.datatypes;
 
+import java.io.File;
 import java.time.LocalDate;
 
 public class DtProfesor extends DtUsuario{
@@ -10,8 +11,8 @@ public class DtProfesor extends DtUsuario{
 	public final String sitioWeb;
 	public DtProfesor(
 			String nickname, String email, String nombre, String apellido, LocalDate fechaNac, 
-			String institucion, String biografia, String descripcion, String sitioWeb) {
-		super(nickname, email, nombre, apellido, fechaNac);
+			String institucion, String biografia, String descripcion, String sitioWeb, File img) {
+		super(nickname, email, nombre, apellido, fechaNac, img);
 		this.institucion = institucion;
 		this.biografia = biografia;
 		this.descripcion = descripcion;

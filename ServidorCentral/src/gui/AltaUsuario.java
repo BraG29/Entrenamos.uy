@@ -94,7 +94,7 @@ public class AltaUsuario extends JFrame {
 		setTitle("Alta Usuario");
 		setBackground(SystemColor.inactiveCaption);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 551, 558);
+		setBounds(100, 100, 454, 558);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaptionBorder);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -295,10 +295,6 @@ public class AltaUsuario extends JFrame {
 		JLabel lblObligatorios = new JLabel("* Campos Obligatorios");
 		lblObligatorios.setBounds(267, 38, 171, 15);
 		contentPane.add(lblObligatorios);
-		
-		JLabel lblImagen = new JLabel("");
-		lblImagen.setBounds(422, 63, 100, 100);
-		contentPane.add(lblImagen);
 		cBoxTipoUsr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 //				int op = comboBoxTipoUsr.getSelectedIndex();

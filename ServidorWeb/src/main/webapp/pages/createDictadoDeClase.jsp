@@ -26,32 +26,32 @@
         </select>
 
         <div class="form-floating my-2">
-            <input type="text" class="form-control" name="nombreClaseInput" required>
+            <input type="text" class="form-control" id="nombreClaseInput" required>
             <label for="nombreClaseInput">Nombre de la Clase</label>
         </div>
 
         <div class="form-floating my-2">
-            <input type="date" class="form-control" name="fechaClaseInput" required>
+            <input type="date" class="form-control" id="fechaClaseInput" required>
             <label for="fechaClaseInput">Fecha de comienzo</label>
         </div>
 
         <div class="form-floating my-2">
-            <input type="number" class="form-control" name="horaInput" min="0" max="23" required>
+            <input type="number" class="form-control" id="horaInput" min="0" max="23" required>
             <label for="horaInput">Hora de inicio</label>
         </div>
 
         <div class="form-floating my-2">
-            <input type="number" class="form-control" name="minimoInput" min="0" required>
+            <input type="number" class="form-control" id="minimoInput" min="0" required>
             <label for="minimoInput">Mínima cantidad de socios</label>
         </div>
 
         <div class="form-floating my-2">
-            <input type="number" class="form-control" name="maximoInput" min="1" required>
+            <input type="number" class="form-control" id="maximoInput" min="1" required>
             <label for="maximoInput">Máxima cantidad de socios</label>
         </div>
 
         <div class="form-floating my-2">
-            <input type="url" class="form-control" name="urlClaseInput" required>
+            <input type="url" class="form-control" id="urlClaseInput" required>
             <label for="urlClaseInput">URL asociada</label>
         </div>
 
@@ -59,6 +59,7 @@
         <button class="w-100 btn btn-lg btn-primary" type="submit">Crear Clase</button>
     </form>
 </main>
+<jsp:include page="./../templates/footer.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
@@ -77,6 +78,3 @@
         }
     });
 </script>
-<jsp:include page="./../templates/footer.jsp"/>
-</body>
-</html>
