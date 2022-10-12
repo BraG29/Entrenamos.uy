@@ -96,9 +96,9 @@ public interface IControlador {
     
     public String getActividadDepoAsociadaClase(String nomClase, String insti);
     
-    public DtActividadDeportiva getDtActividadDepo(String nomActi);
+    //public DtActividadDeportiva getDtActividadDepo(String nomActi);
     
-    public DtClase getDtClase(String nomClase);
+    //public DtClase getDtClase(String nomClase);
     
     public HashMap<String, ArrayList<Object>> getHashInstisAndProfes();
     

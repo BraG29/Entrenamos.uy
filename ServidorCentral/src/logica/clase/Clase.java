@@ -73,6 +73,9 @@ public class Clase implements Serializable{
     	
     };
 
+    public void aniadirReg(Registro r) {
+    	registros.add(r);
+    }
 
     
     

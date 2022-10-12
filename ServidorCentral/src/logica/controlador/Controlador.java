@@ -126,8 +126,8 @@ public class Controlador implements IControlador {
 			if (i == null) {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
-			Profesor p =
-					new Profesor(nick, apellido, email, pass, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+			Profesor p = new Profesor(
+					nick, apellido, email, pass, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
 			em.getTransaction().begin();
 			em.persist(p);
 			em.flush();
@@ -465,13 +465,23 @@ public class Controlador implements IControlador {
         
     public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
     	EntityManager em = emf.createEntityManager();
-    	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
-    	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
-    	Clase c = actividadDeportivaActual.getClase(pNombreClase);
-    	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
-    	Float costo = actividadDeportivaActual.getCosto();
-    	LocalDate fecha = LocalDate.now();
-		socioActual.registrarAClase(c, fecha, costo);
+    	try {
+    		em.getTransaction().begin();
+    		Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
+    		ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
+    		Clase c = em.find(Clase.class, pNombreClase);
+    		Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
+    		Float costo = actividadDeportivaActual.getCosto();
+    		LocalDate fecha = LocalDate.now();
+    		Registro reg = socioActual.registrarAClase(c, fecha, costo);
+    		c.aniadirReg(reg);
+    		
+    		em.getTransaction().commit();
+			
+		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+			throw new IllegalArgumentException("No se pudo persistir en la base de datos");
+		}
 		em.clear();
 		em.close();
     }
@@ -807,7 +817,6 @@ public class Controlador implements IControlador {
    	  	 }
    	  	 return hashADevolver;
 	}
-     
      
     //CU Aceptar/Rechazar actividad deportiva
      //NO FUNCIONA HASTA QUE CREAR ACTIVIDAD DEPORTIVA TENGA ESTADO EN SU CONSTRUCTOR.
