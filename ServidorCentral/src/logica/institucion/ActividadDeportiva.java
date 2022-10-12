@@ -30,6 +30,7 @@ import logica.clase.Clase;
 import logica.cuponera.Cuponera;
 import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtClase;
+import logica.datatypes.DtCuponera;
 import net.bytebuddy.description.type.RecordComponentDescription.ForLoadedRecordComponent;
 
 import java.util.ArrayList;
@@ -171,17 +172,20 @@ public class ActividadDeportiva implements Serializable {
     }
     
     public DtActividadDeportiva getDTActividadDeportiva(){
-        ArrayList<String> strClases = new ArrayList<String>();
+        ArrayList<DtClase> listClases = null;
         for(Clase c : this.clases){
-            strClases.add(c.getNombreClase());
+        	DtClase cl = c.getData();
+            listClases.add(cl);
         }
         
-        ArrayList<String> strCuponeras = new ArrayList<String>();
+        ArrayList<DtCuponera> listCuponeras = null;
         for(Cuponera c : this.cuponeras){
-            strCuponeras.add(c.getNombreCup());
+            listCuponeras.add(c.getData());
         }
         
-        DtActividadDeportiva DtActi = new DtActividadDeportiva(this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, strClases, strCuponeras);
+        DtActividadDeportiva DtActi = new DtActividadDeportiva(
+        		this.nombreAct, this.descripcion, this.duracion, 
+        		this.costo, this.fechaRegistro, listClases, listCuponeras);
         return DtActi;
     }
     

@@ -154,6 +154,7 @@ public class Cuponera implements Serializable {
 				this.descuento, this.fechaAlta, this.cantClases, nomActis);
 		return output;
 	}
+	
 
 	/*
 	public ArrayList<String> getNombres() {

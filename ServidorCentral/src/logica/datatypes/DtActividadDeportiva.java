@@ -9,10 +9,12 @@ public class DtActividadDeportiva {
     public final float duracion;
     public final float costo;
     public final LocalDateTime fechaRegistro;
-    public final ArrayList<String> clases;
-    public final ArrayList<String> cuponeras;
+    public final ArrayList<DtClase> clases;
+    public final ArrayList<DtCuponera> cuponeras;
     
-    public DtActividadDeportiva(String nomAct, String desc, float dura, float cost, LocalDateTime fecha, ArrayList<String> clase, ArrayList<String> cupo){
+    public DtActividadDeportiva(
+    		String nomAct, String desc, float dura, float cost, LocalDateTime fecha,
+    		ArrayList<DtClase> clase, ArrayList<DtCuponera> cupo){
         this.nombreAct = nomAct;
         this.descripcion = desc;
         this.duracion = dura;

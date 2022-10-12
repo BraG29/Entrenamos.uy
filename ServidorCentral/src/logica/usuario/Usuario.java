@@ -1,5 +1,6 @@
 package logica.usuario;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.jar.Attributes.Name;
@@ -100,5 +101,12 @@ public class Usuario implements Serializable {
     
     public DtUsuario getDatosCompletos(){//should be implemented by child classes
         return null;
+    }
+    
+    public File getImagen() {
+    	String rutaDir = System.getProperty("user.dir");
+    	String imgPath = rutaDir+"/src/imgUsr/"+"."+nickname;
+    	File img = new File(imgPath);
+    	return img;
     }
 }

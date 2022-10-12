@@ -60,6 +60,8 @@ public class ModificarUsuario extends JFrame {
 
 	private JPanel contentPane;
 	private VentanaMensaje showMensaje;
+	private VentanaFileChooser fCImagen;
+	private File imagen;
 	private JTable table;
 	private JTextField txtFieldNombre;
 	private JTextField txtFieldApellido;
@@ -132,23 +134,9 @@ public class ModificarUsuario extends JFrame {
 					return values[index];
 				}
 			});
-			
-			JPanel panelFileChooser = new JPanel();
-			panelFileChooser.setBounds(0, 0, 607, 326);
-			contentPane.add(panelFileChooser);
-			panelFileChooser.setVisible(false);
-			panelFileChooser.setLayout(null);
-			
-			JFileChooser fCImagen = new JFileChooser();
-			fCImagen.setBounds(0, 0, 606, 326);
-			panelFileChooser.add(fCImagen);
-			fCImagen.setAcceptAllFileFilterUsed(false);
 			FileNameExtensionFilter filterJPG = new FileNameExtensionFilter(".jpg", "jpg");
 			FileNameExtensionFilter filterPNG = new FileNameExtensionFilter(".png", "png");
 			FileNameExtensionFilter filterJPEG = new FileNameExtensionFilter(".jpeg", "jpeg");
-			fCImagen.addChoosableFileFilter(filterJPG);
-			fCImagen.addChoosableFileFilter(filterPNG);
-			fCImagen.addChoosableFileFilter(filterJPEG);
 			
 			JScrollPane scrollPaneList = new JScrollPane(listUsuarios);
 			scrollPaneList.setBounds(12, 24, 259, 302);
@@ -226,6 +214,10 @@ public class ModificarUsuario extends JFrame {
 			btnCambioImg.setEnabled(false);
 			btnCambioImg.setBounds(12, 120, 158, 25);
 			panelSocio.add(btnCambioImg);
+			
+			JLabel lblImagenSeleccionada = new JLabel("Ninguna imagen seleccionada");
+			lblImagenSeleccionada.setBounds(181, 125, 222, 15);
+			panelSocio.add(lblImagenSeleccionada);
 
 			JPanel panelProfesor = new JPanel();
 			panelProfesor.setBorder(null);
@@ -238,15 +230,10 @@ public class ModificarUsuario extends JFrame {
 
 			btnCambioImg.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					panelFileChooser.setVisible(true);
-					btnCambioImg.setVisible(false);
-				}
-			});
-
-			fCImagen.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					panelFileChooser.setVisible(false);
-					btnCambioImg.setVisible(true);
+					fCImagen = new VentanaFileChooser();
+					imagen = fCImagen.getArchivo();
+					if(imagen != null)
+						lblImagenSeleccionada.setText(imagen.getName());
 				}
 			});
 			JLabel lblInstitucion = new JLabel("Institución:");
@@ -388,7 +375,7 @@ public class ModificarUsuario extends JFrame {
 								cBoxMes.getSelectedIndex(),
 								cBoxDia.getSelectedIndex());
 						if(!panelProfesor.isVisible()) {
-							sistema.modificarDatos((String)listUsuarios.getSelectedValue(), nombre, apellido, fNac);
+							sistema.modificarDatos((String)listUsuarios.getSelectedValue(), nombre, apellido, fNac, imagen);
 						}else {
 							String institucion = txtFieldInstitucion.getText();
 							String descripcion = txtFieldDescripcion.getText();
@@ -396,16 +383,15 @@ public class ModificarUsuario extends JFrame {
 							String sitioWeb = txtFieldSitioWeb.getText();
 							sistema.modificarDatos(
 									(String)listUsuarios.getSelectedValue(),
-									nombre, apellido, fNac, institucion, descripcion, biografia, sitioWeb);
+									nombre, apellido, fNac, institucion, descripcion, biografia, sitioWeb, imagen);
 						}
 						String rutaDir = System.getProperty("user.dir");
-						if(fCImagen.getSelectedFile() != null) {
+						if(imagen != null) {
 							Image imgMuestra = null;
-							File img = fCImagen.getSelectedFile();
 							try {
-								imgMuestra = ImageIO.read(img).getScaledInstance(180, 180, 100);
+								imgMuestra = ImageIO.read(imagen).getScaledInstance(180, 180, 100);
 								Files.copy(
-										Paths.get(img.getPath()),
+										Paths.get(imagen.getPath()),
 										Paths.get(rutaDir+"/src/imgUsers/"+"."+(String)listUsuarios.getSelectedValue()),
 										StandardCopyOption.REPLACE_EXISTING);
 							} catch (IOException e) {
