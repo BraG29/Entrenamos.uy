@@ -112,8 +112,8 @@ public class Profesor extends Usuario{
     
     public DtUsuario getDatosProfe(){ 
     	DtUsuario dtP = new DtProfesor(
-        		this.nickname, this.email, this.nombre, this.apellido, 
-        		this.fechaNac, this.institucion.getNombreInst(), this.biografia, this.descripcion, this.sitioWeb);
+        		this.nickname, this.email, this.nombre, this.apellido, this.fechaNac, this.institucion.getNombreInst(),
+        		this.biografia, this.descripcion, this.sitioWeb, getImagen());
     	return dtP;
 
     }

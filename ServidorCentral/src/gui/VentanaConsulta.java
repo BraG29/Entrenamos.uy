@@ -25,27 +25,7 @@ public class VentanaConsulta extends javax.swing.JFrame {
     public VentanaConsulta(Object DtAUsar){
         initComponents();
         
-        if(DtAUsar.getClass().equals(DtCuponera.class)) {
-        	DtCuponera cupo = ((DtCuponera) DtAUsar);
-        	this.labelTitulo.setText("Consulta de Cuponera");
-        	this.label1.setText("Nombre :" + cupo.nombreCup);
-        	this.label2.setText("Descripcion: " + cupo.descripcion);
-        	this.label3.setText("Cant. clases: "+ cupo.cantClases);
-        	this.label4.setText("Descuento: " + cupo.descuento + "%");
-        	this.label5.setText("Fecha de Inicio: " + cupo.fechaInicio);
-        	this.label6.setText("Fecha de Fin: " + cupo.fechaFin);
-        	this.label7.setText("Fecha de Alta: " + cupo.fechaAlta);
-        	
-//        	DefaultListModel listModel;
-//            
-//            listModel = new DefaultListModel<>();
-//            
-//            for(int i = 0; i < clase.size();i++) {
-//            	listModel.addElement(arrCat.get(i));
-//            }
-
-        	
-        }else {
+        
         	DtClase clase = ((DtClase) DtAUsar);
         	this.labelTitulo.setText("Consulta de Clase");
         	this.label1.setText("Nombre :" + clase.nombreClase);
@@ -55,10 +35,11 @@ public class VentanaConsulta extends javax.swing.JFrame {
         	this.label5.setText("Hora Inicio: " + clase.horaIni);
         	this.label6.setText("Fecha de Registro: " + clase.fechaRegistro);
         	this.label7.setText("URL: " + clase.claseURL);
-        	//this.list.getListM
-        	
+        	this.lblNewLabel.setVisible(false);
+        	this.list.setVisible(false);
+        	this.scrollPane.setVisible(false);
         }
-    }
+    
     
     public VentanaConsulta(Object DtAUsar, ArrayList<String> arrCat){
         initComponents();
@@ -157,7 +138,7 @@ public class VentanaConsulta extends javax.swing.JFrame {
             }
         });
         
-        JScrollPane scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane();
         
         lblNewLabel = new JLabel("Categorias");
 
@@ -292,4 +273,5 @@ public class VentanaConsulta extends javax.swing.JFrame {
     private javax.swing.JPanel panelAzul;
     private JLabel lblNewLabel;
     private JList list;
+    private JScrollPane scrollPane;
 }

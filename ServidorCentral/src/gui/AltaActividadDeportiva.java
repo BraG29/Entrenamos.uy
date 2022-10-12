@@ -410,36 +410,37 @@ public class AltaActividadDeportiva extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldDuracionMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    	ArrayList<String> catSeleccionadas = new ArrayList<String>();
         String nombreActividad = fieldNombre.getText();
         String nombreInsti = this.comboInsti.getSelectedItem().toString();
         String desc = fieldDesc.getText();
         
         try{//se intenta parsear el float
-            float dura = Float.parseFloat(fieldDuracion.getText());             
+            float dura = Float.parseFloat(fieldDuracion.getText()); 
+            //VER PARA QUE EL ERROR QUE TIRE SEA CORRESPONDIENTE A LO QUE PASA
+            
             float costo = Float.parseFloat(spinnerCosto.getValue().toString());
             LocalDateTime fechaAlta = convertirALocalDateTime(((Date)spinnerFecha.getValue()));
-            ArrayList<String> catSeleccionadas = new ArrayList<String>();
+            
             catSeleccionadas.addAll(this.list.getSelectedValuesList());
+            if(catSeleccionadas.equals("") || catSeleccionadas.equals(null) || catSeleccionadas.equals("[]") || catSeleccionadas.isEmpty()) {
+            	throw new IllegalArgumentException("Categoria no puede estar vacio");
+            }
 
             Fabrica fab = new Fabrica();
             IControlador controlador =  fab.getInterface();
             
-            try{//se intenta persistir los datos
             	
-                controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta,catSeleccionadas);
+            controlador.altaActividadDepo(nombreActividad,nombreInsti,desc,dura,costo,fechaAlta,catSeleccionadas);
 
-                if(this.archivoAUsar != null) {
-                	controlador.guardarImagen(this.archivoAUsar,this.fieldNombre.getText(),"imgActis");
-                }
-                
-            }catch(Exception e){//algo malió sal en la persistición
-                VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
-                errorVentana.setVisible(true);
-                return;
+            if(this.archivoAUsar != null) {
+                controlador.guardarImagen(this.archivoAUsar,this.fieldNombre.getText(),"imgActis");
             }
+                
+         
             
         }catch(Exception e){//fallo el parseo del float
-            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!","caracteres invalidos en campo Duracion",java.awt.Color.RED);
+            VentanaMensaje errorVentana = new VentanaMensaje("ERROR!",e.getMessage(),java.awt.Color.RED);
             errorVentana.setVisible(true);
             return;
         }

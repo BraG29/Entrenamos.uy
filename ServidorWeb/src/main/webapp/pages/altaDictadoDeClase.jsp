@@ -1,4 +1,4 @@
-<!--<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <main class="form-signup w-50 m-auto">
     <form>
         <h1 class="h3 mb-3 fw-normal">Dar de alta Dictado de Clase</h1>
@@ -45,6 +45,7 @@
         <button class="w-100 btn btn-lg btn-primary" type="submit">Crear Clase</button>
     </form>
 </main>
+<jsp:include page="./../templates/footer.jsp"/>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
@@ -63,4 +64,3 @@
         }
     });
 </script>
-<jsp:include page="./../templates/footer.jsp"/>-->

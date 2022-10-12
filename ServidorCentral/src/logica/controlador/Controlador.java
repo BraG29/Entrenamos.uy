@@ -173,7 +173,7 @@ public class Controlador implements IControlador {
 		return datosUsr;
 	}
 
-	public void modificarDatos(String nickname, String nombre,String apellido,LocalDate fechaNac) {
+	public void modificarDatos(String nickname, String nombre,String apellido,LocalDate fechaNac, File img) {
 		EntityManager em = emf.createEntityManager();
 		try {
 			em.getTransaction().begin();
@@ -192,11 +192,13 @@ public class Controlador implements IControlador {
 		}
 		em.clear();
 		em.close();
+		if(img != null)
+			guardarImagen(img, nickname, "imgUsers");
 	}
 	
 	public void modificarDatos(
 			String nickname, String nombre,String apellido,LocalDate fechaNac,
-			String institucion, String descripcion, String biografia, String sitioWeb) {
+			String institucion, String descripcion, String biografia, String sitioWeb, File img) {
 		
 		EntityManager em = emf.createEntityManager();
 		try {
@@ -224,6 +226,8 @@ public class Controlador implements IControlador {
 		}
 		em.clear();
 		em.close();
+		if(img != null)
+			guardarImagen(img, nickname, "imgUsers");
 	}
 	
 	//CU Consulta de cuponeras de actividades deportivas

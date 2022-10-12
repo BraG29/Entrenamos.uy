@@ -47,34 +47,32 @@ public class AceptarRechazarActividades extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//boton para cambiar estado a aceptada
+
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(238, 156, 117, 25);
 		contentPane.add(btnAceptar);
 		
-		
-		
-		//boton para cambiar estado a rechazada
 		JButton btnRechazar = new JButton("Rechazar");
 		btnRechazar.setBounds(90, 156, 117, 25);
 		contentPane.add(btnRechazar);
-	
-		//obtengo actividades para el combobox
 		JComboBox comboBoxActividad = new JComboBox();
-		
-		String[] inicio = new String[] {"..."}; 
-        comboBoxActividad.setModel(new DefaultComboBoxModel(inicio));
 		
 		Fabrica fab = new Fabrica();
 		IControlador sistema = fab.getInterface();
 		
+		//le paso la lista de cuponeras al combobox
+		String[] inicio = new String[] {"..."}; 
+        comboBoxActividad.setModel(new DefaultComboBoxModel(inicio));
+        
+		//obtengo actividades para el combobox
 		java.util.List ActividadesIngresadas = sistema.listaActividadesIngresada();
 		
 		for (int i = 0; i < ActividadesIngresadas.size(); i++) {
 			comboBoxActividad.addItem(ActividadesIngresadas.get(i));
 		}
+		
+		//String actividadSeleccionada = null;
 		
 		comboBoxActividad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -91,10 +89,10 @@ public class AceptarRechazarActividades extends JFrame {
 					public void actionPerformed(ActionEvent arg0) {
 						sistema.rechazoAceptoActividad(actividadSeleccionada, 2);
 					}
-				});
-			} 
-		});
-		
+				});	
+			}
+
+		});	
 		comboBoxActividad.setBounds(117, 26, 220, 24);
 		contentPane.add(comboBoxActividad);
 

@@ -20,6 +20,7 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
 import logica.clase.Clase;
+import logica.datatypes.DtActividadDeportiva;
 import logica.datatypes.DtClase;
 import logica.datatypes.DtInstitucion;
 
@@ -112,10 +113,13 @@ public class Institucion implements Serializable{
     }
     
     public DtInstitucion getDTInstitucion(){
-        ArrayList<String> ActividadesNom = new ArrayList<String>();
-        //ActividadesNom.addAll(this.actividades.keySet()); 
+    	ArrayList<DtActividadDeportiva> listDt = null;
+    	for(ActividadDeportiva ac : actividades) {
+    		DtActividadDeportiva dtAct = ac.getDTActividadDeportiva();
+    		listDt.add(dtAct);
+    	}
         
-        DtInstitucion DtInsti = new DtInstitucion(this.nombreInst, this.descripcion, this.instURL, ActividadesNom);
+        DtInstitucion DtInsti = new DtInstitucion(this.nombreInst, this.descripcion, this.instURL, listDt);
         return DtInsti;
     }
     
