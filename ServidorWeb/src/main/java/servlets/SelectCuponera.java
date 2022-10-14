@@ -31,8 +31,8 @@ public class SelectCuponera extends HttpServlet {
 		processRequest(request, response);
 	}
 
-	private DtCuponera buscarCuponera(String pNombre) throws ServletException, IOException {
-		DtCuponera dtCuponera = FabricaWebService.getInstance().getICuponeraController().seleccionarCuponera(pNombre);
-		return dtCuponera;
-	}	
+//	private DtCuponera buscarCuponera(String pNombre) throws ServletException, IOException {
+//		DtCuponera dtCuponera = FabricaWebService.getInstance().getICuponeraController().seleccionarCuponera(pNombre);
+//		return dtCuponera;
+//	}	
 }
