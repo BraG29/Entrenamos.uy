@@ -73,6 +73,10 @@ public class Clase implements Serializable{
     	
     };
 
+    public void aniadirReg(Registro r) {
+    	registros.add(r);
+    	this.cantSocios = this.cantSocios + 1;
+    }
 
     
     
@@ -148,5 +152,12 @@ public class Clase implements Serializable{
     	DtClase claseADevolver = new DtClase(this.nombreClase, this.fecha, this.horaIni, this.cantMin, this.cantMax, this.claseURL, this.fechaRegistro, this.horaFin, this.cantSocios);
     	System.out.println("Despues de armar el DtClase");
     	return claseADevolver;
+    }
+    
+    public boolean hayCupos() {
+    	if(cantSocios == cantMax) 
+    		return false;
+    	else
+			return true;
     }
 }

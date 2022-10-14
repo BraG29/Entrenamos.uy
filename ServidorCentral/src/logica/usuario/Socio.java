@@ -28,6 +28,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.Transaction;
 
+import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
+
 import logica.clase.Clase;
 import logica.clase.Registro;
 import logica.cuponera.CompraCuponera;
@@ -74,7 +76,14 @@ public class Socio extends Usuario {
 		return dtS;
 	}
 
-	public void registrarAClase(Clase c, LocalDate fecha, float costo) {
+	public Registro registrarAClase(Clase c, LocalDate fecha, float costo) {
+		for(Registro reg : registro) {
+			if(reg.esRegistroDe(c))
+				throw new IllegalArgumentException("El socio ya tiene un registro para la clase");
+		}
+		Registro r = new Registro(fecha,costo,c,this);
+		registro.add(r);
+		return r;
 	}
 
 	public Collection<Registro> getRegistro() {

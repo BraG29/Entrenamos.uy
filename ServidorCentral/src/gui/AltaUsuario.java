@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.html.HTML;
 
 import org.hibernate.boot.cfgxml.spi.CfgXmlAccessService;
 
@@ -358,7 +359,9 @@ public class AltaUsuario extends JFrame {
 										institucion, descripcion, biografia, sitioWeb, archivo);
 							}
 							
-							String mensajeConfirmacion = "Se ha dado de alta al usuario " + nickname + " en el sistema";
+							String mensajeConfirmacion = 
+									"<html><body>Se ha dado de alta al usuario:<br> " 
+									+ nickname + " en el sistema</html></body>";
 							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 							showMensaje.setVisible(true);
 						}

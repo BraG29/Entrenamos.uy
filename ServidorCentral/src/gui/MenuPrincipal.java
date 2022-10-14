@@ -43,7 +43,7 @@ public class MenuPrincipal extends JFrame {
     private ConsultaActividadDeportiva menuConsultaActividad; // º5 consulta de actividad deportiva
     private AltaClase menuAltaClase; // º6 alta dictado de clase
     private ConsultaDictadoClase menuConsultaDictadoClase; // º7 consulta de dictado de clase
-    //private RegistroDictadoClase menuRegistroDictadoClase; // º8 Registro a dictado de clase
+    private RegistroDictadoClase menuRegistroDictadoClase; // º8 Registro a dictado de clase
     private AltaCuponera menuAltaCuponera; // º9 Crear cuponera de actividades deportivas
     private AgregarActividadDeportivaCuponera menuAgregarActividad; //º10 Agregar actividad deportiva a cuponera    
     private ConsultaCuponeras menuCuponeras; //º11 Consulta de cuponeras de actividades deportivas
@@ -169,8 +169,8 @@ public class MenuPrincipal extends JFrame {
 		JButton btnRegistroAClase = new JButton("Registro a dictado de Clase");
 		btnRegistroAClase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//menuRegistroDictadoClase = new RegistroDictadoClase();
-				//menuRegistroDictadoClase.setVisible(true);
+				menuRegistroDictadoClase = new RegistroDictadoClase();
+				menuRegistroDictadoClase.setVisible(true);
 			}
 		});
 		btnRegistroAClase.setBounds(322, 100, 298, 25);

@@ -187,13 +187,14 @@ public class ActividadDeportiva implements Serializable {
     }
     
     public DtActividadDeportiva getDTActividadDeportiva(){
-        ArrayList<DtClase> listClases = null;
+    	
+        ArrayList<DtClase> listClases = new ArrayList<DtClase>();
         for(Clase c : this.clases){
         	DtClase cl = c.getData();
             listClases.add(cl);
         }
         
-        ArrayList<DtCuponera> listCuponeras = null;
+        ArrayList<DtCuponera> listCuponeras = new ArrayList<DtCuponera>();
         for(Cuponera c : this.cuponeras){
             listCuponeras.add(c.getData());
         }
@@ -204,7 +205,7 @@ public class ActividadDeportiva implements Serializable {
         }
         DtActividadDeportiva DtActi = new DtActividadDeportiva(
         		this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, 
-        		this.insti.getDTInstitucion(), listClases, listCuponeras, strCategorias);
+        		this.estadoActual, listClases, listCuponeras, strCategorias);
         return DtActi;
     }
     

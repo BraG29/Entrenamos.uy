@@ -23,7 +23,8 @@ public class Home extends HttpServlet {
 	}
 
 	private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		request.getRequestDispatcher("./../../webapp/pages/home.jsp").forward(request, response);
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

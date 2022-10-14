@@ -126,8 +126,8 @@ public class Controlador implements IControlador {
 			if (i == null) {
 				throw new IllegalArgumentException("No existe la institucion");
 			}
-			Profesor p =
-					new Profesor(nick, apellido, email, pass, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
+			Profesor p = new Profesor(
+					nick, apellido, email, pass, nombre, fechaNac, biografia, descripcion, sitioWeb, i);
 			em.getTransaction().begin();
 			em.persist(p);
 			em.flush();
@@ -462,16 +462,40 @@ public class Controlador implements IControlador {
               
         return listaADevolver;
     }
+    
+    public ArrayList<String> listaCategorias() {
+    	ArrayList<String> categorias = new ArrayList<String>();
+    	EntityManager em = emf.createEntityManager();
+    	CriteriaBuilder cb = em.getCriteriaBuilder();
+    	CriteriaQuery<Categoria> cq = cb.createQuery(Categoria.class);
+    	Root<Categoria> rootCat = cq.from(Categoria.class);
+    	cq.select(rootCat.get("nombreCat"));
+    	List queryList = em.createQuery(cq).getResultList();
+    	categorias.addAll(queryList);
+    	return categorias;
+    }
         
     public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
     	EntityManager em = emf.createEntityManager();
-    	Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
-    	ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
-    	Clase c = actividadDeportivaActual.getClase(pNombreClase);
-    	Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
-    	Float costo = actividadDeportivaActual.getCosto();
-    	LocalDate fecha = LocalDate.now();
-		socioActual.registrarAClase(c, fecha, costo);
+    	try {
+    		em.getTransaction().begin();
+    		Clase c = em.find(Clase.class, pNombreClase);
+    		if(!c.hayCupos())
+    			throw new IllegalArgumentException("No quedan cupos para esa clase");
+    		Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
+    		ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
+    		Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
+    		Float costo = actividadDeportivaActual.getCosto();
+    		LocalDate fecha = LocalDate.now();
+    		Registro reg = socioActual.registrarAClase(c, fecha, costo);
+    		c.aniadirReg(reg);
+    		
+    		em.getTransaction().commit();
+			
+		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+			throw new IllegalArgumentException("No se pudo persistir en la base de datos");
+		}
 		em.clear();
 		em.close();
     }
@@ -494,7 +518,9 @@ public class Controlador implements IControlador {
             {
                 actividades.add(a.getNombreAct());
             }
-            DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
+            DtCuponera DtCup = new DtCuponera(
+            		cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),
+            		cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
             l.add(DtCup);
         }
 		em.clear();
@@ -647,26 +673,34 @@ public class Controlador implements IControlador {
 		return listaADevolver;
 	}
   
-	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
-		EntityManager em = emf.createEntityManager();
-		ArrayList<String> listaADevolver = new ArrayList<String>();
-		ArrayList<String> listaDeClases = new ArrayList<String>();
-		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-		listaDeClases = acti.getNombreClases();
-		for (int i = 0; i < listaDeClases.size(); i++) {
-			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
-		}
-		em.clear();
-		em.close();
-		return listaADevolver;
-	}
+//	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
+//		EntityManager em = emf.createEntityManager();
+//		ArrayList<String> listaADevolver = new ArrayList<String>();
+//		ArrayList<String> listaDeClases = new ArrayList<String>();
+//		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+//		listaDeClases = acti.getNombreClases();
+//		for (int i = 0; i < listaDeClases.size(); i++) {
+//			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
+//		}
+//		em.clear();
+//		em.close();
+//		return listaADevolver;
+//	}
   
-	public ArrayList<String> getSociosHabilitados(String nombreClase) {
+	public ArrayList<DtSocio> getSocios() {
 		EntityManager em = emf.createEntityManager();
-		ArrayList<String> listaADevolver = new ArrayList<String>();
-		listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
+		ArrayList<DtSocio> listaADevolver = new ArrayList<DtSocio>();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Socio> cq = cb.createQuery(Socio.class);
+		Root<Socio> socioRoot = cq.from(Socio.class);
+		cq.select(socioRoot);
+		List socios = em.createQuery(cq).getResultList();
 		em.clear();
 		em.close();
+		for(int i = 0; i < socios.size(); i++) {
+			Socio s = (Socio) socios.get(i);
+			listaADevolver.add((DtSocio)s.getDatosSocio());
+		}
 		return listaADevolver;
 	}
   
@@ -785,29 +819,25 @@ public class Controlador implements IControlador {
      
      public DtInstitucion getDtInsti(String nombreInsti) {
     	 EntityManager em = emf.createEntityManager();
-    	 return em.find(Institucion.class, nombreInsti).getDTInstitucion();
+    	 DtInstitucion dTinsti = em.find(Institucion.class, nombreInsti).getDTInstitucion();
+    	 em.clear();
+    	 em.close();
+    	 return dTinsti;
      }
      
      
-     public HashMap<String,ArrayList<DtActividadDeportiva>> getHashInstisAndDtActis() {
+     public HashMap<String,DtInstitucion> getHashDtInstis() {
     	 
-    	 HashMap<String,ArrayList<DtActividadDeportiva>> hashADevolver = new HashMap<>();
-   	  
+    	 HashMap<String,DtInstitucion> hashADevolver = new HashMap<>();
+    	 
    	  	 ArrayList<String> listaNomInstis = this.getNombreInstituciones();
    	  
    	  	 for(int i = 0; i < listaNomInstis.size();i++) {
    		  
-   	  		 ArrayList<String> listaActis = this.consultarActividadDepo(listaNomInstis.get(i));
-   	  		 ArrayList<DtActividadDeportiva> listaDtActi = new ArrayList<>();
-   	  		 
-	   		 for(int c = 0; c < listaActis.size();c++) {
-	   			 listaDtActi.add(this.getDtActividadDepo(listaActis.get(c)));
-	   		 }
-	   	 hashADevolver.put(listaNomInstis.get(i),listaDtActi);
+   	  		 hashADevolver.put(listaNomInstis.get(i),getDtInsti(listaNomInstis.get(i)));
    	  	 }
    	  	 return hashADevolver;
 	}
-     
      
     //CU Aceptar/Rechazar actividad deportiva
      public ArrayList<String> listaActividadesIngresada(){
@@ -919,5 +949,17 @@ public class Controlador implements IControlador {
     	 
     	 return arrADevolver; 
     	 
+     }
+     
+     public ArrayList<String> consultarActisAceptadas(){
+    	 ArrayList<String> arrADevolver = new ArrayList<>();
+    	 EntityManager em = emf.createEntityManager();
+    	 
+    	 arrADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE estadoActual = 1").getResultList());
+    	 
+    	 
+    	 em.clear();
+    	 em.close();
+    	 return arrADevolver; 
      }
 }

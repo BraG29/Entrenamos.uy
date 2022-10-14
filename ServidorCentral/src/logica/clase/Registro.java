@@ -65,10 +65,11 @@ public class Registro implements Serializable {
     public Registro() {
     }
     //Full Constructor
-    public Registro(LocalDate fecha, float cost, Clase c) {
+    public Registro(LocalDate fecha, float cost, Clase c, Socio s) {
         this.fecha = fecha;
         this.cost = cost;
         this.claseAsociada = c;
+        this.socio = s;
     }
 
     public boolean esRegistroDe(Clase c){//needs implementation
