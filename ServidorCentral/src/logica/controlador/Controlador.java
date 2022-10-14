@@ -950,4 +950,16 @@ public class Controlador implements IControlador {
     	 return arrADevolver; 
     	 
      }
+     
+     public ArrayList<String> consultarActisAceptadas(){
+    	 ArrayList<String> arrADevolver = new ArrayList<>();
+    	 EntityManager em = emf.createEntityManager();
+    	 
+    	 arrADevolver.addAll(em.createQuery("select a.nombreAct from ActividadDeportiva a WHERE estadoActual = 1").getResultList());
+    	 
+    	 
+    	 em.clear();
+    	 em.close();
+    	 return arrADevolver; 
+     }
 }

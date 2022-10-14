@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
 import logica.controlador.Controlador;
@@ -28,6 +29,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Rectangle;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 
 
@@ -49,10 +52,12 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         this.labelClases.setVisible(false);
         this.labelActi.setVisible(false);
         this.labelFecha.setVisible(false);
+        this.lblCat.setVisible(false);
         
         this.comboLista.setVisible(false);
         this.comboActi.setVisible(false);
-        
+        this.scrollPane.setVisible(false);
+        this.list.setVisible(false);
         
         //String[] holiwi = new String[] {"-","holiwi","owo"};
         
@@ -62,7 +67,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         this.hashInfo = controlador.getHashDtInstis();
         
         ArrayList<String> arrStr = new ArrayList<String>();
-        //arrStr.addAll(this.hashInfo.keySet());
+        arrStr.addAll(this.hashInfo.keySet());
         
         
         for(int i = 0;i < arrStr.size();i++) {
@@ -99,6 +104,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         labelActi = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
         lblImagen = new javax.swing.JLabel();
+        list = new JList();
+        scrollPane = new JScrollPane();
+        lblCat = new JLabel("Categorias asoc.");
+        
         lblImagen.setBounds(new Rectangle(0, 0, 120, 120));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -211,78 +220,99 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
         labelActi.setText("Actividad Deportiva");
 
         labelFecha.setText("jLabel2");
+        
+        
+        
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(comboLista, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelClases))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(labelFechaAlta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                                .addComponent(labelCosto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelDuracion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelDesc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(labelNombreAct, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(comboActi, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(comboInsti, javax.swing.GroupLayout.Alignment.LEADING, 0, 158, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(labelActi)))
-                            .addComponent(labelFecha))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelAzul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addContainerGap()
+        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(jLabel1, Alignment.LEADING)
+        						.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        							.addComponent(comboLista, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addComponent(labelClases))
+        						.addGroup(Alignment.LEADING, layout.createParallelGroup(Alignment.TRAILING, false)
+        							.addComponent(labelFechaAlta, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+        							.addComponent(labelCosto, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        							.addComponent(labelDuracion, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        							.addComponent(labelDesc, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        							.addComponent(labelNombreAct, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        						.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        							.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+        								.addComponent(comboActi, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        								.addComponent(comboInsti, Alignment.LEADING, 0, 158, Short.MAX_VALUE))
+        							.addPreferredGap(ComponentPlacement.RELATED)
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(jLabel3)
+        								.addComponent(labelActi)))
+        						.addComponent(labelFecha, Alignment.LEADING)
+        						.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+        							.addPreferredGap(ComponentPlacement.UNRELATED)
+        							.addComponent(lblCat)))
+        					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(jButton2)
+        					.addPreferredGap(ComponentPlacement.RELATED)))
+        			.addComponent(panelAzul, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboActi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelActi))
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelClases))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNombreAct)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDesc)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDuracion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCosto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFechaAlta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2))
-            .addComponent(panelAzul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jLabel1)
+        			.addGap(18)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(comboInsti, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jLabel3))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(comboActi, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelActi))
+        			.addGap(8)
+        			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(comboLista, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(labelClases))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(labelNombreAct)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(labelDesc)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(labelDuracion)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(labelCosto)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(labelFechaAlta)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(labelFecha)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(jButton2))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(68)
+        					.addComponent(lblCat)
+        					.addContainerGap())))
+        		.addComponent(panelAzul, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
+        
+        
+        scrollPane.setViewportView(list);
+        getContentPane().setLayout(layout);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultaActionPerformed
+    private void botonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultaActionPerformed-----------------------------------------------------
              
         if(this.comboLista.getSelectedIndex() != 0 && this.comboActi.getSelectedIndex() != 0 && this.comboInsti.getSelectedIndex() != 0){
             //se abren los casos de uso del Lucas y EUwUgenio, MENTIRA
@@ -354,17 +384,13 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
 
     private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboInstiActionPerformed
         
-        if(comboInsti.getSelectedIndex() != 0){
-            //acá iria la función que consulta a la BdD por las Actividades Deportivas------------------------------------------
-//        	Fabrica fab = new Fabrica();
-//        	IControlador controlador = fab.getInterface();
-        	
+        if(comboInsti.getSelectedIndex() != 0){      	
         	//------------------_Itero para darle valor al comboBox de Actividades Deportivas------------------------------------
         	comboActi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         	
         	//
         	//ArrayList<String> arrStr = controlador.consultarActividadDepo(comboInsti.getSelectedItem().toString());
-        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString());
+        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString()).actividades;
         	
         	
         	for(int i = 0;i < arrDtActi.size();i++) {
@@ -392,6 +418,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelFechaAlta.setVisible(false);
 			this.lblImagen.setText("");
 			this.lblImagen.setVisible(false);
+			this.lblCat.setVisible(false);
+			
+	        this.scrollPane.setVisible(false);
+	        this.list.setVisible(false);
         }
         
     }//GEN-LAST:event_comboInstiActionPerformed
@@ -436,14 +466,12 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private void comboActiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActiActionPerformed
 
         if(comboInsti.getSelectedIndex() != 0 && comboActi.getSelectedIndex() != 0){
-            //acá iria la función que consulta a la BdD por los datos de la Actividad Deportiva
 
-        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString());
-        	DtActividadDeportiva dtActi = arrDtActi.get(comboActi.getSelectedIndex()-1);//ver bien lo del -1
+        	ArrayList<DtActividadDeportiva> arrDtActi = this.hashInfo.get(comboInsti.getSelectedItem().toString()).actividades;
+        	DtActividadDeportiva dtActi = arrDtActi.get(comboActi.getSelectedIndex() -1);//ver bien lo del -1
+
             //combos
             this.comboLista.setVisible(true);
-            //mostrar la imagen
-            //cargar img en un txtField
 
             //labels
             this.labelClases.setVisible(true);
@@ -462,35 +490,45 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             
             this.lblImagen.setVisible(true);
             
-            //mentira :3
-            
             this.labelFechaAlta.setVisible(true);
             this.labelFechaAlta.setText("Fecha de Alta: " + dtActi.fechaRegistro.toString());
             
-            //consigo los DtActividades pertinentes
-            ArrayList<String> arrStr = null;
-            ArrayList<String> arrStr2 = null;
+            this.lblCat.setVisible(true);
             
-            for(DtCuponera dtCup : dtActi.cuponeras) {
-            	arrStr.add(dtCup.nombreCup);
+            this.scrollPane.setVisible(true);
+            this.list.setVisible(true);
+            
+            //----------------------------consigo los DtActividades pertinentes-------------------------------------------------------------------
+            ArrayList<String> arrStr = new ArrayList<String>();
+            ArrayList<String> arrStr2 = new ArrayList<String>();
+            ArrayList<String> arrStr3 = new ArrayList<String>();
+            
+            
+            DefaultListModel listModel = new DefaultListModel();
+            
+            
+            for(int i = 0;i < dtActi.cuponeras.size();i++) {
+            	arrStr.add(dtActi.cuponeras.get(i).nombreCup);
             }
-            for(DtClase dtCla : dtActi.clases) {
-            	arrStr.add(dtCla.nombreClase);
+  
+            for(int i = 0;i < dtActi.clases.size();i++) {
+            	arrStr2.add(dtActi.clases.get(i).nombreClase);
+            }
+            
+            for(int i = 0;i < dtActi.categorias.size();i++) {
+            	arrStr3.add(dtActi.categorias.get(i));
             }
             
             comboLista.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
             
-            System.out.println("antes del clearear listaClases");
+
             this.listaClases.clear();
             this.listaClases.addAll(arrStr2);
-            System.out.println(listaClases);
-            
-            
-            System.out.println("antes del clearear listaCuponeras");
+
             this.listaCuponeras.clear();
             this.listaCuponeras.addAll(arrStr);
-            System.out.println(listaCuponeras);
-            
+
+
             
             //System.out.println("antes de iterar");
             for(int i = 0; i < arrStr.size();i++) {
@@ -503,7 +541,13 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             	//this.listaClases.add(arrStr2.get(i));
             }
             
+            for(int i = 0; i < arrStr3.size();i++) {
+            	listModel.addElement(arrStr3.get(i));
+            	//this.listaClases.add(arrStr2.get(i));
+            }
+        
             
+            this.list.setModel(listModel);
             
             System.out.println(dtActi.clases);
 
@@ -534,6 +578,10 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
             this.labelDuracion.setVisible(false);
             this.labelCosto.setVisible(false);
             this.labelFechaAlta.setVisible(false);
+            this.lblCat.setVisible(false);
+            
+            this.scrollPane.setVisible(false);
+            this.list.setVisible(false);
         }
         
     }//GEN-LAST:event_comboActiActionPerformed
@@ -591,4 +639,7 @@ public class ConsultaActividadDeportiva extends javax.swing.JFrame {
     private javax.swing.JLabel labelNombreAct;
     private javax.swing.JPanel panelAzul;
     private JLabel lblImagen;
+    private JScrollPane scrollPane;
+    private JList list;
+    private JLabel lblCat;
 }
