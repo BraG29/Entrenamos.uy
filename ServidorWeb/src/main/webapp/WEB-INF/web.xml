@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+   <description>
+		Servidor web de entrenamos.uy. Desarrollado en el contexto del taller de programacion de aplicaciones del tecnologo de informatica - UTEC
+   </description>
+    <context-param>
+      <param-name>usuarioControllerURL</param-name>
+      <param-value>http://localhost:8080/entrenamosuy/usuarioController?wsdl</param-value>
+    </context-param>
+    <context-param>
+      <param-name>actividadControllerURL</param-name>
+      <param-value>http://localhost:8080/entrenamosuy/actividadController?wsdl</param-value>
+    </context-param>
+    <context-param>
+      <param-name>claseControllerURL</param-name>
+      <param-value>http://localhost:8080/entrenamosuy/claseController?wsdl</param-value>
+    </context-param>
+    <context-param>
+      <param-name>cuponeraControllerURL</param-name>
+      <param-value>http://localhost:8080/entrenamosuy/cuponeraController?wsdl</param-value>
+    </context-param>
+    <context-param>
+      <param-name>contentControllerURL</param-name>
+      <param-value>http://localhost:8080/entrenamosuy/contentController?wsdl</param-value>
+    </context-param>
+  <display-name>servidorWeb</display-name>
+  <welcome-file-list>
+    <welcome-file>/pages/index.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/pages/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/pages/500.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/pages/403.jsp</location>
+  </error-page>
+</web-app>
