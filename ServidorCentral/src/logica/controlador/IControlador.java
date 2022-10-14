@@ -48,6 +48,7 @@ public interface IControlador {
 
 	public void altaCuponera(String nombreCup, String descripcion, LocalDate _fechaInicio, LocalDate _fechaFin,
 			LocalDate fechaFin, float descuento);
+	public ArrayList<String> listaCategorias();
 	public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey);
         
     //Operaciones AgregarActividadDeportivaCuponera--------------------------------------------------------------------
@@ -82,9 +83,9 @@ public interface IControlador {
     
     public ArrayList<String> getClasesPorActiDepo(String nombreActi);
     
-    public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi);
+    //public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi);
     
-    public ArrayList<String> getSociosHabilitados(String nombreClase);
+    public ArrayList<DtSocio> getSocios();
     
     public DtCuponera getDtCuponera(String nombreCupo);
     

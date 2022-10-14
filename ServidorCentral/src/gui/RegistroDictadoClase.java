@@ -1,281 +1,342 @@
-//package gui;
-//
-//import java.util.ArrayList;
-//import logica.controlador.Fabrica;
-//import logica.controlador.IControlador;
-//import logica.datatypes.DtUsrKey;
-//
-//import javax.swing.GroupLayout.Alignment;
-//import javax.swing.GroupLayout;
-//import javax.swing.LayoutStyle.ComponentPlacement;
-//import java.awt.Color;
-//
-//public class RegistroDictadoClase extends javax.swing.JFrame {
-//	private VentanaMensaje showMensaje;
-//	private javax.swing.JButton btnCancelar;
-//	private javax.swing.JButton btnAgregar;
-//	private javax.swing.JComboBox<String> comboBoxActividad;
-//	private javax.swing.JComboBox<String> comboBoxInstitucion;
-//	private javax.swing.JComboBox<String> comboBoxClase;
-//	private javax.swing.JComboBox<String> comboBoxSocios;
-//	private javax.swing.JLabel labelTitulo;
-//	private javax.swing.JLabel labelInstitucion;
-//	private javax.swing.JLabel labelActividad;
-//	private javax.swing.JLabel labelClases;
-//	private javax.swing.JLabel labelSocios;
-//
-//	public RegistroDictadoClase() {
-//		initComponents();
-//		this.labelActividad.setVisible(false);
-//		this.labelClases.setVisible(false);
-//		this.labelSocios.setVisible(false);
-//		this.comboBoxActividad.setVisible(false);
-//		this.comboBoxClase.setVisible(false);
-//		this.comboBoxSocios.setVisible(false);
-//
-//		Fabrica fab = new Fabrica();
-//		IControlador controlador = fab.getInterface();
-//		ArrayList<String> arrStr = controlador.getNombreInstituciones();
-//
-//		for (int i = 0; i < arrStr.size(); i++) {
-//			this.comboBoxInstitucion.addItem(arrStr.get(i));
-//		}
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	private void initComponents() {
-//		btnAgregar = new javax.swing.JButton();
-//		btnCancelar = new javax.swing.JButton();
-//		labelTitulo = new javax.swing.JLabel();
-//		labelInstitucion = new javax.swing.JLabel();
-//		labelActividad = new javax.swing.JLabel();
-//		labelClases = new javax.swing.JLabel();
-//		labelSocios = new javax.swing.JLabel();
-//		comboBoxInstitucion = new javax.swing.JComboBox<>();
-//		comboBoxActividad = new javax.swing.JComboBox<>();
-//		comboBoxClase = new javax.swing.JComboBox<>();
-//		comboBoxSocios = new javax.swing.JComboBox<>();
-//
-//		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-//
-//		labelTitulo.setFont(new java.awt.Font("Noto Sans", 0, 18));
-//		labelTitulo.setText("Registro a Dictado de Clases");
-//		labelInstitucion.setText("Institución");
-//		labelActividad.setText("Actividad Deportiva");
-//		labelClases.setText("Clases");
-//		labelSocios.setText("Socios");
-//
-//		btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
-//		btnCancelar.setText("Atras");
-//		btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-//			public void mouseClicked(java.awt.event.MouseEvent evt) {
-//				btnCancelarMouseClicked(evt);
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+
+import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import org.dom4j.IllegalAddException;
+import org.hibernate.boot.internal.SessionFactoryOptionsBuilder;
+import org.hibernate.engine.query.spi.sql.NativeSQLQueryCollectionReturn;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
+
+import logica.controlador.Fabrica;
+import logica.controlador.IControlador;
+import logica.datatypes.DtActividadDeportiva;
+import logica.datatypes.DtClase;
+import logica.datatypes.DtInstitucion;
+import logica.datatypes.DtSocio;
+import logica.datatypes.DtUsrKey;
+import logica.institucion.Categoria;
+import logica.institucion.Estado;
+
+import java.awt.SystemColor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.JButton;
+
+public class RegistroDictadoClase extends JFrame {
+
+	private JPanel contentPane;
+	private String[] nomClases; 
+	private DtUsrKey dtKeySocio;
+	private VentanaMensaje mensaje;
+
+	/**
+	 * Launch the application.
+	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					RegistroDictadoClase frame = new RegistroDictadoClase();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
 //			}
 //		});
-//
-//		comboBoxInstitucion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//		comboBoxInstitucion.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				comboInstiActionPerformed(evt);
-//			}
-//		});
-//
-//		comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//		comboBoxActividad.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				comboActividadActionPerformed(evt);
-//			}
-//		});
-//
-//		comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//		comboBoxClase.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				comboClaseActionPerformed(evt);
-//			}
-//		});
-//
-//		btnAgregar.setText("Agregar");
-//		btnAgregar.setForeground(Color.WHITE);
-//		btnAgregar.setBackground(new Color(30, 144, 255));
-//		btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-//			public void mouseClicked(java.awt.event.MouseEvent evt) {
-//				btnAgregarMouseClicked(evt);
-//			}
-//		});
-//
-//		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-//		layout.setHorizontalGroup(
-//				layout.createParallelGroup(Alignment.LEADING)
-//						.addGroup(layout.createSequentialGroup().addContainerGap()
-//								.addGroup(layout.createParallelGroup(Alignment.LEADING)
-//										.addGroup(layout.createSequentialGroup().addComponent(
-//												btnCancelar)
-//												.addPreferredGap(ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
-//												.addComponent(btnAgregar).addGap(22))
-//										.addGroup(layout.createSequentialGroup().addGroup(layout
-//												.createParallelGroup(Alignment.LEADING).addComponent(labelTitulo)
-//												.addGroup(layout.createSequentialGroup()
-//														.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-//																.addComponent(comboBoxActividad, Alignment.LEADING, 0,
-//																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//																.addComponent(comboBoxInstitucion, Alignment.LEADING, 0,
-//																		158, Short.MAX_VALUE))
-//														.addPreferredGap(ComponentPlacement.RELATED)
-//														.addGroup(layout.createParallelGroup(Alignment.LEADING)
-//																.addComponent(labelInstitucion)
-//																.addComponent(labelActividad)))
-//												.addGroup(layout.createSequentialGroup()
-//														.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-//																.addComponent(comboBoxSocios, 0,
-//																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//																.addComponent(comboBoxClase, 0, 158, Short.MAX_VALUE))
-//														.addPreferredGap(ComponentPlacement.UNRELATED)
-//														.addGroup(layout.createParallelGroup(Alignment.LEADING)
-//																.addComponent(labelSocios).addComponent(labelClases))))
-//												.addContainerGap(139, Short.MAX_VALUE)))));
-//		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING)
-//				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(labelTitulo).addGap(18)
-//						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(comboBoxInstitucion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-//										GroupLayout.PREFERRED_SIZE)
-//								.addComponent(labelInstitucion))
-//						.addPreferredGap(ComponentPlacement.RELATED)
-//						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(comboBoxActividad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-//										GroupLayout.PREFERRED_SIZE)
-//								.addComponent(labelActividad))
-//						.addGap(8)
-//						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(comboBoxClase, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-//										GroupLayout.PREFERRED_SIZE)
-//								.addComponent(labelClases))
-//						.addPreferredGap(ComponentPlacement.RELATED)
-//						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-//								.addComponent(comboBoxSocios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-//										GroupLayout.PREFERRED_SIZE)
-//								.addComponent(labelSocios))
-//						.addPreferredGap(ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-//						.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(btnCancelar)
-//								.addComponent(btnAgregar))
-//						.addContainerGap()));
-//		getContentPane().setLayout(layout);
-//
-//		pack();
 //	}
-//
-//	private void comboInstiActionPerformed(java.awt.event.ActionEvent evt) {
-//
-//		if (comboBoxInstitucion.getSelectedIndex() != 0) {
-//			Fabrica fab = new Fabrica();
-//			IControlador controlador = fab.getInterface();
-//
-//			comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//
-//			ArrayList<String> arrStr = controlador
-//					.consultarActividadDepo(comboBoxInstitucion.getSelectedItem().toString());
-//			for (int i = 0; i < arrStr.size(); i++) {
-//				comboBoxActividad.addItem(arrStr.get(i));
-//			}
-//			this.comboBoxActividad.setVisible(true);
-//			this.labelActividad.setVisible(true);
-//
-//		} else {
-//			comboBoxActividad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//			this.comboBoxActividad.setVisible(false);
-//			this.comboBoxClase.setVisible(false);
-//			this.comboBoxSocios.setVisible(false);
-//			this.labelActividad.setVisible(false);
-//			this.labelClases.setVisible(false);
-//			this.labelSocios.setVisible(false);
-//		}
-//	}
-//
-//	private void comboActividadActionPerformed(java.awt.event.ActionEvent evt) {
-//		if (comboBoxActividad.getSelectedIndex() != 0) {
-//			Fabrica fab = new Fabrica();
-//			IControlador controlador = fab.getInterface();
-//
-//			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//
-//			ArrayList<String> arrStr = controlador
-//					.getClasesVigentesPorActiDepo(comboBoxActividad.getSelectedItem().toString());
-//			for (int i = 0; i < arrStr.size(); i++) {
-//				comboBoxClase.addItem(arrStr.get(i));
-//			}
-//			this.comboBoxClase.setVisible(true);
-//			this.labelClases.setVisible(true);
-//
-//		} else {
-//			comboBoxClase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//			this.comboBoxClase.setVisible(false);
-//			this.labelClases.setVisible(false);
-//		}
-//	}
-//
-//	private void comboClaseActionPerformed(java.awt.event.ActionEvent evt) {
-//		if (comboBoxClase.getSelectedIndex() != 0) {
-//			Fabrica fab = new Fabrica();
-//			IControlador controlador = fab.getInterface();
-//
-//			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//
-//			ArrayList<DtUsrKey> listaKeys = controlador.listarUsuarios();
-//			String[] arrayKeys = new String[listaKeys.size()];
-//			int i = 0;
-//			for (DtUsrKey keyUsr : listaKeys) {
-//				arrayKeys[i] = keyUsr.nickname + "/" + keyUsr.email;
-//				comboBoxSocios.addItem(arrayKeys[i]);
-//				i++;
-//			}
-//
-//			/*
-//			 * ArrayList<String> arrStr =
-//			 * controlador.getSociosHabilitados(comboBoxClase.getSelectedItem().toString());
-//			 * for (int i = 0; i < arrStr.size(); i++) { }
-//			 */
-//
-//			this.comboBoxSocios.setVisible(true);
-//			this.labelSocios.setVisible(true);
-//
-//		} else {
-//			comboBoxSocios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
-//			this.comboBoxSocios.setVisible(false);
-//			this.labelSocios.setVisible(false);
-//		}
-//	}
-//
-//	private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {
-//		try {
-//			if (comboBoxInstitucion.getSelectedIndex() != 0 && comboBoxActividad.getSelectedIndex() != 0
-//					&& comboBoxClase.getSelectedIndex() != 0 && comboBoxSocios.getSelectedIndex() != 0) {
-//				Fabrica f = new Fabrica();
-//				IControlador sistema = f.getInterface();
-//				String actividad, clase, socio;
-//
-//				String[] nickAndEmail = this.comboBoxSocios.getSelectedItem().toString().split("/", 0);
-//				DtUsrKey dtSocio = new DtUsrKey(nickAndEmail[0], nickAndEmail[1]);
-//
-//				actividad = comboBoxActividad.getSelectedItem().toString();
-//				clase = comboBoxClase.getSelectedItem().toString();
-//
-//				sistema.registroDictadoClase(actividad, clase, dtSocio);
-//
-//				String mensajeConfirmacion = "Se ha registrado el usuario a esa clase.";
-//				showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
-//				showMensaje.setVisible(true);
-//			} else {
-//				throw new IllegalArgumentException("Campos Incompletos");
-//			}
-//
-//		} catch (Exception error) {
-//			showMensaje = new VentanaMensaje("ERROR", error.getMessage(), Color.RED);
-//			showMensaje.setVisible(true);
-//		}
-//	}
-//
-//	private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {
-//		this.setVisible(false);
-//	}
-//}
+
+	/**
+	 * Create the frame.
+	 */
+	public RegistroDictadoClase() {
+		setBackground(SystemColor.inactiveCaption);
+		setForeground(SystemColor.activeCaptionText);
+		setTitle("Registro a Clase");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 565, 424);
+		contentPane = new JPanel();
+		contentPane.setBackground(SystemColor.activeCaptionBorder);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		Fabrica fabrica = new Fabrica();
+		IControlador sistema = fabrica.getInterface();
+		
+		ArrayList<DtSocio> listSocios = sistema.getSocios();
+		String[] cargaLista = {""};
+		for(int i = 0; i < listSocios.size(); i++) {
+			cargaLista[i] = listSocios.get(i).nickname;
+		}
+		
+		
+		JList listUsr = new JList();
+		listUsr.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				for(DtSocio dtS : listSocios) {
+					if(dtS.nickname.equals(listUsr.getSelectedValue().toString()))
+						dtKeySocio = new DtUsrKey(dtS.nickname, dtS.email);
+				}
+			}
+		});
+		listUsr.setModel(new AbstractListModel() {
+			String[] values = cargaLista;
+
+			public int getSize() {
+				return values.length;
+			}
+
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		
+		JScrollPane scrollList = new JScrollPane(listUsr);
+		scrollList.setBounds(12, 69, 153, 288);
+		
+		contentPane.add(scrollList);
+		
+		JLabel lblElijaUnSocio = new JLabel("Elija un Socio:");
+		lblElijaUnSocio.setBounds(12, 41, 98, 15);
+		contentPane.add(lblElijaUnSocio);
+		
+		JComboBox cBTipoListado = new JComboBox();
+		cBTipoListado.setEnabled(false);
+		cBTipoListado.setBounds(192, 36, 112, 24);
+		contentPane.add(cBTipoListado);
+		
+		JLabel lblListarActividadesDeportivas = new JLabel("<html><body>Listar Actividades<br>Deportivas por:</body></html>");
+		lblListarActividadesDeportivas.setBounds(192, 0, 136, 33);
+		contentPane.add(lblListarActividadesDeportivas);
+		
+		String[] cBInicio = {"-"};
+		HashMap mapInsti = sistema.getHashDtInstis();
+		java.util.Collection<DtInstitucion> listInstituciones = mapInsti.values();
+		Set<String> listInstiString = mapInsti.keySet();
+		ArrayList<DtActividadDeportiva> listAllActividades = new ArrayList<>();
+		for(DtInstitucion i : listInstituciones) {
+			for(DtActividadDeportiva dtAC : i.actividades) {
+				if(dtAC.estadoActual == Estado.ACEPTADA)
+					listAllActividades.add(dtAC);
+			}
+		}
+		
+		ArrayList<String> listCategorias = sistema.listaCategorias();
+		
+		String[] nomInstituciones = new String[listInstiString.size() + 1];
+		
+		
+		System.arraycopy(cBInicio, 0, nomInstituciones, 0, 1);
+		System.arraycopy(
+				listInstiString.toArray(new String[listInstiString.size()]), 0, nomInstituciones, 1, listInstiString.size());
+		
+		String[] nomCategorias = new String[listCategorias.size() + 1];
+		System.arraycopy(cBInicio, 0, nomCategorias, 0, 1);
+		System.arraycopy(
+				listCategorias.toArray(new String[listCategorias.size()]), 0, nomCategorias, 1, listCategorias.size());
+		
+		JList listActividades = new JList();
+		
+		JScrollPane scrollActividades = new JScrollPane(listActividades);
+		scrollActividades.setBounds(192, 69, 153, 288);
+		contentPane.add(scrollActividades);
+		
+		JRadioButton rdbtnCategoria = new JRadioButton("Categoria");
+		rdbtnCategoria.setBackground(SystemColor.activeCaptionBorder);
+		rdbtnCategoria.setBounds(329, -4, 98, 25);
+		contentPane.add(rdbtnCategoria);
+		
+		JRadioButton rdbtnInstitucion = new JRadioButton("Institucion");
+		rdbtnInstitucion.setBackground(SystemColor.activeCaptionBorder);
+		rdbtnInstitucion.setBounds(329, 20, 106, 23);
+		contentPane.add(rdbtnInstitucion);
+		
+		JList listClase = new JList();
+		
+		JScrollPane scrollClase = new JScrollPane(listClase);
+		scrollClase.setBounds(372, 69, 153, 288);
+		contentPane.add(scrollClase);
+		
+		JLabel lblElijaUnaClase = new JLabel("Elija una Clase:");
+		lblElijaUnaClase.setBounds(372, 51, 112, 15);
+		contentPane.add(lblElijaUnaClase);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		btnCancelar.setBounds(12, 359, 112, 28);
+		contentPane.add(btnCancelar);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.setBounds(413, 359, 112, 28);
+		contentPane.add(btnAceptar);
+		
+		rdbtnCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(rdbtnInstitucion.isSelected())
+					rdbtnInstitucion.setSelected(false);
+				cBTipoListado.setModel(new DefaultComboBoxModel(nomCategorias));
+				cBTipoListado.setEnabled(true);
+			}
+		});
+		
+		
+		rdbtnInstitucion.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				if(rdbtnCategoria.isSelected())
+					rdbtnCategoria.setSelected(false);
+				cBTipoListado.setModel(new DefaultComboBoxModel(nomInstituciones));
+				cBTipoListado.setEnabled(true);
+				
+								
+			}
+		});
+		
+		cBTipoListado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(cBTipoListado.getSelectedIndex() == 0)
+					listActividades.setModel(null);
+				
+				if(rdbtnInstitucion.isSelected()) {
+					String nomInst = cBTipoListado.getSelectedItem().toString();
+					DtInstitucion dtInst =(DtInstitucion) mapInsti.get(nomInst);
+					String[] nomActividadesXInsti = new String[dtInst.actividades.size()];
+					for(int i = 0; i < nomActividadesXInsti.length; i++) {
+						for(DtActividadDeportiva dtAC : dtInst.actividades) {
+							if(dtAC.estadoActual == Estado.ACEPTADA)
+								nomActividadesXInsti[i] = dtInst.actividades.get(i).nombreAct;
+						}
+					}
+					listActividades.setModel(new AbstractListModel() {
+						String[] values = nomActividadesXInsti;
+
+						public int getSize() {
+							return values.length;
+						}
+
+						public Object getElementAt(int index) {
+							return values[index];
+						}
+						
+					});
+				}
+				
+				else{
+					String[] nomActividadesXCat = new String[listAllActividades.size()];
+					int c = 0;
+					for(DtActividadDeportiva dtAC : listAllActividades) {
+						for(int i = 0; i < dtAC.categorias.size(); i++) {
+							if(dtAC.categorias.get(i).equals(cBTipoListado.getSelectedItem().toString())) {
+								nomActividadesXCat[c] = dtAC.nombreAct;
+								c++;
+							}
+						}
+					}
+					listActividades.setModel(new AbstractListModel() {
+						String[] values = nomActividadesXCat;
+
+						public int getSize() {
+							return values.length;
+						}
+
+						public Object getElementAt(int index) {
+							return values[index];
+						}
+						
+					});
+					
+				}
+			}
+		});
+		
+		listActividades.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				ArrayList<DtClase> listDtClases = new ArrayList<>();
+				for(DtActividadDeportiva dtAC : listAllActividades) {
+					if(dtAC.nombreAct.equals(listActividades.getSelectedValue().toString())) {
+						listDtClases = dtAC.clases;
+						break;
+					}
+				}
+				nomClases = new String[listDtClases.size()];
+				for(int i=0; i<listDtClases.size(); i++) {
+					nomClases[i] = listDtClases.get(i).nombreClase;
+				}
+				listClase.setModel(new AbstractListModel() {
+					String[] values = nomClases;
+
+					public int getSize() {
+						return values.length;
+					}
+
+					public Object getElementAt(int index) {
+						return values[index];
+					}
+					
+				});
+			}
+		});
+		
+		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String clase = new String();
+				try {
+					if(
+							listUsr.getSelectedValue() == null ||
+							listActividades.getSelectedValue() == null ||
+							listClase.getSelectedValue() == null
+							) {
+						throw new IllegalAddException("Seleccione todo lo necesario por favor");
+					}
+					
+					String actividad = listActividades.getSelectedValue().toString();
+					clase = listClase.getSelectedValue().toString();
+					
+					sistema.registroDictadoClase( actividad, clase, dtKeySocio);
+					mensaje = new VentanaMensaje(
+							"Dictado a Clase hecho", 
+							"<html><body>Se ha registrado al usuario: "+dtKeySocio.nickname+"<br>a la clase: "+clase+"</body></html>",
+							Color.BLACK);
+					mensaje.setVisible(true);
+					
+				} catch (IllegalAddException e) {
+					mensaje = new VentanaMensaje("ERROR", e.getMessage(), Color.RED);
+					mensaje.setVisible(true);
+				} catch(IllegalArgumentException e) {
+					mensaje = new VentanaMensaje("ERROR", e.getMessage(), Color.RED);
+					mensaje.setVisible(true);
+				}
+					
+			}
+		});
+		
+		
+		
+	}
+}

@@ -462,14 +462,28 @@ public class Controlador implements IControlador {
               
         return listaADevolver;
     }
+    
+    public ArrayList<String> listaCategorias() {
+    	ArrayList<String> categorias = new ArrayList<String>();
+    	EntityManager em = emf.createEntityManager();
+    	CriteriaBuilder cb = em.getCriteriaBuilder();
+    	CriteriaQuery<Categoria> cq = cb.createQuery(Categoria.class);
+    	Root<Categoria> rootCat = cq.from(Categoria.class);
+    	cq.select(rootCat.get("nombreCat"));
+    	List queryList = em.createQuery(cq).getResultList();
+    	categorias.addAll(queryList);
+    	return categorias;
+    }
         
     public void registroDictadoClase(String pNombreActividad, String pNombreClase, DtUsrKey socioKey) {
     	EntityManager em = emf.createEntityManager();
     	try {
     		em.getTransaction().begin();
+    		Clase c = em.find(Clase.class, pNombreClase);
+    		if(!c.hayCupos())
+    			throw new IllegalArgumentException("No quedan cupos para esa clase");
     		Usuario keyUsr = new Usuario(socioKey.nickname, socioKey.email);        	
     		ActividadDeportiva actividadDeportivaActual = em.find(ActividadDeportiva.class, pNombreActividad);
-    		Clase c = em.find(Clase.class, pNombreClase);
     		Socio socioActual = (Socio) em.find(Usuario.class, keyUsr);
     		Float costo = actividadDeportivaActual.getCosto();
     		LocalDate fecha = LocalDate.now();
@@ -504,7 +518,9 @@ public class Controlador implements IControlador {
             {
                 actividades.add(a.getNombreAct());
             }
-            DtCuponera DtCup = new DtCuponera(cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
+            DtCuponera DtCup = new DtCuponera(
+            		cup.getNombreCup(),cup.getDescripcion(),cup.getFechaInicio(),cup.getFechaFin(),
+            		cup.getDescuento(),cup.getFechaAlta(),cup.getCantClases(),actividades);
             l.add(DtCup);
         }
 		em.clear();
@@ -657,26 +673,34 @@ public class Controlador implements IControlador {
 		return listaADevolver;
 	}
   
-	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
-		EntityManager em = emf.createEntityManager();
-		ArrayList<String> listaADevolver = new ArrayList<String>();
-		ArrayList<String> listaDeClases = new ArrayList<String>();
-		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-		listaDeClases = acti.getNombreClases();
-		for (int i = 0; i < listaDeClases.size(); i++) {
-			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
-		}
-		em.clear();
-		em.close();
-		return listaADevolver;
-	}
+//	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
+//		EntityManager em = emf.createEntityManager();
+//		ArrayList<String> listaADevolver = new ArrayList<String>();
+//		ArrayList<String> listaDeClases = new ArrayList<String>();
+//		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+//		listaDeClases = acti.getNombreClases();
+//		for (int i = 0; i < listaDeClases.size(); i++) {
+//			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
+//		}
+//		em.clear();
+//		em.close();
+//		return listaADevolver;
+//	}
   
-	public ArrayList<String> getSociosHabilitados(String nombreClase) {
+	public ArrayList<DtSocio> getSocios() {
 		EntityManager em = emf.createEntityManager();
-		ArrayList<String> listaADevolver = new ArrayList<String>();
-		listaADevolver.addAll(em.createQuery("select s.nombre from Socio s").getResultList());
+		ArrayList<DtSocio> listaADevolver = new ArrayList<DtSocio>();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Socio> cq = cb.createQuery(Socio.class);
+		Root<Socio> socioRoot = cq.from(Socio.class);
+		cq.select(socioRoot);
+		List socios = em.createQuery(cq).getResultList();
 		em.clear();
 		em.close();
+		for(int i = 0; i < socios.size(); i++) {
+			Socio s = (Socio) socios.get(i);
+			listaADevolver.add((DtSocio)s.getDatosSocio());
+		}
 		return listaADevolver;
 	}
   

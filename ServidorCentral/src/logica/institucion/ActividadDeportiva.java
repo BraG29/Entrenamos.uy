@@ -205,7 +205,7 @@ public class ActividadDeportiva implements Serializable {
         }
         DtActividadDeportiva DtActi = new DtActividadDeportiva(
         		this.nombreAct, this.descripcion, this.duracion, this.costo, this.fechaRegistro, 
-        		 listClases, listCuponeras, strCategorias);
+        		this.estadoActual, listClases, listCuponeras, strCategorias);
         return DtActi;
     }
     
