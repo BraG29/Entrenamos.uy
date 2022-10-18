@@ -19,12 +19,12 @@
   </div>
 
   <main id="zonaRegistroSocio" class="form-signup w-50 m-auto">
-    <form action="signupSocio" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+    <form action="/ServidorWeb/signupSocio" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
       <h1 class="h3 mb-3 fw-normal">Registro de Socio</h1>
 
       <div class="form-floating my-2">
-        <input type="text" class="form-control" name="nombreUsuarioInput" required>
-        <label for="nombreUsuarioInput">Nombre de Usuario</label>
+        <input type="text" class="form-control" name="nicknameInput" required>
+        <label for="nicknameInput">Nombre de Usuario</label>
       </div>
 
       <div class="form-floating my-2">
