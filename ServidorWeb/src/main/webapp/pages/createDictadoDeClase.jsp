@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="./../templates/headerCommon.jsp"/>
 <main class="form-signup w-50 m-auto">
-    <form action="createdictadodeclase" method="POST">
+    <form action="createdictadodeclase" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
         <h1 class="h3 mb-3 fw-normal">Dar de alta Dictado de Clase</h1>
 
         <p style="color:red;">Este select lista las actividades deportivas con estado = aceptado</p>

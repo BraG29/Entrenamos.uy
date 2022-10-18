@@ -9,7 +9,9 @@
             <li><a href="./selectUsuario" class="nav-link px-2">Usuarios</a></li>
         </ul>
         <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-danger me-2" onclick="">Cerrar Sesión</button>
+            <form action="logout" method="GET" enctype="multipart/form-data" accept-charset="UTF-8">
+                <button type="submit" class="btn btn-outline-danger me-2">Cerrar Sesión</button>
+            </form>
         </div>
     </header>
 </div>

@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="./../templates/headerSignInSignUp.jsp"/>
 <main class="form-signup w-50 m-auto">
-    <form action="signup" method="POST">
+    <form action="signup" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
     <h1 class="h3 mb-3 fw-normal">Registro</h1>
 
     <div class="form-floating my-2">
