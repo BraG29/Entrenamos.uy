@@ -12,23 +12,28 @@
 </head>
 
 <body>
-<jsp:include page="./../templates/headerSignInSignUp.jsp"/>
-<main class="form-signin w-50 m-auto">
-    <form action="login" method="POST">
-    <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+  <jsp:include page="./../templates/headerSignInSignUp.jsp"/>
+  <main class="form-signin w-50 m-auto">
+      <form action="login" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+        <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
 
-    <div class="form-floating my-3">
-        <input type="email" class="form-control" name="floatingInput" placeholder="nombre@ejemplo.com" required>
-        <label for="floatingInput">Usuario o Mail</label>
-    </div>
-    <div class="form-floating my-3">
-        <input type="password" class="form-control" name="floatingPassword" placeholder="Password" required>
-        <label for="floatingPassword">Contraseña</label>
-    </div>
+        <div class="form-floating my-3">
+          <input type="email" class="form-control" name="loginUserMailInput" placeholder="nombre@ejemplo.com" required>
+          <label for="loginUserMailInput">Usuario o Mail</label>
+        </div>
+        <div class="form-floating my-3">
+          <input type="password" class="form-control" name="loginUserPasswordInput" placeholder="Password" required>
+          <label for="loginUserPasswordInput">Contraseña</label>
+        </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button>
-    </form>
-</main>
-<jsp:include page="./../templates/footer.jsp"/>
+        <div id="btn-recordarme" class="mx-4 mb-2">
+          <input class="form-check-input" name="loginCheckboxRecordad" type="checkbox" value="false">
+          <label class="form-check-label" for="loginCheckboxRecordad">Recordarme</label>
+        </div>
+        
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button>
+      </form>
+  </main>
+  <jsp:include page="./../templates/footer.jsp"/>
 </body>
 </html>

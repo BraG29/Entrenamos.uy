@@ -25,7 +25,7 @@
     </context-param>
   <display-name>servidorWeb</display-name>
   <welcome-file-list>
-    <welcome-file>/pages/index.jsp</welcome-file>
+    <welcome-file>/pages/home.jsp</welcome-file>
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>
