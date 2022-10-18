@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="./../templates/headerCommon.jsp"/>
 <main class="form-signup w-50 m-auto">
-    <form action="createactividaddeportiva" method="POST">
+    <form action="createactividaddeportiva" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
         <h1 class="h3 mb-3 fw-normal">Dar de alta una Actividad Deportiva</h1>
 
         <div class="form-floating my-2">

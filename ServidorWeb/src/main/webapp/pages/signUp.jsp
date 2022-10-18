@@ -13,69 +13,159 @@
 
 <body>
 <jsp:include page="./../templates/headerSignInSignUp.jsp"/>
-<main class="form-signup w-50 m-auto">
-    <form action="signup" method="POST">
-    <h1 class="h3 mb-3 fw-normal">Registro</h1>
 
-    <div class="form-floating my-2">
-        <input type="text" class="form-control" name="nombreUsuarioInput" required>
-        <label for="nombreUsuarioInput">Nombre de Usuario</label>
-    </div>
+  <div class="form-floating my-2">
+    <button class="w-50 btn btn-lg btn-success" onclick="toggleSection()" name="botonDeCambioDeRegistro" style="margin-left: 25%;">Cambiar tipo de usuario</button>
+  </div>
 
-    <div class="form-floating my-2">
+  <main id="zonaRegistroSocio" class="form-signup w-50 m-auto">
+    <form action="/ServidorWeb/signupSocio" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+      <h1 class="h3 mb-3 fw-normal">Registro de Socio</h1>
+
+      <div class="form-floating my-2">
+        <input type="text" class="form-control" name="nicknameInput" required>
+        <label for="nicknameInput">Nombre de Usuario</label>
+      </div>
+
+      <div class="form-floating my-2">
         <input type="text" class="form-control" name="nombreInput" required>
         <label for="nombreInput">Nombre</label>
-    </div>
+      </div>
 
-    <div class="form-floating my-2">
+      <div class="form-floating my-2">
         <input type="text" class="form-control" name="apellidoInput" required>
         <label for="apellidoInput">Apellido</label>
-    </div>
+      </div>
 
-    <div class="form-floating my-2">
+      <div class="form-floating my-2">
         <input type="email" class="form-control" name="emailInput" placeholder="nombre@ejemplo.com" required>
         <label for="emailInput">Mail</label>
-    </div>
-    <div class="form-floating my-2">
+      </div>
+      <div class="form-floating my-2">
         <input type="password" class="form-control" name="passwordInput" required>
         <label for="passwordInput">Contraseña</label>
-    </div>
+      </div>
 
-    <div class="form-floating my-2">
+      <div class="form-floating my-2">
         <input type="password" class="form-control" name="passwordConfirmInput" required>
         <label for="passwordConfirmInput">Confirmación de Contraseña</label>
-    </div>
+      </div>
 
-    <div class="form-floating my-2">
+      <div class="form-floating my-2">
         <input type="date" class="form-control" name="fechaInput" required>
         <label for="fechaInput">Fecha de Nacimiento</label>
-    </div>
+      </div>
 
-    <div class="form-floating my-2">
+      <div class="form-floating my-2">
         <input type="file" class="form-control" name="imagenInput" accept="image/png, image/jpeg, image/jpeg">
         <label for="imagenInput">Imagen</label>
-    </div>
+      </div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Registro</button>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Registro</button>
     </form>
-</main>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script>
+  </main>
+
+  <main id="zonaRegistroProfesor" class="form-signup w-50 m-auto" style="display:none">
+    <form action="signupProfesor" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
+      <h1 class="h3 mb-3 fw-normal">Registro de Profesor</h1>
+
+      <div class="form-floating my-2">
+        <input type="text" class="form-control" name="nombreUsuarioInput" required>
+        <label for="nombreUsuarioInput">Nombre de Usuario</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="text" class="form-control" name="nombreInput" required>
+        <label for="nombreInput">Nombre</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="text" class="form-control" name="apellidoInput" required>
+        <label for="apellidoInput">Apellido</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="email" class="form-control" name="emailInput" placeholder="nombre@ejemplo.com" required>
+        <label for="emailInput">Mail</label>
+      </div>
+      <div class="form-floating my-2">
+        <input type="password" class="form-control" name="passwordInput" required>
+        <label for="passwordInput">Contraseña</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="password" class="form-control" name="passwordConfirmInput" required>
+        <label for="passwordConfirmInput">Confirmación de Contraseña</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="date" class="form-control" name="fechaInput" required>
+        <label for="fechaInput">Fecha de Nacimiento</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="file" class="form-control" name="imagenInput" accept="image/png, image/jpeg, image/jpeg">
+        <label for="imagenInput">Imagen</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <select class="form-select" aria-label="Default select example" name="institucionInput" required>
+          <option value="Instituto Natural" selected>Instituto Natural</option>
+          <option value="Fuerza Bruta">Fuerza Bruta</option>
+          <option value="Telón">Telón</option>
+          <option value="Olympic">Olympic</option>
+        </select>
+        <label for="institucionInput">Institución</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <textarea class="form-control rounded-1" name="descripcionInput" rows="5"></textarea>
+        <label for="descripcionInput">Descripción general</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <textarea class="form-control rounded-1" name="biografiaInput" rows="5"></textarea>
+        <label for="biografiaInput">Biografía</label>
+      </div>
+
+      <div class="form-floating my-2">
+        <input type="url" class="form-control" name="urlInput">
+        <label for="urlInput">Link a sitio web</label>
+      </div>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Registro</button>
+    </form>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  
+  <script>
+    function toggleSection() {
+      if (document.getElementById("zonaRegistroProfesor").style.display === "none") {
+        document.getElementById("zonaRegistroSocio").style.display = "none";
+        document.getElementById("zonaRegistroProfesor").style.display = "";
+      }
+      else {
+        document.getElementById("zonaRegistroProfesor").style.display = "none";
+        document.getElementById("zonaRegistroSocio").style.display = "";
+      }
+    }
+
     var dateControler = {
-        currentDate: null
+      currentDate: null
     }
 
     $(document).on("change", "#fechaInput", function (event, ui) {
-        var now = new Date();
-        var selectedDate = new Date($(this).val());
+      var now = new Date();
+      var selectedDate = new Date($(this).val());
 
-        if (selectedDate > now) {
+      if (selectedDate > now) {
         $(this).val(dateControler.currentDate)
-        } else {
+      } else {
         dateControler.currentDate = $(this).val();
-        }
+      }
     });
-</script>
+
+  </script>
 <jsp:include page="./../templates/footer.jsp"/>
 </body>
 </html>
