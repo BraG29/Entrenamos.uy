@@ -121,9 +121,9 @@ public interface IControlador {
     public void rechazoAceptoActividad(String nombreActividad, int Estado);
     
     //CU seguir usuario
-    public void followUsr(String seguidor, String seguido);
+    public void followUsr(DtUsrKey seguidor, DtUsrKey seguido);
     //CU dejar de seguir usuario
-    public void unfollowUsr(String seguidor, String seguido);
+    public void unfollowUsr(DtUsrKey seguidor, DtUsrKey seguido);
     
     public ArrayList<String> getCategoriaXActi(String actiDepo);
 

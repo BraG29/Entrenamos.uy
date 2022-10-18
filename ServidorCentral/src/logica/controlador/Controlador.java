@@ -886,10 +886,49 @@ public class Controlador implements IControlador {
 
      
      //CU seguir usuario
-     public void followUsr(String seguidor, String seguido){}
+     public void followUsr(DtUsrKey seguidor, DtUsrKey seguido){
+    	 EntityManager em = emf.createEntityManager();
+    	 try {    		
+    		em.getTransaction().begin();
+    		Usuario usrSeguidor= em.find(Usuario.class, new Usuario(seguidor.nickname,seguidor.email));
+    		
+    		Usuario usrSeguido = em.find(Usuario.class, new Usuario(seguido.nickname,seguido.email));
+  	
+    		usrSeguido.addSeguidor(usrSeguidor);
+    		usrSeguidor.addSeguido(usrSeguido);
+    		
+    		em.flush();
+    		em.getTransaction().commit();
+    	} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+		}
+		em.clear();
+		em.close();
+		
+     }
+     
+     
      
      //CU dejar de seguir usuario
-     public void unfollowUsr(String seguidor, String seguido){}
+     public void unfollowUsr(DtUsrKey seguidor, DtUsrKey seguido){
+    	 EntityManager em = emf.createEntityManager();
+    	 try {    		
+    		em.getTransaction().begin();
+    		Usuario usrSeguidor= em.find(Usuario.class, new Usuario(seguidor.nickname,seguidor.email));
+    		
+    		Usuario usrSeguido = em.find(Usuario.class, new Usuario(seguido.nickname,seguido.email));
+  	
+    		usrSeguido.removeSeguidor(usrSeguidor);
+    		usrSeguidor.removeSeguidos(usrSeguido);
+    		
+    		em.flush();
+    		em.getTransaction().commit();
+    	} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+		}
+		em.clear();
+		em.close();
+     }
      
      public void altaCategoria(String nomCat) {
     	 EntityManager em = emf.createEntityManager();
