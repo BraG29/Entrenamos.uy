@@ -29,7 +29,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transaction;
 import javax.persistence.Query;
 //import javax.persistence.
-
+import javax.persistence.TypedQuery;
 
 import org.hibernate.jpa.internal.util.PessimisticNumberParser;
 //import org.hibernate.mapping.List;
@@ -194,6 +194,29 @@ public class Controlador implements IControlador {
 		em.close();
 		if(img != null)
 			guardarImagen(img, nickname, "imgUsers");
+	}
+	
+	public DtUsrKey consultaUsuario(String credencial) {
+		DtUsrKey usr = null;
+		Usuario u = null;
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
+			Root<Usuario> rootUsr = cq.from(Usuario.class);
+			cq.select(rootUsr);
+			cq.where(cb.or(cb.equal(rootUsr.get("email"), credencial), cb.equal(rootUsr.get("nickname"), credencial)));
+			u = em.createQuery(cq).getSingleResult();
+		} catch (PersistenceException e) {
+			em.getTransaction().rollback();
+		}
+		usr = u.getKey();
+		
+		em.clear();
+		em.close();
+		
+		return usr;
 	}
 	
 	public void modificarDatos(

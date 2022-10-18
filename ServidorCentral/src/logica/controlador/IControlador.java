@@ -21,6 +21,8 @@ public interface IControlador {
 			String institucion, String descripcion, String biografia, String sitioWeb, File img);
 
 	public ArrayList<DtUsuario> listarUsuarios();
+	
+	public DtUsrKey consultaUsuario(String credencial);
 
 	public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, File img);
 

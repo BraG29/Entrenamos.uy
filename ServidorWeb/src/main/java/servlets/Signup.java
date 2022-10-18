@@ -11,9 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-@WebServlet("/signup")
+import logica.controlador.Fabrica;
+
+@WebServlet("/signupSocio")
 @MultipartConfig(
 		  fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
 		  maxFileSize = 1024 * 1024 * 10,      // 10 MB
@@ -51,23 +54,7 @@ public class Signup extends HttpServlet {
 		for(Part p : request.getParts()) {
 			p.write("/home/progappvm/Desktop/imagenes/"+ nombreImg);
 		}
-		salida.println("<html><body>");
-		salida.println("<h1 style ='text-align:center'>Prueba Alta Usuario</h1>");
-		salida.print("<br><br><br>");
-		salida.println("Nickname: "+ request.getParameter("nicknameInput"));
-		salida.print("<br>");
-		salida.println("Email: "+ request.getParameter("emailInput"));
-		salida.print("<br>");
-		salida.println("Nombre: "+ request.getParameter("nombreInput"));
-		salida.print("<br>");
-		salida.println("Apellido: "+ request.getParameter("apellidoInput"));
-		salida.print("<br>");
-		salida.println("Contraseña: "+ request.getParameter("passwordInput"));
-		salida.print("<br>");
-		salida.println("Fecha: "+ request.getParameter("fechaInput"));
-		salida.print("<br>");
 		
-		salida.println("</body></html>");
 		
 		
 //		processRequest(request, response);

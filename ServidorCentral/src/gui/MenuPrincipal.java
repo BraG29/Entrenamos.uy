@@ -59,6 +59,13 @@ public class MenuPrincipal extends JFrame {
 		Fabrica fab = new Fabrica();
 		IControlador sistema = fab.getInterface();
 		sistema.initConnection();
+		DtUsrKey dtKey = sistema.consultaUsuario("braian@mail.com");
+		if(dtKey != null)
+			System.out.println(dtKey.nickname);
+		else {
+			System.out.println("No anduvo mi negro");
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
