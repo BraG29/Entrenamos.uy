@@ -14,12 +14,12 @@
 <body>
 <jsp:include page="./../templates/headerSignInSignUp.jsp"/>
 <main class="form-signup w-50 m-auto">
-    <form action="signup" method="POST">
+	<form action="/ServidorWeb/signup" method="post" enctype="multipart/form-data">
     <h1 class="h3 mb-3 fw-normal">Registro</h1>
 
     <div class="form-floating my-2">
-        <input type="text" class="form-control" name="nombreUsuarioInput" required>
-        <label for="nombreUsuarioInput">Nombre de Usuario</label>
+        <input type="text" class="form-control" name="nicknameInput" required>
+        <label for="nicknameInput">Nickname</label>
     </div>
 
     <div class="form-floating my-2">
@@ -50,14 +50,13 @@
         <input type="date" class="form-control" name="fechaInput" required>
         <label for="fechaInput">Fecha de Nacimiento</label>
     </div>
-
     <div class="form-floating my-2">
         <input type="file" class="form-control" name="imagenInput" accept="image/png, image/jpeg, image/jpeg">
         <label for="imagenInput">Imagen</label>
     </div>
 
     <button class="w-100 btn btn-lg btn-primary" type="submit">Registro</button>
-    </form>
+	</form>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script>
