@@ -39,6 +39,8 @@ import logica.institucion.Institucion;
 import logica.usuario.Profesor;
 import logica.usuario.Socio;
 import logica.usuario.Usuario;
+import net.bytebuddy.asm.Advice.This;
+import logica.datatypes.*;
 
 public class Controlador implements IControlador {
 
@@ -47,6 +49,7 @@ public class Controlador implements IControlador {
     private Institucion instiRecordada;
     // en menu principal hay un ejemplo de instancia de entity manager
     private EntityManagerFactory emf;
+
 
     private static Controlador instance;
 
