@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import logica.controlador.Fabrica;
 import logica.controlador.IControlador;
+import logica.datatypes.DtUsrKey;
 
 import java.awt.SystemColor;
 import javax.swing.JEditorPane;
@@ -58,6 +59,13 @@ public class MenuPrincipal extends JFrame {
 		Fabrica fab = new Fabrica();
 		IControlador sistema = fab.getInterface();
 		sistema.initConnection();
+		DtUsrKey dtKey = sistema.consultaUsuario("braian@mail.com");
+		if(dtKey != null)
+			System.out.println(dtKey.nickname);
+		else {
+			System.out.println("No anduvo mi negro");
+		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -90,6 +98,13 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		/*
+		DtUsrKey Vecindario = new DtUsrKey("Vecindario", "calavera@mail.com");
+		DtUsrKey Piche = new DtUsrKey("ElPiche", "coso@mail.com");
+		 * sistema.followUsr(Vecindario, Piche);//vecindario sigue a piche		
+		sistema.unfollowUsr(Vecindario,Piche); //vecindario deja de seguir a piche
+		
+		 */
 		JLabel lblTitulo = new JLabel("Menu Administrador");
 		lblTitulo.setFont(new Font("Noto Sans CJK SC", Font.BOLD, 18));
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,6 +120,8 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnAltaUsuario.setBounds(12, 63, 298, 25);
 		contentPane.add(btnAltaUsuario);
+		
+		
 		
 		JButton btnConsultaUsuario = new JButton("Consulta de Usuario");
 		btnConsultaUsuario.addActionListener(new ActionListener() {

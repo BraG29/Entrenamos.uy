@@ -18,7 +18,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-//import javax.persistence.
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
@@ -182,6 +181,29 @@ public class Controlador implements IControlador {
             guardarImagen(img, nickname, "imgUsers");
     }
 
+    public DtUsrKey consultaUsuario(String credencial) {
+        DtUsrKey usr = null;
+        Usuario u = null;
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
+            Root<Usuario> rootUsr = cq.from(Usuario.class);
+            cq.select(rootUsr);
+            cq.where(cb.or(cb.equal(rootUsr.get("email"), credencial), cb.equal(rootUsr.get("nickname"), credencial)));
+            u = em.createQuery(cq).getSingleResult();
+        } catch (PersistenceException e) {
+            em.getTransaction().rollback();
+        }
+        usr = u.getKey();
+
+        em.clear();
+        em.close();
+
+        return usr;
+    }
+
     public void modificarDatos(
             String nickname, String nombre, String apellido, LocalDate fechaNac,
             String institucion, String descripcion, String biografia, String sitioWeb, File img) {
@@ -250,16 +272,16 @@ public class Controlador implements IControlador {
         // listaCuponeras.addAll(em.createNativeQuery("SELECT nom_cuponera FROM
         // Actividad_Cuponera WHERE nom_actividad = " + "'" + nombreActi +
         // "'").getResultList()) ;
-//		try {
-//			//em.getTransaction().begin();
-//			
-//		}catch (Exception ex) {
-//			if (em != null) {
-//				em.getTransaction().rollback();
-//			}
-//		} finally {
-//			//em.close();
-//		}
+        // try {
+        // //em.getTransaction().begin();
+        //
+        // }catch (Exception ex) {
+        // if (em != null) {
+        // em.getTransaction().rollback();
+        // }
+        // } finally {
+        // //em.close();
+        // }
 
         // resultado = nombre
         return listaCuponeras;
@@ -527,7 +549,7 @@ public class Controlador implements IControlador {
         return l;
     }
 
-//------------------------------------------------------------------------------------------------------------------------------------------        
+    // ------------------------------------------------------------------------------------------------------------------------------------------
     public ArrayList<String> getNombreCuponeras() {
 
         ArrayList<String> listaADevolver = new ArrayList<String>();
@@ -623,7 +645,7 @@ public class Controlador implements IControlador {
         return listaADevolver;
     }
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------       
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------
     public void darAltaClase(String nombreInsti, String nombreActiDepo, String nombreClase, LocalDateTime fechaInicio,
             DtUsrKey profeKey, int sociosMin, int sociosMax, String URL, LocalDate fechaAlta) {
 
@@ -646,7 +668,7 @@ public class Controlador implements IControlador {
         em.clear();
         em.close();
     }
-//------------------------------------------------------------------------------------------------------------------------------------------ 
+    // ------------------------------------------------------------------------------------------------------------------------------------------
 
     public void recordarInsti(String nombreInsti) {
 
@@ -657,7 +679,7 @@ public class Controlador implements IControlador {
         System.out.println(this.instiRecordada.getNombreInst());
     }
 
-//------------------------------------------------------------------------------------------------------------------------------------------ 
+    // ------------------------------------------------------------------------------------------------------------------------------------------
     public DtActividadDeportiva getDtActividadDeportiva(String nombreActi) {
         EntityManager em = emf.createEntityManager();
         ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
@@ -676,19 +698,21 @@ public class Controlador implements IControlador {
         return listaADevolver;
     }
 
-//	public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
-//		EntityManager em = emf.createEntityManager();
-//		ArrayList<String> listaADevolver = new ArrayList<String>();
-//		ArrayList<String> listaDeClases = new ArrayList<String>();
-//		ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
-//		listaDeClases = acti.getNombreClases();
-//		for (int i = 0; i < listaDeClases.size(); i++) {
-//			listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) + "'").getResultList());
-//		}
-//		em.clear();
-//		em.close();
-//		return listaADevolver;
-//	}
+    // public ArrayList<String> getClasesVigentesPorActiDepo(String nombreActi) {
+    // EntityManager em = emf.createEntityManager();
+    // ArrayList<String> listaADevolver = new ArrayList<String>();
+    // ArrayList<String> listaDeClases = new ArrayList<String>();
+    // ActividadDeportiva acti = em.find(ActividadDeportiva.class, nombreActi);
+    // listaDeClases = acti.getNombreClases();
+    // for (int i = 0; i < listaDeClases.size(); i++) {
+    // listaADevolver.addAll(em.createQuery("select c.nombreClase from Clase c where
+    // cant_minima < cant_maxima AND nombre = '" + listaDeClases.get(i) +
+    // "'").getResultList());
+    // }
+    // em.clear();
+    // em.close();
+    // return listaADevolver;
+    // }
 
     public ArrayList<DtSocio> getSocios() {
         EntityManager em = emf.createEntityManager();
@@ -894,11 +918,46 @@ public class Controlador implements IControlador {
     }
 
     // CU seguir usuario
-    public void followUsr(String seguidor, String seguido) {
+    public void followUsr(DtUsrKey seguidor, DtUsrKey seguido) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Usuario usrSeguidor = em.find(Usuario.class, new Usuario(seguidor.nickname, seguidor.email));
+
+            Usuario usrSeguido = em.find(Usuario.class, new Usuario(seguido.nickname, seguido.email));
+
+            usrSeguido.addSeguidor(usrSeguidor);
+            usrSeguidor.addSeguido(usrSeguido);
+
+            em.flush();
+            em.getTransaction().commit();
+        } catch (PersistenceException e) {
+            em.getTransaction().rollback();
+        }
+        em.clear();
+        em.close();
+
     }
 
     // CU dejar de seguir usuario
-    public void unfollowUsr(String seguidor, String seguido) {
+    public void unfollowUsr(DtUsrKey seguidor, DtUsrKey seguido) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Usuario usrSeguidor = em.find(Usuario.class, new Usuario(seguidor.nickname, seguidor.email));
+
+            Usuario usrSeguido = em.find(Usuario.class, new Usuario(seguido.nickname, seguido.email));
+
+            usrSeguido.removeSeguidor(usrSeguidor);
+            usrSeguidor.removeSeguidos(usrSeguido);
+
+            em.flush();
+            em.getTransaction().commit();
+        } catch (PersistenceException e) {
+            em.getTransaction().rollback();
+        }
+        em.clear();
+        em.close();
     }
 
     public void altaCategoria(String nomCat) {

@@ -23,6 +23,8 @@ public interface IControlador {
 
     public ArrayList<DtUsuario> listarUsuarios();
 
+    public DtUsrKey consultaUsuario(String credencial);
+
     public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, File img);
 
     public void modificarDatos(String nickname, String nombre, String apellido, LocalDate fechaNac, String institucion,
@@ -127,10 +129,10 @@ public interface IControlador {
     public void rechazoAceptoActividad(String nombreActividad, int Estado);
 
     // CU seguir usuario
-    public void followUsr(String seguidor, String seguido);
+    public void followUsr(DtUsrKey seguidor, DtUsrKey seguido);
 
     // CU dejar de seguir usuario
-    public void unfollowUsr(String seguidor, String seguido);
+    public void unfollowUsr(DtUsrKey seguidor, DtUsrKey seguido);
 
     public ArrayList<String> getCategoriaXActi(String actiDepo);
 
