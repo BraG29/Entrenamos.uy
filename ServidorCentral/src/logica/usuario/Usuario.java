@@ -3,35 +3,32 @@ package logica.usuario;
 import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.jar.Attributes.Name;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import logica.datatypes.DtUsuario;
 import logica.datatypes.DtUsrKey;
-
+import logica.datatypes.DtUsuario;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Usuario implements Serializable {
-    
-	@Id
-	@Column(unique = true)
+
+    @Id
+    @Column(unique = true)
     protected String nickname;
-	@Id
-	@Column(unique = true)
+    @Id
+    @Column(unique = true)
     protected String email;
-	protected String contrasenia;
+    protected String contrasenia;
     protected String nombre;
     protected String apellido;
-    @Column(name="fecha_nacimiento")
+    @Column(name = "fecha_nacimiento")
     protected LocalDate fechaNac;
-    
+
 // Getters and Setters----------------------------------------------------------
     public String getNickname() {
         return nickname;
@@ -64,21 +61,21 @@ public class Usuario implements Serializable {
     public void setFechaNac(LocalDate fechaNac) {
         this.fechaNac = fechaNac;
     }
-    	
+
     public String getApellido() {
-		return apellido;
-	}
+        return apellido;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-	
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	//Constructors------------------------------------------------------------------
-    //Empty constructor
+    // Constructors------------------------------------------------------------------
+    // Empty constructor
     public Usuario() {
-	}
-    //Full constructor
+    }
+
+    // Full constructor
     public Usuario(String nickname, String apellido, String email, String pass, String nombre, LocalDate fechaNac) {
         this.nickname = nickname;
         this.email = email;
@@ -88,25 +85,26 @@ public class Usuario implements Serializable {
         this.fechaNac = fechaNac;
         // Falta la imagen .png
     }
-    public Usuario(String nickname, String email) {
-		this.nickname = nickname;
-		this.email = email;
-	}
 
-	//Methods-----------------------------------------------------------------------
-    public DtUsrKey getKey(){
-        DtUsrKey output = new DtUsrKey(this.nickname,this.email);
+    public Usuario(String nickname, String email) {
+        this.nickname = nickname;
+        this.email = email;
+    }
+
+    // Methods-----------------------------------------------------------------------
+    public DtUsrKey getKey() {
+        DtUsrKey output = new DtUsrKey(this.nickname, this.email);
         return output;
     }
-    
-    public DtUsuario getDatosCompletos(){//should be implemented by child classes
+
+    public DtUsuario getDatosCompletos() {// should be implemented by child classes
         return null;
     }
-    
+
     public File getImagen() {
-    	String rutaDir = System.getProperty("user.dir");
-    	String imgPath = rutaDir+"/src/imgUsr/"+"."+nickname;
-    	File img = new File(imgPath);
-    	return img;
+        String rutaDir = System.getProperty("user.dir");
+        String imgPath = rutaDir + "/src/imgUsr/" + "." + nickname;
+        File img = new File(imgPath);
+        return img;
     }
 }

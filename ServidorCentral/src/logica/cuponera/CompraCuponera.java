@@ -1,4 +1,5 @@
 package logica.cuponera;
+
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
@@ -8,28 +9,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import logica.usuario.Socio;
-/**
- *
- * @author elinzar
- */
 
 @Entity
 public class CompraCuponera {
 //Variables---------------------------------------------------------------------  
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-	private LocalDate fecha;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="nom_cuponera")
+    private LocalDate fecha;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "nom_cuponera")
     private Cuponera cuponeraAsociada;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Socio socio;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Socio socio;
+
 //Getters and Setters-----------------------------------------------------------
     public LocalDate getFecha() {
         return fecha;
@@ -38,11 +35,13 @@ public class CompraCuponera {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
 //Constructors------------------------------------------------------------------ 
-    //Empty 
+    // Empty
     public CompraCuponera() {
     }
-    //Full
+
+    // Full
     public CompraCuponera(LocalDate fecha) {
         this.fecha = fecha;
     }

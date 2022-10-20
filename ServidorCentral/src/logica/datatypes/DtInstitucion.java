@@ -9,12 +9,27 @@ public class DtInstitucion {
     public final String descripcion;
     public final String instURL;
     public final ArrayList<DtActividadDeportiva> actividades;
-    
-    
-    public DtInstitucion(String nomInst, String desc, String URL, ArrayList<DtActividadDeportiva> acti){
+
+    public DtInstitucion(String nomInst, String desc, String URL, ArrayList<DtActividadDeportiva> acti) {
         this.nombreInst = nomInst;
         this.descripcion = desc;
         this.instURL = URL;
         this.actividades = acti;
+    }
+
+    public String getNombreInst() {
+        return nombreInst;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getInstURL() {
+        return instURL;
+    }
+
+    public ArrayList<DtActividadDeportiva> getActividades() {
+        return actividades;
     }
 }
