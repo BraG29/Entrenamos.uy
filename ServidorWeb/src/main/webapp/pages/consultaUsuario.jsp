@@ -17,6 +17,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	<link rel="stylesheet" href="./../assets/styles/main.css">
   <title>Entrenamos.UY</title>
 </head>
 <% DtUsuario usrLogged = (DtUsuario) request.getSession().getAttribute("loggedUser");
@@ -33,11 +34,11 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div class="list-group">
             <% List<?> varActDepoAsociadas = (List<?>) request.getAttribute("actividadesAsociadas"); %>
-            <% for ( Object indexActDepo: varActDepoAsociadas ) { %>
-              <a href="<%=request.getContextPath()%>/actividades?actividad=<%=((DtActividadDeportiva)indexActDepo).getNombre()%>" class="list-group-item list-group-item-action">
-                <img alt="Qries" src="<%=request.getContextPath()%>/api/content?c=act&id=<%=((DtActividadDeportiva)indexActDepo).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
+            <% for ( Object index: varActDepoAsociadas ) { %>
+              <a href="<%=request.getContextPath()%>/actividades?actividad=<%=((DtActividadDeportiva)index).getNombre()%>" class="list-group-item list-group-item-action">
+                <img alt="Actividad Asociada" src="<%=request.getContextPath()%>/api/content?c=act&id=<%=((DtActividadDeportiva)index).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
               </a>
-                <b> <%=((DtActividadDeportiva)indexActDepo).getNombre()%> </b>
+                <b> <%=((DtActividadDeportiva)index).getNombre()%> </b>
 							<% } %>
           </div>
         </div>
