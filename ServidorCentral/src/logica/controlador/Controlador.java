@@ -50,6 +50,7 @@ import logica.institucion.Institucion;
 import logica.usuario.Profesor;
 import logica.usuario.Socio;
 import logica.usuario.Usuario;
+import net.bytebuddy.asm.Advice.This;
 import logica.cuponera.Cuponera;
 import logica.datatypes.*;
 import logica.institucion.ActividadDeportiva;
@@ -65,16 +66,18 @@ public class Controlador implements IControlador {
         
 	private static Controlador instance;
 
-	private void Controlador() {
-	}
     
 	
 	public void initConnection(){
-		this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
+		if(emf == null)
+			emf = Persistence.createEntityManagerFactory("PersistenceApp");
 	}
 	
 	public void closeConnection(){
 		this.emf.close();
+	}
+
+	private static void Controlador() {
 	}
 
 	public static Controlador getInstance() {
