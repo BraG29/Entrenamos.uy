@@ -1,7 +1,7 @@
 package logica.clase;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import logica.usuario.Socio;
 
@@ -22,18 +20,19 @@ import logica.usuario.Socio;
 @Entity
 public class Registro implements Serializable {
 //Variables---------------------------------------------------------------------
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private LocalDate fecha;
     private float cost;
-    
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="nom_clase")
+    @JoinColumn(name = "nom_clase")
     private Clase claseAsociada;
-    
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Socio socio;
+
 //Getters and Setters-----------------------------------------------------------
     public int getId() {
         return id;
@@ -58,13 +57,13 @@ public class Registro implements Serializable {
     public Clase getClaseAsociada() {
         return claseAsociada;
     }
-    
-    
+
 //Constructors------------------------------------------------------------------   
-    //Empty Constructor
+    // Empty Constructor
     public Registro() {
     }
-    //Full Constructor
+
+    // Full Constructor
     public Registro(LocalDate fecha, float cost, Clase c, Socio s) {
         this.fecha = fecha;
         this.cost = cost;
@@ -72,13 +71,11 @@ public class Registro implements Serializable {
         this.socio = s;
     }
 
-    public boolean esRegistroDe(Clase c){//needs implementation
-    	if(claseAsociada == c) {
-    		return true;
-    	}
-    	return false;
+    public boolean esRegistroDe(Clase c) {// needs implementation
+        if (claseAsociada == c) {
+            return true;
+        }
+        return false;
     }
-    
 
-    
 }
