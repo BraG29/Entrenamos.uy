@@ -52,7 +52,7 @@
       </div>
 
       <div class="form-floating my-2">
-        <input type="date" class="form-control" name="fechaInput" required>
+        <input type="date" class="form-control" id="fechaInput" name="fechaInput" onclick="upperDateControler()" required>
         <label for="fechaInput">Fecha de Nacimiento</label>
       </div>
 
@@ -99,7 +99,7 @@
       </div>
 
       <div class="form-floating my-2">
-        <input type="date" class="form-control" name="fechaInput" required>
+        <input type="date" class="form-control" id="fechaInput" name="fechaInput" onclick="upperDateControler()" required>
         <label for="fechaInput">Fecha de Nacimiento</label>
       </div>
 
@@ -137,35 +137,7 @@
     </form>
   </main>
   <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-  
-  <script>
-    function toggleSection() {
-      if (document.getElementById("zonaRegistroProfesor").style.display === "none") {
-        document.getElementById("zonaRegistroSocio").style.display = "none";
-        document.getElementById("zonaRegistroProfesor").style.display = "";
-      }
-      else {
-        document.getElementById("zonaRegistroProfesor").style.display = "none";
-        document.getElementById("zonaRegistroSocio").style.display = "";
-      }
-    }
-
-    var dateControler = {
-      currentDate: null
-    }
-
-    $(document).on("change", "#fechaInput", function (event, ui) {
-      var now = new Date();
-      var selectedDate = new Date($(this).val());
-
-      if (selectedDate > now) {
-        $(this).val(dateControler.currentDate)
-      } else {
-        dateControler.currentDate = $(this).val();
-      }
-    });
-
-  </script>
+  <script src="./../assets/scripts/main.js" type="text/javascript"></script>
 <jsp:include page="./../templates/footer.jsp"/>
 </body>
 </html>

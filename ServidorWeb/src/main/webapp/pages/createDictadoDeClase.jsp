@@ -31,7 +31,7 @@
         </div>
 
         <div class="form-floating my-2">
-            <input type="date" class="form-control" id="fechaClaseInput" required>
+            <input type="date" class="form-control" id="fechaClaseInput" onclick="lowerDateControler()" required>
             <label for="fechaClaseInput">Fecha de comienzo</label>
         </div>
 
@@ -60,21 +60,7 @@
     </form>
 </main>
 <jsp:include page="./../templates/footer.jsp"/>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"
-    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<script>
-    var dateControler = {
-        currentDate: null
-    }
-
-    $(document).on("change", "#fechaClaseInput", function (event, ui) {
-        var now = new Date();
-        var selectedDate = new Date($(this).val());
-
-        if (selectedDate < now) {
-            $(this).val(dateControler.currentDate)
-        } else {
-            dateControler.currentDate = $(this).val();
-        }
-    });
-</script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="./../assets/scripts/main.js" type="text/javascript"></script>
+</body>
+</html>
