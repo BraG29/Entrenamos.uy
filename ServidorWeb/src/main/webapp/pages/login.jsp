@@ -19,7 +19,7 @@
 
         <div class="form-floating my-3">
           <input type="email" class="form-control" name="loginUserMailInput" placeholder="nombre@ejemplo.com" required>
-          <label for="loginUserMailInput">Usuario o Mail</label>
+          <label for="credencialInput">Nickname o Mail</label>
         </div>
         <div class="form-floating my-3">
           <input type="password" class="form-control" name="loginUserPasswordInput" placeholder="Password" required>

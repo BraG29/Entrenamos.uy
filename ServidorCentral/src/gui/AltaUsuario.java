@@ -361,7 +361,7 @@ public class AltaUsuario extends JFrame {
 							
 							String mensajeConfirmacion = 
 									"<html><body>Se ha dado de alta al usuario:<br> " 
-									+ nickname + " en el sistema</html></body>";
+									+ nickname + " en el sistema</body></html>";
 							showMensaje = new VentanaMensaje("Usuario Creado", mensajeConfirmacion, Color.BLACK);
 							showMensaje.setVisible(true);
 						}

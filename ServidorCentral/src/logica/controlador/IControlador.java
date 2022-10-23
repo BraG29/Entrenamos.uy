@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.persistence.spi.PersistenceProvider;
+
 import logica.datatypes.*;
 import logica.usuario.Usuario;
 
