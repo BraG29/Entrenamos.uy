@@ -1,7 +1,12 @@
 package logica.controlador;
 
+import java.awt.image.ImagingOpException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.annotation.Annotation;
+//import java.lang.module.Configuration;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -12,16 +17,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.PersistenceProperty;
 import javax.persistence.Query;
+import javax.persistence.SharedCacheMode;
+import javax.persistence.ValidationMode;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
+import javax.persistence.spi.ClassTransformer;
+import javax.persistence.spi.PersistenceProvider;
+import javax.persistence.spi.PersistenceUnitInfo;
+import javax.persistence.spi.PersistenceUnitTransactionType;
+import javax.sql.DataSource;
+
+import org.hibernate.jpa.HibernatePersistenceProvider;
 
 import logica.clase.Clase;
 import logica.clase.Registro;
@@ -53,13 +71,25 @@ public class Controlador implements IControlador {
 
     private static Controlador instance;
 
-    private void Controlador() {
+    private Controlador() {
     }
 
     public void initConnection() {
-        this.emf = Persistence.createEntityManagerFactory("PersistenceApp");
+    	if(this.emf == null) {
+    		this.emf = Persistence.createEntityManagerFactory("PersistenceApp"); 		
+    	}
+//    	Map properties = emf.getProperties();
+//    	Set keys = properties.keySet();
+//    	for(Object key : keys) {
+//    		if (properties.get(key) != null){
+//	    		System.out.println(
+//	    				"Name: "+ key.toString() + " :::Value: "+ properties.get(key).toString());
+//    		}
+//    	}
+//    	System.out.println("");
+//
     }
-
+    
     public void closeConnection() {
         this.emf.close();
     }

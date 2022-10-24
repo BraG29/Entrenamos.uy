@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="datatypes.DtUsuario"%>
-<%@ page import="datatypes.DtUsrKey"%>
+<%@ page import="logica.datatypes.DtUsuario"%>
+<%@ page import="logica.datatypes.DtUsrKey"%>
 
 <%  DtUsuario usrLogged = (DtUsuario) request.getSession().getAttribute("loggedUser");
     DtUsuario usrProfile = (DtUsuario) request.getAttribute("datoUsuario");

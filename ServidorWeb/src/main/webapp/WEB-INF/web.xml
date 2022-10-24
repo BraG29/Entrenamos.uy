@@ -5,7 +5,7 @@
    </description>
   <display-name>servidorWeb</display-name>
   <welcome-file-list>
-    <welcome-file>/pages/home.jsp</welcome-file>
+    <welcome-file>/pages/login.jsp</welcome-file>
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>
@@ -19,4 +19,13 @@
     <error-code>403</error-code>
     <location>/pages/403.jsp</location>
   </error-page>
+  <servlet>
+  	<display-name>login</display-name>
+  	<servlet-name>login</servlet-name>
+  	<servlet-class>servlets.Login</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>login</servlet-name>
+  	<url-pattern>/ServidorWeb</url-pattern>
+  </servlet-mapping>
 </web-app>

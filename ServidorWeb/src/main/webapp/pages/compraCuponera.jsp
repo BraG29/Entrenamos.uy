@@ -2,13 +2,13 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Set"%>    
-<%@ page import="datatypes.DtUsuario"%>
-<%@ page import="datatypes.DtUsrKey"%>
-<%@ page import="datatypes.DtProfesor"%>
-<%@ page import="datatypes.DtSocio"%>
-<%@ page import="datatypes.DtCuponera"%>
-<%@ page import="datatypes.DtClase"%>
-<%@ page import="datatypes.DtActividadDeportiva"%>
+<%@ page import="logica.datatypes.DtUsuario"%>
+<%@ page import="logica.datatypes.DtUsrKey"%>
+<%@ page import="logica.datatypes.DtProfesor"%>
+<%@ page import="logica.datatypes.DtSocio"%>
+<%@ page import="logica.datatypes.DtCuponera"%>
+<%@ page import="logica.datatypes.DtClase"%>
+<%@ page import="logica.datatypes.DtActividadDeportiva"%>
 
 <!DOCTYPE html>
 <html lang="es">
