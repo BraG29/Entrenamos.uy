@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.apache.commons.io.IOUtils;
 
 import logica.controlador.*;
 
@@ -40,8 +41,8 @@ public class ContentHandler extends HttpServlet {
 
         if (c.equals("usu")) {
             try {
-                if (IUC.seleccionarUsuario(id).getImagen() != null)
-                    idf = new String(IUC.seleccionarUsuario(id).getImagen());
+                if (IControlador.seleccionarUsuario(id).getImagen() != null)
+                    idf = new String(IControlador.seleccionarUsuario(id).getImagen());
             } catch (ClassNotFoundException ex) {
                 r404(request, response);
                 return;
@@ -50,7 +51,7 @@ public class ContentHandler extends HttpServlet {
 
         } else if (c.equals("cla")) {
             try {
-                idf = IDCC.buscarClase(id).getImgName();
+                idf = IControlador.buscarClase(id).getImgName();
             } catch (ClassNotFoundException ex) {
                 r404(request, response);
                 return;
@@ -59,9 +60,9 @@ public class ContentHandler extends HttpServlet {
 
         } else if (c.equals("act")) {
             boolean fnghfn = false;
-            for (String i : IADC.obtenerInstituciones())
+            for (String i : IControlador.obtenerInstituciones())
                 try {
-                    idf = IADC.getActDepExt(i, id).getImgName();
+                    idf = IControlador.getActDepExt(i, id).getImgName();
                     fnghfn = true;
                 } catch (Exception e) {
                 }
@@ -73,7 +74,7 @@ public class ContentHandler extends HttpServlet {
 
         } else if (c.equals("cup")) {
             try {
-                idf = ICC.seleccionarCuponera(id).getImgName();
+                idf = IControlador.seleccionarCuponera(id).getImgName();
             } catch (ClassNotFoundException ex) {
                 r404(request, response);
                 return;
